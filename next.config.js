@@ -289,6 +289,11 @@ const nextConfig = {
       // STORY → STORIES (URL consolidation)
       // ============================================
       { source: '/story/:slug', destination: '/stories/:slug', permanent: true },
+
+      // ============================================
+      // RENAMED STORIES
+      // ============================================
+      { source: '/stories/the-bureaucracy-of-blood', destination: '/stories/the-golden-doors', permanent: true },
     ];
   },
 };
