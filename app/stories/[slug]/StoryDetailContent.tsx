@@ -326,23 +326,6 @@ export default function StoryDetailContent({
           </>
         )}
 
-        {/* External Links */}
-        {externalLinks && externalLinks.length > 0 && (
-          <div className="my-8 flex flex-wrap gap-3">
-            {externalLinks.map((link, i) => (
-              <a
-                key={i}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[11px] tracking-[0.1em] uppercase text-foreground/40 hover:text-foreground/70 transition-colors border-b border-foreground/10 pb-0.5"
-              >
-                {link.label} ↗
-              </a>
-            ))}
-          </div>
-        )}
-
         {/* Journey Bridge — the whisper */}
         {story.journeyBridge && (
           <div className="my-12 py-8 border-t border-b border-foreground/10">
@@ -445,6 +428,26 @@ export default function StoryDetailContent({
               </ul>
             </div>
           </>
+        )}
+
+        {/* External / Authority Links */}
+        {externalLinks && externalLinks.length > 0 && (
+          <div className={`${sources.length > 0 ? 'mt-8' : 'mt-12 border-t border-foreground/10 pt-12'}`}>
+            <h3 className="uppercase tracking-wide text-xs font-medium mb-4 text-foreground/40">Further Reading</h3>
+            <div className="flex flex-wrap gap-3">
+              {externalLinks.map((link, i) => (
+                <a
+                  key={i}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] tracking-[0.1em] uppercase text-foreground/40 hover:text-foreground/70 transition-colors border border-foreground/10 px-3 py-1.5 hover:border-foreground/30"
+                >
+                  {link.label} ↗
+                </a>
+              ))}
+            </div>
+          </div>
         )}
 
         {/* Footer */}
