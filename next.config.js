@@ -294,6 +294,36 @@ const nextConfig = {
       // RENAMED STORIES
       // ============================================
       { source: '/stories/the-bureaucracy-of-blood', destination: '/stories/the-golden-doors', permanent: true },
+
+      // ============================================
+      // SLUG FIXES — March 4, 2026 (SEO keyword optimisation)
+      // ============================================
+
+      // Stories
+      { source: '/stories/medina-data', destination: '/stories/marrakech-medina-guide', permanent: true },
+      { source: '/stories/moroccan-wedding-atlas', destination: '/stories/moroccan-wedding-traditions', permanent: true },
+      { source: '/stories/tagine-atlas', destination: '/stories/moroccan-tagine-guide', permanent: true },
+      { source: '/stories/tagine-atlas-deep', destination: '/stories/moroccan-tagine-guide', permanent: true },
+      { source: '/stories/spice-map-morocco', destination: '/stories/moroccan-spice-guide', permanent: true },
+      { source: '/stories/spice-map-deep', destination: '/stories/moroccan-spice-guide', permanent: true },
+      { source: '/stories/scent-atlas-morocco', destination: '/stories/moroccan-perfume-traditions', permanent: true },
+      { source: '/stories/musical-traditions-morocco', destination: '/stories/moroccan-music-traditions', permanent: true },
+      { source: '/stories/pottery-traditions-morocco', destination: '/stories/moroccan-pottery-guide', permanent: true },
+      { source: '/stories/tanneries-of-fes', destination: '/stories/fes-tanneries-guide', permanent: true },
+      { source: '/stories/tourism-flow-morocco', destination: '/stories/morocco-tourism-statistics', permanent: true },
+      { source: '/stories/dirhams-journey', destination: '/stories/moroccan-dirham-currency', permanent: true },
+      { source: '/stories/phosphate-kingdom', destination: '/stories/morocco-phosphate-mining', permanent: true },
+      { source: '/stories/harvest-calendar', destination: '/stories/morocco-harvest-calendar', permanent: true },
+      { source: '/stories/marriage-economy', destination: '/stories/moroccan-wedding-economy', permanent: true },
+      { source: '/stories/souk-decoded', destination: '/stories/moroccan-souk-guide', permanent: true },
+
+      // Places
+      { source: '/places/ifrane-town', destination: '/places/ifrane-morocco', permanent: true },
+      { source: '/places/toubkal-trailhead', destination: '/places/imlil-village', permanent: true },
+      { source: '/places/volubilis-jewish-presence', destination: '/places/volubilis-jewish-history', permanent: true },
+      { source: '/places/musee-du-parfum', destination: '/places/museum-of-perfume-marrakech', permanent: true },
+      { source: '/places/macaal', destination: '/places/macaal-museum-marrakech', permanent: true },
+      { source: '/places/gnawa-khamlia', destination: '/places/khamlia-gnawa-village', permanent: true },
     ];
   },
 };
