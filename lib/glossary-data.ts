@@ -43,15 +43,15 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["imperial city", "medina", "Red City"],
         seeAlso: ["jemaa-el-fna", "koutoubia-mosque", "medina"],
         relatedJourneys: [
-          { slug: "7-Day-Atlas-to-Desert", title: "Atlas to Desert Journey" },
-          { slug: "3-Day-Marrakech-Essaouira", title: "Marrakech & Essaouira" },
+          { slug: "4-Day-Sahara-&-Valleys-Journey", title: "Atlas to Desert Journey" },
+          { slug: "4-Day-Essaouira-&-Coastal-Villages", title: "Marrakech & Essaouira" },
         ],
         relatedStories: [
           { slug: "the-gates", title: "The Gates" },
           { slug: "the-riad", title: "The Riad" },
         ],
         relatedPlaces: [
-          { slug: "marrakech", title: "Marrakech" },
+          { slug: "jemaa-el-fna", title: "Marrakech" },
         ],
       },
       {
@@ -66,14 +66,13 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["imperial city", "Al-Qarawiyyin", "medina"],
         seeAlso: ["fes-el-bali", "chouara-tannery", "fondouk"],
         relatedJourneys: [
-          { slug: "8-Day-Imperial-Cities", title: "Imperial Cities Journey" },
-          { slug: "10-Day-Northern-Morocco", title: "Northern Morocco" },
+          { slug: "3-day-fes", title: "3-Day Fes" },
         ],
         relatedStories: [
           { slug: "the-two-rivers", title: "The Two Rivers" }, { slug: "the-golden-doors", title: "The Golden Doors" }, { slug: "the-tannery", title: "The Tannery" },
         ],
         relatedPlaces: [
-          { slug: "fes", title: "Fes" },
+          { slug: "chouara-tannery", title: "Chouara Tannery" }, { slug: "al-qarawiyyin", title: "Al-Qarawiyyin" },
         ],
       },
       {
@@ -162,15 +161,13 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["palm oasis", "trans-Saharan trade", "Zagora", "Agdz"],
         seeAlso: ["kasbah", "ksar"],
         relatedJourneys: [
-          { slug: "10-Day-Southern-Oases", title: "Southern Oases Route" },
-          { slug: "7-Day-Atlas-to-Desert", title: "Atlas to Desert" },
+          { slug: "5-day-draa-valley", title: "Draa Valley" },
         ],
         relatedStories: [
           { slug: "the-draa", title: "The Draa" }, { slug: "date-palm-oases", title: "Date Palm Oases" },
         ],
         relatedPlaces: [
-          { slug: "zagora", title: "Zagora" },
-          { slug: "tamegroute", title: "Tamegroute" },
+          { slug: "tamegroute-library", title: "Tamegroute Library" }, { slug: "tamegroute-pottery", title: "Tamegroute Pottery" },
         ],
       },
       {
@@ -185,15 +182,13 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["Jebel Toubkal", "Imlil", "Tizi n'Tichka", "Amazigh"],
         seeAlso: ["amazigh"],
         relatedJourneys: [
-          { slug: "7-Day-Atlas-Valleys", title: "Atlas Valleys Journey" },
-          { slug: "5-Day-Toubkal-Trek", title: "Toubkal Trek" },
+          { slug: "toubkal-summit-trek-4-days", title: "Toubkal Summit Trek" },
         ],
         relatedStories: [
           { slug: "atlas-mountains", title: "Atlas Mountains" }, { slug: "four-peaks-morocco", title: "Four Peaks of Morocco" }, { slug: "vertical-migration", title: "Vertical Migration" },
         ],
         relatedPlaces: [
-          { slug: "imlil", title: "Imlil" },
-          { slug: "ouirgane", title: "Ouirgane" },
+          { slug: "jbel-toubkal", title: "Jbel Toubkal" },
         ],
       },
       {
@@ -249,15 +244,13 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["Merzouga", "M'Hamid", "desert"],
         seeAlso: ["erg", "hammada", "reg", "erg-chebbi"],
         relatedJourneys: [
-          { slug: "3-Day-Desert-Experience", title: "Sahara Desert Experience" },
-          { slug: "8-Day-Desert-Circle", title: "The Desert Circle" },
+          { slug: "3-Day-Sahara-Circle", title: "Sahara Circle" },
         ],
         relatedStories: [
           { slug: "the-singing-sands", title: "The Singing Sands" }, { slug: "the-last-nomads", title: "The Last Nomads" }, { slug: "the-green-sahara", title: "The Green Sahara" },
         ],
         relatedPlaces: [
-          { slug: "merzouga", title: "Merzouga" },
-          { slug: "mhamid", title: "M'Hamid" },
+          { slug: "erg-chebbi", title: "Erg Chebbi" },
         ],
       },
       {
@@ -370,8 +363,8 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "the-riad", title: "The Riad" },
         ],
         relatedPlaces: [
-          { slug: "marrakech", title: "Marrakech" },
-          { slug: "fes", title: "Fes" },
+          { slug: "jemaa-el-fna", title: "Marrakech" },
+          { slug: "al-qarawiyyin", title: "Fes" },
         ],
       },
       {
@@ -398,15 +391,14 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["fortress", "citadel", "pisé", "rammed earth"],
         seeAlso: ["ksar", "pise"],
         relatedJourneys: [
-          { slug: "7-Day-Kasbahs-Route", title: "Route of the Kasbahs" },
-          { slug: "10-Day-Southern-Oases", title: "Southern Oases Route" },
+          { slug: "6-day-kasbahs-valleys", title: "Kasbahs & Valleys" },
         ],
         relatedStories: [
           { slug: "the-kasbahs", title: "The Kasbahs" }, { slug: "route-thousand-kasbahs", title: "Route of a Thousand Kasbahs" }, { slug: "the-thermal-battery", title: "The Thermal Battery" },
         ],
         relatedPlaces: [
-          { slug: "ait-benhaddou", title: "Aït Benhaddou" },
-          { slug: "ouarzazate", title: "Ouarzazate" },
+          { slug: "ait-benhaddou-ksar", title: "Aït Benhaddou" },
+          { slug: "atlas-studios", title: "Ouarzazate" },
         ],
       },
       {
@@ -440,9 +432,9 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "the-medina-logic", title: "The Medina Logic" }, { slug: "medina-atlas", title: "Medina Atlas" }, { slug: "pulse-of-the-medina", title: "Pulse of the Medina" },
         ],
         relatedPlaces: [
-          { slug: "marrakech", title: "Marrakech" },
-          { slug: "fes", title: "Fes" },
-          { slug: "chefchaouen", title: "Chefchaouen" },
+          { slug: "jemaa-el-fna", title: "Marrakech" },
+          { slug: "al-qarawiyyin", title: "Fes" },
+          { slug: "kasbah-chefchaouen", title: "Chefchaouen" },
         ],
       },
       {
@@ -493,8 +485,8 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "souk-decoded", title: "Souk Decoded" },
         ],
         relatedPlaces: [
-          { slug: "marrakech", title: "Marrakech" },
-          { slug: "fes", title: "Fes" },
+          { slug: "jemaa-el-fna", title: "Marrakech" },
+          { slug: "al-qarawiyyin", title: "Fes" },
         ],
       },
       {
@@ -525,8 +517,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "the-little-polished-stone", title: "The Little Polished Stone" }, { slug: "the-zellige-cutters", title: "The Zellige Cutters" }, { slug: "geometry-of-zellige", title: "Geometry of Zellige" },
         ],
         relatedPlaces: [
-          { slug: "fes", title: "Fes" },
-          { slug: "meknes", title: "Meknes" },
+          { slug: "ben-youssef-medersa", title: "Ben Youssef Medersa" },
         ],
       },
       {
@@ -574,8 +565,8 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["Berber", "indigenous North African", "Imazighen"],
         seeAlso: ["tamazight", "tifinagh"],
         relatedJourneys: [
-          { slug: "7-Day-Atlas-Valleys", title: "Atlas Valleys Journey" },
-          { slug: "10-Day-Southern-Oases", title: "Southern Oases Route" },
+          { slug: "ait-bouguemez-valley-trek-5-days", title: "Atlas Valleys Journey" },
+          { slug: "5-day-draa-valley", title: "Southern Oases Route" },
         ],
         relatedStories: [
           { slug: "the-amazigh", title: "The Amazigh" },
@@ -583,9 +574,9 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "carpet-code", title: "Carpet Code" },
         ],
         relatedPlaces: [
-          { slug: "imlil", title: "Imlil" },
-          { slug: "ouirgane", title: "Ouirgane" },
-          { slug: "ait-benhaddou", title: "Aït Benhaddou" },
+          { slug: "aroumd-village", title: "Imlil" },
+          { slug: "aroumd-village", title: "Ouirgane" },
+          { slug: "ait-benhaddou-ksar", title: "Aït Benhaddou" },
         ],
       },
       {
@@ -626,14 +617,13 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["Gnawa", "spiritual music", "trance music", "African diaspora"],
         seeAlso: ["lila", "maalem"],
         relatedJourneys: [
-          { slug: "7-Day-Music-of-Morocco", title: "Music of Morocco" },
+          { slug: "gnawa-festival-essaouira-5-days", title: "Gnawa Festival" },
         ],
         relatedStories: [
           { slug: "the-gnawa", title: "The Gnawa" }, { slug: "the-lila", title: "The Lila" }, { slug: "the-maalems-guembri", title: "The Maalem's Guembri" },
         ],
         relatedPlaces: [
-          { slug: "essaouira", title: "Essaouira" },
-          { slug: "marrakech", title: "Marrakech" },
+          { slug: "jemaa-el-fna", title: "Jemaa el-Fna" },
         ],
       },
       {
@@ -687,7 +677,7 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Tbourida originated as cavalry training and evolved into ceremonial display. Teams compete at moussems and festivals across Morocco.",
         related: ["Fantasia", "equestrian", "horse riding", "gunpowder"],
         relatedJourneys: [
-          { slug: "5-Day-Tbourida-Festival", title: "Tbourida by the Sea" },
+          { slug: "el-jadida-tbourida-5-days", title: "El Jadida Tbourida" },
         ],
         relatedStories: [
           { slug: "the-gunpowder-ballet", title: "The Gunpowder Ballet" }, { slug: "the-barb-horse", title: "The Barb Horse" },
@@ -706,8 +696,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "the-hammam", title: "The Hammam" }, { slug: "the-roman-bath", title: "The Roman Bath" }, { slug: "hammam-culture", title: "Hammam Culture" },
         ],
         relatedPlaces: [
-          { slug: "marrakech", title: "Marrakech" },
-          { slug: "fes", title: "Fes" },
+          { slug: "ben-youssef-medersa", title: "Ben Youssef Medersa" },
         ],
       },
       {
@@ -724,8 +713,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "argan-triangle", title: "The Argan Triangle" }, { slug: "the-argan-women", title: "The Argan Women" }, { slug: "the-argan-goats", title: "The Argan Goats" },
         ],
         relatedPlaces: [
-          { slug: "essaouira", title: "Essaouira" },
-          { slug: "taroudant", title: "Taroudant" },
+          { slug: "beach-essaouira", title: "Essaouira Beach" },
         ],
       },
     ],
@@ -832,15 +820,15 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Regional variations are significant: Marrakech favors sweet-savory combinations; Fes uses more preserved lemons and olives.",
         related: ["Moroccan stew", "clay pot cooking", "slow cooking"],
         relatedJourneys: [
-          { slug: "5-Day-Culinary-Journey", title: "Culinary Journey" },
+          { slug: "morocco-culinary-8-days", title: "Culinary Journey" },
         ],
         relatedStories: [
           { slug: "the-cone", title: "The Cone" },
           { slug: "the-pottery-of-tamegroute", title: "The Pottery of Tamegroute" },
         ],
         relatedPlaces: [
-          { slug: "marrakech", title: "Marrakech" },
-          { slug: "fes", title: "Fes" },
+          { slug: "jemaa-el-fna", title: "Marrakech" },
+          { slug: "al-qarawiyyin", title: "Fes" },
         ],
       },
       {
@@ -1085,14 +1073,13 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["Rif Mountains", "blue city", "medina", "Andalusian refugees"],
         seeAlso: ["medina"],
         relatedJourneys: [
-          { slug: "10-Day-Northern-Morocco", title: "Northern Morocco" },
-          { slug: "7-Day-Rif-Mountains", title: "Rif Mountains Journey" },
+          { slug: "5-Day-Chefchaouen-&-the-Rif", title: "Chefchaouen & the Rif" },
         ],
         relatedStories: [
           { slug: "the-blue-city", title: "The Blue City" },
         ],
         relatedPlaces: [
-          { slug: "chefchaouen", title: "Chefchaouen" },
+          { slug: "kasbah-chefchaouen", title: "Kasbah Chefchaouen" },
         ],
       },
       {
@@ -1106,14 +1093,13 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["Sahara", "Merzouga", "sand dunes", "desert"],
         seeAlso: ["erg"],
         relatedJourneys: [
-          { slug: "3-Day-Desert-Experience", title: "Sahara Desert Experience" },
-          { slug: "8-Day-Desert-Circle", title: "The Desert Circle" },
+          { slug: "3-Day-Sahara-Circle", title: "Sahara Circle" },
         ],
         relatedStories: [
           { slug: "the-singing-sands", title: "The Singing Sands" },
         ],
         relatedPlaces: [
-          { slug: "merzouga", title: "Merzouga" },
+          { slug: "erg-chebbi", title: "Erg Chebbi" },
         ],
       },
       {
@@ -1126,13 +1112,13 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The gorge is a popular rock climbing destination with routes for all skill levels. The paved road through the canyon passes traditional Berber villages and palm oases.",
         related: ["High Atlas", "canyon", "rock climbing", "Tinghir"],
         relatedJourneys: [
-          { slug: "10-Day-Southern-Oases", title: "Southern Oases Route" },
+          { slug: "5-day-draa-valley", title: "Southern Oases Route" },
         ],
         relatedStories: [
           { slug: "tinghir-jerusalem", title: "Tinghir-Jerusalem" },
         ],
         relatedPlaces: [
-          { slug: "tinghir", title: "Tinghir" },
+          { slug: "dades-gorge", title: "Tinghir" },
         ],
       },
       {
@@ -1146,14 +1132,13 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["High Atlas", "kasbahs", "Rose Valley", "Kelaat M'Gouna"],
         seeAlso: ["kasbah"],
         relatedJourneys: [
-          { slug: "7-Day-Kasbahs-Route", title: "Route of the Kasbahs" },
+          { slug: "6-day-kasbahs-valleys", title: "Route of the Kasbahs" },
         ],
         relatedStories: [
           { slug: "route-thousand-kasbahs", title: "Route of a Thousand Kasbahs" }, { slug: "the-kasbahs", title: "The Kasbahs" },
         ],
         relatedPlaces: [
-          { slug: "kelaat-mgouna", title: "Kelaat M'Gouna" },
-          { slug: "boumalne-dades", title: "Boumalne Dades" },
+          { slug: "dades-gorge", title: "Dades Gorge" },
         ],
       },
       {
@@ -1167,13 +1152,13 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["Atlantic coast", "UNESCO", "Gnaoua", "port city"],
         seeAlso: ["gnawa", "medina"],
         relatedJourneys: [
-          { slug: "3-Day-Marrakech-Essaouira", title: "Marrakech & Essaouira" },
+          { slug: "4-Day-Essaouira-&-Coastal-Villages", title: "Essaouira & Coast" },
         ],
         relatedStories: [
           { slug: "the-forty-percent", title: "The Forty Percent" }, { slug: "the-blue-boats", title: "The Blue Boats" }, { slug: "the-thuya-woodworkers", title: "The Thuya Woodworkers" },
         ],
         relatedPlaces: [
-          { slug: "essaouira", title: "Essaouira" },
+          { slug: "ramparts-essaouira", title: "Ramparts Essaouira" }, { slug: "port-essaouira", title: "Port Essaouira" },
         ],
       },
     ],
@@ -1221,14 +1206,14 @@ export const glossaryData: GlossaryCategory[] = [
         context: "These rugs gained Western popularity after Le Corbusier featured them in his designs. Authentic Beni Ourain rugs use undyed wool from mountain sheep and can take months to complete.",
         related: ["Middle Atlas", "Amazigh rug", "tribal carpet", "natural wool"],
         relatedJourneys: [
-          { slug: "7-Day-Atlas-Valleys", title: "Atlas Valleys Journey" },
+          { slug: "morocco-textile-trail-10-days", title: "Textile Trail" },
         ],
         relatedStories: [
           { slug: "the-carpet-weavers", title: "The Carpet Weavers" }, { slug: "the-carpet", title: "The Carpet" },
         ],
         relatedPlaces: [
-          { slug: "azrou", title: "Azrou" },
-          { slug: "ifrane", title: "Ifrane" },
+          { slug: "cedar-forest-azrou", title: "Azrou" },
+          { slug: "cedar-forest-azrou", title: "Ifrane" },
         ],
       },
       {
@@ -1254,13 +1239,13 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Azilal rugs are distinguished by their creative freedom—weavers often improvise patterns, creating unique compositions that reflect personal expression alongside traditional symbols.",
         related: ["High Atlas", "Berber rug", "mixed technique", "tribal art"],
         relatedJourneys: [
-          { slug: "5-Day-Toubkal-Trek", title: "Toubkal Trek" },
+          { slug: "toubkal-summit-trek-4-days", title: "Toubkal Trek" },
         ],
         relatedStories: [
           { slug: "carpet-code", title: "Carpet Code" }, { slug: "the-carpet", title: "The Carpet" },
         ],
         relatedPlaces: [
-          { slug: "azilal", title: "Azilal" },
+          { slug: "dades-gorge", title: "Azilal" },
         ],
       },
       {
