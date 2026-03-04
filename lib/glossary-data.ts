@@ -47,8 +47,8 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "3-Day-Marrakech-Essaouira", title: "Marrakech & Essaouira" },
         ],
         relatedStories: [
-          { slug: "the-language-of-walls", title: "The Language of Walls" },
-          { slug: "the-garden-within", title: "The Garden Within" },
+          { slug: "the-gates", title: "The Gates" },
+          { slug: "the-riad", title: "The Riad" },
         ],
         relatedPlaces: [
           { slug: "marrakech", title: "Marrakech" },
@@ -70,8 +70,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "10-Day-Northern-Morocco", title: "Northern Morocco" },
         ],
         relatedStories: [
-          { slug: "the-geometry-of-faith", title: "The Geometry of Faith" },
-          { slug: "the-tanners-art", title: "The Tanner's Art" },
+          { slug: "the-two-rivers", title: "The Two Rivers" }, { slug: "the-golden-doors", title: "The Golden Doors" }, { slug: "the-tannery", title: "The Tannery" },
         ],
         relatedPlaces: [
           { slug: "fes", title: "Fes" },
@@ -88,6 +87,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Tangier's cosmopolitan history attracted writers and artists including Paul Bowles, William S. Burroughs, and Henri Matisse. The medina's Petit Socco was once the hub of espionage and intrigue.",
         related: ["Strait of Gibraltar", "international zone", "Beat Generation"],
         seeAlso: ["medina"],
+        relatedStories: [
+          { slug: "the-zone", title: "The Zone" }, { slug: "the-14-kilometres", title: "The 14 Kilometres" },
+        ],
       },
       {
         id: "rabat",
@@ -100,6 +102,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The French made Rabat the capital during the Protectorate, and it remains the seat of government and home to the royal palace. The Kasbah of the Udayas and Hassan Tower are its main historic sites.",
         related: ["imperial city", "capital", "Almohad dynasty"],
         seeAlso: ["hassan-tower", "kasbah"],
+        relatedStories: [
+          { slug: "the-unfinished-tower", title: "The Unfinished Tower" }, { slug: "the-kings-lions", title: "The King's Lions" },
+        ],
       },
       {
         id: "casablanca",
@@ -110,6 +115,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "cities-regions",
         definition: "Morocco's largest city and economic capital, home to nearly 4 million people. A 20th-century creation—the French transformed a small port into a showcase of Art Deco architecture and Morocco's commercial hub.",
         context: "The Arabic name 'Dar el-Beida' (White House) and Spanish 'Casablanca' both refer to a whitewashed landmark. The Hassan II Mosque, completed in 1993, has the world's tallest minaret at 210 meters.",
+        relatedStories: [
+          { slug: "play-it-again-sam", title: "Play It Again, Sam" }, { slug: "the-only-museum", title: "The Only Museum" },
+        ],
         related: ["Art Deco", "Hassan II Mosque", "economic capital"],
       },
       {
@@ -123,6 +131,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Moulay Ismail stripped the Palais El Badi in Marrakech to build his new capital. The city's 40 kilometers of walls once enclosed palaces, gardens, and stables for 12,000 horses.",
         related: ["imperial city", "Moulay Ismail", "Bab Mansour"],
         seeAlso: ["volubilis"],
+        relatedStories: [
+          { slug: "the-builder-king", title: "The Builder King" }, { slug: "imperial-cities", title: "Imperial Cities" },
+        ],
       },
       {
         id: "ouarzazate",
@@ -135,6 +146,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The name comes from Amazigh 'war zazat' (without noise/confusion). The nearby Taourirt Kasbah and Atlas Film Studios are major attractions.",
         related: ["film studios", "Taourirt Kasbah", "desert gateway"],
         seeAlso: ["ait-benhaddou", "draa-valley"],
+        relatedStories: [
+          { slug: "the-stand-in", title: "The Stand-In" }, { slug: "gladiator-country", title: "Gladiator Country" },
+        ],
       },
       {
         id: "draa-valley",
@@ -152,8 +166,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "7-Day-Atlas-to-Desert", title: "Atlas to Desert" },
         ],
         relatedStories: [
-          { slug: "the-fortress-of-grain", title: "The Fortress of Grain" },
-          { slug: "the-last-caravanserai", title: "The Last Caravanserai" },
+          { slug: "the-draa", title: "The Draa" }, { slug: "date-palm-oases", title: "Date Palm Oases" },
         ],
         relatedPlaces: [
           { slug: "zagora", title: "Zagora" },
@@ -176,8 +189,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "5-Day-Toubkal-Trek", title: "Toubkal Trek" },
         ],
         relatedStories: [
-          { slug: "the-silence-of-stone", title: "The Silence of Stone" },
-          { slug: "the-language-of-wool", title: "The Language of Wool" },
+          { slug: "atlas-mountains", title: "Atlas Mountains" }, { slug: "four-peaks-morocco", title: "Four Peaks of Morocco" }, { slug: "vertical-migration", title: "Vertical Migration" },
         ],
         relatedPlaces: [
           { slug: "imlil", title: "Imlil" },
@@ -192,6 +204,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "cities-regions",
         definition: "A mountain range between Fes and the High Atlas, characterized by cedar forests, crater lakes, and Amazigh villages. Lower and greener than the High Atlas, with peaks around 3,300 meters.",
         context: "Ifrane, founded by the French as a hill station, is known as 'Morocco's Switzerland.' The cedar forests shelter the endangered Barbary macaque, North Africa's only wild primate.",
+        relatedStories: [
+          { slug: "atlas-mountains", title: "Atlas Mountains" }, { slug: "the-kings-lions", title: "The King's Lions" },
+        ],
         related: ["Ifrane", "cedar forest", "Barbary macaque", "Azrou"],
       },
       {
@@ -203,6 +218,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "cities-regions",
         definition: "An ancient mountain range south of the High Atlas, with dramatic geological formations dating back 2 billion years. Lower and drier than other Atlas ranges, with pink granite, volcanic plugs, and prehistoric rock engravings.",
         context: "The Ameln Valley near Tafraoute showcases traditional Amazigh architecture against surreal boulder-strewn landscapes. Belgian artist Jean Vérame painted several boulders blue in 1984.",
+        relatedStories: [
+          { slug: "the-fortress-of-grain", title: "The Fortress of Grain" }, { slug: "the-saffron-harvest", title: "The Saffron Harvest" },
+        ],
         related: ["Tafraoute", "Ameln Valley", "prehistoric rock art"],
       },
       {
@@ -216,6 +234,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The Rif was the last region to submit to French and Spanish colonial control and has retained a distinct Amazigh identity. Chefchaouen and Akchour waterfalls are the main tourist draws.",
         related: ["Chefchaouen", "Mediterranean coast", "Amazigh"],
         seeAlso: ["chefchaouen"],
+        relatedStories: [
+          { slug: "the-priestess", title: "The Priestess" }, { slug: "cannabis-rif", title: "Cannabis & the Rif" },
+        ],
       },
       {
         id: "sahara",
@@ -232,8 +253,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "8-Day-Desert-Circle", title: "The Desert Circle" },
         ],
         relatedStories: [
-          { slug: "the-blue-men", title: "The Blue Men" },
-          { slug: "stars-over-sand", title: "Stars Over Sand" },
+          { slug: "the-singing-sands", title: "The Singing Sands" }, { slug: "the-last-nomads", title: "The Last Nomads" }, { slug: "the-green-sahara", title: "The Green Sahara" },
         ],
         relatedPlaces: [
           { slug: "merzouga", title: "Merzouga" },
@@ -251,6 +271,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The valley has been an Amazigh heartland for millennia. Taroudant, the 'Grandmother of Marrakech,' preserves ramparts and souks predating the Red City.",
         related: ["Agadir", "Taroudant", "argan", "Amazigh"],
         seeAlso: ["argan"],
+        relatedStories: [
+          { slug: "argan-triangle", title: "The Argan Triangle" }, { slug: "the-argan-women", title: "The Argan Women" },
+        ],
       },
       {
         id: "tafilalt",
@@ -263,6 +286,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Tafilalt dates are prized throughout Morocco. The region is also known for fossil beds containing 400-million-year-old trilobites and ammonites.",
         related: ["Erfoud", "Rissani", "Alaouite dynasty", "dates", "fossils"],
         seeAlso: ["erg-chebbi"],
+        relatedStories: [
+          { slug: "the-hidden-kingdom", title: "The Hidden Kingdom" }, { slug: "date-palm-oases", title: "Date Palm Oases" },
+        ],
       },
       {
         id: "atlantic-coast",
@@ -273,6 +299,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The coast benefits from the cool Canary Current, making it pleasant even in summer. Essaouira and Taghazout are popular surf destinations; Dakhla in the south is a world-class kitesurfing spot.",
         related: ["Essaouira", "Taghazout", "Dakhla", "surfing"],
         seeAlso: ["essaouira-medina"],
+        relatedStories: [
+          { slug: "atlantic-coast-morocco", title: "Atlantic Coast" }, { slug: "the-blue-boats", title: "The Blue Boats" }, { slug: "surf-coast-morocco", title: "Surf Coast" },
+        ],
       },
     ],
   },
@@ -302,6 +331,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Unlike the dunes of an erg, a hammada offers stark, lunar landscapes of ochre rock stretching to the horizon.",
         related: ["Agafay", "stone desert", "rock desert"],
         seeAlso: ["erg", "reg"],
+        relatedStories: [
+          { slug: "the-hammada", title: "The Hammada" }, { slug: "the-caravan-navigators", title: "The Caravan Navigators" },
+        ],
       },
       {
         id: "reg",
@@ -312,6 +344,9 @@ export const glossaryData: GlossaryCategory[] = [
         definition: "A gravel plain desert, covered with small stones and pebbles rather than sand or large rocks. Also called serir in some regions.",
         context: "Much of Morocco's desert terrain is technically reg—the flat, gravelly expanses between mountain ranges.",
         seeAlso: ["erg", "hammada"],
+        relatedStories: [
+          { slug: "the-hammada", title: "The Hammada" }, { slug: "the-fossil-souk", title: "The Fossil Souk" },
+        ],
       },
     ],
   },
@@ -331,8 +366,8 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["Moroccan architecture", "courtyard house", "traditional accommodation"],
         seeAlso: ["dar", "medina"],
         relatedStories: [
-          { slug: "the-garden-within", title: "The Garden Within" },
-          { slug: "architecture-of-privacy", title: "Architecture of Privacy" },
+          { slug: "the-riad", title: "The Riad" },
+          { slug: "the-riad", title: "The Riad" },
         ],
         relatedPlaces: [
           { slug: "marrakech", title: "Marrakech" },
@@ -348,6 +383,9 @@ export const glossaryData: GlossaryCategory[] = [
         definition: "A traditional Moroccan townhouse, similar to a riad but typically smaller and without a garden—featuring a simple courtyard with a light well instead.",
         context: "The distinction between dar and riad is often blurred in tourism marketing, with many dars called riads.",
         seeAlso: ["riad"],
+        relatedStories: [
+          { slug: "the-riad", title: "The Riad" }, { slug: "the-harem-geometry", title: "The Harem Geometry" },
+        ],
       },
       {
         id: "kasbah",
@@ -364,8 +402,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "10-Day-Southern-Oases", title: "Southern Oases Route" },
         ],
         relatedStories: [
-          { slug: "the-fortress-of-grain", title: "The Fortress of Grain" },
-          { slug: "castles-of-clay", title: "Castles of Clay" },
+          { slug: "the-kasbahs", title: "The Kasbahs" }, { slug: "route-thousand-kasbahs", title: "Route of a Thousand Kasbahs" }, { slug: "the-thermal-battery", title: "The Thermal Battery" },
         ],
         relatedPlaces: [
           { slug: "ait-benhaddou", title: "Aït Benhaddou" },
@@ -382,6 +419,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Ait Benhaddou is Morocco's most famous ksar, a UNESCO World Heritage site.",
         related: ["fortified village", "Ait Benhaddou", "ksour"],
         seeAlso: ["kasbah"],
+        relatedStories: [
+          { slug: "the-ksour", title: "The Ksour" }, { slug: "the-fortress-of-grain", title: "The Fortress of Grain" },
+        ],
       },
       {
         id: "medina",
@@ -397,8 +437,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "8-Day-Imperial-Cities", title: "Imperial Cities Journey" },
         ],
         relatedStories: [
-          { slug: "the-labyrinth", title: "The Labyrinth" },
-          { slug: "streets-without-names", title: "Streets Without Names" },
+          { slug: "the-medina-logic", title: "The Medina Logic" }, { slug: "medina-atlas", title: "Medina Atlas" }, { slug: "pulse-of-the-medina", title: "Pulse of the Medina" },
         ],
         relatedPlaces: [
           { slug: "marrakech", title: "Marrakech" },
@@ -415,6 +454,9 @@ export const glossaryData: GlossaryCategory[] = [
         definition: "A narrow alley or lane within a medina, often dead-ending at a cluster of houses.",
         context: "Medina addresses typically reference the derb name rather than street numbers.",
         seeAlso: ["medina"],
+        relatedStories: [
+          { slug: "the-medina-logic", title: "The Medina Logic" }, { slug: "medina-data", title: "Medina Data" },
+        ],
       },
       {
         id: "pise",
@@ -425,6 +467,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Pisé buildings require constant maintenance; without repair, they dissolve back into the earth within decades.",
         related: ["rammed earth", "adobe", "earth construction"],
         seeAlso: ["kasbah", "ksar"],
+        relatedStories: [
+          { slug: "the-quarry", title: "The Quarry" }, { slug: "the-thermal-battery", title: "The Thermal Battery" }, { slug: "the-silence-factory", title: "The Silence Factory" },
+        ],
       },
     ],
   },
@@ -444,8 +489,8 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["market", "bazaar", "marketplace"],
         seeAlso: ["medina", "fondouk"],
         relatedStories: [
-          { slug: "the-way-of-the-souk", title: "The Way of the Souk" },
-          { slug: "merchants-and-makers", title: "Merchants and Makers" },
+          { slug: "souk-decoded", title: "Souk Decoded" },
+          { slug: "souk-decoded", title: "Souk Decoded" },
         ],
         relatedPlaces: [
           { slug: "marrakech", title: "Marrakech" },
@@ -462,6 +507,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Fes has over 100 historic fondouks, some dating to the 13th century.",
         related: ["caravanserai", "khan", "merchants' inn"],
         seeAlso: ["souk"],
+        relatedStories: [
+          { slug: "souk-decoded", title: "Souk Decoded" }, { slug: "the-medina-logic", title: "The Medina Logic" },
+        ],
       },
       {
         id: "zellige",
@@ -474,8 +522,7 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["mosaic", "tilework", "Islamic geometric art", "Moroccan tiles"],
         seeAlso: ["maalem"],
         relatedStories: [
-          { slug: "the-geometry-of-faith", title: "The Geometry of Faith" },
-          { slug: "the-last-zellige-master", title: "The Last Zellige Master" },
+          { slug: "the-little-polished-stone", title: "The Little Polished Stone" }, { slug: "the-zellige-cutters", title: "The Zellige Cutters" }, { slug: "geometry-of-zellige", title: "Geometry of Zellige" },
         ],
         relatedPlaces: [
           { slug: "fes", title: "Fes" },
@@ -490,6 +537,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "commerce-craft",
         definition: "A traditional waterproof lime plaster, polished with flat stones and treated with olive oil soap. Originally used in hammams, now popular for bathrooms and feature walls.",
         context: "Authentic tadelakt uses lime from the Marrakech region and requires specialized application techniques.",
+        relatedStories: [
+          { slug: "the-tadelakt-masters", title: "The Tadelakt Masters" }, { slug: "the-riad", title: "The Riad" },
+        ],
         related: ["lime plaster", "Moroccan plaster", "waterproof finish"],
       },
       {
@@ -500,6 +550,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "commerce-craft",
         definition: "An ancient underground irrigation system using gravity-fed tunnels to channel water from mountain aquifers to agricultural areas. Similar to Persian qanats. Some date back over 1,000 years.",
         context: "The khettaras of the Tafilalt oasis once numbered over 300; today fewer than 30 remain functional.",
+        relatedStories: [
+          { slug: "the-invisible-river", title: "The Invisible River" }, { slug: "the-khettara", title: "The Khettara" }, { slug: "the-water-masters", title: "The Water Masters" },
+        ],
         related: ["qanat", "irrigation", "underground canal", "foggara"],
       },
     ],
@@ -525,9 +578,9 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "10-Day-Southern-Oases", title: "Southern Oases Route" },
         ],
         relatedStories: [
-          { slug: "the-free-people", title: "The Free People" },
-          { slug: "the-language-of-wool", title: "The Language of Wool" },
-          { slug: "symbols-in-the-weave", title: "Symbols in the Weave" },
+          { slug: "the-amazigh", title: "The Amazigh" },
+          { slug: "the-carpet-weavers", title: "The Carpet Weavers" },
+          { slug: "carpet-code", title: "Carpet Code" },
         ],
         relatedPlaces: [
           { slug: "imlil", title: "Imlil" },
@@ -544,6 +597,9 @@ export const glossaryData: GlossaryCategory[] = [
         definition: "The family of Amazigh languages spoken across North Africa. In Morocco, the three main variants are Tashelhit (south), Tamazight (central Atlas), and Tarifit (Rif). Recognized as an official language of Morocco since 2011.",
         related: ["Berber language", "Tashelhit", "Tarifit", "Amazigh language"],
         seeAlso: ["amazigh", "tifinagh"],
+        relatedStories: [
+          { slug: "the-five-tongues", title: "The Five Tongues" }, { slug: "languages-of-morocco", title: "Languages of Morocco" },
+        ],
       },
       {
         id: "tifinagh",
@@ -555,6 +611,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "You'll see Tifinagh script on government buildings and road signs alongside Arabic and French.",
         related: ["Berber alphabet", "Amazigh script", "Libyco-Berber"],
         seeAlso: ["tamazight", "amazigh"],
+        relatedStories: [
+          { slug: "the-five-tongues", title: "The Five Tongues" }, { slug: "the-alphabet-in-stone", title: "The Alphabet in Stone" },
+        ],
       },
       {
         id: "gnaoua",
@@ -570,8 +629,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "7-Day-Music-of-Morocco", title: "Music of Morocco" },
         ],
         relatedStories: [
-          { slug: "the-sound-of-trance", title: "The Sound of Trance" },
-          { slug: "spirit-possession-healing", title: "Spirit Possession & Healing" },
+          { slug: "the-gnawa", title: "The Gnawa" }, { slug: "the-lila", title: "The Lila" }, { slug: "the-maalems-guembri", title: "The Maalem's Guembri" },
         ],
         relatedPlaces: [
           { slug: "essaouira", title: "Essaouira" },
@@ -588,6 +646,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Authentic lilas are private spiritual ceremonies, not tourist performances.",
         related: ["Gnaoua ceremony", "spiritual healing", "trance ritual"],
         seeAlso: ["gnaoua", "maalem"],
+        relatedStories: [
+          { slug: "the-lila", title: "The Lila" }, { slug: "the-gnawa", title: "The Gnawa" }, { slug: "the-sacred-smoke", title: "The Sacred Smoke" },
+        ],
       },
       {
         id: "maalem",
@@ -599,6 +660,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The title carries significant respect—it denotes not just skill but transmission of traditional knowledge.",
         related: ["master craftsman", "master musician", "guild master"],
         seeAlso: ["gnaoua", "zellige"],
+        relatedStories: [
+          { slug: "the-maalems-guembri", title: "The Maalem's Guembri" }, { slug: "the-gnawa", title: "The Gnawa" },
+        ],
       },
       {
         id: "moussem",
@@ -608,6 +672,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "people-culture",
         definition: "A religious festival or pilgrimage, typically honoring a local saint (marabout). Moussems combine religious devotion with markets, music, and social gathering.",
         context: "The Imilchil Marriage Moussem in the High Atlas is one of Morocco's most famous, where young people traditionally chose marriage partners.",
+        relatedStories: [
+          { slug: "the-moussems", title: "The Moussems" }, { slug: "the-wedding-market", title: "The Wedding Market" },
+        ],
         related: ["festival", "pilgrimage", "saint's day", "religious gathering"],
       },
       {
@@ -623,7 +690,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "5-Day-Tbourida-Festival", title: "Tbourida by the Sea" },
         ],
         relatedStories: [
-          { slug: "riders-of-the-plain", title: "Riders of the Plain" },
+          { slug: "the-gunpowder-ballet", title: "The Gunpowder Ballet" }, { slug: "the-barb-horse", title: "The Barb Horse" },
         ],
       },
       {
@@ -636,7 +703,7 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Historically, hammams served as social gathering spaces, especially for women. Every neighborhood has its local hammam alongside modern spas.",
         related: ["bathhouse", "steam bath", "gommage", "kessa"],
         relatedStories: [
-          { slug: "ritual-of-steam", title: "The Ritual of Steam" },
+          { slug: "the-hammam", title: "The Hammam" }, { slug: "the-roman-bath", title: "The Roman Bath" }, { slug: "hammam-culture", title: "Hammam Culture" },
         ],
         relatedPlaces: [
           { slug: "marrakech", title: "Marrakech" },
@@ -654,8 +721,7 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Traditional production is done by women's cooperatives. Goats famously climb argan trees to eat the fruit, though staged photo opportunities should be avoided.",
         related: ["argan oil", "Souss Valley", "women's cooperatives", "endemic species"],
         relatedStories: [
-          { slug: "liquid-gold", title: "Liquid Gold" },
-          { slug: "the-argan-forest", title: "The Argan Forest" },
+          { slug: "argan-triangle", title: "The Argan Triangle" }, { slug: "the-argan-women", title: "The Argan Women" }, { slug: "the-argan-goats", title: "The Argan Goats" },
         ],
         relatedPlaces: [
           { slug: "essaouira", title: "Essaouira" },
@@ -718,6 +784,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "geography",
         definition: "Mountain or hill. Used in place names throughout Morocco: Jebel Toubkal, Jebel Saghro, Jebel Siroua.",
         context: "The Arabic term; the Amazigh equivalent is 'Adrar.'",
+        relatedStories: [
+          { slug: "four-peaks-morocco", title: "Four Peaks of Morocco" }, { slug: "the-moving-mountains", title: "The Moving Mountains" },
+        ],
         related: ["mountain", "Adrar", "peak"],
       },
       {
@@ -728,6 +797,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "geography",
         definition: "A river or riverbed, often dry except during rainy season. Also spelled 'wadi.'",
         context: "Most Moroccan oueds are seasonal—raging torrents in spring, bone-dry wadis in summer.",
+        relatedStories: [
+          { slug: "the-draa", title: "The Draa" }, { slug: "the-two-rivers", title: "The Two Rivers" },
+        ],
         related: ["wadi", "river", "riverbed", "seasonal river"],
       },
       {
@@ -739,6 +811,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The Tafilalt oasis near Erfoud is one of the largest in Morocco, with over a million palm trees.",
         related: ["palm grove", "date palms", "Tafilalt", "Zagora"],
         seeAlso: ["khettara", "ksar"],
+        relatedStories: [
+          { slug: "the-oasis-engineers", title: "The Oasis Engineers" }, { slug: "date-palm-oases", title: "Date Palm Oases" }, { slug: "the-date-cathedral", title: "The Date Cathedral" },
+        ],
       },
     ],
   },
@@ -760,8 +835,8 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "5-Day-Culinary-Journey", title: "Culinary Journey" },
         ],
         relatedStories: [
-          { slug: "the-slow-fire", title: "The Slow Fire" },
-          { slug: "clay-and-flame", title: "Clay and Flame" },
+          { slug: "the-cone", title: "The Cone" },
+          { slug: "the-pottery-of-tamegroute", title: "The Pottery of Tamegroute" },
         ],
         relatedPlaces: [
           { slug: "marrakech", title: "Marrakech" },
@@ -776,6 +851,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "food-drink",
         definition: "A tomato-based soup with chickpeas, lentils, and herbs, traditionally served to break the fast during Ramadan. Recipes vary by region and family.",
         context: "During Ramadan, harira is served at sunset with dates, chebakia (honey pastries), and hard-boiled eggs.",
+        relatedStories: [
+          { slug: "ramadan-moon", title: "Ramadan Moon" }, { slug: "the-fassi-table", title: "The Fassi Table" },
+        ],
         related: ["Ramadan soup", "Moroccan soup", "iftar"],
       },
       {
@@ -788,7 +866,7 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Authentic couscous is steamed three times over a simmering stew; instant couscous is a pale imitation.",
         related: ["seksu", "semolina", "Friday lunch"],
         relatedStories: [
-          { slug: "friday-ritual", title: "The Friday Ritual" },
+          { slug: "the-friday-couscous", title: "The Friday Couscous" }, { slug: "couscous-friday", title: "Couscous Friday" },
         ],
       },
       {
@@ -808,6 +886,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "food-drink",
         definition: "A layered pie of thin warqa pastry filled with pigeon or chicken, almonds, eggs, and spices, dusted with cinnamon and powdered sugar. A signature dish of Fes.",
         context: "The sweet-savory combination—meat with sugar and cinnamon—reflects medieval Andalusian influence.",
+        relatedStories: [
+          { slug: "the-fassi-table", title: "The Fassi Table" },
+        ],
         related: ["bastilla", "b'stilla", "pigeon pie", "Fassi cuisine"],
       },
       {
@@ -818,6 +899,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "food-drink",
         definition: "Moroccan mint tea, made with Chinese gunpowder green tea, fresh spearmint, and generous sugar. Poured from height to create a frothy top.",
         context: "Refusing tea is considered impolite. The ritual of preparation and serving is as important as the drink itself.",
+        relatedStories: [
+          { slug: "the-three-glasses", title: "The Three Glasses" }, { slug: "the-mint-tea-ritual", title: "The Mint Tea Ritual" }, { slug: "moroccan-tea", title: "Moroccan Tea" },
+        ],
         related: ["Moroccan mint tea", "whiskey Berber", "nana mint"],
       },
     ],
@@ -848,6 +932,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Spread over 8 hectares with 150 rooms, the palace was designed to be the greatest of its time. Each room was decorated by master craftsmen from Fes. The French Protectorate later used it as the residence of the Resident-General.",
         related: ["Marrakech", "19th-century Morocco", "Moroccan palace"],
         seeAlso: ["riad", "zellige"],
+        relatedStories: [
+          { slug: "the-harem-geometry", title: "The Harem Geometry" },
+        ],
       },
       {
         id: "palais-el-badi",
@@ -859,6 +946,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Al-Mansour funded construction with Portuguese ransom money. The palace took 25 years to build, featuring gold from Sudan, Italian marble, and Irish oak. Later stripped by Moulay Ismail to build Meknes.",
         related: ["Marrakech", "Saadian dynasty", "Battle of Ksar el-Kebir"],
         seeAlso: ["saadian-tombs"],
+        relatedStories: [
+          { slug: "the-palace-of-revenge", title: "The Palace of Revenge" }, { slug: "the-golden-one", title: "The Golden One" },
+        ],
       },
       {
         id: "saadian-tombs",
@@ -870,6 +960,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The main mausoleum, the Hall of Twelve Columns, features Italian Carrara marble and intricate muqarnas ceilings. Some 60 members of the Saadian dynasty are buried here.",
         related: ["Marrakech", "Saadian dynasty", "mausoleum"],
         seeAlso: ["palais-el-badi"],
+        relatedStories: [
+          { slug: "the-sugar-kings-grave", title: "The Sugar King's Grave" }, { slug: "the-golden-one", title: "The Golden One" },
+        ],
       },
       {
         id: "koutoubia-mosque",
@@ -881,6 +974,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The name derives from 'kutubiyyin' (booksellers), as the mosque was once surrounded by manuscript dealers. Non-Muslims cannot enter, but the minaret dominates the skyline and is visible from across the city.",
         related: ["Marrakech", "Almohad dynasty", "mosque", "minaret"],
         seeAlso: ["medina"],
+        relatedStories: [
+          { slug: "the-koutoubia-mistake", title: "The Koutoubia Mistake" }, { slug: "the-twin-towers", title: "The Twin Towers" }, { slug: "the-three-sisters", title: "The Three Sisters" },
+        ],
       },
       {
         id: "jardin-majorelle",
@@ -889,6 +985,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "landmarks",
         definition: "A botanical garden in Marrakech created by French painter Jacques Majorelle over 40 years, starting in 1923. Famous for its cobalt blue buildings (now called Majorelle Blue), bamboo groves, and cactus collection.",
         context: "The garden fell into disrepair after Majorelle's death but was rescued by Yves Saint Laurent and Pierre Bergé in 1980. It now contains the Berber Museum and YSL's memorial.",
+        relatedStories: [
+          { slug: "the-blue-garden", title: "The Blue Garden" }, { slug: "the-color-of-light", title: "The Color of Light" },
+        ],
         related: ["Marrakech", "Yves Saint Laurent", "botanical garden"],
       },
       {
@@ -901,6 +1000,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The name may mean 'assembly of the dead' (referring to public executions) or 'mosque at the end' (a destroyed Almoravid mosque). The square has been the heart of Marrakech since the city's founding.",
         related: ["Marrakech", "medina", "UNESCO", "night market"],
         seeAlso: ["souk", "medina"],
+        relatedStories: [
+          { slug: "the-square", title: "The Square" }, { slug: "the-assembly-of-the-dead", title: "The Assembly of the Dead" }, { slug: "the-storytellers-of-jemaa-el-fna", title: "The Storytellers" },
+        ],
       },
       {
         id: "ait-benhaddou",
@@ -912,6 +1014,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Though largely abandoned (only a few families remain), the ksar has appeared in numerous films including Lawrence of Arabia, Gladiator, and Game of Thrones. The earthen architecture requires constant restoration.",
         related: ["UNESCO", "ksar", "film location", "Ouarzazate"],
         seeAlso: ["ksar", "kasbah"],
+        relatedStories: [
+          { slug: "route-thousand-kasbahs", title: "Route of a Thousand Kasbahs" }, { slug: "the-stand-in", title: "The Stand-In" },
+        ],
       },
       {
         id: "fes-el-bali",
@@ -923,6 +1028,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Fes el-Bali preserves medieval urban planning virtually intact. The medina contains the University of Al-Qarawiyyin (founded 859 CE, the world's oldest continuously operating university) and the famous tanneries.",
         related: ["Fes", "medina", "UNESCO", "Al-Qarawiyyin"],
         seeAlso: ["medina", "fondouk", "souk"],
+        relatedStories: [
+          { slug: "the-golden-doors", title: "The Golden Doors" }, { slug: "the-tannery", title: "The Tannery" }, { slug: "maimonides-in-fes", title: "Maimonides in Fes" },
+        ],
       },
       {
         id: "chouara-tannery",
@@ -934,6 +1042,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The tannery is best viewed from surrounding leather shops' terraces. The process and smell have remained unchanged for nearly a millennium—visitors are offered mint to mask the odor.",
         related: ["Fes", "leather", "traditional craft", "medina"],
         seeAlso: ["fes-el-bali", "souk"],
+        relatedStories: [
+          { slug: "the-tannery", title: "The Tannery" }, { slug: "tanneries-of-fes", title: "Tanneries of Fes" },
+        ],
       },
       {
         id: "volubilis",
@@ -943,6 +1054,9 @@ export const glossaryData: GlossaryCategory[] = [
         category: "landmarks",
         definition: "The best-preserved Roman ruins in Morocco, a UNESCO World Heritage site near Meknes. Founded in the 3rd century BCE, it became the Roman administrative center of Mauretania Tingitana.",
         context: "The city flourished producing olive oil and grain for Rome. Notable features include the Capitol, Basilica, and several houses with intact mosaic floors. Largely abandoned after an earthquake in 1755.",
+        relatedStories: [
+          { slug: "the-roman-south", title: "The Roman South" }, { slug: "the-edge-of-the-empire", title: "The Edge of the Empire" },
+        ],
         related: ["Roman Morocco", "Meknes", "UNESCO", "ancient ruins", "Moulay Idriss"],
       },
       {
@@ -955,6 +1069,9 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The site now includes the Mausoleum of Mohammed V and remains of 348 columns that would have supported the mosque. The minaret shares the same Almohad design as the Koutoubia and Seville's Giralda.",
         related: ["Rabat", "Almohad dynasty", "minaret", "Mausoleum of Mohammed V"],
         seeAlso: ["koutoubia-mosque"],
+        relatedStories: [
+          { slug: "the-unfinished-tower", title: "The Unfinished Tower" }, { slug: "the-three-sisters", title: "The Three Sisters" },
+        ],
       },
       {
         id: "chefchaouen",
@@ -972,8 +1089,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "7-Day-Rif-Mountains", title: "Rif Mountains Journey" },
         ],
         relatedStories: [
-          { slug: "the-blue-maze", title: "The Blue Maze" },
-          { slug: "fifty-shades-of-blue", title: "Fifty Shades of Blue" },
+          { slug: "the-blue-city", title: "The Blue City" },
         ],
         relatedPlaces: [
           { slug: "chefchaouen", title: "Chefchaouen" },
@@ -994,8 +1110,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "8-Day-Desert-Circle", title: "The Desert Circle" },
         ],
         relatedStories: [
-          { slug: "stars-over-sand", title: "Stars Over Sand" },
-          { slug: "the-blue-men", title: "The Blue Men" },
+          { slug: "the-singing-sands", title: "The Singing Sands" },
         ],
         relatedPlaces: [
           { slug: "merzouga", title: "Merzouga" },
@@ -1012,6 +1127,9 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["High Atlas", "canyon", "rock climbing", "Tinghir"],
         relatedJourneys: [
           { slug: "10-Day-Southern-Oases", title: "Southern Oases Route" },
+        ],
+        relatedStories: [
+          { slug: "tinghir-jerusalem", title: "Tinghir-Jerusalem" },
         ],
         relatedPlaces: [
           { slug: "tinghir", title: "Tinghir" },
@@ -1031,7 +1149,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "7-Day-Kasbahs-Route", title: "Route of the Kasbahs" },
         ],
         relatedStories: [
-          { slug: "valley-of-roses", title: "Valley of Roses" },
+          { slug: "route-thousand-kasbahs", title: "Route of a Thousand Kasbahs" }, { slug: "the-kasbahs", title: "The Kasbahs" },
         ],
         relatedPlaces: [
           { slug: "kelaat-mgouna", title: "Kelaat M'Gouna" },
@@ -1052,8 +1170,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "3-Day-Marrakech-Essaouira", title: "Marrakech & Essaouira" },
         ],
         relatedStories: [
-          { slug: "the-wind-city", title: "The Wind City" },
-          { slug: "port-of-timbuktu", title: "Port of Timbuktu" },
+          { slug: "the-forty-percent", title: "The Forty Percent" }, { slug: "the-blue-boats", title: "The Blue Boats" }, { slug: "the-thuya-woodworkers", title: "The Thuya Woodworkers" },
         ],
         relatedPlaces: [
           { slug: "essaouira", title: "Essaouira" },
@@ -1076,8 +1193,8 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Kilims are practical textiles used as floor coverings, wall hangings, and saddle blankets. The flat weave makes them reversible and easier to transport.",
         related: ["flatweave", "carpet", "tapestry", "hanbel"],
         relatedStories: [
-          { slug: "the-language-of-wool", title: "The Language of Wool" },
-          { slug: "flat-weave-traditions", title: "Flat Weave Traditions" },
+          { slug: "the-carpet-weavers", title: "The Carpet Weavers" },
+          { slug: "the-carpet", title: "The Carpet" },
         ],
       },
       {
@@ -1090,8 +1207,7 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Once considered poor women's craft, boucherouite rugs gained international recognition as folk art in the late 20th century. Each rug tells the story of its materials—old clothes, fabric samples, industrial scraps.",
         related: ["rag rug", "recycled textile", "upcycled art", "folk art"],
         relatedStories: [
-          { slug: "rags-to-art", title: "Rags to Art" },
-          { slug: "the-scrap-weavers", title: "The Scrap Weavers" },
+          { slug: "the-carpet", title: "The Carpet" }, { slug: "carpet-code", title: "Carpet Code" },
         ],
       },
       {
@@ -1108,8 +1224,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "7-Day-Atlas-Valleys", title: "Atlas Valleys Journey" },
         ],
         relatedStories: [
-          { slug: "white-wool-black-diamonds", title: "White Wool, Black Diamonds" },
-          { slug: "weavers-of-the-atlas", title: "Weavers of the Atlas" },
+          { slug: "the-carpet-weavers", title: "The Carpet Weavers" }, { slug: "the-carpet", title: "The Carpet" },
         ],
         relatedPlaces: [
           { slug: "azrou", title: "Azrou" },
@@ -1126,7 +1241,7 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Hanbels are among the most practical Moroccan textiles, lightweight and multipurpose. Regional variations include the striped hanbels of the Middle Atlas and the geometric patterns of the South.",
         related: ["blanket", "flatweave", "striped textile", "bedding"],
         relatedStories: [
-          { slug: "stripes-of-the-atlas", title: "Stripes of the Atlas" },
+          { slug: "the-carpet", title: "The Carpet" }, { slug: "the-wedding-blanket", title: "The Wedding Blanket" },
         ],
       },
       {
@@ -1142,7 +1257,7 @@ export const glossaryData: GlossaryCategory[] = [
           { slug: "5-Day-Toubkal-Trek", title: "Toubkal Trek" },
         ],
         relatedStories: [
-          { slug: "free-hand-weavers", title: "Free Hand Weavers" },
+          { slug: "carpet-code", title: "Carpet Code" }, { slug: "the-carpet", title: "The Carpet" },
         ],
         relatedPlaces: [
           { slug: "azilal", title: "Azilal" },
@@ -1158,7 +1273,7 @@ export const glossaryData: GlossaryCategory[] = [
         context: "Modern 'sabra silk' is often synthetic, though traditional production used fibers from the aloe cactus. The material is popular in contemporary Moroccan interior design.",
         related: ["cactus silk", "agave fiber", "decorative textile", "cushion cover"],
         relatedStories: [
-          { slug: "silk-of-the-desert", title: "Silk of the Desert" },
+          { slug: "the-indigo-trail", title: "The Indigo Trail" }, { slug: "the-carpet", title: "The Carpet" },
         ],
       },
       {
@@ -1171,8 +1286,7 @@ export const glossaryData: GlossaryCategory[] = [
         context: "The loom holds spiritual significance—weaving is considered a form of communication with ancestors. Setting up a new loom involves ritual blessing.",
         related: ["weaving frame", "vertical loom", "traditional craft"],
         relatedStories: [
-          { slug: "the-first-language", title: "The First Language" },
-          { slug: "sacred-geometry", title: "Sacred Geometry" },
+          { slug: "the-carpet-weavers", title: "The Carpet Weavers" }, { slug: "the-wedding-blanket", title: "The Wedding Blanket" },
         ],
       },
     ],
