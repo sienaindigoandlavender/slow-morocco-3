@@ -405,49 +405,6 @@ export default function HomeContent({
       )}
 
       {/* ═══════════════════════════════════════════════════════════════
-          EPIC JOURNEYS — dark, full bleed
-          ═══════════════════════════════════════════════════════════════ */}
-      {epicJourneys.length > 0 && (
-        <section className="py-20 md:py-28 bg-[#1a1916] text-white">
-          <div className="container mx-auto px-8 md:px-16 lg:px-20">
-            <div className="flex items-baseline justify-between mb-12">
-              <div>
-                <p className="text-[10px] tracking-[0.35em] uppercase text-white/30 font-mono mb-3">
-                  Epic journeys
-                </p>
-                <h2 className="font-serif text-3xl md:text-4xl">For those who want it all</h2>
-              </div>
-              <Link
-                href="/epic"
-                className="text-[10px] tracking-[0.2em] uppercase text-white/30 hover:text-white transition-colors"
-              >
-                All epic journeys →
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              {epicJourneys.slice(0, 3).map((journey) => (
-                <Link key={journey.slug} href={`/journeys/${journey.slug}`} className="group">
-                  <div className="aspect-[4/5] relative overflow-hidden mb-4">
-                    {journey.heroImage ? (
-                      <Image src={journey.heroImage} alt={journey.title} fill className="object-cover group-hover:scale-[1.02] transition-transform duration-700" />
-                    ) : (
-                      <div className="absolute inset-0 bg-white/10" />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <p className="text-[10px] tracking-[0.3em] uppercase text-white/50 mb-2">{journey.duration}</p>
-                      <h3 className="font-serif text-xl text-white">{journey.title}</h3>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ═══════════════════════════════════════════════════════════════
           TESTIMONIALS
           ═══════════════════════════════════════════════════════════════ */}
       {testimonials.length > 0 && (
