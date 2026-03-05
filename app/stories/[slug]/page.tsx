@@ -187,7 +187,7 @@ export default async function StoryPage({
     headline: story.title,
     description: story.excerpt || story.subtitle || "",
     url: `${BASE_URL}/stories/${slug}`,
-    dateModified: storyData.updated_at || storyData.created_at || new Date().toISOString(),
+    dateModified: new Date().toISOString(),
     author: {
       "@type": "Person",
       name: "J. Ng",
