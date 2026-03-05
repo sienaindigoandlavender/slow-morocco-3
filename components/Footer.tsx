@@ -251,26 +251,30 @@ export default function Footer() {
                     <li><Link href="/epic" className="text-sm text-white/60 hover:text-white transition-colors">Epic</Link></li>
                     <li><Link href="/stories" className="text-sm text-white/60 hover:text-white transition-colors">Stories</Link></li>
                     <li><Link href="/places" className="text-sm text-white/60 hover:text-white transition-colors">Places</Link></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-5">
-                    Plan
-                  </h4>
-                  <ul className="space-y-3">
-                    <li><Link href="/plan-your-trip" className="text-sm text-white/60 hover:text-white transition-colors">Plan Your Trip</Link></li>
-                    <li><Link href="/faq" className="text-sm text-white/60 hover:text-white transition-colors">FAQ</Link></li>
-                    <li><Link href="/whats-included" className="text-sm text-white/60 hover:text-white transition-colors">What's Included</Link></li>
                     <li><Link href="/glossary" className="text-sm text-white/60 hover:text-white transition-colors">Glossary</Link></li>
                   </ul>
                 </div>
                 <div>
                   <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-5">
-                    About
+                    About Morocco
                   </h4>
                   <ul className="space-y-3">
+                    <li><Link href="/stories" className="text-sm text-white/60 hover:text-white transition-colors">All Stories</Link></li>
+                    <li><Link href="/life" className="text-sm text-white/60 hover:text-white transition-colors">Life — Data</Link></li>
+                    <li><Link href="/travel" className="text-sm text-white/60 hover:text-white transition-colors">Travel — Planning</Link></li>
+                    <li><Link href="/visa-info" className="text-sm text-white/60 hover:text-white transition-colors">Visa Information</Link></li>
+                    <li><Link href="/health-safety" className="text-sm text-white/60 hover:text-white transition-colors">Health &amp; Safety</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-5">
+                    Plan &amp; Book
+                  </h4>
+                  <ul className="space-y-3">
+                    <li><Link href="/plan-your-trip" className="text-sm text-white/60 hover:text-white transition-colors">Plan Your Trip</Link></li>
+                    <li><Link href="/faq" className="text-sm text-white/60 hover:text-white transition-colors">FAQ</Link></li>
+                    <li><Link href="/whats-included" className="text-sm text-white/60 hover:text-white transition-colors">What's Included</Link></li>
                     <li><Link href="/about" className="text-sm text-white/60 hover:text-white transition-colors">Who We Are</Link></li>
-                    <li><Link href="/manifesto" className="text-sm text-white/60 hover:text-white transition-colors">Manifesto</Link></li>
                     <li><Link href="/contact" className="text-sm text-white/60 hover:text-white transition-colors">Contact</Link></li>
                   </ul>
                 </div>

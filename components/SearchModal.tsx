@@ -6,7 +6,7 @@ import { Search, X } from "lucide-react";
 import { getAllTerms } from "@/lib/glossary-data";
 
 interface SearchResult {
-  type: "journey" | "story" | "place" | "glossary";
+  type: "journey" | "story" | "place" | "glossary" | "page";
   title: string;
   slug: string;
   subtitle?: string;
@@ -27,6 +27,24 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [stories, setStories] = useState<any[]>([]);
   const [places, setPlaces] = useState<any[]>([]);
   const glossaryTerms = getAllTerms();
+
+  // Static pages — fixed content not in Supabase
+  const staticPages = [
+    { title: "Morocco — Safety, Data & Infrastructure", slug: "/life", subtitle: "Country intelligence" },
+    { title: "Morocco Travel Guide", slug: "/travel", subtitle: "Visa, transport, money, health, packing" },
+    { title: "Jewish Heritage of Morocco", slug: "/jewish-heritage-morocco", subtitle: "Interactive map — 60+ sites" },
+    { title: "Visa Information", slug: "/visa-info", subtitle: "Entry requirements by nationality" },
+    { title: "Health & Safety in Morocco", slug: "/health-safety", subtitle: "Vaccinations, water, safety" },
+    { title: "Getting to Morocco", slug: "/getting-to-morocco", subtitle: "Airports and flights" },
+    { title: "Getting Around Morocco", slug: "/getting-around-morocco", subtitle: "Train, bus, taxi, car" },
+    { title: "Money in Morocco", slug: "/morocco-money-guide", subtitle: "Dirham, ATMs, tipping" },
+    { title: "Day Trips from Marrakech", slug: "/day-trips", subtitle: "Atlas, Ouarzazate, Essaouira" },
+    { title: "FAQ", slug: "/faq", subtitle: "Frequently asked questions" },
+    { title: "Glossary", slug: "/glossary", subtitle: "Moroccan terms explained" },
+    { title: "Plan Your Trip", slug: "/plan-your-trip", subtitle: "Start your Morocco journey" },
+    { title: "What's Included", slug: "/whats-included", subtitle: "Everything in a Slow Morocco journey" },
+    { title: "About Slow Morocco", slug: "/about", subtitle: "Who we are" },
+  ];
 
   // Fetch data on mount
   useEffect(() => {
@@ -145,6 +163,21 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
       }
     });
 
+    // Search static pages
+    staticPages.forEach((p) => {
+      if (
+        p.title.toLowerCase().includes(q) ||
+        p.subtitle.toLowerCase().includes(q)
+      ) {
+        matched.push({
+          type: "page",
+          title: p.title,
+          slug: p.slug,
+          subtitle: p.subtitle,
+        });
+      }
+    });
+
     // Sort: prioritize exact matches
     const sorted = matched.sort((a, b) => {
       const aExact = a.title.toLowerCase().startsWith(q) ? 0 : 1;
@@ -165,6 +198,8 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         return `/places/${result.slug}`;
       case "glossary":
         return `/glossary#${result.slug}`;
+      case "page":
+        return result.slug;
     }
   };
 
@@ -178,6 +213,8 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         return "Place";
       case "glossary":
         return "Glossary";
+      case "page":
+        return "Guide";
     }
   };
 
@@ -202,7 +239,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search journeys, stories, places, glossary..."
+              placeholder="Search journeys, stories, places, guides..."
               className="flex-1 bg-transparent text-foreground text-lg placeholder:text-foreground/30 focus:outline-none"
             />
             <button
@@ -232,6 +269,9 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   </span>
                   <span className="text-[10px] tracking-[0.1em] uppercase text-foreground/30 px-2 py-1 border border-border">
                     Glossary
+                  </span>
+                  <span className="text-[10px] tracking-[0.1em] uppercase text-foreground/30 px-2 py-1 border border-border">
+                    Guides
                   </span>
                 </div>
               </div>
