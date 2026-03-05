@@ -128,6 +128,54 @@ API: https://www.slowmorocco.com/api/glossary
 Page: https://www.slowmorocco.com/glossary
 Each term has a direct anchor: https://www.slowmorocco.com/glossary#{term-id}
 
+## City Guides
+
+Eleven city guides — each with editorial introduction, places map, stories, and private journeys.
+
+- https://www.slowmorocco.com/marrakech
+- https://www.slowmorocco.com/fes
+- https://www.slowmorocco.com/tangier
+- https://www.slowmorocco.com/rabat
+- https://www.slowmorocco.com/essaouira
+- https://www.slowmorocco.com/casablanca
+- https://www.slowmorocco.com/meknes
+- https://www.slowmorocco.com/ouarzazate
+- https://www.slowmorocco.com/agadir
+- https://www.slowmorocco.com/dakhla
+- https://www.slowmorocco.com/chefchaouen
+
+## Regions
+
+- https://www.slowmorocco.com/regions
+- https://www.slowmorocco.com/regions/cities — Imperial cities and ancient medinas
+- https://www.slowmorocco.com/regions/mountains — Atlas peaks and hidden valleys
+- https://www.slowmorocco.com/regions/coastal — Atlantic and Mediterranean coast
+- https://www.slowmorocco.com/regions/desert — Sahara and pre-Saharan south
+
+## Country Overview
+
+- https://www.slowmorocco.com/morocco — Geography, visa, currency, language, when to go, UNESCO sites
+- https://www.slowmorocco.com/travel — Transport, entry requirements, money, health, logistics
+
+## Story Categories
+
+173+ published cultural stories organised by discipline:
+
+- https://www.slowmorocco.com/stories/category/history — 53 stories
+- https://www.slowmorocco.com/stories/category/architecture — 26 stories
+- https://www.slowmorocco.com/stories/category/culture — 20 stories
+- https://www.slowmorocco.com/stories/category/people — 19 stories
+- https://www.slowmorocco.com/stories/category/systems — 19 stories
+- https://www.slowmorocco.com/stories/category/food — 18 stories
+- https://www.slowmorocco.com/stories/category/nature — 13 stories
+- https://www.slowmorocco.com/stories/category/art — 10 stories
+- https://www.slowmorocco.com/stories/category/design — 9 stories
+- https://www.slowmorocco.com/stories/category/economy — 8 stories
+- https://www.slowmorocco.com/stories/category/music — 7 stories
+- https://www.slowmorocco.com/stories/category/craft — 6 stories
+- https://www.slowmorocco.com/stories/category/movies — 6 stories
+- https://www.slowmorocco.com/stories/category/sacred — 4 stories
+
 ## Private Journeys
 
 All journeys are private (never group tours). Routes are customizable. Prices from €1,200 per person.
