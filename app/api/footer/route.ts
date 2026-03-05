@@ -72,6 +72,8 @@ export async function GET() {
       "health and safety": "/health-safety",
       "travel insurance": "/travel-insurance",
       "cancellation policy": "/cancellation-policy",
+      "morocco": "/morocco",
+      "about morocco": "/morocco",
     };
 
     // Group links by column
@@ -118,6 +120,10 @@ export async function GET() {
         );
         if (!hasAllStories) {
           col.links.unshift({ order: 0, label: "All Stories", href: "/stories", type: "link" });
+        }
+        const hasMorocco = col.links.some((l: any) => l.href === "/morocco");
+        if (!hasMorocco) {
+          col.links.unshift({ order: -1, label: "Morocco", href: "/morocco", type: "link" });
         }
       }
     });
@@ -175,6 +181,7 @@ export async function GET() {
           number: 4,
           title: `About ${countryName}`,
           links: [
+            { order: 0, label: "Morocco", href: "/morocco", type: "link" },
             { order: 1, label: "All Stories", href: "/stories", type: "link" },
             { order: 2, label: "Visa Info", href: "/visa-info", type: "link" },
             { order: 3, label: "Health & Safety", href: "/health-safety", type: "link" },
