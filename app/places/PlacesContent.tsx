@@ -210,6 +210,22 @@ export default function PlacesContent({
         }}
       />
 
+      {/* Map link bar */}
+      <div className="border-b border-foreground/10 py-4">
+        <div className="container mx-auto px-6 lg:px-16 flex items-center justify-between">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-foreground/40">
+            {initialPlaces.length} places in the atlas
+          </p>
+          <Link
+            href="/places/map"
+            className="text-[11px] tracking-[0.2em] uppercase text-foreground/50 hover:text-foreground transition-colors flex items-center gap-2"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-foreground/40 inline-block" />
+            View all on one map →
+          </Link>
+        </div>
+      </div>
+
       {/* Map Section */}
       {places.length > 0 && (
         <section className="py-12">
