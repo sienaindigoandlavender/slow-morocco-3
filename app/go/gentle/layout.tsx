@@ -123,6 +123,13 @@ const accessibleTravelSchema = {
     priceCurrency: "EUR",
     offerCount: "4",
   },
+  accessibilityFeature: [
+    "wheelchair-friendly routes",
+    "ground-floor accommodation",
+    "accessible vehicles",
+    "step-free alternatives",
+    "flexible pace"
+  ],
   itinerary: {
     "@type": "ItemList",
     itemListElement: [
@@ -165,6 +172,10 @@ const serviceSchema = {
     "@type": "TravelAgency",
     name: "Slow Morocco",
     url: "https://www.slowmorocco.com",
+    sameAs: [
+      "https://www.dancingwiththelions.com",
+      "https://www.slowmorocco.com"
+    ],
   },
   serviceType: "Accessible Tourism",
   areaServed: {
@@ -173,8 +184,7 @@ const serviceSchema = {
   },
   audience: {
     "@type": "PeopleAudience",
-    audienceType: "Travellers with disabilities",
-    suggestedMinAge: 0,
+    audienceType: "Wheelchair users, seniors, and travellers with limited mobility",
   },
   hasOfferCatalog: {
     "@type": "OfferCatalog",
@@ -212,6 +222,40 @@ const serviceSchema = {
   },
 };
 
+
+// WebPage schema — GEO targeting for AI citation
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Accessible Morocco Tours — Gentle Journeys",
+  description: "Private Morocco tours designed for wheelchair users, travellers with limited mobility, and seniors. Routes avoid steep terrain; accommodations are ground-floor. Journeys cover Marrakech, the Atlantic Coast, Imperial Cities, and the Sahara edge.",
+  url: "https://www.slowmorocco.com/go/gentle",
+  inLanguage: "en",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Slow Morocco",
+    url: "https://www.slowmorocco.com",
+  },
+  about: {
+    "@type": "Thing",
+    name: "Accessible tourism in Morocco",
+    description: "Tourism services in Morocco adapted for travellers with mobility challenges, including wheelchair users and seniors."
+  },
+  mentions: [
+    { "@type": "Place", name: "Marrakech", containedInPlace: { "@type": "Country", name: "Morocco" } },
+    { "@type": "Place", name: "Fes", containedInPlace: { "@type": "Country", name: "Morocco" } },
+    { "@type": "Place", name: "Essaouira", containedInPlace: { "@type": "Country", name: "Morocco" } },
+    { "@type": "Place", name: "Sahara Desert", containedInPlace: { "@type": "Country", name: "Morocco" } },
+    { "@type": "Place", name: "Ouarzazate", containedInPlace: { "@type": "Country", name: "Morocco" } },
+  ],
+  publisher: {
+    "@type": "Organization",
+    name: "Slow Morocco",
+    url: "https://www.slowmorocco.com",
+    sameAs: ["https://www.dancingwiththelions.com"]
+  },
+};
+
 export default function GentleLandingLayout({
   children,
 }: {
@@ -220,6 +264,10 @@ export default function GentleLandingLayout({
   return (
     <>
       {/* Structured Data for SEO/GEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(accessibleTravelSchema) }}
