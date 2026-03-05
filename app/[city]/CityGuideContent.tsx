@@ -427,11 +427,6 @@ export default function CityGuideContent({
                       {journey.short_description || journey.arc_description}
                     </p>
                   )}
-                  {journey.price_eur ? (
-                    <p className="text-xs text-foreground/30 mt-3 font-mono">
-                      From €{journey.price_eur}
-                    </p>
-                  ) : null}
                 </Link>
               </article>
             ))}
@@ -523,11 +518,6 @@ export default function CityGuideContent({
                         {journey.short_description || journey.arc_description}
                       </p>
                     )}
-                    {journey.price_eur ? (
-                      <p className="text-xs text-foreground/30 mt-3 font-mono">
-                        From €{journey.price_eur}
-                      </p>
-                    ) : null}
                   </Link>
                 </article>
               );
