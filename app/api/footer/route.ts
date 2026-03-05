@@ -73,6 +73,7 @@ export async function GET() {
       "travel insurance": "/travel-insurance",
       "cancellation policy": "/cancellation-policy",
       "morocco": "/morocco",
+      "regions": "/regions",
       "about morocco": "/morocco",
       "travel": "/travel",
       "travel guide": "/travel",
@@ -189,7 +190,8 @@ export async function GET() {
           title: "Places",
           links: [
             { order: 1, label: "All Places", href: "/places", type: "link" },
-            { order: 2, label: "Cities", href: "/places?region=cities", type: "link" },
+            { order: 2, label: "Regions", href: "/regions", type: "link" },
+            { order: 3, label: "Cities", href: "/places?region=cities", type: "link" },
             { order: 3, label: "Mountains", href: "/places?region=mountains", type: "link" },
             { order: 4, label: "Coastal", href: "/places?region=coastal", type: "link" },
             { order: 5, label: "Desert", href: "/places?region=desert", type: "link" },
