@@ -34,6 +34,7 @@ const STATIC_PAGES = [
     priority: 0.9,
     changeFrequency: 'weekly' as const,
   })),
+  { path: '/morocco', priority: 0.9, changeFrequency: 'monthly' as const },
   { path: '/about', priority: 0.7, changeFrequency: 'monthly' as const },
   { path: '/plan-your-trip', priority: 0.9, changeFrequency: 'monthly' as const },
   { path: '/manifesto', priority: 0.7, changeFrequency: 'monthly' as const },
