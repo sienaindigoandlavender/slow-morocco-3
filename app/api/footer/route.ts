@@ -74,6 +74,9 @@ export async function GET() {
       "cancellation policy": "/cancellation-policy",
       "morocco": "/morocco",
       "about morocco": "/morocco",
+      "travel": "/travel",
+      "travel guide": "/travel",
+      "life": "/life",
     };
 
     // Group links by column
@@ -114,6 +117,21 @@ export async function GET() {
         }
       }
 
+      if (col.title.toLowerCase() === "journeys") {
+        const hasCancel = col.links.some((l: any) => l.href === "/cancellation-policy");
+        if (!hasCancel) {
+          col.links.push({ order: 97, label: "Cancellation Policy", href: "/cancellation-policy", type: "link" });
+        }
+        const hasContact = col.links.some((l: any) => l.href === "/contact");
+        if (!hasContact) {
+          col.links.push({ order: 98, label: "Contact Us", href: "/contact", type: "link" });
+        }
+        // Remove visa/health/insurance if they snuck in
+        col.links = col.links.filter((l: any) =>
+          !["/visa-info", "/health-safety", "/travel-insurance", "/about"].includes(l.href)
+        );
+      }
+
       if (col.title.toLowerCase().includes("about") || col.title.toLowerCase().includes("morocco")) {
         const hasAllStories = col.links.some(
           (l: any) => l.label.toLowerCase() === "all stories" || l.label.toLowerCase() === "stories"
@@ -125,6 +143,18 @@ export async function GET() {
         if (!hasMorocco) {
           col.links.unshift({ order: -1, label: "Morocco", href: "/morocco", type: "link" });
         }
+        const hasTravel = col.links.some((l: any) => l.href === "/travel");
+        if (!hasTravel) {
+          col.links.push({ order: 98, label: "Travel", href: "/travel", type: "link" });
+        }
+        const hasLife = col.links.some((l: any) => l.href === "/life");
+        if (!hasLife) {
+          col.links.push({ order: 99, label: "Life", href: "/life", type: "link" });
+        }
+        // Remove visa/health/insurance — these live in /travel
+        col.links = col.links.filter((l: any) =>
+          !["/visa-info", "/health-safety", "/travel-insurance"].includes(l.href)
+        );
       }
     });
 
@@ -173,7 +203,7 @@ export async function GET() {
             { order: 2, label: "Plan Your Trip", href: "/plan-your-trip", type: "link" },
             { order: 3, label: "What's Included", href: "/whats-included", type: "link" },
             { order: 4, label: "FAQ", href: "/faq", type: "link" },
-            { order: 5, label: "About Us", href: "/about", type: "link" },
+            { order: 5, label: "Cancellation Policy", href: "/cancellation-policy", type: "link" },
             { order: 6, label: "Contact Us", href: "/contact", type: "link" },
           ],
         },
@@ -183,10 +213,8 @@ export async function GET() {
           links: [
             { order: 0, label: "Morocco", href: "/morocco", type: "link" },
             { order: 1, label: "All Stories", href: "/stories", type: "link" },
-            { order: 2, label: "Visa Info", href: "/visa-info", type: "link" },
-            { order: 3, label: "Health & Safety", href: "/health-safety", type: "link" },
-            { order: 4, label: "Travel Insurance", href: "/travel-insurance", type: "link" },
-            { order: 5, label: "Cancellation Policy", href: "/cancellation-policy", type: "link" },
+            { order: 2, label: "Travel", href: "/travel", type: "link" },
+            { order: 3, label: "Life", href: "/life", type: "link" },
           ],
         },
       ];
