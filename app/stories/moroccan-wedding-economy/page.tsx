@@ -6,8 +6,8 @@ import MarriageEconomyContent from "./MarriageEconomyContent";
 export const revalidate = 3600;
 
 const BASE_URL = "https://www.slowmorocco.com";
-const SLUG = "marriage-economy"; // Supabase slug
-const URL_PATH = "moroccan-wedding-economy"; // URL / folder name
+const SLUG = "moroccan-wedding-economy"; // Supabase slug
+const URL_PATH = "moroccan-wedding-economy";
 const CANONICAL = `${BASE_URL}/stories/${URL_PATH}`;
 
 export const metadata: Metadata = {
