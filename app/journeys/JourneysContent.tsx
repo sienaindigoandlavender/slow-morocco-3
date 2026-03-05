@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ControlBar from "@/components/ControlBar";
 import { Search, Clock, Moon, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCurrency } from "@/lib/currency";
 import PageBanner from "@/components/PageBanner";
@@ -265,52 +266,18 @@ export default function JourneysContent({
         </div>
       </section>
 
-      {/* Top bar: count + sort + pagination */}
+      {/* Top bar: count + sort only */}
       <div className="container mx-auto px-6 lg:px-16 py-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <p className="text-sm text-foreground/40" role="status" aria-live="polite">
-              {filteredResults.length} {filteredResults.length === 1 ? "journey" : "journeys"}
-            </p>
-            <button
-              onClick={() => { setSortBy(sortBy === "default" ? "alpha" : "default"); setCurrentPage(1); }}
-              className={`text-xs tracking-[0.1em] uppercase px-3 py-1.5 border transition-colors ${
-                sortBy === "alpha"
-                  ? "bg-foreground text-background border-foreground"
-                  : "text-foreground/40 border-foreground/20 hover:border-foreground/40"
-              }`}
-            >
-              A → Z
-            </button>
-          </div>
-          {totalPages > 1 && (
-            <div className="flex items-center gap-1">
-              <button
-                onClick={() => goToPage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-3 py-2 text-xs tracking-[0.1em] uppercase text-foreground/40 hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
-              >←</button>
-              {getPageNumbers().map((page, i) =>
-                page === "..." ? (
-                  <span key={`te-${i}`} className="px-2 text-xs text-foreground/30">…</span>
-                ) : (
-                  <button
-                    key={page}
-                    onClick={() => goToPage(page as number)}
-                    className={`min-w-[36px] py-2 text-xs tracking-[0.1em] transition-colors ${
-                      currentPage === page ? "bg-foreground text-background" : "text-foreground/50 hover:text-foreground"
-                    }`}
-                  >{page}</button>
-                )
-              )}
-              <button
-                onClick={() => goToPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-3 py-2 text-xs tracking-[0.1em] uppercase text-foreground/40 hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
-              >→</button>
-            </div>
-          )}
-        </div>
+        <ControlBar
+          count={filteredResults.length}
+          noun="journey"
+          sortBy={sortBy}
+          onSortChange={() => { setSortBy(sortBy === "default" ? "alpha" : "default"); setCurrentPage(1); }}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={goToPage}
+          showPagination={false}
+        />
       </div>
 
       {/* SEO Content — always rendered for crawlers */}
@@ -496,64 +463,21 @@ export default function JourneysContent({
                 })}
               </div>
 
-              {/* Pagination Controls */}
+              {/* Bottom pagination — centered */}
               {totalPages > 1 && (
-                <nav className="flex justify-center items-center gap-2 mt-16 pt-8 border-t border-foreground/10" aria-label="Journey pages">
-                  {/* Previous Button */}
-                  <button
-                    onClick={() => goToPage(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    aria-label="Go to previous page"
-                    className={`flex items-center gap-1 px-4 py-2 text-xs tracking-[0.15em] uppercase transition-colors ${
-                      currentPage === 1
-                        ? "text-foreground/20 cursor-not-allowed"
-                        : "text-foreground/60 hover:text-foreground"
-                    }`}
-                  >
-                    <ChevronLeft className="w-4 h-4" aria-hidden="true" />
-                    Prev
-                  </button>
-
-                  {/* Page Numbers */}
-                  <div className="flex items-center gap-1">
-                    {getPageNumbers().map((page, index) => (
-                      page === '...' ? (
-                        <span key={`ellipsis-${index}`} className="px-3 py-2 text-foreground/30" aria-hidden="true">
-                          ...
-                        </span>
-                      ) : (
-                        <button
-                          key={page}
-                          onClick={() => goToPage(page as number)}
-                          aria-label={`Go to page ${page}`}
-                          aria-current={currentPage === page ? 'page' : undefined}
-                          className={`min-w-[40px] px-3 py-2 text-xs tracking-[0.1em] transition-colors ${
-                            currentPage === page
-                              ? "bg-foreground text-background"
-                              : "text-foreground/60 hover:text-foreground hover:bg-foreground/5"
-                          }`}
-                        >
-                          {page}
-                        </button>
-                      )
-                    ))}
-                  </div>
-
-                  {/* Next Button */}
-                  <button
-                    onClick={() => goToPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    aria-label="Go to next page"
-                    className={`flex items-center gap-1 px-4 py-2 text-xs tracking-[0.15em] uppercase transition-colors ${
-                      currentPage === totalPages
-                        ? "text-foreground/20 cursor-not-allowed"
-                        : "text-foreground/60 hover:text-foreground"
-                    }`}
-                  >
-                    Next
-                    <ChevronRight className="w-4 h-4" aria-hidden="true" />
-                  </button>
-                </nav>
+                <div className="mt-16 pt-8 border-t border-foreground/10">
+                  <ControlBar
+                    count={filteredResults.length}
+                    noun="journey"
+                    sortBy={sortBy}
+                    onSortChange={() => { setSortBy(sortBy === "default" ? "alpha" : "default"); setCurrentPage(1); }}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={goToPage}
+                    showCount={false}
+                    showSort={false}
+                  />
+                </div>
               )}
             </>
           )}
