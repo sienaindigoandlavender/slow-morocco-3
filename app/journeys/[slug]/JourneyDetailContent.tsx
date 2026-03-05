@@ -44,7 +44,7 @@ const getActivityIcon = (activity: string) => {
 const ItineraryMap = dynamic(() => import("@/components/ItineraryMap"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[350px] md:h-[400px] bg-[#f5f0e8] flex items-center justify-center">
+    <div className="w-full h-[350px] md:h-[400px] bg-[#f5f5f5] flex items-center justify-center">
       <div className="w-8 h-8 border-2 border-foreground/20 border-t-foreground rounded-full animate-spin" />
     </div>
   ),
@@ -131,7 +131,7 @@ function JourneysCarousel({ journeys }: { journeys: Journey[] }) {
             href={`/journeys/${journey.slug}`}
             className="flex-shrink-0 w-[280px] group"
           >
-            <div className="relative aspect-[4/5] mb-3 overflow-hidden bg-[#e8e0d4]">
+            <div className="relative aspect-[4/5] mb-3 overflow-hidden bg-[#f0f0f0]">
               {journey.heroImage && (
                 <Image
                   src={journey.heroImage}
@@ -146,11 +146,6 @@ function JourneysCarousel({ journeys }: { journeys: Journey[] }) {
               <p className="text-xs text-muted-foreground tracking-wide">
                 {journey.durationDays} Days
               </p>
-              {Number((journey as any).price) > 0 && (
-                <p className="text-xs text-muted-foreground">
-                  From €{Number((journey as any).price).toLocaleString()}
-                </p>
-              )}
             </div>
           </Link>
         ))}
@@ -269,7 +264,7 @@ export default function JourneyDetailContent({
             <div className="border-t border-white/10 pt-16 mb-16">
               <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-8 mb-6">
                 <span className="font-serif text-4xl md:text-5xl text-white">
-                  {journey.epicPrice ? `€${journey.epicPrice.toLocaleString()}` : 'Price on request'}
+                  Price on request
                 </span>
                 <span className="text-sm text-white/40">
                   Private journey for two guests
@@ -406,7 +401,7 @@ export default function JourneyDetailContent({
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Image */}
-      <section className="relative h-[60vh] md:h-[70vh] bg-[#e8e0d4]">
+      <section className="relative h-[60vh] md:h-[70vh] bg-[#f0f0f0]">
         {journey.heroImage && (
           <Image
             src={journey.heroImage}
@@ -440,11 +435,6 @@ export default function JourneyDetailContent({
             <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground">
               {journey.durationDays} Days
             </p>
-            {Number(journey.price) > 0 && (
-              <p className="text-sm text-muted-foreground">
-                From <span className="text-foreground">€{Number(journey.price).toLocaleString()}</span> per person
-              </p>
-            )}
           </div>
 
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight mb-8">
