@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let mapboxgl: any = null;
@@ -24,15 +23,15 @@ interface Props {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Architecture:  "#c9a96e",
-  Nature:        "#7aad6e",
-  Culture:       "#e07b5a",
-  History:       "#9b8db0",
-  Food:          "#d4885c",
-  Sacred:        "#6eaab0",
-  Craft:         "#b09b6e",
-  Market:        "#d4b96e",
-  Museum:        "#8db09b",
+  Architecture: "#c9a96e",
+  Nature:       "#7aad6e",
+  Culture:      "#e07b5a",
+  History:      "#9b8db0",
+  Food:         "#d4885c",
+  Sacred:       "#6eaab0",
+  Craft:        "#b09b6e",
+  Market:       "#d4b96e",
+  Museum:       "#8db09b",
 };
 
 const DEFAULT_COLOR = "#c9a96e";
@@ -53,57 +52,72 @@ export default function AllPlacesMap({ places, total }: Props) {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [count, setCount] = useState(places.length);
 
-  // Unique categories
   const categories = ["All", ...Array.from(new Set(places.map((p) => p.category).filter(Boolean))).sort()];
 
-  const initMap = useCallback(async () => {
+  // Init map — same pattern as HomeCityMap
+  useEffect(() => {
     if (!mapContainer.current || map.current) return;
-    if (!mapboxgl) {
-      const mb = await import("mapbox-gl");
-      if (!document.getElementById("mapbox-gl-css")) {
-        const link = document.createElement("link");
-        link.id = "mapbox-gl-css";
-        link.rel = "stylesheet";
-        link.href = "https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css";
-        document.head.appendChild(link);
+
+    async function initMap() {
+      if (!mapboxgl) {
+        const mb = await import("mapbox-gl");
+        mapboxgl = mb.default;
+        mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
+        if (!document.getElementById("mapbox-gl-css")) {
+          const link = document.createElement("link");
+          link.id = "mapbox-gl-css";
+          link.rel = "stylesheet";
+          link.href = "https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css";
+          document.head.appendChild(link);
+        }
       }
-      mapboxgl = mb.default;
-      mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
+
+      if (!mapContainer.current) return;
+
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/mapbox/dark-v11",
+        center: [-6.5, 31.5],
+        zoom: 5.2,
+        minZoom: 3,
+        maxZoom: 16,
+        attributionControl: false,
+      });
+
+      map.current.addControl(
+        new mapboxgl.NavigationControl({ showCompass: false }),
+        "bottom-right"
+      );
+
+      map.current.on("load", () => {
+        setMapLoaded(true);
+      });
+
+      map.current.on("click", () => {
+        setSelected(null);
+      });
     }
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: "mapbox://styles/mapbox/dark-v11",
-      center: [-6.5, 31.5],
-      zoom: 5.2,
-      minZoom: 4,
-      maxZoom: 16,
-      projection: "mercator",
-    });
-
-    map.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), "bottom-right");
-    map.current.scrollZoom.enable();
-
-    map.current.on("load", () => {
-      setMapLoaded(true);
-    });
+    initMap();
   }, []);
 
-  // Place markers
-  const placeMarkers = useCallback((filter: string) => {
+  // Place markers whenever map is loaded or filter changes
+  useEffect(() => {
     if (!map.current || !mapLoaded) return;
 
-    // Remove existing
     markers.current.forEach((m) => m.remove());
     markers.current = [];
 
-    const visible = filter === "All" ? places : places.filter((p) => p.category === filter);
+    const visible =
+      activeCategory === "All"
+        ? places
+        : places.filter((p) => p.category === activeCategory);
+
     setCount(visible.length);
 
     visible.forEach((place) => {
       const color = getCategoryColor(place.category);
 
-      // Dot element
       const el = document.createElement("div");
       el.style.cssText = `
         width: 10px;
@@ -119,12 +133,10 @@ export default function AllPlacesMap({ places, total }: Props) {
       el.addEventListener("mouseenter", () => {
         el.style.transform = "scale(2)";
         el.style.background = "#ffffff";
-        el.style.zIndex = "999";
       });
       el.addEventListener("mouseleave", () => {
         el.style.transform = "scale(1)";
         el.style.background = color;
-        el.style.zIndex = "1";
       });
       el.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -133,7 +145,7 @@ export default function AllPlacesMap({ places, total }: Props) {
           center: [place.longitude, place.latitude],
           zoom: Math.max(map.current.getZoom(), 7),
           duration: 600,
-          offset: [120, 0],
+          offset: [-170, 0],
         });
       });
 
@@ -143,31 +155,29 @@ export default function AllPlacesMap({ places, total }: Props) {
 
       markers.current.push(marker);
     });
-  }, [places, mapLoaded]);
-
-  useEffect(() => { initMap(); }, [initMap]);
-  useEffect(() => { if (mapLoaded) placeMarkers(activeCategory); }, [mapLoaded, activeCategory, placeMarkers]);
-
-  // Close panel on map click
-  useEffect(() => {
-    if (!map.current) return;
-    const handler = () => setSelected(null);
-    map.current.on("click", handler);
-    return () => { if (map.current) map.current.off("click", handler); };
-  }, [mapLoaded]);
+  }, [mapLoaded, activeCategory, places]);
 
   return (
-    <div className="relative w-full bg-[#0e0e0e]" style={{ height: "100dvh" }}>
-
-      {/* Map */}
-      <div ref={mapContainer} className="absolute inset-0" />
+    <div
+      className="relative w-full bg-[#0e0e0e]"
+      style={{ height: "100dvh", overflow: "hidden" }}
+    >
+      {/* Map fills entire screen */}
+      <div ref={mapContainer} style={{ position: "absolute", inset: 0 }} />
 
       {/* Header bar */}
-      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-4"
-        style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%)" }}>
+      <div
+        className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-4"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, transparent 100%)",
+        }}
+      >
         <div className="flex items-center gap-4">
-          <Link href="/places"
-            className="text-[10px] tracking-[0.25em] uppercase text-white/50 hover:text-white/80 transition-colors">
+          <Link
+            href="/places"
+            className="text-[10px] tracking-[0.25em] uppercase text-white/50 hover:text-white/80 transition-colors"
+          >
             ← All Places
           </Link>
           <span className="text-white/20">|</span>
@@ -175,23 +185,33 @@ export default function AllPlacesMap({ places, total }: Props) {
             {count} of {total} places
           </p>
         </div>
-        <h1 className="font-serif text-white/80 text-sm md:text-base tracking-wide">
+        <p className="font-serif text-white/70 text-sm tracking-wide">
           Morocco — All Places
-        </h1>
+        </p>
       </div>
 
-      {/* Category filter */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 flex-wrap justify-center px-4"
-        style={{ maxWidth: "90vw" }}>
+      {/* Category filter pills */}
+      <div
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 flex-wrap justify-center px-4"
+        style={{ maxWidth: "90vw" }}
+      >
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
             className="px-3 py-1.5 text-[10px] tracking-[0.15em] uppercase transition-all duration-200 rounded-full"
             style={{
-              background: activeCategory === cat ? "#ffffff" : "rgba(0,0,0,0.6)",
-              color: activeCategory === cat ? "#0e0e0e" : "rgba(255,255,255,0.5)",
-              border: `1px solid ${activeCategory === cat ? "#ffffff" : "rgba(255,255,255,0.15)"}`,
+              background:
+                activeCategory === cat ? "#ffffff" : "rgba(0,0,0,0.6)",
+              color:
+                activeCategory === cat
+                  ? "#0e0e0e"
+                  : "rgba(255,255,255,0.5)",
+              border: `1px solid ${
+                activeCategory === cat
+                  ? "#ffffff"
+                  : "rgba(255,255,255,0.15)"
+              }`,
               backdropFilter: "blur(8px)",
             }}
           >
@@ -200,7 +220,7 @@ export default function AllPlacesMap({ places, total }: Props) {
         ))}
       </div>
 
-      {/* Place panel */}
+      {/* Slide-in place panel */}
       <div
         className="absolute top-0 right-0 bottom-0 z-30 flex flex-col transition-transform duration-300 ease-out"
         style={{
@@ -212,16 +232,17 @@ export default function AllPlacesMap({ places, total }: Props) {
       >
         {selected && (
           <>
-            {/* Close */}
             <button
               onClick={() => setSelected(null)}
-              className="absolute top-4 right-4 z-10 text-white/40 hover:text-white/80 transition-colors text-xl leading-none"
+              className="absolute top-4 right-4 z-10 text-white/40 hover:text-white/80 transition-colors text-2xl leading-none"
             >
               ×
             </button>
 
-            {/* Image */}
-            <div className="relative w-full flex-shrink-0" style={{ height: "200px", background: "#1a1a1a" }}>
+            <div
+              className="relative w-full flex-shrink-0"
+              style={{ height: "200px", background: "#1a1a1a" }}
+            >
               {selected.hero_image ? (
                 <img
                   src={selected.hero_image}
@@ -232,17 +253,27 @@ export default function AllPlacesMap({ places, total }: Props) {
               ) : (
                 <div className="w-full h-full" style={{ background: "#1f1f1f" }} />
               )}
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #0e0e0e 0%, transparent 60%)" }} />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(to top, #0e0e0e 0%, transparent 60%)",
+                }}
+              />
             </div>
 
-            {/* Content */}
             <div className="flex-1 overflow-y-auto px-7 pt-5 pb-8">
               {selected.category && (
-                <p className="text-[10px] tracking-[0.2em] uppercase mb-3"
-                  style={{ color: getCategoryColor(selected.category) }}>
+                <p
+                  className="text-[10px] tracking-[0.2em] uppercase mb-3"
+                  style={{ color: getCategoryColor(selected.category) }}
+                >
                   {selected.category}
                   {selected.destination && (
-                    <span className="text-white/25"> · {selected.destination}</span>
+                    <span className="text-white/25">
+                      {" "}
+                      · {selected.destination}
+                    </span>
                   )}
                 </p>
               )}
@@ -266,20 +297,40 @@ export default function AllPlacesMap({ places, total }: Props) {
       </div>
 
       {/* Legend */}
-      <div className="absolute top-16 left-4 z-20 hidden md:flex flex-col gap-2 p-3 rounded"
-        style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      <div
+        className="absolute top-16 left-4 z-20 hidden md:flex flex-col gap-2 p-3 rounded"
+        style={{
+          background: "rgba(0,0,0,0.55)",
+          backdropFilter: "blur(8px)",
+          border: "1px solid rgba(255,255,255,0.08)",
+        }}
+      >
         {Object.entries(CATEGORY_COLORS).map(([cat, color]) => (
-          <div key={cat} className="flex items-center gap-2 cursor-pointer"
-            onClick={() => setActiveCategory(activeCategory === cat ? "All" : cat)}>
-            <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: color }} />
-            <span className="text-[10px] tracking-[0.1em] uppercase"
-              style={{ color: activeCategory === cat || activeCategory === "All" ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.25)" }}>
+          <div
+            key={cat}
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() =>
+              setActiveCategory(activeCategory === cat ? "All" : cat)
+            }
+          >
+            <span
+              className="w-2 h-2 rounded-full flex-shrink-0"
+              style={{ background: color }}
+            />
+            <span
+              className="text-[10px] tracking-[0.1em] uppercase"
+              style={{
+                color:
+                  activeCategory === cat || activeCategory === "All"
+                    ? "rgba(255,255,255,0.7)"
+                    : "rgba(255,255,255,0.25)",
+              }}
+            >
               {cat}
             </span>
           </div>
         ))}
       </div>
-
     </div>
   );
 }
