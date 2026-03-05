@@ -119,18 +119,20 @@ export async function GET() {
       }
 
       if (col.title.toLowerCase() === "journeys") {
-        const hasContact = col.links.some((l: any) => l.href === "/contact");
-        if (!hasContact) {
-          col.links.push({ order: 97, label: "Contact Us", href: "/contact", type: "link" });
-        }
-        const hasCancel = col.links.some((l: any) => l.href === "/cancellation-policy");
-        if (!hasCancel) {
-          col.links.push({ order: 98, label: "Cancellation Policy", href: "/cancellation-policy", type: "link" });
-        }
-        // Remove visa/health/insurance if they snuck in
+        // Remove visa/health/insurance/stray about if they snuck in
         col.links = col.links.filter((l: any) =>
-          !["/visa-info", "/health-safety", "/travel-insurance", "/about"].includes(l.href)
+          !["/visa-info", "/health-safety", "/travel-insurance"].includes(l.href)
         );
+        // Remove any existing FAQ/About/Contact so we can re-add in correct order
+        col.links = col.links.filter((l: any) =>
+          !["/faq", "/about", "/contact", "/cancellation-policy"].includes(l.href)
+        );
+        // Re-add in correct order at the bottom
+        col.links.push({ order: 94, label: "Cancellation Policy", href: "/cancellation-policy", type: "link" });
+        col.links.push({ order: 95, label: "FAQ", href: "/faq", type: "link" });
+        col.links.push({ order: 96, label: "About Us", href: "/about", type: "link" });
+        col.links.push({ order: 97, label: "Contact Us", href: "/contact", type: "link" });
+        col.links.sort((a: any, b: any) => a.order - b.order);
       }
 
       if (col.title.toLowerCase().includes("about") || col.title.toLowerCase().includes("morocco")) {
