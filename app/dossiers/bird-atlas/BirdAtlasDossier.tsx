@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import * as d3 from "d3";
 
-// ═══════════════════════════════════════════════════════
+// ─────────────────────────────────────────────
 // TYPES
-// ═══════════════════════════════════════════════════════
+// ─────────────────────────────────────────────
 
 interface EBirdObs {
   speciesCode: string;
@@ -17,7 +17,6 @@ interface EBirdObs {
   howMany: number | null;
   lat: number;
   lng: number;
-  obsValid: boolean;
 }
 
 interface Site {
@@ -33,43 +32,37 @@ interface Site {
   ramsar?: boolean;
 }
 
-// ═══════════════════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════════════════
+// ─────────────────────────────────────────────
+// SITE DATA
+// ─────────────────────────────────────────────
 
 const SITES: Site[] = [
   {
     name: "Strait of Gibraltar",
-    lat: 35.98, lng: -5.60,
-    type: "strait",
+    lat: 35.98, lng: -5.60, type: "strait",
     species: "Black Kite, White Stork, Honey Buzzard, Booted Eagle, Egyptian Vulture",
     significance: "14km crossing. 300,000+ raptors and 400,000+ storks annually. One of the top five raptor migration bottlenecks on Earth.",
     peak: "Aug–Oct southbound · Mar–May northbound",
   },
   {
     name: "Merja Zerga",
-    lat: 34.87, lng: -6.27,
-    type: "wetland",
-    species: "Greater Flamingo, Spoonbill, Marbled Duck, Marsh Harrier, Avocet",
-    significance: "Ramsar wetland. 50,000+ wintering waterbirds. Last confirmed sightings of Slender-billed Curlew on record.",
-    peak: "Nov–Mar",
-    ramsar: true,
+    lat: 34.87, lng: -6.27, type: "wetland",
+    species: "Greater Flamingo, Spoonbill, Marbled Duck, Marsh Harrier",
+    significance: "Ramsar wetland. 50,000+ wintering waterbirds. Last confirmed sightings of Slender-billed Curlew.",
+    peak: "Nov–Mar", ramsar: true,
     threatened: "Slender-billed Curlew (CR)",
   },
   {
     name: "Souss-Massa NP",
-    lat: 30.07, lng: -9.63,
-    type: "coastal",
+    lat: 30.07, lng: -9.63, type: "coastal",
     species: "Northern Bald Ibis, Audouin's Gull, Moussier's Redstart",
     significance: "Last viable wild population of Northern Bald Ibis. ~700 individuals. Morocco holds 95% of the species.",
-    peak: "Year-round (breeding Feb–Jun)",
-    ramsar: true,
+    peak: "Year-round (breeding Feb–Jun)", ramsar: true,
     threatened: "Northern Bald Ibis (EN)",
   },
   {
     name: "Tamri Estuary",
-    lat: 30.72, lng: -9.83,
-    type: "coastal",
+    lat: 30.72, lng: -9.83, type: "coastal",
     species: "Northern Bald Ibis, Lesser Crested Tern",
     significance: "Second Northern Bald Ibis colony. Cliff-nesting site north of Agadir.",
     peak: "Feb–Jun",
@@ -77,135 +70,100 @@ const SITES: Site[] = [
   },
   {
     name: "Lac de Sidi Bourhaba",
-    lat: 34.23, lng: -6.65,
-    type: "wetland",
-    species: "Crested Coot, Marbled Duck, White-headed Duck, Purple Swamphen",
+    lat: 34.23, lng: -6.65, type: "wetland",
+    species: "Crested Coot, Marbled Duck, White-headed Duck",
     significance: "Ramsar site. Critical breeding lake for three globally threatened duck species.",
-    peak: "Oct–Mar",
-    ramsar: true,
+    peak: "Oct–Mar", ramsar: true,
     threatened: "White-headed Duck (EN)",
   },
   {
     name: "Oualidia Lagoon",
-    lat: 32.73, lng: -9.03,
-    type: "wetland",
+    lat: 32.73, lng: -9.03, type: "wetland",
     species: "Greater Flamingo, Grebes, Little Egret, Kingfisher",
-    significance: "Coastal Atlantic lagoon. Major wintering site. Famous for oysters and flamingos in the same frame.",
+    significance: "Atlantic lagoon. Major wintering site. Flamingos and oyster beds in the same frame.",
     peak: "Oct–Apr",
   },
   {
     name: "Oued Massa",
-    lat: 29.98, lng: -9.65,
-    type: "wetland",
-    species: "Glossy Ibis, Marbled Duck, Flamingo, Little Bittern",
-    significance: "Only Moroccan breeding site for Glossy Ibis (12–14 pairs). Within Souss-Massa NP.",
-    peak: "Mar–Jun",
-    ramsar: true,
+    lat: 29.98, lng: -9.65, type: "wetland",
+    species: "Glossy Ibis, Marbled Duck, Flamingo",
+    significance: "Only Moroccan breeding site for Glossy Ibis (12–14 pairs).",
+    peak: "Mar–Jun", ramsar: true,
   },
   {
     name: "Khnifiss Lagoon",
-    lat: 28.03, lng: -12.26,
-    type: "coastal",
+    lat: 28.03, lng: -12.26, type: "coastal",
     species: "Flamingo, Spoonbill, Waders, Caspian Tern",
-    significance: "Largest lagoon in southern Morocco. Remote, near Tarfaya. Critical Atlantic coast staging post.",
-    peak: "Sep–Mar",
-    ramsar: true,
+    significance: "Largest lagoon in southern Morocco. Near Tarfaya. Critical Atlantic staging post.",
+    peak: "Sep–Mar", ramsar: true,
   },
   {
     name: "Dayet Aoua",
-    lat: 33.44, lng: -5.05,
-    type: "wetland",
-    species: "Crested Coot, Ferruginous Duck, Purple Swamphen, White Stork",
-    significance: "Middle Atlas lake at 1,450m. Key breeding wetland in cedar forest. Seasonal — can dry in drought years.",
+    lat: 33.44, lng: -5.05, type: "wetland",
+    species: "Crested Coot, Ferruginous Duck, White Stork",
+    significance: "Middle Atlas lake at 1,450m. Key breeding wetland in cedar forest.",
     peak: "Mar–Jun",
   },
   {
     name: "Middle Atlas Forests",
-    lat: 33.40, lng: -5.15,
-    type: "forest",
-    elevation: "1,200–2,000m",
+    lat: 33.40, lng: -5.15, type: "forest", elevation: "1,200–2,000m",
     species: "Levaillant's Woodpecker, Atlas Flycatcher, Crossbill, Firecrest",
-    significance: "Cedar and oak forest. Maghreb endemic bird hotspot. Same forest community as southern European montane.",
+    significance: "Cedar and oak forest. Maghreb endemic bird hotspot.",
     peak: "Apr–Jul",
   },
   {
     name: "Toubkal / High Atlas",
-    lat: 31.06, lng: -7.92,
-    type: "mountain",
-    elevation: "3,000–4,167m",
-    species: "Crimson-winged Finch, Alpine Chough, Bearded Vulture, Atlas Horned Lark",
-    significance: "Alpine zone above treeline. One of last Bearded Vulture breeding sites in North Africa.",
+    lat: 31.06, lng: -7.92, type: "mountain", elevation: "3,000–4,167m",
+    species: "Crimson-winged Finch, Alpine Chough, Bearded Vulture",
+    significance: "One of last Bearded Vulture breeding sites in North Africa.",
     peak: "May–Aug",
     threatened: "Bearded Vulture (regional CR)",
   },
   {
     name: "Merzouga / Erg Chebbi",
-    lat: 31.10, lng: -3.97,
-    type: "desert",
-    species: "Desert Sparrow, Egyptian Nightjar, Houbara Bustard, Cream-coloured Courser",
+    lat: 31.10, lng: -3.97, type: "desert",
+    species: "Desert Sparrow, Egyptian Nightjar, Houbara Bustard",
     significance: "Saharan IBA. Desert specialist species. Houbara Bustard conservation zone.",
     peak: "Oct–Apr",
     threatened: "Houbara Bustard (VU)",
   },
 ];
 
-// Migration flyway routes — Atlantic coast corridor + inland Atlas route
-const FLYWAY_ROUTES = {
-  atlantic: [
-    [-5.60, 35.98],  // Gibraltar
-    [-5.80, 35.60],  // Tangier coast
-    [-6.27, 34.87],  // Merja Zerga
-    [-6.65, 34.23],  // Lac Sidi Bourhaba
-    [-9.03, 32.73],  // Oualidia
-    [-9.83, 30.72],  // Tamri
-    [-9.63, 30.07],  // Souss-Massa
-    [-9.65, 29.98],  // Oued Massa
-    [-12.26, 28.03], // Khnifiss
-    [-13.20, 27.00], // Near Tarfaya (Saharan coast)
-  ] as [number, number][],
-  inland: [
-    [-5.60, 35.98],  // Gibraltar
-    [-5.00, 34.03],  // Fes corridor
-    [-5.15, 33.40],  // Middle Atlas
-    [-5.05, 33.44],  // Dayet Aoua
-    [-7.92, 31.06],  // High Atlas
-    [-6.80, 30.50],  // Pre-Sahara
-    [-3.97, 31.10],  // Merzouga
-    [-2.50, 28.50],  // Into Sahara
-  ] as [number, number][],
-};
-
-// Seasonal presence data for D3 chart
-const SEASONAL_DATA = [
-  { species: "White Stork", jan:0, feb:1, mar:3, apr:5, may:4, jun:2, jul:1, aug:3, sep:5, oct:4, nov:2, dec:0, color: "#e8e8e8", outline: "#555" },
-  { species: "Greater Flamingo", jan:5, feb:5, mar:4, apr:3, may:2, jun:1, jul:1, aug:2, sep:3, oct:4, nov:5, dec:5, color: "#f4a0c0", outline: "#c45080" },
-  { species: "Northern Bald Ibis", jan:2, feb:4, mar:5, apr:5, may:5, jun:4, jul:3, aug:2, sep:1, oct:1, nov:1, dec:1, color: "#2a2a2a", outline: "#000" },
-  { species: "Black Kite", jan:0, feb:1, mar:3, apr:4, may:3, jun:1, jul:0, aug:2, sep:5, oct:4, nov:1, dec:0, color: "#8B4513", outline: "#5a2d0c" },
-  { species: "Egyptian Vulture", jan:0, feb:0, mar:1, apr:3, may:4, jun:4, jul:3, aug:2, sep:3, oct:2, nov:0, dec:0, color: "#d4c878", outline: "#a09030" },
-  { species: "Honey Buzzard", jan:0, feb:0, mar:0, apr:1, may:2, jun:1, jul:0, aug:1, sep:4, oct:3, nov:0, dec:0, color: "#c8a060", outline: "#8b6020" },
-  { species: "Booted Eagle", jan:1, feb:1, mar:2, apr:3, may:3, jun:2, jul:1, aug:2, sep:4, oct:4, nov:2, dec:1, color: "#6B8E23", outline: "#3a5010" },
-  { species: "Marbled Duck", jan:3, feb:3, mar:4, apr:5, may:4, jun:3, jul:2, aug:2, sep:3, oct:3, nov:3, dec:3, color: "#a0905c", outline: "#6a6030" },
-  { species: "Bearded Vulture", jan:3, feb:4, mar:5, apr:5, may:4, jun:3, jul:3, aug:3, sep:3, oct:3, nov:3, dec:3, color: "#c87030", outline: "#804010" },
-  { species: "Houbara Bustard", jan:4, feb:4, mar:3, apr:2, may:1, jun:0, jul:0, aug:0, sep:1, oct:3, nov:4, dec:4, color: "#d4b870", outline: "#a08030" },
+const FLYWAY_ATLANTIC: [number, number][] = [
+  [-5.60, 35.98], [-5.80, 35.60], [-6.27, 34.87], [-6.65, 34.23],
+  [-9.03, 32.73], [-9.83, 30.72], [-9.63, 30.07], [-9.65, 29.98],
+  [-12.26, 28.03], [-13.20, 27.00],
 ];
 
-const MONTHS = ["J","F","M","A","M","J","J","A","S","O","N","D"];
-const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const FLYWAY_INLAND: [number, number][] = [
+  [-5.60, 35.98], [-5.00, 34.03], [-5.15, 33.40], [-5.05, 33.44],
+  [-7.92, 31.06], [-6.80, 30.50], [-3.97, 31.10], [-2.50, 28.50],
+];
+
+const SEASONAL_DATA = [
+  { species: "White Stork",       vals: [0,1,3,5,4,2,1,3,5,4,2,0], color: "#c8c8c8", stroke: "#666" },
+  { species: "Greater Flamingo",  vals: [5,5,4,3,2,1,1,2,3,4,5,5], color: "#f4a0c0", stroke: "#b04070" },
+  { species: "Bald Ibis",         vals: [2,4,5,5,5,4,3,2,1,1,1,1], color: "#1a1a1a", stroke: "#000" },
+  { species: "Black Kite",        vals: [0,1,3,4,3,1,0,2,5,4,1,0], color: "#8B4513", stroke: "#5a2d0c" },
+  { species: "Egyptian Vulture",  vals: [0,0,1,3,4,4,3,2,3,2,0,0], color: "#d4c878", stroke: "#a09030" },
+  { species: "Booted Eagle",      vals: [1,1,2,3,3,2,1,2,4,4,2,1], color: "#6B8E23", stroke: "#3a5010" },
+  { species: "Marbled Duck",      vals: [3,3,4,5,4,3,2,2,3,3,3,3], color: "#a0905c", stroke: "#6a6030" },
+  { species: "Bearded Vulture",   vals: [3,4,5,5,4,3,3,3,3,3,3,3], color: "#c87030", stroke: "#804010" },
+  { species: "Houbara Bustard",   vals: [4,4,3,2,1,0,0,0,1,3,4,4], color: "#d4b870", stroke: "#a08030" },
+];
 
 const TYPE_COLORS: Record<string, string> = {
-  wetland: "#4a9aba",
-  coastal: "#2d7a5a",
-  strait: "#c8a050",
-  mountain: "#8a7a9a",
-  desert: "#d4945a",
-  forest: "#4a7a4a",
+  wetland: "#4a9aba", coastal: "#2d7a5a", strait: "#c9a96e",
+  mountain: "#8a7a9a", desert: "#d4945a", forest: "#4a7a4a",
 };
 
-// ═══════════════════════════════════════════════════════
-// HOOKS
-// ═══════════════════════════════════════════════════════
+const MONTHS_SHORT = ["J","F","M","A","M","J","J","A","S","O","N","D"];
 
-function useInView(threshold = 0.15) {
+// ─────────────────────────────────────────────
+// HOOKS
+// ─────────────────────────────────────────────
+
+function useInView(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null);
   const [vis, setVis] = useState(false);
   useEffect(() => {
@@ -235,237 +193,207 @@ function useCounter(target: number, duration = 2000, active = false) {
   return val;
 }
 
-// ═══════════════════════════════════════════════════════
-// SUB-COMPONENTS
-// ═══════════════════════════════════════════════════════
+// ─────────────────────────────────────────────
+// FADE IN WRAPPER
+// ─────────────────────────────────────────────
 
-function StatCounter({ target, suffix = "", label, color }: { target: number; suffix?: string; label: string; color: string }) {
+function Reveal({ children, delay = 0, className = "" }: {
+  children: React.ReactNode; delay?: number; className?: string;
+}) {
   const { ref, vis } = useInView();
-  const val = useCounter(target, 1800, vis);
   return (
-    <div ref={ref}>
-      <p className="font-mono text-4xl font-bold mb-1" style={{ color }}>
-        {val.toLocaleString()}{suffix}
-      </p>
-      <p className="font-mono text-[10px] uppercase tracking-widest text-neutral-500">{label}</p>
-    </div>
-  );
-}
-
-function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const { ref, vis } = useInView(0.1);
-  return (
-    <div ref={ref} style={{
+    <div ref={ref} className={className} style={{
       opacity: vis ? 1 : 0,
-      transform: vis ? "translateY(0)" : "translateY(20px)",
-      transition: `opacity 0.8s ease ${delay}s, transform 0.8s ease ${delay}s`,
+      transform: vis ? "translateY(0)" : "translateY(22px)",
+      transition: `opacity 0.9s ease ${delay}s, transform 0.9s ease ${delay}s`,
     }}>
       {children}
     </div>
   );
 }
 
-// ═══════════════════════════════════════════════════════
-// SEASONAL CHART
-// ═══════════════════════════════════════════════════════
+// ─────────────────────────────────────────────
+// ANIMATED STAT
+// ─────────────────────────────────────────────
+
+function AnimStat({ value, suffix = "", label, accent }: {
+  value: number; suffix?: string; label: string; accent: string;
+}) {
+  const { ref, vis } = useInView();
+  const n = useCounter(value, 1800, vis);
+  return (
+    <div ref={ref}>
+      <div className="font-serif leading-none mb-2"
+        style={{ fontSize: "clamp(3rem,6vw,4.5rem)", color: accent }}>
+        {n.toLocaleString()}{suffix}
+      </div>
+      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400">{label}</p>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// SEASONAL PRESENCE CHART
+// ─────────────────────────────────────────────
 
 function SeasonalChart() {
   const svgRef = useRef<SVGSVGElement>(null);
   const { ref, vis } = useInView(0.2);
-  const [hovered, setHovered] = useState<{ species: string; month: string; value: number } | null>(null);
+  const [hov, setHov] = useState<string | null>(null);
 
   useEffect(() => {
     if (!svgRef.current || !vis) return;
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
 
-    const W = 880, H = 340;
-    const m = { top: 30, right: 20, bottom: 50, left: 160 };
+    const W = 900, H = 320;
+    const m = { top: 16, right: 16, bottom: 40, left: 152 };
     const w = W - m.left - m.right;
     const h = H - m.top - m.bottom;
 
     svg.attr("viewBox", `0 0 ${W} ${H}`).attr("preserveAspectRatio", "xMidYMid meet");
     const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
 
-    const monthKeys = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
-    const xScale = d3.scaleBand().domain(MONTHS).range([0, w]).padding(0.08);
-    const yScale = d3.scaleBand().domain(SEASONAL_DATA.map(d => d.species)).range([0, h]).padding(0.15);
+    const xScale = d3.scaleBand().domain(MONTHS_SHORT).range([0, w]).padding(0.1);
+    const yScale = d3.scaleBand().domain(SEASONAL_DATA.map(d => d.species)).range([0, h]).padding(0.18);
 
-    // Grid lines
-    g.append("g").selectAll("line")
-      .data(MONTHS)
-      .enter().append("line")
-      .attr("x1", d => (xScale(d) || 0) + xScale.bandwidth() / 2)
-      .attr("x2", d => (xScale(d) || 0) + xScale.bandwidth() / 2)
+    // Subtle month grid
+    g.selectAll(".mgrid").data(MONTHS_SHORT).enter()
+      .append("line").attr("class", "mgrid")
+      .attr("x1", d => (xScale(d) ?? 0) + xScale.bandwidth() / 2)
+      .attr("x2", d => (xScale(d) ?? 0) + xScale.bandwidth() / 2)
       .attr("y1", 0).attr("y2", h)
       .attr("stroke", "#f0f0f0").attr("stroke-width", 1);
 
     // Cells
     SEASONAL_DATA.forEach((row, ri) => {
-      monthKeys.forEach((mk, mi) => {
-        const val = (row as any)[mk] as number;
+      row.vals.forEach((val, mi) => {
         if (val === 0) return;
-        const opacity = val / 5;
-        const x = xScale(MONTHS[mi]) || 0;
-        const y = yScale(row.species) || 0;
+        const x = xScale(MONTHS_SHORT[mi]) ?? 0;
+        const y = yScale(row.species) ?? 0;
         const bw = xScale.bandwidth();
         const bh = yScale.bandwidth();
+        const opacity = val / 5;
 
-        // Animate in with delay
-        setTimeout(() => {
-          g.append("rect")
-            .attr("x", x).attr("y", y)
-            .attr("width", bw).attr("height", bh)
-            .attr("rx", 3)
-            .attr("fill", row.color)
-            .attr("stroke", row.outline)
-            .attr("stroke-width", 0.5)
-            .attr("opacity", 0)
-            .on("mouseenter", function() {
-              d3.select(this).attr("opacity", Math.min(opacity + 0.3, 1));
-              setHovered({ species: row.species, month: MONTH_NAMES[mi], value: val });
-            })
-            .on("mouseleave", function() {
-              d3.select(this).attr("opacity", opacity);
-              setHovered(null);
-            })
-            .transition().duration(400).delay(ri * 60 + mi * 20)
-            .attr("opacity", opacity);
-        }, 0);
+        g.append("rect")
+          .attr("x", x).attr("y", y)
+          .attr("width", bw).attr("height", bh)
+          .attr("rx", 2)
+          .attr("fill", row.color)
+          .attr("stroke", row.stroke)
+          .attr("stroke-width", 0.4)
+          .attr("opacity", 0)
+          .on("mouseenter", () => setHov(`${row.species} · ${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][mi]}`))
+          .on("mouseleave", () => setHov(null))
+          .transition().duration(500).delay(ri * 55 + mi * 18)
+          .attr("opacity", opacity);
       });
     });
 
-    // X axis — months
-    g.append("g").attr("transform", `translate(0,${h})`)
-      .selectAll("text").data(MONTHS).enter().append("text")
-      .attr("x", d => (xScale(d) || 0) + xScale.bandwidth() / 2)
-      .attr("y", 20).attr("text-anchor", "middle")
-      .attr("font-family", "monospace").attr("font-size", 11)
-      .attr("fill", "#888")
-      .text(d => d);
-
-    // Y axis — species
-    g.append("g").selectAll("text").data(SEASONAL_DATA).enter().append("text")
-      .attr("x", -8).attr("y", d => (yScale(d.species) || 0) + yScale.bandwidth() / 2 + 4)
+    // Species labels
+    g.selectAll(".ylabel").data(SEASONAL_DATA).enter()
+      .append("text").attr("class", "ylabel")
+      .attr("x", -10)
+      .attr("y", d => (yScale(d.species) ?? 0) + yScale.bandwidth() / 2 + 4)
       .attr("text-anchor", "end")
       .attr("font-family", "monospace").attr("font-size", 11)
-      .attr("fill", "#333")
+      .attr("fill", "#444")
       .text(d => d.species);
 
-    // Intensity legend
-    const legend = g.append("g").attr("transform", `translate(0,${h + 32})`);
-    legend.append("text").attr("x", 0).attr("y", 0)
-      .attr("font-family", "monospace").attr("font-size", 10).attr("fill", "#aaa")
-      .text("Presence:");
-    [1,2,3,4,5].forEach((v, i) => {
-      legend.append("rect")
-        .attr("x", 70 + i * 28).attr("y", -12)
-        .attr("width", 22).attr("height", 14).attr("rx", 2)
-        .attr("fill", `rgba(100,120,180,${v/5})`);
-      legend.append("text")
-        .attr("x", 70 + i * 28 + 11).attr("y", 12)
-        .attr("text-anchor", "middle")
-        .attr("font-family", "monospace").attr("font-size", 9).attr("fill", "#999")
-        .text(["rare","low","mod","high","peak"][v - 1]);
-    });
+    // Month labels
+    g.selectAll(".xlabel").data(MONTHS_SHORT).enter()
+      .append("text").attr("class", "xlabel")
+      .attr("x", d => (xScale(d) ?? 0) + xScale.bandwidth() / 2)
+      .attr("y", h + 22)
+      .attr("text-anchor", "middle")
+      .attr("font-family", "monospace").attr("font-size", 11)
+      .attr("fill", "#aaa")
+      .text(d => d);
 
   }, [vis]);
 
   return (
     <div ref={ref}>
-      {hovered && (
-        <div className="mb-3 font-mono text-xs text-neutral-500">
-          <span className="text-neutral-900 font-semibold">{hovered.species}</span>
-          {" "}· {hovered.month} · presence {["rare","low","moderate","high","peak"][hovered.value - 1]}
-        </div>
-      )}
-      <svg ref={svgRef} className="w-full" style={{ maxHeight: 360 }} />
+      <div className="h-5 mb-2">
+        {hov && (
+          <p className="font-mono text-xs text-neutral-400">
+            <span className="text-neutral-900">{hov.split(" · ")[0]}</span>
+            {" · "}{hov.split(" · ")[1]}
+          </p>
+        )}
+      </div>
+      <svg ref={svgRef} className="w-full" />
+      <p className="font-mono text-[10px] text-neutral-300 mt-4">
+        Shade intensity = relative abundance · hover to inspect
+      </p>
     </div>
   );
 }
 
-// ═══════════════════════════════════════════════════════
-// LIVE SIGHTINGS
-// ═══════════════════════════════════════════════════════
+// ─────────────────────────────────────────────
+// LIVE DISPATCH (eBird feed)
+// ─────────────────────────────────────────────
 
-function LiveSightings() {
+function LiveDispatch() {
   const [obs, setObs] = useState<EBirdObs[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState("");
+  const [ts, setTs] = useState("");
+  const { ref, vis } = useInView(0.1);
 
   useEffect(() => {
-    async function fetchObs() {
-      try {
-        const res = await fetch("/api/ebird?endpoint=data/obs/MA/recent&maxResults=30&back=14");
-        if (!res.ok) throw new Error("Failed");
-        const data = await res.json();
-        setObs(data);
-        setLastUpdated(new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }));
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchObs();
+    fetch("/api/ebird?endpoint=data/obs/MA/recent&maxResults=25&back=14")
+      .then(r => r.ok ? r.json() : [])
+      .then(data => { setObs(data); setTs(new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long" })); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
-
-  const { ref, vis } = useInView(0.1);
 
   return (
     <div ref={ref}>
-      <div className="flex items-baseline justify-between mb-4">
-        <p className="font-mono text-[10px] uppercase tracking-widest text-neutral-400">
-          Live Sightings — eBird · Morocco · Last 14 Days
+      <div className="flex items-baseline justify-between border-b border-neutral-200 pb-3 mb-0">
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400">
+          What is in the air right now
         </p>
-        {lastUpdated && (
-          <span className="font-mono text-[10px] text-neutral-400">
-            Updated {lastUpdated}
-          </span>
-        )}
+        {ts && <span className="font-mono text-[10px] text-neutral-300">{ts} · eBird live</span>}
       </div>
 
       {loading && (
-        <div className="space-y-2">
-          {[1,2,3,4,5].map(i => (
-            <div key={i} className="h-10 bg-neutral-100 rounded animate-pulse" />
+        <div className="space-y-px">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="h-11 bg-neutral-50 animate-pulse" style={{ animationDelay: `${i * 0.08}s` }} />
           ))}
         </div>
       )}
 
-      {error && (
-        <p className="font-mono text-xs text-neutral-400">
-          Live data unavailable — eBird API unreachable.
-        </p>
+      {!loading && obs.length === 0 && (
+        <p className="font-mono text-xs text-neutral-300 py-6">No recent sightings returned.</p>
       )}
 
-      {!loading && !error && (
-        <div className="space-y-0">
+      {!loading && obs.length > 0 && (
+        <div>
           {obs.slice(0, 20).map((o, i) => (
-            <div
-              key={i}
-              className="flex items-start justify-between py-2.5 border-b border-neutral-100"
+            <div key={i}
+              className="flex items-baseline justify-between py-3 border-b border-neutral-100"
               style={{
                 opacity: vis ? 1 : 0,
-                transform: vis ? "translateX(0)" : "translateX(-12px)",
-                transition: `opacity 0.4s ease ${i * 0.04}s, transform 0.4s ease ${i * 0.04}s`,
+                transform: vis ? "none" : "translateX(-8px)",
+                transition: `opacity 0.4s ease ${i * 0.035}s, transform 0.4s ease ${i * 0.035}s`,
               }}
             >
-              <div className="flex-1">
+              <div>
                 <span className="font-mono text-[13px] text-neutral-900">{o.comName}</span>
-                <span className="font-mono text-[11px] text-neutral-400 ml-2 italic">{o.sciName}</span>
+                <span className="font-mono text-[11px] text-neutral-400 italic ml-2">{o.sciName}</span>
               </div>
-              <div className="text-right ml-4 shrink-0">
-                <p className="font-mono text-[11px] text-neutral-500">{o.locName}</p>
-                <p className="font-mono text-[10px] text-neutral-400">
+              <div className="text-right ml-6 shrink-0">
+                <p className="font-mono text-[11px] text-neutral-500 truncate" style={{ maxWidth: 180 }}>{o.locName}</p>
+                <p className="font-mono text-[10px] text-neutral-300">
                   {o.howMany ? `${o.howMany} ind.` : "present"} · {o.obsDt.split(" ")[0]}
                 </p>
               </div>
             </div>
           ))}
-          <p className="font-mono text-[10px] text-neutral-400 pt-3">
-            Source: eBird / Cornell Lab of Ornithology · {obs.length} records
+          <p className="font-mono text-[10px] text-neutral-300 pt-3">
+            {obs.length} records · Cornell Lab of Ornithology / eBird
           </p>
         </div>
       )}
@@ -473,600 +401,556 @@ function LiveSightings() {
   );
 }
 
-// ═══════════════════════════════════════════════════════
-// MAP COMPONENT
-// ═══════════════════════════════════════════════════════
+// ─────────────────────────────────────────────
+// MAP
+// ─────────────────────────────────────────────
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let mapboxgl: any = null;
 
 function MigrationMap() {
-  const mapContainer = useRef<HTMLDivElement>(null);
+  const container = useRef<HTMLDivElement>(null);
   const map = useRef<any>(null);
-  const [selected, setSelected] = useState<Site | null>(null);
-  const [mapLoaded, setMapLoaded] = useState(false);
-  const [liveObs, setLiveObs] = useState<EBirdObs[]>([]);
-  const [showLive, setShowLive] = useState(true);
-  const [showRoutes, setShowRoutes] = useState(true);
-  const markers = useRef<any[]>([]);
+  const siteMarkers = useRef<any[]>([]);
   const liveMarkers = useRef<any[]>([]);
+  const [selected, setSelected] = useState<Site | null>(null);
+  const [ready, setReady] = useState(false);
+  const [showRoutes, setShowRoutes] = useState(true);
+  const [showLive, setShowLive] = useState(true);
+  const [liveObs, setLiveObs] = useState<EBirdObs[]>([]);
 
   useEffect(() => {
-    if (!mapContainer.current || map.current) return;
-
-    async function initMap() {
+    if (!container.current || map.current) return;
+    async function init() {
       if (!mapboxgl) {
         const mb = await import("mapbox-gl");
         mapboxgl = mb.default;
         mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
         if (!document.getElementById("mapbox-gl-css")) {
-          const link = document.createElement("link");
-          link.id = "mapbox-gl-css";
-          link.rel = "stylesheet";
-          link.href = "https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css";
-          document.head.appendChild(link);
+          const l = document.createElement("link");
+          l.id = "mapbox-gl-css"; l.rel = "stylesheet";
+          l.href = "https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css";
+          document.head.appendChild(l);
         }
       }
-
-      if (!mapContainer.current) return;
-
+      if (!container.current) return;
       map.current = new mapboxgl.Map({
-        container: mapContainer.current,
+        container: container.current,
         style: "mapbox://styles/mapbox/dark-v11",
-        center: [-7.0, 31.8],
-        zoom: 4.8,
-        minZoom: 3,
-        maxZoom: 12,
+        center: [-7.0, 31.8], zoom: 4.8,
+        minZoom: 3, maxZoom: 13,
         attributionControl: false,
       });
-
-      map.current.addControl(
-        new mapboxgl.NavigationControl({ showCompass: false }),
-        "bottom-right"
-      );
-
+      map.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), "bottom-right");
+      map.current.on("click", () => setSelected(null));
       map.current.on("load", () => {
         // Atlantic flyway
-        map.current.addSource("atlantic-flyway", {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            geometry: { type: "LineString", coordinates: FLYWAY_ROUTES.atlantic },
-          },
-        });
-        map.current.addLayer({
-          id: "atlantic-flyway-glow",
-          type: "line",
-          source: "atlantic-flyway",
-          paint: {
-            "line-color": "#c9a96e",
-            "line-width": 6,
-            "line-opacity": 0.15,
-          },
-        });
-        map.current.addLayer({
-          id: "atlantic-flyway",
-          type: "line",
-          source: "atlantic-flyway",
-          paint: {
-            "line-color": "#c9a96e",
-            "line-width": 2,
-            "line-opacity": 0.7,
-            "line-dasharray": [4, 3],
-          },
-        });
-
-        // Inland Atlas route
-        map.current.addSource("inland-flyway", {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            geometry: { type: "LineString", coordinates: FLYWAY_ROUTES.inland },
-          },
-        });
-        map.current.addLayer({
-          id: "inland-flyway-glow",
-          type: "line",
-          source: "inland-flyway",
-          paint: {
-            "line-color": "#9b8db0",
-            "line-width": 6,
-            "line-opacity": 0.15,
-          },
-        });
-        map.current.addLayer({
-          id: "inland-flyway",
-          type: "line",
-          source: "inland-flyway",
-          paint: {
-            "line-color": "#9b8db0",
-            "line-width": 2,
-            "line-opacity": 0.7,
-            "line-dasharray": [4, 3],
-          },
-        });
-
-        setMapLoaded(true);
+        map.current.addSource("af", { type: "geojson", data: { type: "Feature", geometry: { type: "LineString", coordinates: FLYWAY_ATLANTIC } } });
+        map.current.addLayer({ id: "af-glow", type: "line", source: "af", paint: { "line-color": "#c9a96e", "line-width": 8, "line-opacity": 0.12 } });
+        map.current.addLayer({ id: "af", type: "line", source: "af", paint: { "line-color": "#c9a96e", "line-width": 2, "line-opacity": 0.75, "line-dasharray": [5, 4] } });
+        // Inland route
+        map.current.addSource("il", { type: "geojson", data: { type: "Feature", geometry: { type: "LineString", coordinates: FLYWAY_INLAND } } });
+        map.current.addLayer({ id: "il-glow", type: "line", source: "il", paint: { "line-color": "#9b8db0", "line-width": 8, "line-opacity": 0.12 } });
+        map.current.addLayer({ id: "il", type: "line", source: "il", paint: { "line-color": "#9b8db0", "line-width": 2, "line-opacity": 0.75, "line-dasharray": [5, 4] } });
+        setReady(true);
       });
     }
-
-    initMap();
+    init();
   }, []);
 
-  // Place site markers
+  // Site markers
   useEffect(() => {
-    if (!map.current || !mapLoaded) return;
-    markers.current.forEach(m => m.remove());
-    markers.current = [];
-
-    SITES.forEach((site) => {
+    if (!ready) return;
+    siteMarkers.current.forEach(m => m.remove());
+    siteMarkers.current = [];
+    SITES.forEach(site => {
       const color = TYPE_COLORS[site.type];
       const el = document.createElement("div");
-      el.style.cssText = `
-        width: 12px; height: 12px; border-radius: 50%;
-        background: ${color}; border: 2px solid rgba(255,255,255,0.6);
-        cursor: pointer; transition: transform 0.15s ease;
-        box-shadow: 0 0 12px ${color}88;
-      `;
-      el.addEventListener("mouseenter", () => {
-        el.style.transform = "scale(1.8)";
-      });
-      el.addEventListener("mouseleave", () => {
-        el.style.transform = "scale(1)";
-      });
-      el.addEventListener("click", (e) => {
+      el.style.cssText = `width:12px;height:12px;border-radius:50%;background:${color};border:2px solid rgba(255,255,255,0.55);cursor:pointer;transition:transform 0.15s;box-shadow:0 0 10px ${color}88;`;
+      el.addEventListener("mouseenter", () => { el.style.transform = "scale(1.9)"; });
+      el.addEventListener("mouseleave", () => { el.style.transform = "scale(1)"; });
+      el.addEventListener("click", e => {
         e.stopPropagation();
         setSelected(site);
-        map.current.easeTo({
-          center: [site.lng, site.lat],
-          zoom: Math.max(map.current.getZoom(), 7),
-          duration: 800,
-          offset: [140, 0],
-        });
+        map.current.easeTo({ center: [site.lng, site.lat], zoom: Math.max(map.current.getZoom(), 7), duration: 700, offset: [130, 0] });
       });
-
-      const marker = new mapboxgl.Marker({ element: el, anchor: "center" })
-        .setLngLat([site.lng, site.lat])
-        .addTo(map.current);
-      markers.current.push(marker);
+      siteMarkers.current.push(new mapboxgl.Marker({ element: el, anchor: "center" }).setLngLat([site.lng, site.lat]).addTo(map.current));
     });
-  }, [mapLoaded]);
+  }, [ready]);
 
-  // Fetch and show live eBird observations
+  // Live eBird
   useEffect(() => {
-    async function fetchLive() {
-      try {
-        const res = await fetch("/api/ebird?endpoint=data/obs/MA/recent&maxResults=100&back=14");
-        if (!res.ok) return;
-        const data = await res.json();
-        setLiveObs(data.filter((o: EBirdObs) => o.lat && o.lng));
-      } catch {}
-    }
-    fetchLive();
+    fetch("/api/ebird?endpoint=data/obs/MA/recent&maxResults=80&back=14")
+      .then(r => r.ok ? r.json() : [])
+      .then(d => setLiveObs(d.filter((o: EBirdObs) => o.lat && o.lng)))
+      .catch(() => {});
   }, []);
 
-  // Render live obs markers
   useEffect(() => {
-    if (!map.current || !mapLoaded) return;
+    if (!ready) return;
     liveMarkers.current.forEach(m => m.remove());
     liveMarkers.current = [];
     if (!showLive) return;
-
-    liveObs.forEach((obs) => {
+    liveObs.forEach(o => {
       const el = document.createElement("div");
-      el.style.cssText = `
-        width: 6px; height: 6px; border-radius: 50%;
-        background: #4ade80; opacity: 0.8;
-        box-shadow: 0 0 4px #4ade80;
-      `;
+      el.style.cssText = "width:6px;height:6px;border-radius:50%;background:#4ade80;opacity:0.75;box-shadow:0 0 5px #4ade80;";
       const popup = new mapboxgl.Popup({ offset: 8, closeButton: false })
-        .setHTML(`<div style="font-family:monospace;font-size:11px;padding:4px 6px;background:#0e0e0e;color:#fff;border-radius:4px">
-          <strong>${obs.comName}</strong><br/>
-          ${obs.locName}<br/>
-          <span style="color:#888">${obs.obsDt.split(" ")[0]} · ${obs.howMany ? obs.howMany + " ind." : "present"}</span>
-        </div>`);
-
-      const marker = new mapboxgl.Marker({ element: el, anchor: "center" })
-        .setLngLat([obs.lng, obs.lat])
-        .setPopup(popup)
-        .addTo(map.current);
-      liveMarkers.current.push(marker);
+        .setHTML(`<div style="font-family:monospace;font-size:11px;padding:4px 8px;background:#0a0a0a;color:#fff;border-radius:3px"><strong>${o.comName}</strong><br/><span style="color:#888">${o.locName}</span></div>`);
+      liveMarkers.current.push(new mapboxgl.Marker({ element: el, anchor: "center" }).setLngLat([o.lng, o.lat]).setPopup(popup).addTo(map.current));
     });
-  }, [mapLoaded, liveObs, showLive]);
+  }, [ready, liveObs, showLive]);
 
-  // Toggle routes visibility
+  // Toggle routes
   useEffect(() => {
-    if (!map.current || !mapLoaded) return;
-    const opacity = showRoutes ? 0.7 : 0;
-    const glowOpacity = showRoutes ? 0.15 : 0;
+    if (!ready) return;
+    const o = showRoutes ? 0.75 : 0;
+    const go = showRoutes ? 0.12 : 0;
     try {
-      map.current.setPaintProperty("atlantic-flyway", "line-opacity", opacity);
-      map.current.setPaintProperty("atlantic-flyway-glow", "line-opacity", glowOpacity);
-      map.current.setPaintProperty("inland-flyway", "line-opacity", opacity);
-      map.current.setPaintProperty("inland-flyway-glow", "line-opacity", glowOpacity);
+      ["af","il"].forEach(id => {
+        map.current.setPaintProperty(id, "line-opacity", o);
+        map.current.setPaintProperty(`${id}-glow`, "line-opacity", go);
+      });
     } catch {}
-  }, [showRoutes, mapLoaded]);
+  }, [showRoutes, ready]);
 
   return (
-    <div className="relative" style={{ height: 560 }}>
-      <div ref={mapContainer} style={{ position: "absolute", inset: 0 }} />
+    <div className="relative" style={{ height: 580 }}>
+      <div ref={container} style={{ position: "absolute", inset: 0 }} />
 
-      {/* Controls */}
+      {/* Toggle controls */}
       <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
-        <button
-          onClick={() => setShowRoutes(v => !v)}
-          className="flex items-center gap-2 px-3 py-1.5 rounded font-mono text-[10px] uppercase tracking-wider transition-all"
-          style={{
-            background: showRoutes ? "rgba(201,169,110,0.15)" : "rgba(0,0,0,0.6)",
-            border: `1px solid ${showRoutes ? "#c9a96e" : "rgba(255,255,255,0.15)"}`,
-            color: showRoutes ? "#c9a96e" : "rgba(255,255,255,0.4)",
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          <span className="w-2 h-0.5 inline-block" style={{ background: "#c9a96e" }} />
-          Flyways
-        </button>
-        <button
-          onClick={() => setShowLive(v => !v)}
-          className="flex items-center gap-2 px-3 py-1.5 rounded font-mono text-[10px] uppercase tracking-wider transition-all"
-          style={{
-            background: showLive ? "rgba(74,222,128,0.1)" : "rgba(0,0,0,0.6)",
-            border: `1px solid ${showLive ? "#4ade80" : "rgba(255,255,255,0.15)"}`,
-            color: showLive ? "#4ade80" : "rgba(255,255,255,0.4)",
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          <span className="w-2 h-2 rounded-full inline-block" style={{ background: showLive ? "#4ade80" : "#444" }} />
-          Live sightings
-        </button>
-      </div>
-
-      {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-10 p-3 rounded"
-        style={{ background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.08)" }}>
-        <div className="flex flex-col gap-1.5">
-          {Object.entries(TYPE_COLORS).map(([type, color]) => (
-            <div key={type} className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full" style={{ background: color }} />
-              <span className="font-mono text-[10px] text-white/60 capitalize">{type}</span>
-            </div>
-          ))}
-          <div className="flex items-center gap-2 mt-1 pt-1 border-t border-white/10">
-            <span className="w-2 h-2 rounded-full" style={{ background: "#4ade80" }} />
-            <span className="font-mono text-[10px] text-white/60">eBird live</span>
-          </div>
-        </div>
+        {[
+          { label: "Flyways", active: showRoutes, toggle: () => setShowRoutes(v => !v), color: "#c9a96e", icon: "line" },
+          { label: "Live sightings", active: showLive, toggle: () => setShowLive(v => !v), color: "#4ade80", icon: "dot" },
+        ].map(btn => (
+          <button key={btn.label} onClick={btn.toggle}
+            className="flex items-center gap-2 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider rounded transition-all"
+            style={{
+              background: btn.active ? `${btn.color}18` : "rgba(0,0,0,0.55)",
+              border: `1px solid ${btn.active ? btn.color : "rgba(255,255,255,0.12)"}`,
+              color: btn.active ? btn.color : "rgba(255,255,255,0.35)",
+              backdropFilter: "blur(8px)",
+            }}>
+            {btn.icon === "line"
+              ? <svg width="18" height="6"><line x1="0" y1="3" x2="18" y2="3" stroke={btn.color} strokeWidth="1.5" strokeDasharray="4 3"/></svg>
+              : <span className="w-2 h-2 rounded-full" style={{ background: btn.active ? btn.color : "#555" }} />
+            }
+            {btn.label}
+          </button>
+        ))}
       </div>
 
       {/* Flyway legend */}
       <div className="absolute top-4 right-4 z-10 p-3 rounded"
-        style={{ background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.08)" }}>
+        style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.07)" }}>
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
-            <svg width="24" height="8"><line x1="0" y1="4" x2="24" y2="4" stroke="#c9a96e" strokeWidth="2" strokeDasharray="4 3" /></svg>
-            <span className="font-mono text-[10px] text-white/60">Atlantic flyway</span>
+            <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="#c9a96e" strokeWidth="1.5" strokeDasharray="4 3"/></svg>
+            <span className="font-mono text-[10px] text-white/55">Atlantic flyway</span>
           </div>
           <div className="flex items-center gap-2">
-            <svg width="24" height="8"><line x1="0" y1="4" x2="24" y2="4" stroke="#9b8db0" strokeWidth="2" strokeDasharray="4 3" /></svg>
-            <span className="font-mono text-[10px] text-white/60">Atlas inland route</span>
+            <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="#9b8db0" strokeWidth="1.5" strokeDasharray="4 3"/></svg>
+            <span className="font-mono text-[10px] text-white/55">Atlas inland route</span>
+          </div>
+          <div className="mt-1 pt-2 border-t border-white/10 flex flex-col gap-1.5">
+            {Object.entries(TYPE_COLORS).map(([t, c]) => (
+              <div key={t} className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full" style={{ background: c }} />
+                <span className="font-mono text-[10px] text-white/45 capitalize">{t}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Site panel */}
-      {selected && (
-        <div
-          className="absolute top-0 right-0 bottom-0 z-20 flex flex-col overflow-y-auto"
-          style={{ width: 300, background: "#0a0a0a", borderLeft: "1px solid rgba(255,255,255,0.08)" }}
-        >
-          <button
-            onClick={() => setSelected(null)}
-            className="absolute top-3 right-3 text-white/40 hover:text-white text-xl"
-          >×</button>
-          <div className="p-6 pt-10">
-            <span className="font-mono text-[9px] uppercase tracking-widest mb-2 block"
-              style={{ color: TYPE_COLORS[selected.type] }}>
+      {/* Site detail panel */}
+      <div className="absolute top-0 right-0 bottom-0 z-20 transition-transform duration-300"
+        style={{ width: 300, background: "#0a0a0a", borderLeft: "1px solid rgba(255,255,255,0.07)", transform: selected ? "translateX(0)" : "translateX(100%)" }}>
+        {selected && (
+          <div className="p-6 pt-10 h-full overflow-y-auto">
+            <button onClick={() => setSelected(null)} className="absolute top-4 right-4 text-white/35 hover:text-white text-2xl leading-none">×</button>
+            <p className="font-mono text-[9px] uppercase tracking-widest mb-1" style={{ color: TYPE_COLORS[selected.type] }}>
               {selected.type}{selected.elevation ? ` · ${selected.elevation}` : ""}
               {selected.ramsar && <span className="ml-2 text-blue-400">Ramsar</span>}
-            </span>
-            <h3 className="font-serif text-white text-xl leading-tight mb-4">{selected.name}</h3>
-            <p className="font-mono text-[11px] text-white/60 leading-relaxed mb-4">{selected.significance}</p>
-            <div className="border-t border-white/10 pt-4 mb-4">
-              <p className="font-mono text-[9px] uppercase tracking-widest text-white/30 mb-1">Species</p>
-              <p className="font-mono text-[11px] text-white/70 leading-relaxed">{selected.species}</p>
-            </div>
-            <div className="border-t border-white/10 pt-4 mb-4">
-              <p className="font-mono text-[9px] uppercase tracking-widest text-white/30 mb-1">Peak Season</p>
-              <p className="font-mono text-[11px] text-white/70">{selected.peak}</p>
-            </div>
-            {selected.threatened && (
-              <div className="bg-red-950/40 border border-red-900/30 rounded p-3">
-                <p className="font-mono text-[10px] text-red-400/80 leading-relaxed">
-                  ⚠ {selected.threatened}
-                </p>
+            </p>
+            <h3 className="font-serif text-white text-xl leading-tight mb-5">{selected.name}</h3>
+            <p className="font-mono text-[11px] text-white/55 leading-relaxed mb-5">{selected.significance}</p>
+            <div className="space-y-4">
+              <div>
+                <p className="font-mono text-[9px] uppercase tracking-widest text-white/25 mb-1">Species</p>
+                <p className="font-mono text-[11px] text-white/65 leading-relaxed">{selected.species}</p>
               </div>
-            )}
+              <div>
+                <p className="font-mono text-[9px] uppercase tracking-widest text-white/25 mb-1">Peak season</p>
+                <p className="font-mono text-[11px] text-white/65">{selected.peak}</p>
+              </div>
+              {selected.threatened && (
+                <div className="mt-4 p-3 rounded" style={{ background: "rgba(185,28,28,0.15)", border: "1px solid rgba(185,28,28,0.3)" }}>
+                  <p className="font-mono text-[10px] text-red-400/80">⚠ {selected.threatened}</p>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
 
-// ═══════════════════════════════════════════════════════
+// ─────────────────────────────────────────────
 // MAIN DOSSIER
-// ═══════════════════════════════════════════════════════
-
-const C = {
-  ink: "#0a0a0a",
-  text: "#262626",
-  muted: "#737373",
-  border: "#e5e5e5",
-  gold: "#c9a96e",
-  green: "#2d7a5a",
-};
+// ─────────────────────────────────────────────
 
 export default function BirdAtlasDossier() {
-  const heroR = useInView();
+  const heroR = useInView(0.1);
 
   return (
-    <div className="min-h-screen bg-white" style={{ color: C.ink }}>
+    <div className="min-h-screen bg-white text-neutral-900">
 
-      {/* ── HERO ───────────────────────────────────────── */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] pt-32 pb-16 border-b" style={{ borderColor: C.border }}>
-        <Link href="/stories" className="font-mono text-[10px] uppercase tracking-widest hover:opacity-60 transition-opacity inline-block mb-8" style={{ color: C.muted }}>
+      {/* ━━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] pt-32 pb-20 border-b border-neutral-100">
+        <Link href="/stories"
+          className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-300 hover:text-neutral-600 transition-colors inline-block mb-10">
           ← Stories
         </Link>
-        <p className="font-mono text-[10px] uppercase tracking-widest mb-3" style={{ color: C.muted }}>
-          Dossier · Natural History
-        </p>
-        <div ref={heroR.ref}>
-          <h1
-            className="font-serif leading-[0.92] tracking-tight mb-4"
-            style={{
-              fontSize: "clamp(2.8rem, 8vw, 5.5rem)",
-              opacity: heroR.vis ? 1 : 0,
-              transform: heroR.vis ? "translateY(0)" : "translateY(24px)",
-              transition: "opacity 1s ease, transform 1s ease",
-            }}
-          >
-            <em>The Bird Atlas</em>
-          </h1>
-          <p className="font-serif italic text-xl md:text-2xl mb-6" style={{ color: C.muted }}>
-            Morocco is where Europe ends and Africa begins.<br />
-            Every migration has to cross here.
-          </p>
-        </div>
-        <p className="text-[13px] max-w-[600px] leading-[1.75]" style={{ color: C.text }}>
-          Fourteen kilometres. That is the width of the Strait of Gibraltar — the gap between two continents that 
-          every migratory bird between Europe and Africa must navigate. Each autumn, hundreds of millions of birds 
-          funnel through this corridor. Morocco is not just a destination. It is the crossing point, the 
-          wintering ground, and the breeding refuge of species that exist almost nowhere else.
-        </p>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
-          <StatCounter target={500} suffix="+" label="species recorded" color={C.gold} />
-          <StatCounter target={400000} suffix="+" label="storks cross annually" color={C.green} />
-          <StatCounter target={12} label="key birding sites" color="#9b8db0" />
-          <StatCounter target={95} suffix="%" label="of wild Bald Ibis" color="#c04040" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-end">
+          <div className="lg:col-span-7" ref={heroR.ref}>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-4">
+              Dossier · Natural History
+            </p>
+            <h1 className="font-serif leading-[0.9] tracking-tight mb-6"
+              style={{
+                fontSize: "clamp(3.2rem,9vw,6rem)",
+                opacity: heroR.vis ? 1 : 0,
+                transform: heroR.vis ? "none" : "translateY(28px)",
+                transition: "opacity 1.1s ease, transform 1.1s ease",
+              }}>
+              <em>The Bird<br />Atlas</em>
+            </h1>
+            <p className="font-serif italic text-xl text-neutral-400 leading-snug">
+              Morocco is where Europe ends<br />and Africa begins. Every migration<br />has to cross here.
+            </p>
+          </div>
+
+          <div className="lg:col-span-5">
+            <Reveal delay={0.2}>
+              <div className="grid grid-cols-2 gap-8">
+                <AnimStat value={500} suffix="+" label="species recorded" accent="#c9a96e" />
+                <AnimStat value={400000} suffix="+" label="storks cross annually" accent="#2d7a5a" />
+                <AnimStat value={14} suffix="km" label="the crossing width" accent="#9b8db0" />
+                <AnimStat value={95} suffix="%" label="of wild Bald Ibis" accent="#c04040" />
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* ── MAP ────────────────────────────────────────── */}
-      <section className="border-b" style={{ borderColor: C.border }}>
+      {/* ━━━ OPENING PROSE ━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-20 border-b border-neutral-100">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          <div className="lg:col-span-7">
+            <Reveal>
+              <p className="font-serif text-2xl leading-relaxed text-neutral-800 mb-8">
+                Fourteen kilometres. That is the width of the Strait of Gibraltar — the gap two continents 
+                leave between them. Every bird that migrates between Europe and Africa has to cross it or 
+                go swimming. Most do not go swimming.
+              </p>
+              <p className="text-[14px] leading-[1.85] text-neutral-600 mb-6">
+                Each autumn, hundreds of millions of birds funnel through this corridor. Raptors cannot flap 
+                across open water — they depend on thermals, and thermals only rise over land. So they 
+                gather above Jbel Moussa, circle upward in columns until they are almost invisible, then glide 
+                across in silence. The sky above the strait in September looks like a slow-motion river. 
+                White storks cross in flocks of thousands on the same thermals. Black kites fill the air 
+                so densely they cast moving shadows on the ground.
+              </p>
+              <p className="text-[14px] leading-[1.85] text-neutral-600">
+                Morocco is not just a destination on the route. It is the crossing, the wintering ground, 
+                and the refuge of species that exist almost nowhere else. More bird species have been 
+                recorded here than in France or Spain — not because Morocco is exceptional, but because 
+                of where it sits: at the hinge of two continents, where Mediterranean, Atlantic, Saharan, 
+                and sub-Saharan biomes collide in a geography not much larger than California.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* Pull quote */}
+          <div className="lg:col-span-4 lg:col-start-9">
+            <Reveal delay={0.2}>
+              <div className="sticky top-24">
+                <div className="border-l-2 border-neutral-900 pl-6 mb-10">
+                  <p className="font-serif italic text-2xl leading-snug text-neutral-800">
+                    "The sky above the strait in September looks like a slow-motion river."
+                  </p>
+                </div>
+                <div className="space-y-5">
+                  {[
+                    { label: "Atlantic corridor", desc: "Merja Zerga to Khnifiss — 1,800km of wetland chain" },
+                    { label: "Night crossing", desc: "Passerines cross at night, raptors by day — a 10-million year arms race" },
+                    { label: "The ibis question", desc: "700 birds left on Earth. Most of them here." },
+                  ].map((item) => (
+                    <div key={item.label} className="border-t border-neutral-100 pt-4">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-neutral-400 mb-1">{item.label}</p>
+                      <p className="text-[12px] text-neutral-600 leading-relaxed">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ FILM ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="border-b border-neutral-100">
+        <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+          <iframe
+            src="https://player.vimeo.com/video/58291553?autoplay=0&title=0&byline=0&portrait=0&color=c9a96e"
+            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+            title="A Bird Ballet — Neels Castillon"
+          />
+        </div>
+        <div className="px-8 md:px-[8%] lg:px-[12%] py-5">
+          <p className="font-mono text-[10px] text-neutral-300">
+            <em>A Bird Ballet</em> — Neels Castillon, Marseille, 2013.
+            Starlings in murmuration. The same species crosses Morocco every autumn on its way south.
+          </p>
+        </div>
+      </section>
+
+      {/* ━━━ MAP — FULL WIDTH ━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="border-b border-neutral-100">
         <div className="px-8 md:px-[8%] lg:px-[12%] py-10">
-          <FadeIn>
-            <p className="font-mono text-[10px] uppercase tracking-widest mb-2" style={{ color: C.muted }}>
-              Migration Routes + Key Sites
-            </p>
-            <p className="font-mono text-[11px] mb-6" style={{ color: C.muted }}>
-              Click any site marker for details. Toggle flyways and live eBird sightings.
-            </p>
-          </FadeIn>
+          <Reveal>
+            <div className="flex items-baseline justify-between">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-1">
+                  The Routes
+                </p>
+                <p className="text-[13px] text-neutral-500">
+                  Atlantic flyway and Atlas inland route. Click any site for detail. Green dots are live eBird sightings.
+                </p>
+              </div>
+            </div>
+          </Reveal>
         </div>
         <MigrationMap />
       </section>
 
-      {/* ── THE CROSSING ───────────────────────────────── */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b" style={{ borderColor: C.border }}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 max-w-5xl">
-          <FadeIn>
-            <p className="font-mono text-[10px] uppercase tracking-widest mb-3" style={{ color: C.gold }}>
-              The Gibraltar Crossing
-            </p>
-            <p className="text-[13px] leading-[1.75]" style={{ color: C.text }}>
-              Raptors cannot flap across open water — they soar on thermals, and thermals only rise over land. 
-              The Strait of Gibraltar is 14km wide, the minimum viable crossing. Every autumn, short-toed eagles, 
-              honey buzzards, black kites, Egyptian vultures, and booted eagles circle upward in columns above 
-              Jbel Moussa until they are specks, then glide across in silence. White storks cross in flocks of 
-              thousands on the same thermals. The sky above the strait in September looks like a slow-motion river.
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <p className="font-mono text-[10px] uppercase tracking-widest mb-3" style={{ color: C.green }}>
-              The Atlantic Corridor
-            </p>
-            <p className="text-[13px] leading-[1.75]" style={{ color: C.text }}>
-              Once across, most species follow the Atlantic coast south — a chain of wetlands that runs 1,800km 
-              from Merja Zerga to Khnifiss Lagoon. Flamingos, spoonbills, waders, and ducks string themselves 
-              along this corridor like beads. Some stop for winter. Some refuel and continue into the Sahel. 
-              The chain is only as strong as its weakest link — one drained wetland breaks the route for 
-              everything that uses it.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ── SEASONAL CHART ─────────────────────────────── */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b" style={{ borderColor: C.border }}>
-        <FadeIn>
-          <p className="font-mono text-[10px] uppercase tracking-widest mb-2" style={{ color: C.muted }}>
-            Seasonal Presence
+      {/* ━━━ THE ATLANTIC CHAIN ━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-24 border-b border-neutral-100">
+        <Reveal>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-300 mb-16">
+            The Chain
           </p>
-          <p className="font-mono text-[11px] mb-8" style={{ color: C.muted }}>
-            When each species is present in Morocco. Hover to inspect. Based on recorded observation patterns.
-          </p>
-        </FadeIn>
-        <SeasonalChart />
-      </section>
-
-      {/* ── LIVE SIGHTINGS ─────────────────────────────── */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b" style={{ borderColor: C.border }}>
-        <FadeIn>
-          <p className="font-mono text-[10px] uppercase tracking-widest mb-2" style={{ color: C.muted }}>
-            What is being seen right now
-          </p>
-          <p className="font-mono text-[11px] mb-8" style={{ color: C.muted }}>
-            Live observations from eBird citizen science network. Updates daily.
-          </p>
-        </FadeIn>
-        <LiveSightings />
-      </section>
-
-      {/* ── THREATENED SPECIES ─────────────────────────── */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b" style={{ borderColor: C.border }}>
-        <FadeIn>
-          <p className="font-mono text-[10px] uppercase tracking-widest mb-8" style={{ color: C.muted }}>
-            Species Morocco Cannot Afford to Lose
-          </p>
-        </FadeIn>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+        </Reveal>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20">
           {[
             {
-              name: "Northern Bald Ibis",
-              status: "Endangered",
-              statusColor: "#dc2626",
-              count: "~700 wild individuals",
-              note: "Morocco holds 95% of the world's remaining wild population. The bird went extinct everywhere else — Europe, the Middle East — before being rediscovered breeding at Souss-Massa in the 1990s. It is one of the rarest birds on Earth, and it lives here.",
+              title: "Merja Zerga",
+              sub: "34°52'N — Atlantic coast",
+              body: "A Ramsar wetland an hour north of Rabat. In January, greater flamingos stand in flocks of thousands against grey Atlantic water — pink geometry in grey light. Spoonbills, avocets, and marsh harriers use the lagoon as a refuelling stop between Europe and the Sahel. The last confirmed sighting of the Slender-billed Curlew — possibly the rarest bird in the world, possibly now extinct — was recorded here.",
+              accent: "#4a9aba",
             },
             {
-              name: "Marbled Duck",
-              status: "Vulnerable",
-              statusColor: "#d97706",
-              count: "15,000–20,000 globally",
-              note: "Wetland specialist. Morocco's network of Atlantic lagoons and Middle Atlas lakes is critical to the western Mediterranean population. Habitat drainage is the primary threat — each lost wetland removes a breeding or wintering site that cannot be replaced.",
+              title: "Souss-Massa",
+              sub: "30°04'N — south of Agadir",
+              body: "The Northern Bald Ibis is not beautiful. It is bald, black, and equipped with a curved red bill that gives it the expression of someone who has just received bad news. It is also one of the rarest birds on Earth — fewer than 700 individuals survive in the wild — and Morocco holds 95% of them. Souss-Massa is where most of them breed, on coastal cliffs above a national park that exists specifically to protect them.",
+              accent: "#2d7a5a",
             },
             {
-              name: "Houbara Bustard",
-              status: "Vulnerable",
-              statusColor: "#d97706",
-              count: "Declining",
-              note: "Desert and steppe specialist. Traditional quarry for falconry across the Arab world — Moroccan populations face pressure from legal hunting as well as habitat degradation. The Saharan fringes around Merzouga are among the last viable sites in North Africa.",
+              title: "Khnifiss Lagoon",
+              sub: "28°01'N — near Tarfaya",
+              body: "The largest lagoon in southern Morocco, remote enough that most of the 13 million tourists who enter Morocco annually never hear its name. The Atlantic coast between Agadir and the Saharan border is one of the least-visited coastlines in North Africa, which is precisely why it still works as a migration staging post. Flamingos, spoonbills, and Caspian terns use it like a motorway service station — fuel up, move on.",
+              accent: "#d4945a",
             },
-          ].map((sp, i) => (
-            <FadeIn key={sp.name} delay={i * 0.1}>
-              <div className="border-t-2 pt-5" style={{ borderColor: sp.statusColor }}>
-                <p className="font-mono text-[9px] uppercase tracking-widest mb-1" style={{ color: sp.statusColor }}>
-                  {sp.status} · {sp.count}
-                </p>
-                <h3 className="font-serif text-lg mb-3" style={{ color: C.ink }}>{sp.name}</h3>
-                <p className="text-[12px] leading-[1.75]" style={{ color: C.text }}>{sp.note}</p>
+          ].map((item, i) => (
+            <Reveal key={item.title} delay={i * 0.1}>
+              <div className="border-t-2 pt-6" style={{ borderColor: item.accent }}>
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-1" style={{ color: item.accent }}>{item.sub}</p>
+                <h3 className="font-serif text-2xl mb-4">{item.title}</h3>
+                <p className="text-[13px] leading-[1.85] text-neutral-600">{item.body}</p>
               </div>
-            </FadeIn>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      {/* ── WIND EMBED ─────────────────────────────────── */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b" style={{ borderColor: C.border }}>
-        <FadeIn>
-          <p className="font-mono text-[10px] uppercase tracking-widest mb-2" style={{ color: C.muted }}>
-            Live Wind — Migration Conditions Now
-          </p>
-          <p className="font-mono text-[11px] mb-6" style={{ color: C.muted }}>
-            Birds read wind the way sailors do. North winds push autumn migration south through the strait. 
-            South winds halt it. The Saharan sirocco can ground thousands of birds for days.
-          </p>
-        </FadeIn>
-        <div className="rounded overflow-hidden" style={{ height: 400, border: `1px solid ${C.border}` }}>
-          <iframe
-            src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=km/h&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=32.5&lon=-7.0&detailLat=35.98&detailLon=-5.60&detail=true&pressure=true&message=true"
-            style={{ width: "100%", height: "100%", border: "none" }}
-            title="Live wind conditions over Morocco"
-          />
-        </div>
-        <p className="font-mono text-[10px] mt-2" style={{ color: C.muted }}>
-          Source: Windy.com · ECMWF forecast model · Live
-        </p>
-      </section>
-
-      {/* ── READING NOTES ──────────────────────────────── */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b" style={{ borderColor: C.border }}>
-        <p className="font-mono text-[10px] uppercase tracking-widest mb-8" style={{ color: C.muted }}>
-          Reading Notes
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          <FadeIn>
-            <p className="font-mono text-[10px] uppercase tracking-widest mb-2" style={{ color: C.gold }}>
-              Why More Than France
-            </p>
-            <p className="text-[12px] leading-[1.75]" style={{ color: C.text }}>
-              Morocco's 500+ species exceed France's and Spain's totals because it straddles four biomes 
-              simultaneously: Mediterranean, Atlantic, Saharan, and sub-Saharan. A single day's birding can 
-              move through wetland, coastal scrub, argan forest, and semi-desert. The overlap creates 
-              an extraordinary concentration of habitat types in a small geography.
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <p className="font-mono text-[10px] uppercase tracking-widest mb-2" style={{ color: C.green }}>
-              The Ramsar Chain
-            </p>
-            <p className="text-[12px] leading-[1.75]" style={{ color: C.text }}>
-              Morocco has 24 Ramsar-designated wetlands. Five of the key birding sites — Merja Zerga, 
-              Sidi Bourhaba, Souss-Massa, Oued Massa, Khnifiss — are formally protected under international law. 
-              The designation matters: it gives local water managers a legal framework against drainage and 
-              provides international funding mechanisms for habitat restoration.
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <p className="font-mono text-[10px] uppercase tracking-widest mb-2" style={{ color: "#9b8db0" }}>
-              The Night Crossing
-            </p>
-            <p className="text-[12px] leading-[1.75]" style={{ color: C.text }}>
-              Passerines — warblers, flycatchers, redstarts — cross the strait at night. They navigate by 
-              stars and magnetic field, trusting darkness to protect them from raptors that cross by day on 
-              the same thermals. The predator-prey arms race has produced a system where the sky above 
-              the strait belongs to different species at different hours.
-            </p>
-          </FadeIn>
+      {/* ━━━ SEASONAL PRESENCE ━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-24 border-b border-neutral-100">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          <div className="lg:col-span-4">
+            <Reveal>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-4">When to go</p>
+              <h2 className="font-serif text-4xl leading-tight mb-6">
+                <em>Nine species,<br />twelve months</em>
+              </h2>
+              <p className="text-[13px] leading-[1.85] text-neutral-600 mb-6">
+                Morocco is not a seasonal destination for birds — it is a year-round one. Something extraordinary 
+                is always happening. The question is which extraordinary thing you are there to see.
+              </p>
+              <p className="text-[13px] leading-[1.85] text-neutral-600">
+                September is the crossing — raptors and storks above the strait. January is flamingos 
+                and wintering waterbirds at the Atlantic lagoons. March is the Bald Ibis at Souss-Massa, 
+                arriving to breed on the same cliffs they have used for thousands of years. 
+                May is the High Atlas, when the Bearded Vulture is still at the nest.
+              </p>
+            </Reveal>
+          </div>
+          <div className="lg:col-span-8">
+            <Reveal delay={0.15}>
+              <SeasonalChart />
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* ── JOURNEY CTA ────────────────────────────────── */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-10 border-b" style={{ borderColor: C.border }}>
-        <FadeIn>
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <p className="font-mono text-[12px]" style={{ color: C.muted }}>
+      {/* ━━━ LIVE DISPATCH ━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-24 border-b border-neutral-100">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          <div className="lg:col-span-4">
+            <Reveal>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-4">Dispatch</p>
+              <h2 className="font-serif text-4xl leading-tight mb-6">
+                <em>What is being<br />seen today</em>
+              </h2>
+              <p className="text-[13px] leading-[1.85] text-neutral-600">
+                Observations submitted by birders in Morocco in the last 14 days, 
+                via the eBird citizen science network. Updated daily. 
+                The list changes with the season — check it in September and it reads 
+                like a roll call of everything Europe is sending south.
+              </p>
+            </Reveal>
+          </div>
+          <div className="lg:col-span-7 lg:col-start-6">
+            <Reveal delay={0.1}>
+              <LiveDispatch />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ WIND EMBED ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-24 border-b border-neutral-100">
+        <Reveal>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mb-8">
+            <div className="lg:col-span-6">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-4">Migration conditions now</p>
+              <h2 className="font-serif text-4xl leading-tight">
+                <em>Birds read wind<br />the way sailors do</em>
+              </h2>
+            </div>
+            <div className="lg:col-span-5 lg:col-start-8">
+              <p className="text-[13px] leading-[1.85] text-neutral-600">
+                North winds push autumn migration south through the strait. South winds halt it. 
+                The Saharan sirocco can ground thousands of birds for days — you can find 
+                exhausted warblers sitting on every surface in Tarifa waiting for the weather to turn. 
+                The map below shows current wind conditions over Morocco.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <div className="rounded-sm overflow-hidden border border-neutral-100" style={{ height: 440 }}>
+            <iframe
+              src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=km/h&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=32.5&lon=-7.0&detail=true&pressure=true&message=true"
+              style={{ width: "100%", height: "100%", border: "none" }}
+              title="Wind conditions over Morocco"
+            />
+          </div>
+          <p className="font-mono text-[10px] text-neutral-300 mt-3">
+            Windy.com · ECMWF forecast model · live
+          </p>
+        </Reveal>
+      </section>
+
+      {/* ━━━ THREE SPECIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-24 border-b border-neutral-100">
+        <Reveal>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-300 mb-16">
+            The species Morocco cannot afford to lose
+          </p>
+        </Reveal>
+        <div className="space-y-16">
+          {[
+            {
+              name: "Northern Bald Ibis",
+              status: "Endangered", statusColor: "#dc2626",
+              opening: "It went extinct everywhere else first.",
+              body: "Europe lost it in the 17th century. The Middle East lost it in the 20th. Morocco held on. The species is bald, black, and equipped with a curved red bill — it has never won any beauty competitions — but it breeds on coastal cliffs at Souss-Massa and Tamri with the consistency of something that has been doing this for a million years. The global wild population stands at around 700 individuals. Nearly all of them are here.",
+            },
+            {
+              name: "Marbled Duck",
+              status: "Vulnerable", statusColor: "#d97706",
+              opening: "A duck that needs a specific kind of wetland.",
+              body: "Not any wetland — shallow, vegetated, warm. The Marbled Duck has been declining across its Mediterranean range for decades as marshes drain and water tables drop. Morocco's Atlantic lagoon chain — Merja Zerga, Sidi Bourhaba, Dayet Aoua in the Middle Atlas — is critical to the western population. Each drained wetland removes a breeding or wintering site with no substitute available. The global population is estimated at 15,000–20,000 birds.",
+            },
+            {
+              name: "Houbara Bustard",
+              status: "Vulnerable", statusColor: "#d97706",
+              opening: "The most politically complex bird in Morocco.",
+              body: "The Houbara Bustard has been hunted with falcons for centuries across the Arab world. Moroccan populations face pressure from legal, licensed falconry hunts by Gulf royalty — a diplomatic relationship that complicates straightforward conservation. The bird is a steppe and desert specialist, and the Saharan fringes around Merzouga remain one of the last viable North African sites. Whether the populations there are sustainable depends entirely on decisions made in palaces rather than field stations.",
+            },
+          ].map((sp, i) => (
+            <Reveal key={sp.name} delay={i * 0.08}>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-16 border-b border-neutral-100 last:border-0 last:pb-0">
+                <div className="lg:col-span-3">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-1" style={{ color: sp.statusColor }}>{sp.status}</p>
+                  <h3 className="font-serif text-2xl text-neutral-900">{sp.name}</h3>
+                </div>
+                <div className="lg:col-span-8 lg:col-start-5">
+                  <p className="font-serif italic text-xl text-neutral-700 mb-4">{sp.opening}</p>
+                  <p className="text-[13px] leading-[1.85] text-neutral-600">{sp.body}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ━━━ JOURNEY CTA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
+        <Reveal>
+          <div className="flex items-center justify-between gap-8 flex-wrap">
+            <p className="font-serif italic text-xl text-neutral-600 max-w-lg">
               The birding routes we build cross wetlands most tourists never see.
             </p>
             <Link href="/plan-your-trip"
-              className="font-mono text-[11px] uppercase tracking-widest border px-6 py-3 hover:bg-black hover:text-white transition-colors"
-              style={{ borderColor: C.ink, color: C.ink }}>
+              className="font-mono text-[11px] uppercase tracking-[0.15em] border border-neutral-900 px-7 py-3.5 hover:bg-neutral-900 hover:text-white transition-all duration-200 whitespace-nowrap">
               Plan a birding journey →
             </Link>
           </div>
-        </FadeIn>
+        </Reveal>
       </section>
 
-      {/* ── SOURCES ────────────────────────────────────── */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-12" style={{ background: "#1a1a1a" }}>
-        <div className="max-w-[640px]">
-          <p className="font-mono text-[10px] uppercase tracking-widest mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>
-            Sources & Live Data
-          </p>
-          <p className="text-[11px] leading-[1.75]" style={{ color: "rgba(255,255,255,0.5)" }}>
-            Live sightings: eBird / Cornell Lab of Ornithology, updated daily (api.ebird.org). 
-            Seasonal presence data: BirdLife International datazone, Bergier & Thévenot <em>Oiseaux du Maroc</em> (2006), 
-            GREPOM (Groupe de Recherche pour la Protection des Oiseaux au Maroc). 
-            Site significance: IBA (Important Bird Areas) database, BirdLife International. 
-            Wind data: Windy.com / ECMWF. Population figures: IUCN Red List 2024.
-            Migration bottleneck data: HawkWatch International, SEO/BirdLife Gibraltar counts.
-          </p>
-          <p className="font-mono text-[11px] mt-4" style={{ color: C.gold }}>
-            © Slow Morocco · J. Ng
-          </p>
+      {/* ━━━ SOURCES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-16" style={{ background: "#141414" }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl">
+          <div>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.25)" }}>
+              Live data
+            </p>
+            <p className="text-[11px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.4)" }}>
+              Sightings feed: eBird / Cornell Lab of Ornithology, updated daily.
+              Wind data: Windy.com / ECMWF forecast model, live.
+            </p>
+          </div>
+          <div>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.25)" }}>
+              Reference sources
+            </p>
+            <p className="text-[11px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.4)" }}>
+              Bergier & Thévenot, <em>Oiseaux du Maroc</em> (2006).
+              BirdLife International IBA database. IUCN Red List 2024.
+              GREPOM. HawkWatch International Gibraltar counts.
+            </p>
+          </div>
         </div>
+        <p className="font-mono text-[10px] mt-10" style={{ color: "#c9a96e" }}>
+          © Slow Morocco · J. Ng
+        </p>
       </section>
 
     </div>
