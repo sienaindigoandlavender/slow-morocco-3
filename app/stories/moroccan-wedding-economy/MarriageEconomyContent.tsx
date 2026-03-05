@@ -571,12 +571,16 @@ function SinglehoodChart() {
 // ─────────────────────────────────────────────
 
 export default function MarriageEconomyContent({ story, images, relatedJourneys }: Props) {
+  const chunks = story.body ? splitBody(story.body, [3, 6, 9]) : [];
+  const [c1 = "", c2 = "", c3 = "", c4 = ""] = chunks;
+  const sources = story.sources
+    ? story.sources.split(";;").map(s => s.trim()).filter(Boolean)
     : [];
 
   return (
     <div className="min-h-screen bg-white text-neutral-900">
 
-      {/* HERO */}
+      {/* ━━━ HERO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section>
         {story.hero_image ? (
           <div className="relative w-full" style={{ height: "70vh", minHeight: 480 }}>
@@ -609,22 +613,32 @@ export default function MarriageEconomyContent({ story, images, relatedJourneys 
         )}
       </section>
 
-      {/* FULL STORY BODY */}
-      {story.body && (
+      {/* ━━━ STATS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-14 border-b border-neutral-100">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          <AnimStat value={252000} label="marriages per year" accent="#c9a96e" />
+          <AnimStat value={65475} label="divorces in 2024" accent="#c04040" />
+          <AnimStat value={32} suffix=" yrs" label="avg age men at marriage" accent="#2d7a5a" />
+          <AnimStat value={89} suffix="%" label="divorces by mutual consent" accent="#9b8db0" />
+        </div>
+      </section>
+
+      {/* ━━━ BODY 1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {c1 && (
         <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-7">
-              <Reveal><BodyChunk content={story.body} /></Reveal>
+              <Reveal><BodyChunk content={c1} /></Reveal>
             </div>
             <div className="lg:col-span-4 lg:col-start-9">
               <Reveal delay={0.15}>
                 <div className="sticky top-24 border-l-2 border-neutral-200 pl-6 space-y-5">
                   <p className="font-serif italic text-xl leading-snug text-neutral-600">
-                    "The wedding costs more than the house. Everyone knows this. Everyone pays anyway."
+                    "For every 100 marriages filed between 2017 and 2021, fifty divorce cases were registered."
                   </p>
                   <div className="space-y-4 pt-2">
                     {[
-                      { label: "The mahr", note: "Mandatory gift from groom to bride · her legal property alone" },
+                      { label: "The mahr", note: "Mandatory dowry from groom to bride · her legal property alone" },
                       { label: "The négafa", note: "Professional wedding stylist · manages all outfit changes and ritual choreography" },
                       { label: "The amariya", note: "Gilded throne carried on shoulders · 5,000–50,000 MAD to rent" },
                     ].map(item => (
@@ -641,7 +655,187 @@ export default function MarriageEconomyContent({ story, images, relatedJourneys 
         </section>
       )}
 
-      {/* STORY IMAGES */}
+      {/* ━━━ CHART 1 — Marriage vs Divorce ━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="lg:col-span-4">
+            <Reveal>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-4">The numbers</p>
+              <h2 className="font-serif text-3xl leading-tight mb-5">
+                <em>Fewer marriages.<br />More divorces.<br />Every year.</em>
+              </h2>
+              <p className="text-[13px] leading-[1.85] text-neutral-600">
+                Marriages peaked around 280,000 in 2018 and have been declining since.
+                Divorces have moved in the opposite direction — rising from 44,408 in 2014
+                to a peak of 67,556 in 2023. The Covid year of 2020 pushed the ratio
+                to one divorce for every two marriages.
+              </p>
+            </Reveal>
+          </div>
+          <div className="lg:col-span-8">
+            <Reveal delay={0.15}><MarriageDivorceTrend /></Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ BODY 2 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {c2 && (
+        <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
+          <div className="max-w-2xl">
+            <Reveal><BodyChunk content={c2} /></Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* ━━━ CHART 2 — Wedding Cost Breakdown ━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
+        <Reveal>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-10">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-4">What it costs</p>
+              <h2 className="font-serif text-3xl leading-tight">
+                <em>The line items<br />nobody quotes you</em>
+              </h2>
+            </div>
+            <p className="text-[13px] leading-[1.85] text-neutral-600">
+              A standard Moroccan wedding runs 200,000–400,000 dirhams ($20,000–$40,000).
+              The groom's family traditionally pays. The bride's family provides the trousseau —
+              caftans, jewelry, household items. Switch between budgets to see how each
+              line item scales.
+            </p>
+          </div>
+        </Reveal>
+        <Reveal delay={0.1}><WeddingCostChart /></Reveal>
+      </section>
+
+      {/* ━━━ BODY 3 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {c3 && (
+        <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
+          <div className="max-w-2xl">
+            <Reveal><BodyChunk content={c3} /></Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* ━━━ CHART 3+4 — Consent & Singlehood ━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
+        <Reveal>
+          <div className="mb-10">
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-4">Changing norms</p>
+            <h2 className="font-serif text-3xl leading-tight max-w-lg">
+              <em>The divorce is amicable.<br />The single woman is no longer exceptional.</em>
+            </h2>
+          </div>
+        </Reveal>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+          <Reveal delay={0.05}>
+            <div>
+              <DivorceConsentChart />
+              <p className="text-[13px] leading-[1.85] text-neutral-600 mt-5">
+                In 2014, 37% of Moroccan divorces were contested. By 2024, only 10.7% were.
+                The shift to <em>chiqaq</em> — mutual consent divorce — reflects both legal
+                reform and a generational change in how couples approach the end of a marriage.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <div>
+              <SinglehoodChart />
+              <p className="text-[13px] leading-[1.85] text-neutral-600 mt-5">
+                Women over 50 who have never married: 3.9% in 2004, 11.1% in 2024.
+                The rate is higher in rural areas — where economic pressure on men to pay
+                wedding costs is most acute — and growing fastest among urban, educated women.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ━━━ MARRIAGE AGE COMPARISON ━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
+        <Reveal>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-10">Average age at first marriage</p>
+        </Reveal>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl">
+          {[
+            { label: "Women", value: 25.5, accent: "#9b8db0", note: "Up from 26.4 in 2004 (HCP notes the 2018 figure as current baseline)" },
+            { label: "Men", value: 31.9, accent: "#c9a96e", note: "Up from 31.2 in 2004. Housing costs and wedding expenses delay marriage" },
+          ].map((item, i) => (
+            <Reveal key={item.label} delay={i * 0.1}>
+              <div className="border-t-2 pt-6" style={{ borderColor: item.accent }}>
+                <div className="font-serif leading-none mb-2" style={{ fontSize: "clamp(3rem,7vw,5rem)", color: item.accent }}>
+                  {item.value}
+                </div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400 mb-2">
+                  {item.label} · years old
+                </p>
+                <p className="text-[12px] text-neutral-500 leading-relaxed">{item.note}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ━━━ BODY 4 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {c4 && (
+        <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
+          <div className="max-w-2xl">
+            <Reveal><BodyChunk content={c4} /></Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* ━━━ CHILD MARRIAGE DECLINE ━━━━━━━━━━━━━━━━━━ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
+        <Reveal>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="lg:col-span-5">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-4">One number that moved</p>
+              <h2 className="font-serif text-3xl leading-tight mb-5">
+                <em>Child marriage<br />nearly gone</em>
+              </h2>
+              <p className="text-[13px] leading-[1.85] text-neutral-600">
+                The percentage of women aged 20–24 who were married before turning 18
+                fell from 15.9% in 2004 to 8.4% in 2024. Marriages involving girls
+                under 15 have nearly disappeared entirely — from 2.5% to 0.2%.
+                The 2004 Mudawwana reform raised the legal minimum marriage age to 18.
+                The data suggests it worked.
+              </p>
+            </div>
+            <div className="lg:col-span-6 lg:col-start-7">
+              <Reveal delay={0.1}>
+                <div className="space-y-4">
+                  {[
+                    { label: "Women married before 18", before: 15.9, after: 8.4, accent: "#c04040" },
+                    { label: "Girls married under 15", before: 2.5, after: 0.2, accent: "#c9a96e" },
+                    { label: "Women single at 50", before: 3.9, after: 11.1, accent: "#9b8db0" },
+                    { label: "Women-headed households", before: 16.2, after: 19.2, accent: "#2d7a5a" },
+                  ].map(item => (
+                    <div key={item.label} className="grid grid-cols-12 items-center gap-3 py-4 border-b border-neutral-100">
+                      <div className="col-span-5">
+                        <p className="font-mono text-[11px] text-neutral-600">{item.label}</p>
+                      </div>
+                      <div className="col-span-4">
+                        <div className="relative h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+                          <div className="absolute left-0 top-0 bottom-0 rounded-full transition-all duration-700"
+                            style={{ width: `${(item.after / 20) * 100}%`, background: item.accent }} />
+                        </div>
+                      </div>
+                      <div className="col-span-3 text-right">
+                        <span className="font-mono text-[11px] text-neutral-400 line-through mr-2">{item.before}%</span>
+                        <span className="font-mono text-[13px]" style={{ color: item.accent }}>{item.after}%</span>
+                      </div>
+                    </div>
+                  ))}
+                  <p className="font-mono text-[10px] text-neutral-300 pt-1">2004 → 2024 · HCP Morocco</p>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ━━━ STORY IMAGES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {images.length > 0 && (
         <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -663,7 +857,7 @@ export default function MarriageEconomyContent({ story, images, relatedJourneys 
         </section>
       )}
 
-      {/* JOURNEY CTA */}
+      {/* ━━━ JOURNEY CTA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
         <Reveal>
           <div className="flex items-center justify-between gap-8 flex-wrap">
@@ -678,7 +872,7 @@ export default function MarriageEconomyContent({ story, images, relatedJourneys 
         </Reveal>
       </section>
 
-      {/* RELATED JOURNEYS */}
+      {/* ━━━ RELATED JOURNEYS ━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {relatedJourneys.length > 0 && (
         <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
           <Reveal>
@@ -702,167 +896,7 @@ export default function MarriageEconomyContent({ story, images, relatedJourneys 
         </section>
       )}
 
-      {/* ━━━ THE ECONOMICS — after story is complete ━━ */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
-        <Reveal>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-3">The data</p>
-          <h2 className="font-serif leading-[0.92] tracking-tight mb-4" style={{ fontSize: "clamp(2rem,5vw,3.5rem)" }}>
-            <em>The numbers<br />behind the celebration</em>
-          </h2>
-          <p className="text-[13px] leading-[1.85] text-neutral-500 max-w-xl">
-            Morocco's marriage economy — costs, trends, and how the institution is changing.
-            All data sourced from the HCP (Haut-Commissariat au Plan), 2024.
-          </p>
-        </Reveal>
-      </section>
-
-      {/* STATS */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-14 border-b border-neutral-100">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-          <AnimStat value={252000} label="marriages per year" accent="#c9a96e" />
-          <AnimStat value={65475} label="divorces in 2024" accent="#c04040" />
-          <AnimStat value={32} suffix=" yrs" label="avg age men at marriage" accent="#2d7a5a" />
-          <AnimStat value={89} suffix="%" label="divorces by mutual consent" accent="#9b8db0" />
-        </div>
-      </section>
-
-      {/* CHART 1 — Marriage vs Divorce */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-4">
-            <Reveal>
-              <h3 className="font-serif text-2xl leading-tight mb-4">
-                <em>Fewer marriages.<br />More divorces.<br />Every year.</em>
-              </h3>
-              <p className="text-[13px] leading-[1.85] text-neutral-600">
-                Marriages peaked around 280,000 in 2018 and have been declining since.
-                Divorces rose from 44,408 in 2014 to a peak of 67,556 in 2023.
-                In 2020, the ratio hit one divorce for every two marriages.
-              </p>
-            </Reveal>
-          </div>
-          <div className="lg:col-span-8">
-            <Reveal delay={0.15}><MarriageDivorceTrend /></Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* CHART 2 — Wedding Cost */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
-        <Reveal>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-10">
-            <h3 className="font-serif text-2xl leading-tight">
-              <em>The line items<br />nobody quotes you</em>
-            </h3>
-            <p className="text-[13px] leading-[1.85] text-neutral-600">
-              A standard wedding runs 200,000–400,000 dirhams ($20,000–$40,000).
-              The groom's family traditionally pays everything except the bride's trousseau.
-              Switch between budgets to see how each line item scales.
-            </p>
-          </div>
-        </Reveal>
-        <Reveal delay={0.1}><WeddingCostChart /></Reveal>
-      </section>
-
-      {/* CHART 3+4 — Consent & Singlehood */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
-        <Reveal>
-          <h3 className="font-serif text-2xl leading-tight mb-10 max-w-lg">
-            <em>The divorce is amicable.<br />The single woman is no longer exceptional.</em>
-          </h3>
-        </Reveal>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
-          <Reveal delay={0.05}>
-            <div>
-              <DivorceConsentChart />
-              <p className="text-[13px] leading-[1.85] text-neutral-600 mt-5">
-                In 2014, 37% of divorces were contested. By 2024, only 10.7% were.
-                The shift to <em>chiqaq</em> — mutual consent — reflects both legal reform
-                and a generational change in how couples end a marriage.
-              </p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <div>
-              <SinglehoodChart />
-              <p className="text-[13px] leading-[1.85] text-neutral-600 mt-5">
-                Women over 50 who have never married: 3.9% in 2004, 11.1% in 2024.
-                Growing fastest among urban, educated women — and in rural areas where
-                the financial burden on men is most acute.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* MARRIAGE AGE */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
-        <Reveal>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-10">Average age at first marriage</p>
-        </Reveal>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl">
-          {[
-            { label: "Women", value: 25.5, accent: "#9b8db0", note: "Up from 26.4 in 2004 (HCP notes 2018 figure as current baseline)" },
-            { label: "Men", value: 31.9, accent: "#c9a96e", note: "Up from 31.2 in 2004. Housing costs and wedding expenses delay marriage." },
-          ].map((item, i) => (
-            <Reveal key={item.label} delay={i * 0.1}>
-              <div className="border-t-2 pt-6" style={{ borderColor: item.accent }}>
-                <div className="font-serif leading-none mb-2" style={{ fontSize: "clamp(3rem,7vw,5rem)", color: item.accent }}>
-                  {item.value}
-                </div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400 mb-2">{item.label} · years old</p>
-                <p className="text-[12px] text-neutral-500 leading-relaxed">{item.note}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* BEFORE / AFTER */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-b border-neutral-100">
-        <Reveal>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-5">
-              <h3 className="font-serif text-2xl leading-tight mb-5"><em>Twenty years of change</em></h3>
-              <p className="text-[13px] leading-[1.85] text-neutral-600">
-                The 2004 Mudawwana reform raised the minimum marriage age to 18, gave women
-                equal right to initiate divorce, and restricted polygamy. The data shows what changed.
-              </p>
-            </div>
-            <div className="lg:col-span-6 lg:col-start-7">
-              <Reveal delay={0.1}>
-                <div className="space-y-4">
-                  {[
-                    { label: "Women married before 18", before: 15.9, after: 8.4, accent: "#c04040" },
-                    { label: "Girls married under 15", before: 2.5, after: 0.2, accent: "#c9a96e" },
-                    { label: "Women single at 50", before: 3.9, after: 11.1, accent: "#9b8db0" },
-                    { label: "Women-headed households", before: 16.2, after: 19.2, accent: "#2d7a5a" },
-                  ].map(item => (
-                    <div key={item.label} className="grid grid-cols-12 items-center gap-3 py-4 border-b border-neutral-100">
-                      <div className="col-span-5">
-                        <p className="font-mono text-[11px] text-neutral-600">{item.label}</p>
-                      </div>
-                      <div className="col-span-4">
-                        <div className="relative h-1.5 bg-neutral-100 rounded-full overflow-hidden">
-                          <div className="absolute left-0 top-0 bottom-0 rounded-full"
-                            style={{ width: `${(item.after / 20) * 100}%`, background: item.accent }} />
-                        </div>
-                      </div>
-                      <div className="col-span-3 text-right">
-                        <span className="font-mono text-[11px] text-neutral-400 line-through mr-2">{item.before}%</span>
-                        <span className="font-mono text-[13px]" style={{ color: item.accent }}>{item.after}%</span>
-                      </div>
-                    </div>
-                  ))}
-                  <p className="font-mono text-[10px] text-neutral-300 pt-1">2004 → 2024 · HCP Morocco</p>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* SOURCES */}
+      {/* ━━━ SOURCES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="px-8 md:px-[8%] lg:px-[12%] py-16" style={{ background: "#141414" }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-4xl">
           <div>
