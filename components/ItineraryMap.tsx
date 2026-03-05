@@ -322,7 +322,7 @@ export default function ItineraryMap({ itinerary, className = '' }: ItineraryMap
   return (
     <div className={`relative ${className}`}>
       {isLoading && (
-        <div className="absolute inset-0 bg-[#f5f0e8] flex items-center justify-center z-10">
+        <div className="absolute inset-0 bg-[#f5f5f5] flex items-center justify-center z-10">
           <div className="w-8 h-8 border-2 border-foreground/20 border-t-foreground rounded-full animate-spin" />
         </div>
       )}

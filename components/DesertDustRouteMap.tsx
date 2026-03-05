@@ -242,7 +242,7 @@ export default function DesertDustRouteMap({ className = '' }: { className?: str
   if (mapError) {
     return (
       <div className={`relative ${className}`}>
-        <div className="w-full h-[400px] bg-[#f5f0e8] flex items-center justify-center">
+        <div className="w-full h-[400px] bg-[#f5f5f5] flex items-center justify-center">
           <div className="text-center px-8">
             <p className="text-sm text-foreground/60 mb-4">Interactive map unavailable</p>
             <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-foreground/70">
@@ -267,7 +267,7 @@ export default function DesertDustRouteMap({ className = '' }: { className?: str
   return (
     <div className={`relative ${className}`}>
       {isLoading && (
-        <div className="absolute inset-0 bg-[#f5f0e8] flex items-center justify-center z-10">
+        <div className="absolute inset-0 bg-[#f5f5f5] flex items-center justify-center z-10">
           <div className="w-8 h-8 border-2 border-foreground/20 border-t-foreground rounded-full animate-spin" />
         </div>
       )}
