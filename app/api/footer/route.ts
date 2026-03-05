@@ -156,7 +156,7 @@ export async function GET() {
         }
         // Remove visa/health/insurance — these live in /travel
         col.links = col.links.filter((l: any) =>
-          !["/visa-info", "/health-safety", "/travel-insurance"].includes(l.href)
+          !["/visa-info", "/health-safety", "/travel-insurance", "/contact", "/about"].includes(l.href)
         );
       }
     });
