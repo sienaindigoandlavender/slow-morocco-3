@@ -64,10 +64,7 @@ const jsonLd = {
       "datePublished": "2025-01-01",
       "dateModified": new Date().toISOString().split("T")[0],
       "author": { "@type": "Person", "name": "J. Ng", "url": `${BASE_URL}/about` },
-      "publisher": {
-        "@type": "Organization", "name": "Slow Morocco", "url": BASE_URL,
-        "parentOrganization": { "@type": "Organization", "name": "Dancing with Lions", "url": "https://www.dancingwiththelions.com" },
-      },
+      "publisher": { "@type": "Organization", "name": "Slow Morocco", "url": BASE_URL },
       "mainEntityOfPage": CANONICAL,
       "keywords": "Morocco birds, bird migration, Atlantic flyway, Northern Bald Ibis, Merja Zerga, Souss-Massa, Gibraltar crossing",
       "articleSection": "Nature",
