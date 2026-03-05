@@ -28,6 +28,7 @@ const STATIC_PAGES = [
   { path: '/journeys', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/stories', priority: 0.8, changeFrequency: 'weekly' as const },
   { path: '/places', priority: 0.8, changeFrequency: 'weekly' as const },
+  { path: '/places/map', priority: 0.7, changeFrequency: 'weekly' as const },
   // City guides — high priority, these are destination authority pages
   ...CITY_SLUGS.map(city => ({
     path: `/${city}`,
