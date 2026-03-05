@@ -70,12 +70,34 @@ async function fetchCityData(citySlug: string) {
 
   if (!destination) return null;
 
-  // Filter journeys that include this city
-  const journeys = allJourneys.filter((j) => {
+  const CITY_SLUGS_ALL = [
+    "marrakech", "fes", "tangier", "rabat", "essaouira",
+    "casablanca", "meknes", "ouarzazate", "agadir", "dakhla", "chefchaouen",
+  ];
+
+  // Featured journeys — city is start point or first/only destination
+  const featuredJourneys = allJourneys.filter((j) => {
     const dests = (j.destinations || "").toLowerCase();
     const start = (j.start_city || "").toLowerCase();
     const slug = citySlug.toLowerCase();
-    return dests.includes(slug) || start.includes(slug);
+    const destList = dests.split(",").map((d: string) => d.trim());
+    return (
+      start === slug ||
+      destList[0] === slug ||
+      (destList.length === 1 && destList[0] === slug)
+    );
+  });
+
+  // Connecting journeys — city appears in route but not as start/primary
+  // Must connect through at least one other known city
+  const featuredSlugs = new Set(featuredJourneys.map((j) => j.slug));
+  const connectingJourneys = allJourneys.filter((j) => {
+    if (featuredSlugs.has(j.slug)) return false;
+    const dests = (j.destinations || "").toLowerCase();
+    const slug = citySlug.toLowerCase();
+    if (!dests.includes(slug)) return false;
+    const otherCities = CITY_SLUGS_ALL.filter((c) => c !== slug);
+    return otherCities.some((c) => dests.includes(c));
   });
 
   // Filter stories by tags or region matching city
@@ -87,7 +109,7 @@ async function fetchCityData(citySlug: string) {
     return tags.includes(slug) || tags.includes(title) || region.includes(slug) || region.includes(title);
   });
 
-  return { destination, journeys, places, stories: cityStories };
+  return { destination, featuredJourneys, connectingJourneys, places, stories: cityStories };
 }
 
 export default async function CityGuidePage({ params }: Props) {
@@ -99,7 +121,8 @@ export default async function CityGuidePage({ params }: Props) {
   return (
     <CityGuideContent
       destination={data.destination}
-      journeys={data.journeys}
+      journeys={data.featuredJourneys}
+      connectingJourneys={data.connectingJourneys}
       places={data.places}
       stories={data.stories}
       citySlug={params.city}

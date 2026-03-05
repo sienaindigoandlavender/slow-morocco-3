@@ -55,6 +55,7 @@ interface Story {
 interface Props {
   destination: Destination;
   journeys: Journey[];
+  connectingJourneys: Journey[];
   places: Place[];
   stories: Story[];
   citySlug: string;
@@ -179,6 +180,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 export default function CityGuideContent({
   destination,
   journeys,
+  connectingJourneys,
   places,
   stories,
   citySlug,
@@ -424,6 +426,92 @@ export default function CityGuideContent({
               </Link>
             </div>
           )}
+        </section>
+      )}
+
+      {/* ── You might also consider ──────────────────────────────────────── */}
+      {connectingJourneys.length > 0 && (
+        <section className="px-8 md:px-16 lg:px-20 pb-20 md:pb-28 border-t border-border pt-16">
+          <div className="mb-12">
+            <p className="text-[10px] tracking-[0.3em] uppercase font-mono text-foreground/30 mb-2">
+              You might also consider
+            </p>
+            <p className="font-serif text-2xl md:text-3xl text-foreground/70">
+              Journeys that pass through {destination.title}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+            {connectingJourneys.slice(0, 3).map((journey) => {
+              // Extract the other cities this journey visits
+              const otherDests = (journey.destinations || "")
+                .split(",")
+                .map((d: string) => d.trim())
+                .filter((d: string) => d !== citySlug && d.length > 0)
+                .slice(0, 3);
+
+              return (
+                <article key={journey.slug}>
+                  <Link href={`/journeys/${journey.slug}`} className="group">
+                    <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-5">
+                      {journey.hero_image_url && (
+                        <Image
+                          src={journey.hero_image_url}
+                          alt={journey.title}
+                          fill
+                          className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        />
+                      )}
+                    </div>
+
+                    {/* Route line */}
+                    {otherDests.length > 0 && (
+                      <div className="flex items-center gap-1.5 mb-3 flex-wrap">
+                        <span className="text-[9px] tracking-[0.2em] uppercase font-mono text-foreground/25">
+                          {destination.title}
+                        </span>
+                        {otherDests.map((dest: string) => (
+                          <span key={dest} className="flex items-center gap-1.5">
+                            <span className="text-foreground/15 text-[9px]">→</span>
+                            <span className="text-[9px] tracking-[0.2em] uppercase font-mono text-foreground/25 capitalize">
+                              {dest.replace(/-/g, " ")}
+                            </span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="flex items-center gap-3 mb-2">
+                      {journey.duration_days ? (
+                        <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30">
+                          {journey.duration_days}d
+                        </span>
+                      ) : null}
+                      {journey.category && (
+                        <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30">
+                          {journey.category}
+                        </span>
+                      )}
+                    </div>
+
+                    <h3 className="font-serif text-xl mb-2 group-hover:text-foreground/60 transition-colors">
+                      {journey.title}
+                    </h3>
+                    {(journey.short_description || journey.arc_description) && (
+                      <p className="text-sm text-foreground/50 leading-relaxed line-clamp-2">
+                        {journey.short_description || journey.arc_description}
+                      </p>
+                    )}
+                    {journey.price_eur ? (
+                      <p className="text-xs text-foreground/30 mt-3 font-mono">
+                        From €{journey.price_eur}
+                      </p>
+                    ) : null}
+                  </Link>
+                </article>
+              );
+            })}
+          </div>
         </section>
       )}
 
