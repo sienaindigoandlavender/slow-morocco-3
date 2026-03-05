@@ -119,13 +119,13 @@ export async function GET() {
       }
 
       if (col.title.toLowerCase() === "journeys") {
-        const hasCancel = col.links.some((l: any) => l.href === "/cancellation-policy");
-        if (!hasCancel) {
-          col.links.push({ order: 97, label: "Cancellation Policy", href: "/cancellation-policy", type: "link" });
-        }
         const hasContact = col.links.some((l: any) => l.href === "/contact");
         if (!hasContact) {
-          col.links.push({ order: 98, label: "Contact Us", href: "/contact", type: "link" });
+          col.links.push({ order: 97, label: "Contact Us", href: "/contact", type: "link" });
+        }
+        const hasCancel = col.links.some((l: any) => l.href === "/cancellation-policy");
+        if (!hasCancel) {
+          col.links.push({ order: 98, label: "Cancellation Policy", href: "/cancellation-policy", type: "link" });
         }
         // Remove visa/health/insurance if they snuck in
         col.links = col.links.filter((l: any) =>
@@ -205,8 +205,9 @@ export async function GET() {
             { order: 2, label: "Plan Your Trip", href: "/plan-your-trip", type: "link" },
             { order: 3, label: "What's Included", href: "/whats-included", type: "link" },
             { order: 4, label: "FAQ", href: "/faq", type: "link" },
-            { order: 5, label: "Cancellation Policy", href: "/cancellation-policy", type: "link" },
+            { order: 5, label: "About", href: "/about", type: "link" },
             { order: 6, label: "Contact Us", href: "/contact", type: "link" },
+            { order: 7, label: "Cancellation Policy", href: "/cancellation-policy", type: "link" },
           ],
         },
         {
