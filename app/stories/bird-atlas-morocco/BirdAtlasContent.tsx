@@ -11,17 +11,17 @@ import * as d3 from "d3";
 
 interface Story {
   title: string;
-  subtitle?: string;
-  hero_image?: string;
-  hero_caption?: string;
-  body?: string;
-  year?: string;
-  read_time?: string;
-  text_by?: string;
-  category?: string;
-  region?: string;
-  sources?: string;
-  tags?: string;
+  subtitle?: string | null;
+  hero_image?: string | null;
+  hero_caption?: string | null;
+  body?: string | null;
+  year?: string | null;
+  read_time?: string | null;
+  text_by?: string | null;
+  category?: string | null;
+  region?: string | null;
+  sources?: string | null;
+  tags?: string | null;
 }
 
 interface StoryImage {
