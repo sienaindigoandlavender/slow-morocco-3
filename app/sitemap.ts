@@ -16,12 +16,24 @@ function safeSitemapUrl(base: string, prefix: string, slug: string): string {
   return `${base}${prefix}/${encodedSlug}`
 }
 
+// City guide slugs
+const CITY_SLUGS = [
+  'marrakech', 'fes', 'tangier', 'rabat', 'essaouira',
+  'casablanca', 'meknes', 'ouarzazate', 'agadir', 'dakhla', 'chefchaouen',
+]
+
 // Static pages with their priorities
 const STATIC_PAGES = [
   { path: '', priority: 1, changeFrequency: 'weekly' as const },
   { path: '/journeys', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/stories', priority: 0.8, changeFrequency: 'weekly' as const },
   { path: '/places', priority: 0.8, changeFrequency: 'weekly' as const },
+  // City guides — high priority, these are destination authority pages
+  ...CITY_SLUGS.map(city => ({
+    path: `/${city}`,
+    priority: 0.9,
+    changeFrequency: 'weekly' as const,
+  })),
   { path: '/about', priority: 0.7, changeFrequency: 'monthly' as const },
   { path: '/plan-your-trip', priority: 0.9, changeFrequency: 'monthly' as const },
   { path: '/manifesto', priority: 0.7, changeFrequency: 'monthly' as const },
@@ -29,6 +41,7 @@ const STATIC_PAGES = [
   { path: '/contact', priority: 0.6, changeFrequency: 'monthly' as const },
   { path: '/whats-included', priority: 0.6, changeFrequency: 'monthly' as const },
   { path: '/life', priority: 0.9, changeFrequency: 'monthly' as const },
+  { path: '/travel', priority: 0.9, changeFrequency: 'monthly' as const },
   { path: '/morocco-travel-guide', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/getting-to-morocco', priority: 0.7, changeFrequency: 'monthly' as const },
   { path: '/getting-around-morocco', priority: 0.7, changeFrequency: 'monthly' as const },
