@@ -29,6 +29,8 @@ interface Journey {
   price_eur: number | null;
   category: string | null;
   focus_type: string | null;
+  destinations: string | null;
+  start_city: string | null;
 }
 
 interface Place {
