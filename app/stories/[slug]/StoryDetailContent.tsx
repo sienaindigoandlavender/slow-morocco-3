@@ -551,11 +551,7 @@ export default function StoryDetailContent({
                         {journey.duration} days
                       </p>
                     )}
-                    {journey.price && journey.price > 0 && (
-                      <p className="text-xs text-white/40">
-                        From <span className="text-white/70">€{journey.price.toLocaleString()}</span>
-                      </p>
-                    )}
+
                   </div>
                   <h3 className="font-serif text-lg leading-snug group-hover:text-white/60 transition-colors">
                     {journey.title}
