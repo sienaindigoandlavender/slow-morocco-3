@@ -3,10 +3,19 @@
 import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
-import Chatbot from "./Chatbot";
+import WhatsAppButton from "./WhatsAppButton";
 
 // Routes that should NOT have the main header/footer
 const LANDING_PAGE_ROUTES = ["/go"];
+
+// Routes where WhatsApp button appears — commercial/booking intent only
+const WHATSAPP_ROUTES = [
+  "/journeys",
+  "/plan-your-trip",
+  "/day-trips",
+  "/epic",
+  "/overnight",
+];
 
 export default function LayoutWrapper({
   children,
@@ -14,24 +23,25 @@ export default function LayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  
-  // Check if current path starts with any landing page route
+
   const isLandingPage = LANDING_PAGE_ROUTES.some((route) =>
     pathname.startsWith(route)
   );
 
   if (isLandingPage) {
-    // Landing pages handle their own header/footer
     return <>{children}</>;
   }
 
-  // Regular pages get the main header/footer
+  const showWhatsApp = WHATSAPP_ROUTES.some((route) =>
+    pathname.startsWith(route)
+  );
+
   return (
     <>
       <Header />
       <main>{children}</main>
       <Footer />
-      <Chatbot />
+      {showWhatsApp && <WhatsAppButton />}
     </>
   );
 }
