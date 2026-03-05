@@ -238,11 +238,30 @@ export default function CityGuideContent({
         </div>
       </section>
 
-      {/* ── Intro ─────────────────────────────────────────────────────────── */}
-      <section className="px-8 md:px-16 lg:px-20 py-16 md:py-20 max-w-3xl">
-        <p className="font-serif text-xl md:text-2xl leading-relaxed text-foreground">
-          {cityData.intro}
-        </p>
+      {/* ── Intro / Body ──────────────────────────────────────────────────── */}
+      <section className="px-8 md:px-16 lg:px-20 py-16 md:py-20">
+        {destination.body ? (
+          // Database body — multi-paragraph
+          <div className="max-w-3xl space-y-6">
+            {destination.body.split(/\n\n+/).filter(Boolean).map((para, i) => (
+              <p
+                key={i}
+                className={
+                  i === 0
+                    ? "font-serif text-xl md:text-2xl leading-relaxed text-foreground"
+                    : "text-base leading-relaxed text-foreground"
+                }
+              >
+                {para}
+              </p>
+            ))}
+          </div>
+        ) : (
+          // Fallback to hardcoded one-liner
+          <p className="font-serif text-xl md:text-2xl leading-relaxed text-foreground max-w-3xl">
+            {cityData.intro}
+          </p>
+        )}
       </section>
 
       {/* ── Map + Places ──────────────────────────────────────────────────── */}
