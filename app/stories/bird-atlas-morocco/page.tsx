@@ -167,8 +167,6 @@ export default async function BirdAtlasPage() {
     ?.filter((j) =>
       j.title?.toLowerCase().includes("bird") ||
       j.title?.toLowerCase().includes("nature") ||
-      j.tags?.toLowerCase().includes("bird") ||
-      j.tags?.toLowerCase().includes("nature") ||
       j.category?.toLowerCase().includes("nature")
     )
     .slice(0, 2) || [];
