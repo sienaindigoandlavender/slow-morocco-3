@@ -672,6 +672,31 @@ export async function getStoryBySlug(slug: string) {
   return data as Story;
 }
 
+export interface StoryImage {
+  id: number;
+  story_slug: string;
+  image_url: string;
+  caption: string | null;
+  attribution: string | null;
+  license: string | null;
+  license_url: string | null;
+  source_url: string | null;
+  position: number;
+  width: number | null;
+  height: number | null;
+  created_at: string;
+}
+
+export async function getStoryImages(slug: string): Promise<StoryImage[]> {
+  const { data, error } = await supabase
+    .from("story_images")
+    .select("*")
+    .eq("story_slug", slug)
+    .order("position", { ascending: true });
+  if (error) { console.error("Error fetching story images:", error); return []; }
+  return (data || []) as StoryImage[];
+}
+
 export async function createStory(story: Partial<Story>) {
   const { data, error } = await supabase.from("stories").insert(story).select().single();
   if (error) { console.error("Error creating story:", error); return null; }
