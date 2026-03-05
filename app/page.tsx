@@ -38,7 +38,7 @@ export default async function HomePage() {
     // Format stories
     stories = storiesData
       .filter((s) => s.hero_image)
-      .slice(0, 3)
+      .slice(0, 8)
       .map((s) => ({
         slug: s.slug,
         title: s.title,
@@ -46,6 +46,8 @@ export default async function HomePage() {
         excerpt: s.excerpt,
         heroImage: s.hero_image,
         mood: s.category,
+        category: s.category,
+        read_time: s.read_time,
       }));
 
     // Format settings
