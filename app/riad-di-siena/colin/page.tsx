@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const DesertDustRouteMap = dynamic(() => import("@/components/DesertDustRouteMap"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[400px] md:h-[450px] bg-[#f5f0e8] flex items-center justify-center">
+    <div className="w-full h-[400px] md:h-[450px] bg-[#f5f5f5] flex items-center justify-center">
       <div className="w-8 h-8 border-2 border-foreground/20 border-t-foreground rounded-full animate-spin" />
     </div>
   ),
@@ -69,7 +69,7 @@ export default function ColinItineraryPage() {
       </section>
 
       {/* Bike Options */}
-      <section className="py-20 md:py-28 bg-[#f5f2ed]">
+      <section className="py-20 md:py-28 bg-white">
         <div className="container mx-auto px-8 md:px-16 lg:px-20">
           <div className="max-w-4xl">
             <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-8">
@@ -162,7 +162,7 @@ export default function ColinItineraryPage() {
       </section>
 
       {/* Midday */}
-      <section className="py-20 md:py-28 bg-[#f5f2ed]">
+      <section className="py-20 md:py-28 bg-white">
         <div className="container mx-auto px-8 md:px-16 lg:px-20">
           <div className="max-w-3xl">
             <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-4">
@@ -261,7 +261,7 @@ export default function ColinItineraryPage() {
       </section>
 
       {/* Evening */}
-      <section className="py-20 md:py-28 bg-[#f5f2ed]">
+      <section className="py-20 md:py-28 bg-white">
         <div className="container mx-auto px-8 md:px-16 lg:px-20">
           <div className="max-w-3xl">
             <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-4">
@@ -337,7 +337,7 @@ export default function ColinItineraryPage() {
       </section>
 
       {/* Start the Conversation CTA */}
-      <section className="py-24 md:py-32 bg-[#f5f2ed]">
+      <section className="py-24 md:py-32 bg-white">
         <div className="container mx-auto px-8 md:px-16 lg:px-20 text-center">
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl mb-6">
             This journey is a starting point.

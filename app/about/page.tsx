@@ -122,7 +122,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Philosophy Quote */}
-      <section className="py-20 md:py-28 bg-[#f5f2ed]">
+      <section className="py-20 md:py-28 bg-white">
         <div className="container mx-auto px-8 md:px-16 lg:px-20">
           <div className="max-w-4xl mx-auto text-center">
             <blockquote className="font-serif text-2xl md:text-3xl lg:text-4xl leading-[1.3] text-foreground/80">
@@ -201,7 +201,7 @@ export default async function AboutPage() {
 
       {/* Team Section */}
       {team.length > 0 && (
-        <section className="py-20 md:py-28 bg-[#f5f2ed]">
+        <section className="py-20 md:py-28 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-20">
             <div className="mb-16">
               <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-4">

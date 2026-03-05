@@ -230,7 +230,7 @@ export default function GentleContent({
                   className="group"
                   aria-label={`${exp.title} — ${exp.duration}-day accessible Morocco journey`}
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden mb-6 bg-[#E8E4DF]">
+                  <div className="relative aspect-[4/3] overflow-hidden mb-6 bg-[#f0f0f0]">
                     {exp.heroImage ? (
                       <Image
                         src={exp.heroImage}
@@ -422,7 +422,7 @@ export default function GentleContent({
               <div className="grid md:grid-cols-3 gap-12">
                 {team.map((member) => (
                   <div key={member.id}>
-                    <div className="w-20 h-20 mb-5 bg-[#E8E4DF] overflow-hidden">
+                    <div className="w-20 h-20 mb-5 bg-[#f0f0f0] overflow-hidden">
                       {member.image ? (
                         <Image
                           src={member.image}

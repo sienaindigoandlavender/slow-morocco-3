@@ -265,7 +265,7 @@ export default function JewishHeritageContent() {
               aria-pressed={activeFilter === key}
               className={`flex items-center gap-2 px-4 py-2 text-[10px] tracking-[0.12em] uppercase backdrop-blur-sm border transition-all ${
                 activeFilter === key
-                  ? "bg-[#f5f0e8] text-[#1a1a1a] border-[#f5f0e8]"
+                  ? "bg-[#f5f5f5] text-[#1a1a1a] border-[#f5f0e8]"
                   : "bg-[#1a1a1a]/60 text-white/50 border-white/10 hover:border-white/25 hover:text-white/80"
               }`}
             >

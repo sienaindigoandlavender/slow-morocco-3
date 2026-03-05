@@ -80,7 +80,7 @@ export default function ManifestoPage() {
       </section>
 
       {/* The Promise */}
-      <section className="py-32 md:py-40 bg-[#f5f0e8]">
+      <section className="py-32 md:py-40 bg-[#f5f5f5]">
         <div className="container mx-auto px-6 lg:px-16 max-w-3xl text-center">
           <p className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#1a1a1a]/90 leading-tight">
             We introduce you.

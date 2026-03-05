@@ -200,7 +200,7 @@ export default function HomeContent({
                   href={`/journeys/${journey.slug}`}
                   className="group flex-shrink-0 w-[280px]"
                 >
-                  <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-[#e8e0d4]">
+                  <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-[#f0f0f0]">
                     {journey.heroImage && (
                       <Image
                         src={journey.heroImage}
@@ -420,7 +420,7 @@ export default function HomeContent({
           TESTIMONIALS: What travelers say
           ═══════════════════════════════════════════════════════════════ */}
       {testimonials.length > 0 && (
-        <section className="py-20 md:py-28 bg-[#f5f2ed]">
+        <section className="py-20 md:py-28 bg-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-20">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">

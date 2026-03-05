@@ -331,7 +331,7 @@ export default function StoriesContent({
       </section>
 
       {/* Newsletter CTA */}
-      <section className="py-20 md:py-28 bg-[#f5f2ed]">
+      <section className="py-20 md:py-28 bg-white">
         <div className="container mx-auto px-8 md:px-16 lg:px-20 text-center max-w-2xl">
           <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-4">
             Stay Curious
