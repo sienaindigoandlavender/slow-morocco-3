@@ -60,7 +60,13 @@ export default function AllPlacesMap({ places, total }: Props) {
     if (!mapContainer.current || map.current) return;
     if (!mapboxgl) {
       const mb = await import("mapbox-gl");
-      await import("mapbox-gl/dist/mapbox-gl.css");
+      if (!document.getElementById("mapbox-gl-css")) {
+        const link = document.createElement("link");
+        link.id = "mapbox-gl-css";
+        link.rel = "stylesheet";
+        link.href = "https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css";
+        document.head.appendChild(link);
+      }
       mapboxgl = mb.default;
       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
     }
