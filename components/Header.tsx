@@ -60,15 +60,7 @@ export default function Header() {
               >
                 Journeys
               </Link>
-              <Link
-                href="/epic"
-                className={`text-[11px] tracking-[0.15em] uppercase transition-colors ${
-                  scrolled ? "text-foreground/70 hover:text-foreground" : "text-white/80 hover:text-white"
-                }`}
-              >
-                Epic
-              </Link>
-              <Link
+<Link
                 href="/stories"
                 className={`text-[11px] tracking-[0.15em] uppercase transition-colors ${
                   scrolled ? "text-foreground/70 hover:text-foreground" : "text-white/80 hover:text-white"
@@ -84,16 +76,7 @@ export default function Header() {
               >
                 Places
               </Link>
-              <Link
-                href="/about"
-                className={`text-[11px] tracking-[0.15em] uppercase transition-colors ${
-                  scrolled ? "text-foreground/70 hover:text-foreground" : "text-white/80 hover:text-white"
-                }`}
-              >
-                About
-              </Link>
-
-              {/* Search Icon */}
+{/* Search Icon */}
               <button
                 onClick={() => setSearchOpen(true)}
                 className={`p-2 transition-colors ${
@@ -153,14 +136,7 @@ export default function Header() {
               >
                 Journeys
               </Link>
-              <Link
-                href="/epic"
-                className="block text-sm tracking-[0.15em] uppercase py-4"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Epic
-              </Link>
-              <Link
+<Link
                 href="/stories"
                 className="block text-sm tracking-[0.15em] uppercase py-4"
                 onClick={() => setMobileMenuOpen(false)}
@@ -174,14 +150,7 @@ export default function Header() {
               >
                 Places
               </Link>
-              <Link
-                href="/about"
-                className="block text-sm tracking-[0.15em] uppercase py-4"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                About
-              </Link>
-              <div className="pt-6">
+<div className="pt-6">
                 <Link
                   href="/plan-your-trip"
                   className="inline-block text-sm tracking-[0.15em] uppercase border border-foreground px-8 py-4"
