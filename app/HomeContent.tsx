@@ -3,8 +3,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import HeroSearch from "@/components/HeroSearch";
+
+const HomeCityMap = dynamic(() => import("@/components/HomeCityMap"), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-[#0d0d0d]" />,
+});
 
 interface Journey {
   slug: string;
@@ -125,6 +131,30 @@ export default function HomeContent({
               through the people and places that make it unforgettable.
             </h2>
           </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          CITY MAP: Morocco interactive — 10 cities
+          ═══════════════════════════════════════════════════════════════ */}
+      <section className="border-t border-border">
+        <div className="container mx-auto px-8 md:px-16 lg:px-20 pt-16 pb-8">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-3 font-mono">
+                Where to go
+              </p>
+              <h2 className="font-serif text-3xl md:text-4xl text-foreground">
+                Ten cities. One country.
+              </h2>
+            </div>
+            <p className="hidden md:block text-xs text-foreground/30 tracking-[0.1em] pb-1">
+              Hover a city. Click to explore.
+            </p>
+          </div>
+        </div>
+        <div className="h-[520px] md:h-[620px] w-full">
+          <HomeCityMap />
         </div>
       </section>
 
