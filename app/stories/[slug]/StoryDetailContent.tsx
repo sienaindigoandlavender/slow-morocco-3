@@ -35,10 +35,17 @@ interface Story {
 }
 
 interface StoryImage {
+  id: number;
   story_slug: string;
-  image_order: string;
   image_url: string;
-  caption?: string;
+  caption: string | null;
+  attribution: string | null;
+  license: string | null;
+  license_url: string | null;
+  source_url: string | null;
+  position: number;
+  width: number | null;
+  height: number | null;
 }
 
 interface RelatedJourney {
@@ -201,7 +208,7 @@ export default function StoryDetailContent({
           <article className="min-w-0">
 
             {/* Body */}
-            {story.body && <StoryBody content={story.body} />}
+            {story.body && <StoryBody content={story.body} inlineImages={images} />}
 
             {/* Seasonal */}
             {story.category && (
