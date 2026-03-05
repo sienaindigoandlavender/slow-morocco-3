@@ -15,7 +15,7 @@ interface Story {
   hero_image?: string | null;
   hero_caption?: string | null;
   body?: string | null;
-  year?: string | null;
+  year?: number | null;
   read_time?: string | null;
   text_by?: string | null;
   category?: string | null;
