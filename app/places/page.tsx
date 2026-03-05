@@ -1,86 +1,42 @@
-import { Suspense } from "react";
-import { getRegions, getDestinations, getPlaces } from "@/lib/supabase";
-import PlacesContent from "./PlacesContent";
+import { Metadata } from "next";
+import { getPlaces } from "@/lib/supabase";
+import AllPlacesMap from "./AllPlacesMap";
 
-// Revalidate every hour
+export const metadata: Metadata = {
+  title: "All Places on One Map | Slow Morocco",
+  description:
+    "Every place in the Slow Morocco atlas — 120+ locations across Morocco mapped in one view. Medinas, kasbahs, oases, tanneries, shrines, souks, and more.",
+  openGraph: {
+    title: "All Places on One Map — Slow Morocco",
+    description:
+      "120+ places across Morocco. Every medina, kasbah, oasis, tannery, shrine, and souk in the atlas.",
+    url: "https://www.slowmorocco.com/places/map",
+  },
+  alternates: {
+    canonical: "https://www.slowmorocco.com/places/map",
+  },
+};
+
 export const revalidate = 3600;
 
-interface RegionItem {
-  slug: string;
-  title: string;
-  subtitle: string;
-  heroImage: string;
-}
+export default async function AllPlacesMapPage() {
+  const places = await getPlaces({ published: true });
 
-interface DestinationItem {
-  slug: string;
-  title: string;
-  subtitle: string;
-  region: string;
-  heroImage: string;
-  excerpt: string;
-}
-
-interface PlaceItem {
-  slug: string;
-  title: string;
-  destination: string;
-  category: string;
-  heroImage: string;
-  excerpt: string;
-}
-
-async function fetchPlacesData() {
-  try {
-    const [regionsData, destinationsData, placesData] = await Promise.all([
-      getRegions(),
-      getDestinations({ published: true }),
-      getPlaces({ published: true }),
-    ]);
-
-    const regions: RegionItem[] = regionsData.map((r) => ({
-      slug: r.slug,
-      title: r.title,
-      subtitle: r.subtitle || "",
-      heroImage: r.hero_image || "",
-    }));
-
-    const destinations: DestinationItem[] = destinationsData.map((d) => ({
-      slug: d.slug,
-      title: d.title,
-      subtitle: d.subtitle || "",
-      region: d.region || "",
-      heroImage: d.hero_image || "",
-      excerpt: d.excerpt || "",
-    }));
-
-    const places: PlaceItem[] = placesData.map((p) => ({
-      slug: p.slug,
-      title: p.title,
-      destination: p.destination || "",
-      category: p.category || "",
-      heroImage: p.hero_image || "",
-      excerpt: p.excerpt || "",
-    }));
-
-    return { regions, destinations, places, dataLoaded: places.length > 0 };
-  } catch (error) {
-    console.error("Error fetching places data:", error);
-    return { regions: [], destinations: [], places: [], dataLoaded: false };
-  }
-}
-
-export default async function PlacesPage() {
-  const { regions, destinations, places, dataLoaded } = await fetchPlacesData();
-
-  return (
-    <Suspense fallback={<div className="min-h-screen" />}>
-      <PlacesContent
-        initialRegions={regions}
-        initialDestinations={destinations}
-        initialPlaces={places}
-        dataLoaded={dataLoaded}
-      />
-    </Suspense>
+  // Only places with coordinates
+  const mappable = places.filter(
+    (p) => p.latitude != null && p.longitude != null
   );
+
+  const placeData = mappable.map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    category: p.category || "",
+    destination: p.destination || "",
+    excerpt: p.excerpt || "",
+    hero_image: p.hero_image || "",
+    latitude: p.latitude as number,
+    longitude: p.longitude as number,
+  }));
+
+  return <AllPlacesMap places={placeData} total={places.length} />;
 }
