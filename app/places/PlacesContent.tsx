@@ -1,5 +1,7 @@
 "use client";
 
+import ControlBar from "@/components/ControlBar";
+
 import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -264,7 +266,7 @@ export default function PlacesContent({
                   <span className="font-serif text-lg md:text-xl">
                     {region.title}
                   </span>
-                  <span className="text-xs text-foreground/60 mt-1 hidden md:block">
+                  <span className="text-sm text-white/80 mt-1 hidden md:block">
                     {region.subtitle}
                   </span>
                 </div>
@@ -347,30 +349,17 @@ export default function PlacesContent({
             </div>
           ) : filteredPlaces.length > 0 ? (
             <>
-              {/* Top bar: count + sort + pagination */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-                <div className="flex items-center gap-4">
-                  <p className="text-sm text-foreground/40">
-                    {filteredPlaces.length}{" "}
-                    {filteredPlaces.length === 1 ? "place" : "places"}
-                  </p>
-                  <button
-                    onClick={() =>
-                      setSortBy(sortBy === "default" ? "alpha" : "default")
-                    }
-                    className={`text-xs tracking-[0.1em] uppercase px-3 py-1.5 border transition-colors ${
-                      sortBy === "alpha"
-                        ? "bg-foreground text-background border-foreground"
-                        : "text-foreground/40 border-foreground/20 hover:border-foreground/40"
-                    }`}
-                  >
-                    A → Z
-                  </button>
-                </div>
-                <Pagination
+              {/* Top bar: count + sort only */}
+              <div className="mb-8">
+                <ControlBar
+                  count={filteredPlaces.length}
+                  noun="place"
+                  sortBy={sortBy}
+                  onSortChange={() => { setSortBy(sortBy === "default" ? "alpha" : "default"); setCurrentPage(1); }}
                   currentPage={currentPage}
                   totalPages={totalPages}
                   onPageChange={handlePageChange}
+                  showPagination={false}
                 />
               </div>
 
@@ -407,14 +396,22 @@ export default function PlacesContent({
                 })}
               </div>
 
-              {/* Bottom pagination */}
-              <div className="mt-12">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                />
-              </div>
+              {/* Bottom pagination — centered */}
+              {totalPages > 1 && (
+                <div className="mt-12">
+                  <ControlBar
+                    count={filteredPlaces.length}
+                    noun="place"
+                    sortBy={sortBy}
+                    onSortChange={() => { setSortBy(sortBy === "default" ? "alpha" : "default"); setCurrentPage(1); }}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                    showCount={false}
+                    showSort={false}
+                  />
+                </div>
+              )}
             </>
           ) : (
             <div className="text-center py-20">
