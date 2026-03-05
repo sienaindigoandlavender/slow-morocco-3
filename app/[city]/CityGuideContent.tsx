@@ -39,7 +39,7 @@ interface Place {
   hero_image: string | null;
   excerpt: string | null;
   category: string | null;
-  destination: string;
+  destination: string | null;
   latitude: number | null;
   longitude: number | null;
 }
