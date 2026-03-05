@@ -1,5 +1,7 @@
 "use client";
 
+import ControlBar from "@/components/ControlBar";
+
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -256,31 +258,18 @@ export default function StoriesContent({
             </div>
           ) : (
             <>
-              {/* Top bar: count + sort + pagination */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10">
-                <div className="flex items-center gap-4">
-                  <p className="text-sm text-foreground/40">
-                    {filteredStories.length}{" "}
-                    {filteredStories.length === 1 ? "story" : "stories"}
-                  </p>
-                  <button
-                    onClick={handleSortChange}
-                    className={`text-xs tracking-[0.1em] uppercase px-3 py-1.5 border transition-colors ${
-                      sortBy === "alpha"
-                        ? "bg-foreground text-background border-foreground"
-                        : "text-foreground/40 border-foreground/20 hover:border-foreground/40"
-                    }`}
-                  >
-                    A → Z
-                  </button>
-                </div>
-                {totalPages > 1 && (
-                  <PaginationBar
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={goToPage}
-                  />
-                )}
+              {/* Top bar: count + sort only */}
+              <div className="mb-10">
+                <ControlBar
+                  count={filteredStories.length}
+                  noun="story"
+                  sortBy={sortBy}
+                  onSortChange={handleSortChange}
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={goToPage}
+                  showPagination={false}
+                />
               </div>
 
               {/* Stories Grid */}
@@ -320,17 +309,20 @@ export default function StoriesContent({
                 ))}
               </div>
 
-              {/* Bottom pagination */}
+              {/* Bottom pagination — centered */}
               {totalPages > 1 && (
                 <div className="mt-16">
-                  <PaginationBar
+                  <ControlBar
+                    count={filteredStories.length}
+                    noun="story"
+                    sortBy={sortBy}
+                    onSortChange={handleSortChange}
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={goToPage}
+                    showCount={false}
+                    showSort={false}
                   />
-                  <p className="text-center text-xs text-foreground/30 mt-4 tracking-[0.1em]">
-                    {startIndex + 1}–{Math.min(startIndex + STORIES_PER_PAGE, filteredStories.length)} of {filteredStories.length}
-                  </p>
                 </div>
               )}
             </>
