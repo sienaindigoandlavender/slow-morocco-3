@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getStoryBySlug, getStories, getJourneys } from "@/lib/supabase";
+import { getStoryBySlug, getStories, getJourneys, getStoryImages, StoryImage } from "@/lib/supabase";
 import { findRelatedJourneys } from "@/lib/content-matcher";
 import StoryDetailContent from "./StoryDetailContent";
 
@@ -178,16 +178,47 @@ export default async function StoryPage({
   const { story, mapData, externalLinks, relatedJourneySlug } = storyResult;
   const relatedStories = await getRelatedStories(story, slug);
   const relatedJourneys = await getRelatedJourneysSSR(story);
+  const storyImages = await getStoryImages(slug);
+
+  const BASE_URL = "https://www.slowmorocco.com";
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: story.title,
+    description: story.excerpt || story.subtitle || "",
+    url: `${BASE_URL}/stories/${slug}`,
+    dateModified: story.updated_at || story.created_at || new Date().toISOString(),
+    author: {
+      "@type": "Person",
+      name: "J. Ng",
+      worksFor: { "@type": "Organization", name: "Dancing with Lions", url: "https://www.dancingwiththelions.com" },
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Slow Morocco",
+      url: BASE_URL,
+      parentOrganization: { "@type": "Organization", name: "Dancing with Lions", url: "https://www.dancingwiththelions.com" },
+    },
+    about: { "@type": "Place", name: "Morocco" },
+    ...(story.category ? { keywords: story.category } : {}),
+    ...(story.hero_image ? { image: story.hero_image } : {}),
+  };
 
   return (
-    <StoryDetailContent
-      story={story}
-      images={[]}
-      relatedStories={relatedStories}
-      relatedJourneys={relatedJourneys}
-      slug={slug}
-      mapData={mapData}
-      externalLinks={externalLinks}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <StoryDetailContent
+        story={story}
+        images={storyImages}
+        relatedStories={relatedStories}
+        relatedJourneys={relatedJourneys}
+        slug={slug}
+        mapData={mapData}
+        externalLinks={externalLinks}
+      />
+    </>
   );
 }
