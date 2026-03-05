@@ -240,7 +240,7 @@ export default function CityGuideContent({
 
       {/* ── Intro ─────────────────────────────────────────────────────────── */}
       <section className="px-8 md:px-16 lg:px-20 py-16 md:py-20 max-w-3xl">
-        <p className="font-serif text-xl md:text-2xl leading-relaxed text-foreground/80">
+        <p className="font-serif text-xl md:text-2xl leading-relaxed text-foreground">
           {cityData.intro}
         </p>
       </section>
