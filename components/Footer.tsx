@@ -150,7 +150,7 @@ export default function Footer() {
           )}
           
           <div className="container mx-auto px-8 md:px-16 lg:px-20 relative z-10">
-            <div className="max-w-2xl mx-auto text-center">
+            <div className="max-w-2xl mx-auto text-center flex flex-col items-center">
               <h3 className="font-serif text-2xl md:text-3xl text-white mb-4">
                 {newsletter.title}
               </h3>
@@ -161,7 +161,7 @@ export default function Footer() {
               {subscribed ? (
                 <p className="text-white/70">Thank you for subscribing.</p>
               ) : (
-                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto justify-center">
                   <input
                     type="email"
                     value={email}
