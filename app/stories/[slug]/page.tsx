@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getStoryBySlug, getStories, getJourneys, getStoryImages, StoryImage } from "@/lib/supabase";
+import { getStoryBySlug, getStories, getJourneys, getStoryImages } from "@/lib/supabase";
 import { findRelatedJourneys } from "@/lib/content-matcher";
 import StoryDetailContent from "./StoryDetailContent";
 
@@ -175,7 +175,7 @@ export default async function StoryPage({
     notFound();
   }
 
-  const { story, mapData, externalLinks, relatedJourneySlug } = storyResult;
+  const { story, mapData, externalLinks } = storyResult;
   const relatedStories = await getRelatedStories(story, slug);
   const relatedJourneys = await getRelatedJourneysSSR(story);
   const storyImages = await getStoryImages(slug);
@@ -201,7 +201,7 @@ export default async function StoryPage({
     },
     about: { "@type": "Place", name: "Morocco" },
     ...(story.category ? { keywords: story.category } : {}),
-    ...(story.hero_image ? { image: story.hero_image } : {}),
+    ...(story.heroImage ? { image: story.heroImage } : {}),
   };
 
   return (
