@@ -330,6 +330,44 @@ export default function StoriesContent({
         </div>
       </section>
 
+      {/* Category browse */}
+      <section className="py-12 border-t border-border">
+        <div className="container mx-auto px-8 md:px-16 lg:px-20">
+          <p className="text-[10px] tracking-[0.3em] uppercase font-mono text-foreground/30 mb-6">
+            Browse by category
+          </p>
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
+            {[
+              { slug: "history", label: "History", count: 53 },
+              { slug: "architecture", label: "Architecture", count: 26 },
+              { slug: "culture", label: "Culture", count: 20 },
+              { slug: "people", label: "People", count: 19 },
+              { slug: "systems", label: "Systems", count: 19 },
+              { slug: "food", label: "Food", count: 18 },
+              { slug: "nature", label: "Nature", count: 13 },
+              { slug: "art", label: "Art", count: 10 },
+              { slug: "design", label: "Design", count: 9 },
+              { slug: "economy", label: "Economy", count: 8 },
+              { slug: "music", label: "Music", count: 7 },
+              { slug: "craft", label: "Craft", count: 6 },
+            ].map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/stories/category/${cat.slug}`}
+                className="group flex items-baseline gap-1.5"
+              >
+                <span className="font-serif text-lg text-foreground/50 group-hover:text-foreground transition-colors">
+                  {cat.label}
+                </span>
+                <span className="text-[9px] font-mono text-foreground/25 group-hover:text-foreground/40 transition-colors">
+                  {cat.count}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Newsletter CTA */}
       <section className="py-20 md:py-28 bg-white">
         <div className="container mx-auto px-8 md:px-16 lg:px-20 text-center max-w-2xl">
