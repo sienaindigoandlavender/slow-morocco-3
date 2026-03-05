@@ -145,7 +145,7 @@ export default function StoryBody({ content }: StoryBodyProps) {
         return (
           <p
             key={index}
-            className="text-foreground/70 leading-relaxed mb-6"
+            className="text-foreground leading-relaxed mb-6"
           >
             {processText(paragraph)}
           </p>
