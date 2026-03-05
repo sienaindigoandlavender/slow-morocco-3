@@ -85,6 +85,13 @@ const CITIES: City[] = [
     excerpt: "A Saharan peninsula. Turquoise lagoon. The wind never stops.",
     coordinates: [-15.9329, 23.6848],
   },
+  {
+    slug: "chefchaouen",
+    title: "Chefchaouen",
+    subtitle: "The blue city",
+    excerpt: "Washed in indigo and cobalt. Every alley a photograph. The Rif Mountains behind.",
+    coordinates: [-5.2636, 35.1714],
+  },
 ];
 
 export default function HomeCityMap() {
@@ -116,8 +123,8 @@ export default function HomeCityMap() {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/mapbox/dark-v11",
-        center: [-7.0, 31.5],
-        zoom: 4.8,
+        center: [-8.0, 29.5],
+        zoom: 4.6,
         minZoom: 4,
         maxZoom: 9,
         attributionControl: false,
