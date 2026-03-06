@@ -33,7 +33,7 @@ export function convertDriveUrl(url: string): string {
   const ucMatch = url.match(/\/uc\?.*id=([a-zA-Z0-9_-]+)/);
   if (ucMatch) fileId = ucMatch[1];
 
-  if (fileId) return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+  if (fileId) return `https://lh3.googleusercontent.com/d/${fileId}=w1200`;
   return url;
 }
 
