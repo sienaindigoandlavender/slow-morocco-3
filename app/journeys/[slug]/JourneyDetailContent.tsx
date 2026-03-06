@@ -209,6 +209,7 @@ export default function JourneyDetailContent({
               src={journey.heroImage}
               alt={journey.title}
               fill
+              sizes="100vw"
               className="object-cover opacity-70"
               priority
             />
@@ -219,9 +220,6 @@ export default function JourneyDetailContent({
           
           <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
             <div className="container mx-auto max-w-4xl">
-              <p className="text-xs tracking-[0.3em] uppercase text-white/40 mb-4">
-                Epic Journey
-              </p>
               <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-tight mb-4">
                 {journey.title}
               </h1>
@@ -416,6 +414,7 @@ export default function JourneyDetailContent({
             src={journey.heroImage}
             alt={journey.title}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />

@@ -86,15 +86,12 @@ export default function HomeContent({
           ═══════════════════════════════════════════════════════════════ */}
       <section className="relative h-screen">
         {heroImage ? (
-          <Image src={heroImage} alt="Slow Morocco" fill className="object-cover" priority />
+          <Image src={heroImage} alt="Slow Morocco" fill sizes="100vw" className="object-cover" priority />
         ) : (
           <div className="absolute inset-0 bg-foreground/90" />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/70" />
         <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-16 lg:px-20 pb-16 md:pb-24">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-white/50 mb-4">
-            Private cultural journeys
-          </p>
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white mb-8 max-w-3xl leading-[1.05]">
             Morocco, slowly.
           </h1>

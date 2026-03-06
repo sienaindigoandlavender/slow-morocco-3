@@ -145,6 +145,7 @@ export default function PlaceDetailContent({
             src={place.heroImage}
             alt={place.heroCaption || `${place.title} in ${place.destination}, Morocco`}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -182,11 +183,7 @@ export default function PlaceDetailContent({
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-16">
           <div className="container mx-auto">
-            <p className="text-xs tracking-[0.2em] uppercase text-foreground/70 mb-2 capitalize">{place.destination}</p>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-4">{place.title}</h1>
-            {place.heroCaption && (
-              <p className="text-foreground/70 text-sm max-w-xl">{place.heroCaption}</p>
-            )}
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white">{place.title}</h1>
           </div>
         </div>
       </section>

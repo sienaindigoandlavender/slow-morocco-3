@@ -170,9 +170,6 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
         <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-20 pb-14">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-white/40 mb-4 font-mono">
-            North Africa · 37 million people · 11 UNESCO sites
-          </p>
           <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl text-white">
             Morocco
           </h1>
