@@ -24,70 +24,6 @@ interface StoriesContentProps {
 
 const STORIES_PER_PAGE = 12;
 
-// ─── Shared pagination bar ───────────────────────────────────────
-function PaginationBar({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}) {
-  const pages: (number | "...")[] = [];
-  if (totalPages <= 7) {
-    for (let i = 1; i <= totalPages; i++) pages.push(i);
-  } else {
-    pages.push(1);
-    if (currentPage > 3) pages.push("...");
-    for (
-      let i = Math.max(2, currentPage - 1);
-      i <= Math.min(totalPages - 1, currentPage + 1);
-      i++
-    ) {
-      pages.push(i);
-    }
-    if (currentPage < totalPages - 2) pages.push("...");
-    pages.push(totalPages);
-  }
-
-  return (
-    <div className="flex items-center justify-center gap-1">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="px-3 py-2 text-xs tracking-[0.1em] uppercase text-foreground/40 hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
-      >
-        ←
-      </button>
-      {pages.map((page, i) =>
-        page === "..." ? (
-          <span key={`e-${i}`} className="px-2 py-2 text-xs text-foreground/30">…</span>
-        ) : (
-          <button
-            key={page}
-            onClick={() => onPageChange(page)}
-            className={`min-w-[36px] py-2 text-xs tracking-[0.1em] transition-colors ${
-              currentPage === page
-                ? "bg-foreground text-background"
-                : "text-foreground/50 hover:text-foreground"
-            }`}
-          >
-            {page}
-          </button>
-        )
-      )}
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="px-3 py-2 text-xs tracking-[0.1em] uppercase text-foreground/40 hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
-      >
-        →
-      </button>
-    </div>
-  );
-}
-
 export default function StoriesContent({
   initialStories,
   dataLoaded = true,
@@ -258,7 +194,7 @@ export default function StoriesContent({
             </div>
           ) : (
             <>
-              {/* Top bar: count + sort only */}
+              {/* Top bar: count + sort + pagination */}
               <div className="mb-10">
                 <ControlBar
                   count={filteredStories.length}
@@ -268,7 +204,6 @@ export default function StoriesContent({
                   currentPage={currentPage}
                   totalPages={totalPages}
                   onPageChange={goToPage}
-                  showPagination={false}
                 />
               </div>
 
@@ -309,7 +244,7 @@ export default function StoriesContent({
                 ))}
               </div>
 
-              {/* Bottom pagination — centered */}
+              {/* Bottom: count + sort + pagination */}
               {totalPages > 1 && (
                 <div className="mt-16">
                   <ControlBar
@@ -320,8 +255,6 @@ export default function StoriesContent({
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={goToPage}
-                    showCount={false}
-                    showSort={false}
                   />
                 </div>
               )}
@@ -330,65 +263,6 @@ export default function StoriesContent({
         </div>
       </section>
 
-      {/* Category browse */}
-      <section className="py-12 border-t border-border">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20">
-          <p className="text-[10px] tracking-[0.3em] uppercase font-mono text-foreground/30 mb-6">
-            Browse by category
-          </p>
-          <div className="flex flex-wrap gap-x-6 gap-y-3">
-            {[
-              { slug: "history", label: "History", count: 53 },
-              { slug: "architecture", label: "Architecture", count: 26 },
-              { slug: "culture", label: "Culture", count: 20 },
-              { slug: "people", label: "People", count: 19 },
-              { slug: "systems", label: "Systems", count: 19 },
-              { slug: "food", label: "Food", count: 18 },
-              { slug: "nature", label: "Nature", count: 13 },
-              { slug: "art", label: "Art", count: 10 },
-              { slug: "design", label: "Design", count: 9 },
-              { slug: "economy", label: "Economy", count: 8 },
-              { slug: "music", label: "Music", count: 7 },
-              { slug: "craft", label: "Craft", count: 6 },
-            ].map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/stories/category/${cat.slug}`}
-                className="group flex items-baseline gap-1.5"
-              >
-                <span className="font-serif text-lg text-foreground/50 group-hover:text-foreground transition-colors">
-                  {cat.label}
-                </span>
-                <span className="text-[9px] font-mono text-foreground/25 group-hover:text-foreground/40 transition-colors">
-                  {cat.count}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter CTA */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20 text-center max-w-2xl">
-          <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-4">
-            Stay Curious
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl mb-6">
-            Get stories in your inbox
-          </h2>
-          <p className="text-foreground/60 mb-10 text-sm">
-            New stories, cultural insights, and journey inspiration. No spam,
-            just depth.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block border border-foreground px-10 py-4 text-xs tracking-[0.15em] uppercase hover:bg-foreground hover:text-background transition-colors"
-          >
-            Subscribe
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }

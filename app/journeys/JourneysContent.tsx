@@ -266,7 +266,7 @@ export default function JourneysContent({
         </div>
       </section>
 
-      {/* Top bar: count + sort only */}
+      {/* Top bar: count + sort + pagination */}
       <div className="container mx-auto px-6 lg:px-16 py-6">
         <ControlBar
           count={filteredResults.length}
@@ -276,7 +276,6 @@ export default function JourneysContent({
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={goToPage}
-          showPagination={false}
         />
       </div>
 
@@ -463,7 +462,7 @@ export default function JourneysContent({
                 })}
               </div>
 
-              {/* Bottom pagination — centered */}
+              {/* Bottom: count + sort + pagination */}
               {totalPages > 1 && (
                 <div className="mt-16 pt-8 border-t border-foreground/10">
                   <ControlBar
@@ -474,8 +473,6 @@ export default function JourneysContent({
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={goToPage}
-                    showCount={false}
-                    showSort={false}
                   />
                 </div>
               )}
