@@ -3,7 +3,8 @@ import LegalPageContent from "@/components/LegalPageContent";
 
 export const metadata: Metadata = {
   title: "Travel Insurance | Slow Morocco",
-  description: "Travel insurance information for Slow Morocco guests.",
+  description:
+    "Why travel insurance is required for Slow Morocco journeys — recommended coverage, medical evacuation, trip cancellation, and what to look for in a policy.",
   alternates: {
     canonical: "https://www.slowmorocco.com/travel-insurance",
   },
