@@ -6,7 +6,7 @@ import PhosphateKingdomContent from "./PhosphateKingdomContent";
 export const revalidate = 3600;
 
 const BASE_URL = "https://www.slowmorocco.com";
-const SLUG = "phosphate-kingdom";
+const SLUG = "morocco-phosphate-mining";
 const CANONICAL = `${BASE_URL}/stories/${SLUG}`;
 
 // ─────────────────────────────────────────────────────────────────────────────
