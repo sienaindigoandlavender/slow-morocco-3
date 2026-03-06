@@ -177,6 +177,52 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
+// ─── World Cup 2030 data ──────────────────────────────────────────────────────
+
+const WORLD_CUP_DATA: Record<string, {
+  stadium: string;
+  capacity: string;
+  status: string;
+  note: string;
+}> = {
+  casablanca: {
+    stadium: "Grand Stade Hassan II",
+    capacity: "115,000",
+    status: "New build — completion expected 2028",
+    note: "Designed by Populous and Oualalou + Choi, this will be the largest football stadium in the world. Built on a 100-hectare site in El Mansouria, 38 km north of Casablanca. A leading candidate to host the 2030 World Cup final.",
+  },
+  tangier: {
+    stadium: "Grand Stade de Tangier",
+    capacity: "75,600",
+    status: "Renovated — completed 2025",
+    note: "Originally the Ibn Battuta Stadium (45,000 seats, opened 2011), expanded and renamed after a $360 million renovation that removed the athletics track and nearly doubled capacity.",
+  },
+  marrakech: {
+    stadium: "Grand Stade de Marrakech",
+    capacity: "70,000",
+    status: "Renovation planned",
+    note: "Currently 45,000 seats, set to expand to 70,000 for the World Cup. Located on the outskirts of the city, the stadium also hosted matches during the 2025 Africa Cup of Nations.",
+  },
+  rabat: {
+    stadium: "Stade Prince Moulay Abdellah",
+    capacity: "68,700",
+    status: "Completed — inaugurated September 2025",
+    note: "A new-build sports complex completed in record time between 2023 and 2025. Inaugurated during the 2026 FIFA World Cup qualifiers. The 68,095-seat venue is expandable to 68,700.",
+  },
+  fes: {
+    stadium: "Stade de Fès",
+    capacity: "55,800",
+    status: "Renovation planned",
+    note: "Currently 45,000 seats, scheduled for expansion to 55,800 with a new roof. The stadium hosts both football and athletics events and will receive a complete restyling for 2030.",
+  },
+  agadir: {
+    stadium: "Grand Stade d'Agadir",
+    capacity: "46,000–70,000",
+    status: "Renovation planned",
+    note: "The Adrar Stadium opened in 2013 after nine years of construction. Currently 45,000 seats, it will be renovated and covered. Some plans call for expansion up to 70,000.",
+  },
+};
+
 // ─── Main component ────────────────────────────────────────────────────────────
 
 export default function CityGuideContent({
@@ -525,6 +571,69 @@ export default function CityGuideContent({
           </div>
         </section>
       )}
+
+      {/* ── World Cup 2030 ────────────────────────────────────────────────── */}
+      {WORLD_CUP_DATA[citySlug] && (() => {
+        const wc = WORLD_CUP_DATA[citySlug];
+        return (
+          <section className="px-8 md:px-16 lg:px-20 pb-20 md:pb-28 border-t border-border pt-16">
+            <div className="max-w-3xl">
+              <SectionLabel>FIFA World Cup 2030</SectionLabel>
+              <h2 className="font-serif text-2xl md:text-3xl mb-3">
+                {destination.title} is a host city
+              </h2>
+              <p className="text-sm text-foreground/50 leading-relaxed mb-10">
+                Morocco will co-host the 2030 FIFA World Cup alongside Spain and Portugal — the first World Cup to span three continents. Six Moroccan cities will host matches, with {destination.title} among them.
+              </p>
+
+              <div className="border border-border divide-y divide-border">
+                <div className="flex items-start gap-6 p-5 md:p-6">
+                  <div className="flex-shrink-0">
+                    <svg className="w-5 h-5 text-foreground/30 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                      <path d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-2.247m0 0A9.015 9.015 0 003 12c0-1.605.42-3.113 1.157-4.418" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-1">Stadium</p>
+                    <p className="font-serif text-lg">{wc.stadium}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-6 p-5 md:p-6">
+                  <div className="flex-shrink-0">
+                    <svg className="w-5 h-5 text-foreground/30 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                      <path d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-1">Capacity</p>
+                    <p className="font-serif text-lg">{wc.capacity}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-6 p-5 md:p-6">
+                  <div className="flex-shrink-0">
+                    <svg className="w-5 h-5 text-foreground/30 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                      <path d="M11.42 15.17l-5.58-3.36a.75.75 0 010-1.08l5.58-3.36a.75.75 0 011.16.63v6.7a.75.75 0 01-1.16.63z" />
+                      <path d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-1">Status</p>
+                    <p className="text-sm text-foreground/70">{wc.status}</p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-sm text-foreground/50 leading-relaxed mt-6">
+                {wc.note}
+              </p>
+
+              <p className="text-sm text-foreground/40 leading-relaxed mt-6">
+                Morocco is investing over $1.4 billion across its six World Cup venues. The high-speed rail network — already connecting Tangier to Casablanca — is planned to extend south to Marrakech and Agadir before 2030.
+              </p>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* ── Footer bridge ─────────────────────────────────────────────────── */}
       <section className="px-8 md:px-16 lg:px-20 py-20 border-t border-border">

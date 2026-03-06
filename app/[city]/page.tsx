@@ -36,7 +36,14 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const destination = await getDestinationBySlug(params.city);
-  if (!destination) return {};
+  if (!destination) {
+    const fallbackTitle = CITY_TITLES[params.city] || params.city;
+    return {
+      title: `${fallbackTitle} — Slow Morocco`,
+      description: `Explore ${fallbackTitle}: stories, places, and private journeys.`,
+      alternates: { canonical: `https://www.slowmorocco.com/${params.city}` },
+    };
+  }
 
   const BASE_URL = "https://www.slowmorocco.com";
   const title = `${destination.title} — Slow Morocco`;
@@ -61,6 +68,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+// Fallback titles for cities without a destinations row
+const CITY_TITLES: Record<string, string> = {
+  marrakech: "Marrakech", fes: "Fes", tangier: "Tangier", rabat: "Rabat",
+  essaouira: "Essaouira", casablanca: "Casablanca", meknes: "Meknes",
+  ouarzazate: "Ouarzazate", agadir: "Agadir", dakhla: "Dakhla", chefchaouen: "Chefchaouen",
+};
+
 async function fetchCityData(citySlug: string) {
   const [destination, allJourneys, places, stories] = await Promise.all([
     getDestinationBySlug(citySlug),
@@ -69,7 +83,22 @@ async function fetchCityData(citySlug: string) {
     getStories({ published: true }),
   ]);
 
-  if (!destination) return null;
+  // Build a destination object even if no DB row exists
+  const dest = destination || {
+    slug: citySlug,
+    title: CITY_TITLES[citySlug] || citySlug.charAt(0).toUpperCase() + citySlug.slice(1),
+    subtitle: null,
+    region: null,
+    hero_image: null,
+    hero_caption: null,
+    excerpt: null,
+    body: null,
+    published: true,
+    featured: false,
+    sort_order: null,
+    created_at: "",
+    updated_at: "",
+  };
 
   const CITY_SLUGS_ALL = [
     "marrakech", "fes", "tangier", "rabat", "essaouira",
@@ -106,18 +135,17 @@ async function fetchCityData(citySlug: string) {
     const tags = (s.tags || "").toLowerCase();
     const region = (s.region || "").toLowerCase();
     const slug = citySlug.toLowerCase();
-    const title = destination.title.toLowerCase();
+    const title = dest.title.toLowerCase();
     return tags.includes(slug) || tags.includes(title) || region.includes(slug) || region.includes(title);
   });
 
-  return { destination, featuredJourneys, connectingJourneys, places, stories: cityStories };
+  return { destination: dest, featuredJourneys, connectingJourneys, places, stories: cityStories };
 }
 
 export default async function CityGuidePage({ params }: Props) {
   if (!CITY_SLUGS.includes(params.city)) notFound();
 
   const data = await fetchCityData(params.city);
-  if (!data) notFound();
 
   return (
     <CityGuideContent
