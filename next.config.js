@@ -312,7 +312,7 @@ const nextConfig = {
       { source: '/stories/tanneries-of-fes', destination: '/stories/fes-tanneries-guide', permanent: true },
       { source: '/stories/tourism-flow-morocco', destination: '/stories/morocco-tourism-statistics', permanent: true },
       { source: '/stories/dirhams-journey', destination: '/stories/moroccan-dirham-currency', permanent: true },
-      { source: '/stories/phosphate-kingdom', destination: '/stories/morocco-phosphate-mining', permanent: true },
+
       { source: '/stories/harvest-calendar', destination: '/stories/morocco-harvest-calendar', permanent: true },
       { source: '/stories/marriage-economy', destination: '/stories/moroccan-wedding-economy', permanent: true },
       { source: '/stories/souk-decoded', destination: '/stories/moroccan-souk-guide', permanent: true },
