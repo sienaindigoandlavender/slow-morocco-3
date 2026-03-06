@@ -365,7 +365,7 @@ export default function PlacesContent({
             </div>
           ) : filteredPlaces.length > 0 ? (
             <>
-              {/* Top bar: count + sort + pagination */}
+              {/* Top pagination */}
               <div className="mb-8">
                 <ControlBar
                   count={filteredPlaces.length}
@@ -375,6 +375,8 @@ export default function PlacesContent({
                   currentPage={currentPage}
                   totalPages={totalPages}
                   onPageChange={handlePageChange}
+                  showCount={false}
+                  showSort={false}
                 />
               </div>
 
@@ -411,7 +413,7 @@ export default function PlacesContent({
                 })}
               </div>
 
-              {/* Bottom: count + sort + pagination */}
+              {/* Bottom pagination */}
               {totalPages > 1 && (
                 <div className="mt-12">
                   <ControlBar
@@ -422,6 +424,8 @@ export default function PlacesContent({
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
+                    showCount={false}
+                    showSort={false}
                   />
                 </div>
               )}
