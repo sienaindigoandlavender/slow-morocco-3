@@ -366,7 +366,7 @@ export default function PlacesContent({
           ) : filteredPlaces.length > 0 ? (
             <>
               {/* Top pagination */}
-              <div className="mb-8">
+              <div className="mb-6">
                 <ControlBar
                   count={filteredPlaces.length}
                   noun="place"

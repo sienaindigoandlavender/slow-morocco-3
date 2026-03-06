@@ -195,7 +195,7 @@ export default function StoriesContent({
           ) : (
             <>
               {/* Top pagination */}
-              <div className="mb-10">
+              <div className="mb-6">
                 <ControlBar
                   count={filteredStories.length}
                   noun="story"
