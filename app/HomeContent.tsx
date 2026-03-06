@@ -92,9 +92,12 @@ export default function HomeContent({
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/70" />
         <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-16 lg:px-20 pb-16 md:pb-24">
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white mb-8 max-w-3xl leading-[1.05]">
-            The definitive guide to Morocco, slowly explored.
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white mb-3 max-w-3xl leading-[1.05]">
+            Morocco, slowly.
           </h1>
+          <p className="font-serif text-xl md:text-2xl lg:text-3xl text-white/80 mb-8 max-w-2xl">
+            The definitive guide to Morocco.
+          </p>
           <HeroSearch />
         </div>
       </section>
