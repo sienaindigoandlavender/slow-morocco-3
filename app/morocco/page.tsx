@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import MoroccoContent from "./MoroccoContent";
-import { getDestinations, getStories } from "@/lib/supabase";
+import { getDestinations, getStories, getAllCityGuideFirstImages } from "@/lib/supabase";
 
 export const revalidate = 3600;
 
@@ -20,9 +20,10 @@ export const metadata: Metadata = {
 };
 
 export default async function MoroccoPage() {
-  const [destinations, stories] = await Promise.all([
+  const [destinations, stories, cityImages] = await Promise.all([
     getDestinations({ published: true }),
     getStories({ published: true, featured: true, limit: 3 }),
+    getAllCityGuideFirstImages(),
   ]);
 
   // Filter to city destinations only
@@ -30,5 +31,5 @@ export default async function MoroccoPage() {
     (d.region || "").toLowerCase().includes("cit")
   );
 
-  return <MoroccoContent cities={cities} stories={stories} />;
+  return <MoroccoContent cities={cities} stories={stories} cityImages={cityImages} />;
 }

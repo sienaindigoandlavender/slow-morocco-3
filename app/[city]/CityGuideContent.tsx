@@ -252,7 +252,8 @@ export default function CityGuideContent({
   galleryImages = [],
 }: Props) {
   const firstGalleryImage = galleryImages.length > 0 ? galleryImages[0].image_url : null;
-  const heroImage = destination.hero_image || firstGalleryImage || CITY_HERO_FALLBACKS[citySlug] || null;
+  // Priority: gallery image (city_guide_images table) > destination hero > hardcoded fallback
+  const heroImage = firstGalleryImage || destination.hero_image || CITY_HERO_FALLBACKS[citySlug] || null;
   const cityData = CITY_DATA[citySlug] || {
     center: [-6.0, 32.0] as [number, number],
     zoom: 12,
@@ -283,6 +284,7 @@ export default function CityGuideContent({
             src={heroImage}
             alt={destination.title}
             fill
+            sizes="100vw"
             className="object-cover object-center"
             priority
           />
