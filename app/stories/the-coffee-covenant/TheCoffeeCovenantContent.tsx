@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 const DWLRouteMap = dynamic(() => import('@/components/maps/DWLRouteMap'), { ssr: false })
-import ConnectedIntelligence from '@/components/data/ConnectedIntelligence'
 
 const SOURCES = [
   'ECTA — Ethiopian Coffee and Tea Authority: $2.65B exports, 469K tons (2024/25 fiscal year record).',
@@ -276,7 +275,6 @@ export function TheCoffeeCovenantContent() {
         <div className="space-y-1">
           {SOURCES.map((s, i) => <p key={i} className="text-[10px] text-[#a3a3a3] leading-relaxed">{s}</p>)}
         </div>
-        <ConnectedIntelligence moduleId="the-coffee-covenant" />
         <p className="text-[10px] text-[#a3a3a3] mt-6">&copy; Slow Morocco 2025. Module 170. Data compiled from ECTA, USDA FAS, ICO, FAO. Licensed under CC BY-NC-ND 4.0.</p>
       </div></section>
     </div>

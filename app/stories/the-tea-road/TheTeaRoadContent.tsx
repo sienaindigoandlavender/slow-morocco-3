@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 const DWLRouteMap = dynamic(() => import('@/components/maps/DWLRouteMap'), { ssr: false })
-import ConnectedIntelligence from '@/components/data/ConnectedIntelligence'
 
 const SOURCES = [
   'STiR Coffee & Tea — China 2024 tea exports: 374,100 MT, $1.42B revenue. Morocco 81,000 MT (+34.7%).',
@@ -264,7 +263,6 @@ export function TheTeaRoadContent() {
         <div className="space-y-1">
           {SOURCES.map((s, i) => <p key={i} className="text-[10px] text-[#a3a3a3] leading-relaxed">{s}</p>)}
         </div>
-        <ConnectedIntelligence moduleId="the-tea-road" />
         <p className="text-[10px] text-[#a3a3a3] mt-6">&copy; Slow Morocco 2025. Module 171. Data compiled from CAPIAC, STiR, UN COMTRADE, ITC, FAO. Licensed under CC BY-NC-ND 4.0.</p>
       </div></section>
     </div>

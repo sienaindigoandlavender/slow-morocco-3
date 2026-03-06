@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 const DWLRouteMap = dynamic(() => import('@/components/maps/DWLRouteMap'), { ssr: false })
-import ConnectedIntelligence from '@/components/data/ConnectedIntelligence'
 
 const SOURCES = [
   'Cooks Vanilla — Market Report March 2025: Madagascar exported 4,300 MT in H1 2024. Oversupply era.',
@@ -316,7 +315,6 @@ export function TheVanillaOrchidContent() {
         <div className="space-y-1">
           {SOURCES.map((s, i) => <p key={i} className="text-[10px] text-[#a3a3a3] leading-relaxed">{s}</p>)}
         </div>
-        <ConnectedIntelligence moduleId="the-vanilla-orchid" />
         <p className="text-[10px] text-[#a3a3a3] mt-6">&copy; Slow Morocco 2025. Module 172. Data compiled from USDA, FAO, Tridge, UN COMTRADE. Licensed under CC BY-NC-ND 4.0.</p>
       </div></section>
     </div>

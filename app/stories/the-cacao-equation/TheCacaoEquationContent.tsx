@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 const DWLRouteMap = dynamic(() => import('@/components/maps/DWLRouteMap'), { ssr: false })
-import ConnectedIntelligence from '@/components/data/ConnectedIntelligence'
 
 const SOURCES = [
   'ICCO — International Cocoa Organization: Global production 4.38M MT (2023/24). West Africa 70%.',
@@ -341,7 +340,6 @@ export function TheCacaoEquationContent() {
         <div className="space-y-1">
           {SOURCES.map((s, i) => <p key={i} className="text-[10px] text-[#a3a3a3] leading-relaxed">{s}</p>)}
         </div>
-        <ConnectedIntelligence moduleId="the-cacao-equation" />
         <p className="text-[10px] text-[#a3a3a3] mt-6">&copy; Slow Morocco 2025. Module 173. Data compiled from ICCO, USDA FAS, FAO, Oxfam. Licensed under CC BY-NC-ND 4.0.</p>
       </div></section>
     </div>
