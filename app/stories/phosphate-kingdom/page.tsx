@@ -6,7 +6,8 @@ import PhosphateKingdomContent from "./PhosphateKingdomContent";
 export const revalidate = 3600;
 
 const BASE_URL = "https://www.slowmorocco.com";
-const SLUG = "phosphate-kingdom";
+const SLUG = "phosphate-kingdom";               // URL path
+const DB_SLUG = "morocco-phosphate-mining";      // Supabase slug
 const CANONICAL = `${BASE_URL}/stories/${SLUG}`;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -129,8 +130,8 @@ const jsonLd = {
 
 export default async function PhosphateKingdomPage() {
   const [story, images, allJourneys] = await Promise.all([
-    getStoryBySlug(SLUG),
-    getStoryImages(SLUG),
+    getStoryBySlug(DB_SLUG),
+    getStoryImages(DB_SLUG),
     getJourneys(),
   ]);
 
