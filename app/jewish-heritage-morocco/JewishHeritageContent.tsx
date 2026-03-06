@@ -213,70 +213,72 @@ export default function JewishHeritageContent() {
       />
 
       <main className="relative bg-[#1a1a1a] min-h-screen text-[#f5f0e8]">
-        {/* Map */}
+        {/* Map — full screen behind navbar */}
         <div
           ref={mapContainer}
-          className="absolute inset-0"
+          className="fixed inset-0 top-[72px] md:top-[88px]"
           role="application"
           aria-label="Interactive map of Jewish heritage sites in Morocco"
         />
 
-        {/* Header */}
+        {/* Header overlay — below main navbar */}
         <header
-          className="fixed top-0 left-0 right-0 z-10 px-6 lg:px-10 pt-6 pb-20 pointer-events-none"
+          className="fixed top-[72px] md:top-[88px] left-0 right-0 z-10 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(26,26,26,0.85) 0%, rgba(26,26,26,0.4) 60%, transparent 100%)",
+              "linear-gradient(to bottom, rgba(26,26,26,0.9) 0%, rgba(26,26,26,0.5) 70%, transparent 100%)",
           }}
         >
-          <div className="pointer-events-auto">
-            <Link
-              href="/stories"
-              className="text-[9px] tracking-[0.3em] uppercase text-white/40 hover:text-white/70 transition-colors"
+          <div className="container mx-auto px-8 md:px-16 lg:px-20 pt-8 pb-24">
+            <div className="pointer-events-auto max-w-xl">
+              <Link
+                href="/stories"
+                className="text-[9px] tracking-[0.3em] uppercase text-white/40 hover:text-white/70 transition-colors"
+              >
+                &larr; The Edit
+              </Link>
+              <h1 className="font-serif text-3xl md:text-5xl mt-3 leading-tight">
+                2,000 Years in
+                <br />
+                Every Quarter
+              </h1>
+              <p className="text-sm text-white/50 mt-3 max-w-lg leading-relaxed hidden md:block">
+                An interactive map of Jewish heritage across Morocco &mdash;
+                synagogues, mellahs, cemeteries, pilgrimage shrines, and the
+                places where 275,000 became 2,500.
+              </p>
+              <p className="text-[11px] text-white/30 mt-3">
+                <span className="text-[#8B7355]">{sites.length}</span> sites
+                across <span className="text-[#8B7355]">18</span> cities
+              </p>
+            </div>
+
+            {/* Filters — inline row below header text */}
+            <nav
+              className="pointer-events-auto flex flex-wrap gap-2 mt-6"
+              aria-label="Filter by category"
             >
-              &larr; The Edit
-            </Link>
-            <h1 className="font-serif text-3xl md:text-5xl mt-3 leading-tight">
-              2,000 Years in
-              <br />
-              Every Quarter
-            </h1>
-            <p className="text-sm text-white/50 mt-3 max-w-lg leading-relaxed hidden md:block">
-              An interactive map of Jewish heritage across Morocco &mdash;
-              synagogues, mellahs, cemeteries, pilgrimage shrines, and the
-              places where 275,000 became 2,500.
-            </p>
-            <p className="text-[11px] text-white/30 mt-3">
-              <span className="text-[#8B7355]">{sites.length}</span> sites
-              across <span className="text-[#8B7355]">18</span> cities
-            </p>
+              {Object.entries(categories).map(([key, val]) => (
+                <button
+                  key={key}
+                  onClick={() => toggleFilter(key)}
+                  aria-pressed={activeFilter === key}
+                  className={`flex items-center gap-2 px-4 py-2 text-[10px] tracking-[0.12em] uppercase backdrop-blur-sm border transition-all ${
+                    activeFilter === key
+                      ? "bg-[#f5f5f5] text-[#1a1a1a] border-[#f5f0e8]"
+                      : "bg-[#1a1a1a]/60 text-white/50 border-white/10 hover:border-white/25 hover:text-white/80"
+                  }`}
+                >
+                  <span
+                    className="w-[6px] h-[6px] rounded-full flex-shrink-0"
+                    style={{ background: val.color }}
+                  />
+                  {val.label}
+                </button>
+              ))}
+            </nav>
           </div>
         </header>
-
-        {/* Filters */}
-        <nav
-          className="fixed top-6 right-6 lg:right-10 z-10 flex flex-col gap-1 items-end"
-          aria-label="Filter by category"
-        >
-          {Object.entries(categories).map(([key, val]) => (
-            <button
-              key={key}
-              onClick={() => toggleFilter(key)}
-              aria-pressed={activeFilter === key}
-              className={`flex items-center gap-2 px-4 py-2 text-[10px] tracking-[0.12em] uppercase backdrop-blur-sm border transition-all ${
-                activeFilter === key
-                  ? "bg-[#f5f5f5] text-[#1a1a1a] border-[#f5f0e8]"
-                  : "bg-[#1a1a1a]/60 text-white/50 border-white/10 hover:border-white/25 hover:text-white/80"
-              }`}
-            >
-              <span
-                className="w-[6px] h-[6px] rounded-full flex-shrink-0"
-                style={{ background: val.color }}
-              />
-              {val.label}
-            </button>
-          ))}
-        </nav>
 
         {/* Info Panel */}
         <aside
@@ -333,7 +335,7 @@ export default function JewishHeritageContent() {
           Data: UNESCO, WJC, Diarna Archive
         </footer>
 
-        {/* Journey CTA - subtle */}
+        {/* Journey CTA */}
         <div className="fixed bottom-6 left-6 lg:left-10 z-10 hidden md:block">
           <Link
             href="/journeys/morocco-jewish-heritage-8-days"
