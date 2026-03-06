@@ -845,16 +845,16 @@ export default function BirdAtlasContent({ story, images, relatedJourneys }: Pro
       <section className="px-8 md:px-[8%] lg:px-[12%] py-16" style={{ background: "#141414" }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-4xl">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.25)" }}>Live data</p>
-            <p className="text-[11px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>Live data</p>
+            <p className="text-[11px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.8)" }}>
               Sightings: eBird / Cornell Lab of Ornithology, updated daily.
               Wind: Windy.com / ECMWF, live.
               Film: <em>A Bird Ballet</em>, Neels Castillon, 2013.
             </p>
           </div>
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.25)" }}>Reference</p>
-            <div className="text-[11px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>Reference</p>
+            <div className="text-[11px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.8)" }}>
               {sources.length > 0
                 ? sources.map((s, i) => <p key={i}>{s}</p>)
                 : <p>Bergier & Thévenot, <em>Oiseaux du Maroc</em> (2006). BirdLife International IBA database. IUCN Red List 2024. GREPOM. HawkWatch International.</p>
