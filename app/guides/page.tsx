@@ -1,6 +1,20 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Travel Guides",
+  description:
+    "Everything you need to know before your Morocco journey — FAQ, what's included, booking process, cancellation policy, visa information, health and safety, and travel insurance.",
+  alternates: { canonical: "https://www.slowmorocco.com/guides" },
+  openGraph: {
+    title: "Travel Guides | Slow Morocco",
+    description:
+      "Everything you need to know before your Morocco journey — FAQ, inclusions, booking, and practical information.",
+    url: "https://www.slowmorocco.com/guides",
+  },
+};
 
 export default function GuidesPage() {
   const guides = [

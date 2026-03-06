@@ -1,8 +1,22 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Clock, MapPin, Moon } from "lucide-react";
 import PageBanner from "@/components/PageBanner";
 import AgafayRouteMap from "@/components/AgafayRouteMap";
 import AgafayContent from "./AgafayContent";
+
+export const metadata: Metadata = {
+  title: "Agafay Desert Overnight",
+  description:
+    "One night in the stone desert near Marrakech — sunset camel ride, dinner under the stars, luxury camp with Atlas Mountain views. Private transfer included.",
+  alternates: { canonical: "https://www.slowmorocco.com/overnight/agafay-desert" },
+  openGraph: {
+    title: "Agafay Desert Overnight | Slow Morocco",
+    description:
+      "One night in the stone desert near Marrakech — sunset camel ride, dinner under the stars, and silence you can feel.",
+    url: "https://www.slowmorocco.com/overnight/agafay-desert",
+  },
+};
 
 export const revalidate = 3600;
 
