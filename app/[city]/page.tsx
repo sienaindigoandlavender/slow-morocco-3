@@ -5,6 +5,7 @@ import {
   getPlaces,
   getStories,
   getJourneys,
+  getCityGuideImages,
   convertDriveUrl,
 } from "@/lib/supabase";
 import CityGuideContent from "./CityGuideContent";
@@ -76,11 +77,12 @@ const CITY_TITLES: Record<string, string> = {
 };
 
 async function fetchCityData(citySlug: string) {
-  const [destination, allJourneys, places, stories] = await Promise.all([
+  const [destination, allJourneys, places, stories, galleryImages] = await Promise.all([
     getDestinationBySlug(citySlug),
     getJourneys({ published: true }),
     getPlaces({ published: true, destination: citySlug }),
     getStories({ published: true }),
+    getCityGuideImages(citySlug),
   ]);
 
   // Build a destination object even if no DB row exists
@@ -139,7 +141,7 @@ async function fetchCityData(citySlug: string) {
     return tags.includes(slug) || tags.includes(title) || region.includes(slug) || region.includes(title);
   });
 
-  return { destination: dest, featuredJourneys, connectingJourneys, places, stories: cityStories };
+  return { destination: dest, featuredJourneys, connectingJourneys, places, stories: cityStories, galleryImages };
 }
 
 export default async function CityGuidePage({ params }: Props) {
@@ -155,6 +157,7 @@ export default async function CityGuidePage({ params }: Props) {
       places={data.places}
       stories={data.stories}
       citySlug={params.city}
+      galleryImages={data.galleryImages}
     />
   );
 }

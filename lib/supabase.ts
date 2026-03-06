@@ -769,6 +769,29 @@ export async function getDestinationBySlug(slug: string) {
 }
 
 // =============================================
+// CITY GUIDE IMAGES
+// =============================================
+
+export interface CityGuideImage {
+  id: number;
+  city_slug: string;
+  image_url: string | null;
+  caption: string | null;
+  image_order: number;
+}
+
+export async function getCityGuideImages(citySlug: string) {
+  const { data, error } = await supabase
+    .from("city_guide_images")
+    .select("*")
+    .eq("city_slug", citySlug)
+    .not("image_url", "is", null)
+    .order("image_order", { ascending: true });
+  if (error) { console.error("Error fetching city guide images:", error); return []; }
+  return data as CityGuideImage[];
+}
+
+// =============================================
 // PAGE BANNERS
 // =============================================
 

@@ -54,6 +54,14 @@ interface Story {
   tags: string | null;
 }
 
+interface CityGuideImage {
+  id: number;
+  city_slug: string;
+  image_url: string | null;
+  caption: string | null;
+  image_order: number;
+}
+
 interface Props {
   destination: Destination;
   journeys: Journey[];
@@ -61,7 +69,16 @@ interface Props {
   places: Place[];
   stories: Story[];
   citySlug: string;
+  galleryImages?: CityGuideImage[];
 }
+
+// ─── Fallback hero images for cities without a DB hero_image ────────────────
+
+const CITY_HERO_FALLBACKS: Record<string, string> = {
+  marrakech: "https://res.cloudinary.com/drstfu5yr/image/upload/v1766833142/marrakech_1_nw37ky.png",
+  essaouira: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310155/essaouira_meymce.png",
+  rabat: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310357/rabat_ofyxwj.png",
+};
 
 // ─── City coordinates + attraction data ───────────────────────────────────────
 
@@ -232,7 +249,9 @@ export default function CityGuideContent({
   places,
   stories,
   citySlug,
+  galleryImages = [],
 }: Props) {
+  const heroImage = destination.hero_image || CITY_HERO_FALLBACKS[citySlug] || null;
   const cityData = CITY_DATA[citySlug] || {
     center: [-6.0, 32.0] as [number, number],
     zoom: 12,
@@ -258,9 +277,9 @@ export default function CityGuideContent({
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="relative h-[70vh] min-h-[500px] max-h-[800px]">
-        {destination.hero_image ? (
+        {heroImage ? (
           <Image
-            src={destination.hero_image}
+            src={heroImage}
             alt={destination.title}
             fill
             className="object-cover"
@@ -309,6 +328,39 @@ export default function CityGuideContent({
           </p>
         )}
       </section>
+
+      {/* ── Gallery ───────────────────────────────────────────────────────── */}
+      {galleryImages.length > 0 && (
+        <section className="px-8 md:px-16 lg:px-20 pb-16">
+          <div className={`grid gap-4 ${
+            galleryImages.length === 1
+              ? "grid-cols-1"
+              : galleryImages.length === 2
+              ? "grid-cols-1 md:grid-cols-2"
+              : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          }`}>
+            {galleryImages.map((img) => (
+              <figure key={img.id}>
+                <div className="relative aspect-[16/10] overflow-hidden bg-foreground/5">
+                  {img.image_url && (
+                    <Image
+                      src={img.image_url}
+                      alt={img.caption || destination.title}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+                {img.caption && (
+                  <figcaption className="text-[10px] text-foreground/35 mt-2.5 font-mono tracking-wide">
+                    {img.caption}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ── Map + Places ──────────────────────────────────────────────────── */}
       <section className="px-8 md:px-16 lg:px-20 pb-20">
