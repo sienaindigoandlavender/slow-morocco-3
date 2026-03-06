@@ -146,9 +146,10 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 // ── Fallback hero images ──────────────────────────────────────────────────────
 
 const CITY_HERO_FALLBACKS: Record<string, string> = {
-  marrakech: "https://res.cloudinary.com/drstfu5yr/image/upload/v1766833142/marrakech_1_nw37ky.png",
+  marrakech: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767309989/marrakech-and-the-sea_i5aacd.png",
   essaouira: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310155/essaouira_meymce.png",
   rabat: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310357/rabat_ofyxwj.png",
+  agadir: "https://res.cloudinary.com/drstfu5yr/image/upload/v1769611923/agafay-desert_sp7d6n.jpg",
 };
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -160,10 +161,10 @@ export default function MoroccoContent({ cities, stories }: Props) {
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative h-[65vh] min-h-[480px] max-h-[720px] bg-[#1a1612]">
         <Image
-          src="https://res.cloudinary.com/drstfu5yr/image/upload/v1766833142/marrakech_1_nw37ky.png"
+          src="https://res.cloudinary.com/drstfu5yr/image/upload/v1767310439/kasbah_bfd8t4.png"
           alt="Morocco"
           fill
-          className="object-cover opacity-60"
+          className="object-cover object-center opacity-60"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />

@@ -75,9 +75,10 @@ interface Props {
 // ─── Fallback hero images for cities without a DB hero_image ────────────────
 
 const CITY_HERO_FALLBACKS: Record<string, string> = {
-  marrakech: "https://res.cloudinary.com/drstfu5yr/image/upload/v1766833142/marrakech_1_nw37ky.png",
+  marrakech: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767309989/marrakech-and-the-sea_i5aacd.png",
   essaouira: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310155/essaouira_meymce.png",
   rabat: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310357/rabat_ofyxwj.png",
+  agadir: "https://res.cloudinary.com/drstfu5yr/image/upload/v1769611923/agafay-desert_sp7d6n.jpg",
 };
 
 // ─── City coordinates + attraction data ───────────────────────────────────────
@@ -282,7 +283,7 @@ export default function CityGuideContent({
             src={heroImage}
             alt={destination.title}
             fill
-            className="object-cover"
+            className="object-cover object-center"
             priority
           />
         ) : (
