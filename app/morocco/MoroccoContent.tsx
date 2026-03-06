@@ -161,7 +161,7 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative h-[65vh] min-h-[480px] max-h-[720px] bg-[#1a1612]">
         <Image
-          src="https://res.cloudinary.com/drstfu5yr/image/upload/v1767310439/kasbah_bfd8t4.png"
+          src="https://res.cloudinary.com/ddcznjibs/image/upload/v1772838482/Taourirt_Kasbah_rising_above_the_desert_town_lqljat.png"
           alt="Morocco"
           fill
           sizes="100vw"
@@ -170,7 +170,7 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
         <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-20 pb-14">
-          <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl text-white">
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white">
             Morocco
           </h1>
         </div>

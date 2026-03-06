@@ -840,7 +840,7 @@ export const glossaryData: GlossaryCategory[] = [
         definition: "A tomato-based soup with chickpeas, lentils, and herbs, traditionally served to break the fast during Ramadan. Recipes vary by region and family.",
         context: "During Ramadan, harira is served at sunset with dates, chebakia (honey pastries), and hard-boiled eggs.",
         relatedStories: [
-          { slug: "ramadan-moon", title: "Ramadan Moon" }, { slug: "the-fassi-table", title: "The Fassi Table" },
+          { slug: "ramadan-moon", title: "The Islamic Calendar" }, { slug: "the-fassi-table", title: "The Fassi Table" },
         ],
         related: ["Ramadan soup", "Moroccan soup", "iftar"],
       },

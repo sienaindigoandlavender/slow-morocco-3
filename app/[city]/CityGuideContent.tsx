@@ -75,9 +75,15 @@ interface Props {
 // ─── Fallback hero images for cities without a DB hero_image ────────────────
 
 const CITY_HERO_FALLBACKS: Record<string, string> = {
-  marrakech: "https://res.cloudinary.com/drstfu5yr/image/upload/v1766833142/marrakech_1_nw37ky.png",
+  marrakech: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772836871/Marrakech_skyline_with_terracotta_medina_roof_q06tad.png",
   essaouira: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310155/essaouira_meymce.png",
   rabat: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310357/rabat_ofyxwj.png",
+  fes: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837045/Fes_medina_rooftop_looeyv.png",
+  tangier: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837334/Fes_medina_rooftop_looeyv.png",
+  chefchaouen: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837802/Chefchaouen_blue_medina_wowhdr.png",
+  casablanca: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837985/Hassan_II_Mosque_on_the_Atlantic_qe7t3y.png",
+  meknes: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772838176/Bab_Mansour_gate_in_Meknes_hef5id.png",
+  dakhla: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772838561/Dakhla_lagoon_aerial_view_with_turquoise_water_veanox.png",
 };
 
 // ─── City coordinates + attraction data ───────────────────────────────────────

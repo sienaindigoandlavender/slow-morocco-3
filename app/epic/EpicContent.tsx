@@ -40,22 +40,22 @@ export default function EpicContent({ journeys }: EpicContentProps) {
         </div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <p className="text-xs tracking-[0.4em] uppercase text-white/30 mb-8">
+          <p className="text-xs tracking-[0.4em] uppercase text-white/60 mb-8">
             Slow Morocco Presents
           </p>
-          
+
           <h1 className="text-5xl md:text-7xl lg:text-8xl tracking-[0.2em] font-light mb-8">
             E P I C
           </h1>
-          
-          <p className="text-lg md:text-xl text-white/50 leading-relaxed max-w-2xl mx-auto mb-12">
+
+          <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto mb-12">
             Journeys that cannot be copied. Built over eleven years. 
             Shared only with those ready to receive them.
           </p>
 
           <button
             onClick={scrollToJourneys}
-            className="inline-flex flex-col items-center gap-2 text-white/30 hover:text-white/60 transition-colors"
+            className="inline-flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors"
           >
             <span className="text-xs tracking-[0.2em] uppercase">Discover</span>
             <ChevronDown className="w-5 h-5 animate-bounce" />
@@ -77,7 +77,7 @@ export default function EpicContent({ journeys }: EpicContentProps) {
                 This is not tourism. This is transmission.
               </h2>
             </div>
-            <div className="space-y-6 text-white/60 leading-relaxed">
+            <div className="space-y-6 text-white/80 leading-relaxed">
               <p>
                 These journeys grant access to knowledge held by a handful of people 
                 alive today. A Saharan wayfarer who navigates by stars. A maâlem 
@@ -104,7 +104,7 @@ export default function EpicContent({ journeys }: EpicContentProps) {
       <section id="epic-journeys" className="py-24 md:py-32 border-t border-white/5">
         <div className="container mx-auto px-6 lg:px-16">
           <div className="text-center mb-20">
-            <p className="text-xs tracking-[0.3em] uppercase text-white/30 mb-4">
+            <p className="text-xs tracking-[0.3em] uppercase text-white/60 mb-4">
               Five Journeys
             </p>
             <h2 className="text-3xl md:text-4xl tracking-[0.15em] font-light">
@@ -123,7 +123,7 @@ export default function EpicContent({ journeys }: EpicContentProps) {
                   className="w-full py-8 md:py-12 flex items-center justify-between group text-left"
                 >
                   <div className="flex items-baseline gap-6 md:gap-12">
-                    <span className="text-xs tracking-[0.2em] text-white/20 font-mono">
+                    <span className="text-xs tracking-[0.2em] text-white/50 font-mono">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <h3 className="font-serif text-2xl md:text-3xl lg:text-4xl group-hover:text-white/70 transition-colors">
@@ -131,14 +131,14 @@ export default function EpicContent({ journeys }: EpicContentProps) {
                     </h3>
                   </div>
                   <div className="flex items-center gap-6">
-                    <span className="text-sm text-white/50 hidden md:block">
+                    <span className="text-sm text-white/70 hidden md:block">
                       {journey.epicPrice ? `€${journey.epicPrice.toLocaleString()}` : 'Price on request'}
                     </span>
-                    <span className="text-xs tracking-[0.15em] uppercase text-white/30 hidden lg:block">
+                    <span className="text-xs tracking-[0.15em] uppercase text-white/60 hidden lg:block">
                       {journey.focus}
                     </span>
                     <div className={`w-8 h-8 rounded-full border border-foreground/20 flex items-center justify-center transition-transform ${activeJourney === journey.slug ? 'rotate-180' : ''}`}>
-                      <ChevronDown className="w-4 h-4 text-white/40" />
+                      <ChevronDown className="w-4 h-4 text-white/70" />
                     </div>
                   </div>
                 </button>
@@ -166,12 +166,12 @@ export default function EpicContent({ journeys }: EpicContentProps) {
                       </div>
 
                       <div className="flex flex-col justify-center">
-                        <p className="text-white/60 leading-relaxed mb-6">
+                        <p className="text-white/80 leading-relaxed mb-6">
                           {journey.description}
                         </p>
                         
                         {journey.arcDescription && (
-                          <p className="text-white/40 leading-relaxed text-sm mb-8 line-clamp-4">
+                          <p className="text-white/70 leading-relaxed text-sm mb-8 line-clamp-4">
                             {journey.arcDescription}
                           </p>
                         )}
@@ -181,7 +181,7 @@ export default function EpicContent({ journeys }: EpicContentProps) {
                             <span className="font-serif text-2xl text-white">
                               {journey.epicPrice ? `€${journey.epicPrice.toLocaleString()}` : 'Price on request'}
                             </span>
-                            <span className="text-xs tracking-[0.15em] uppercase text-white/40">
+                            <span className="text-xs tracking-[0.15em] uppercase text-white/70">
                               Private journey for two
                             </span>
                           </div>
@@ -189,7 +189,7 @@ export default function EpicContent({ journeys }: EpicContentProps) {
 
                         <Link
                           href={`/journeys/${journey.slug}`}
-                          className="inline-flex items-center gap-3 text-xs tracking-[0.2em] uppercase text-white/60 hover:text-white transition-colors group/link"
+                          className="inline-flex items-center gap-3 text-xs tracking-[0.2em] uppercase text-white/80 hover:text-white transition-colors group/link"
                         >
                           <span>Request This Journey</span>
                           <svg 
@@ -220,12 +220,12 @@ export default function EpicContent({ journeys }: EpicContentProps) {
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight mb-8">
             These journeys choose their travelers as much as travelers choose them.
           </h2>
-          <p className="text-white/50 leading-relaxed mb-6">
+          <p className="text-white/80 leading-relaxed mb-6">
             We don&apos;t measure success by volume. We measure it by the depth of 
             the exchange — between you and the knowledge keepers, between the 
             ancient and the present.
           </p>
-          <p className="text-white/40 leading-relaxed mb-12 text-sm">
+          <p className="text-white/70 leading-relaxed mb-12 text-sm">
             Inquire below. If it&apos;s right, we&apos;ll know. A €1,000 deposit 
             (applied to your final balance) unlocks the full journey details.
           </p>
@@ -246,24 +246,24 @@ export default function EpicContent({ journeys }: EpicContentProps) {
               <p className="font-serif text-xl md:text-2xl text-white/70 italic mb-4">
                 &ldquo;The stars don&apos;t care about your GPS.&rdquo;
               </p>
-              <cite className="text-xs tracking-[0.2em] uppercase text-white/30">
-                — Navigation by Stars
+              <cite className="text-xs tracking-[0.2em] uppercase text-white/60">
+                —Navigation by Stars
               </cite>
             </blockquote>
             <blockquote className="text-center">
               <p className="font-serif text-xl md:text-2xl text-white/70 italic mb-4">
                 &ldquo;The Little Prince wasn&apos;t fiction. It was memory.&rdquo;
               </p>
-              <cite className="text-xs tracking-[0.2em] uppercase text-white/30">
-                — The Little Prince Route
+              <cite className="text-xs tracking-[0.2em] uppercase text-white/60">
+                —The Little Prince Route
               </cite>
             </blockquote>
             <blockquote className="text-center">
               <p className="font-serif text-xl md:text-2xl text-white/70 italic mb-4">
                 &ldquo;Gnawa is not music. It is medicine.&rdquo;
               </p>
-              <cite className="text-xs tracking-[0.2em] uppercase text-white/30">
-                — The Gnawa Road
+              <cite className="text-xs tracking-[0.2em] uppercase text-white/60">
+                —The Gnawa Road
               </cite>
             </blockquote>
           </div>
