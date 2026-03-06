@@ -519,11 +519,11 @@ export default function WeddingAtlasContent({ story, images, relatedJourneys }: 
       )}
 
       {/* ━━━ SOURCES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16" style={{ background: "#141414" }}>
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-16 border-t border-neutral-200" style={{ background: "#f5f5f0" }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-4xl">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.7)" }}>Sources</p>
-            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.9)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(0,0,0,0.4)" }}>Sources</p>
+            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(0,0,0,0.6)" }}>
               {sources.length > 0
                 ? sources.map((s, i) => <p key={i} className="mb-2">{s}</p>)
                 : <>
@@ -535,14 +535,14 @@ export default function WeddingAtlasContent({ story, images, relatedJourneys }: 
             </div>
           </div>
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.7)" }}>Cost data</p>
-            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.9)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(0,0,0,0.4)" }}>Cost data</p>
+            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(0,0,0,0.6)" }}>
               <p className="mb-2">Estimates based on field research and planner interviews, Marrakech 2023–2024.</p>
               <p>Figures in Moroccan dirhams (MAD). Vary significantly by region, family, and season.</p>
             </div>
           </div>
         </div>
-        <p className="font-mono text-[10px] mt-10" style={{ color: "#c9a96e" }}>© Slow Morocco · J. Ng</p>
+        <p className="font-mono text-[10px] mt-10" style={{ color: "#92702a" }}>© Slow Morocco · J. Ng</p>
       </section>
 
     </div>

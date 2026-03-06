@@ -749,11 +749,11 @@ export default function MarriagesDivorcesContent() {
       </section>
 
       {/* ━━━ SOURCES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <section style={{ background: "#141414", padding: "64px 12% " }}>
+      <section style={{ background: "#f5f5f0", padding: "64px 12%", borderTop: "1px solid #e5e5e0" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, maxWidth: 860 }}>
           <div>
-            <p style={{ fontFamily: "monospace", fontSize: 9, textTransform: "uppercase", letterSpacing: "0.2em", color: "rgba(255,255,255,0.7)", marginBottom: 16 }}>Data sources</p>
-            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.9)" }}>
+            <p style={{ fontFamily: "monospace", fontSize: 9, textTransform: "uppercase", letterSpacing: "0.2em", color: "rgba(0,0,0,0.4)", marginBottom: 16 }}>Data sources</p>
+            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(0,0,0,0.6)" }}>
               <p style={{ marginBottom: 8 }}>HCP — Haut-Commissariat au Plan du Maroc. <em>Femmes Marocaines en Chiffres 2024</em>.</p>
               <p style={{ marginBottom: 8 }}>Conseil Supérieur du Pouvoir Judiciaire (CSPJ). Marriage and divorce statistics 2017–2024.</p>
               <p style={{ marginBottom: 8 }}>Ministère de la Justice. Family Code reform proposals, December 2024.</p>
@@ -761,15 +761,15 @@ export default function MarriagesDivorcesContent() {
             </div>
           </div>
           <div>
-            <p style={{ fontFamily: "monospace", fontSize: 9, textTransform: "uppercase", letterSpacing: "0.2em", color: "rgba(255,255,255,0.7)", marginBottom: 16 }}>Notes</p>
-            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.9)" }}>
+            <p style={{ fontFamily: "monospace", fontSize: 9, textTransform: "uppercase", letterSpacing: "0.2em", color: "rgba(0,0,0,0.4)", marginBottom: 16 }}>Notes</p>
+            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(0,0,0,0.6)" }}>
               <p style={{ marginBottom: 8 }}>All figures from official HCP and CSPJ datasets unless noted.</p>
               <p style={{ marginBottom: 8 }}>Marriage age data latest available: 2018 (HCP gender breakdown).</p>
               <p>Divorce ratio calculated as (divorces ÷ marriages) × 100 per year.</p>
             </div>
           </div>
         </div>
-        <p style={{ fontFamily: "monospace", fontSize: 10, marginTop: 40, color: "#c9a96e" }}>© Slow Morocco · J. Ng</p>
+        <p style={{ fontFamily: "monospace", fontSize: 10, marginTop: 40, color: "#92702a" }}>© Slow Morocco · J. Ng</p>
       </section>
 
     </div>
