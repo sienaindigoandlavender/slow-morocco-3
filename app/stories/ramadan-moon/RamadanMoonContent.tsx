@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 
 // ═══ DATA ═══
 
@@ -40,12 +40,23 @@ const SEASON_COLORS: Record<string, string> = {
   winter: '#48BFE3',
 }
 
+// ═══ STAR FIELD DATA (stable across renders) ═══
+
+const STARS = Array.from({ length: 80 }, (_, i) => ({
+  x: ((i * 7919 + 13) % 1000) / 10,
+  y: ((i * 6271 + 37) % 1000) / 10,
+  r: 0.3 + ((i * 3571) % 100) / 100 * 0.8,
+  delay: ((i * 4937) % 100) / 100 * 6,
+  duration: 3 + ((i * 2749) % 100) / 100 * 4,
+  opacity: 0.15 + ((i * 8123) % 100) / 100 * 0.35,
+}))
+
 // ═══ HOOKS ═══
 
 function useInView(threshold = 0.2): [React.RefCallback<HTMLElement>, boolean] {
   const [inView, setInView] = useState(false)
   const [el, setEl] = useState<HTMLElement | null>(null)
-  const ref = (node: HTMLElement | null) => setEl(node)
+  const ref = useCallback((node: HTMLElement | null) => setEl(node), [])
 
   useEffect(() => {
     if (!el) return
@@ -60,10 +71,34 @@ function useInView(threshold = 0.2): [React.RefCallback<HTMLElement>, boolean] {
   return [ref, inView]
 }
 
+function useCountUp(target: number, visible: boolean, duration = 1800, delay = 0): number {
+  const [value, setValue] = useState(0)
+  const startTime = useRef<number | null>(null)
+  const rafId = useRef<number>(0)
+
+  useEffect(() => {
+    if (!visible) return
+    const timeout = setTimeout(() => {
+      const animate = (ts: number) => {
+        if (!startTime.current) startTime.current = ts
+        const elapsed = ts - startTime.current
+        const progress = Math.min(elapsed / duration, 1)
+        const eased = 1 - Math.pow(1 - progress, 3)
+        setValue(Math.round(eased * target))
+        if (progress < 1) rafId.current = requestAnimationFrame(animate)
+      }
+      rafId.current = requestAnimationFrame(animate)
+    }, delay)
+    return () => { clearTimeout(timeout); cancelAnimationFrame(rafId.current) }
+  }, [visible, target, duration, delay])
+
+  return value
+}
+
 // ═══ MOON SVG ═══
 
-function Moon({ cx, cy, r, illumination, glow = false, highlight = false }: {
-  cx: number; cy: number; r: number; illumination: number; glow?: boolean; highlight?: boolean
+function Moon({ cx, cy, r, illumination, glow = false, highlight = false, breatheDelay = 0 }: {
+  cx: number; cy: number; r: number; illumination: number; glow?: boolean; highlight?: boolean; breatheDelay?: number
 }) {
   const brightness = illumination
   const moonColor = `rgba(255, 248, 220, ${0.15 + brightness * 0.85})`
@@ -72,11 +107,37 @@ function Moon({ cx, cy, r, illumination, glow = false, highlight = false }: {
 
   return (
     <g>
-      {glow && brightness > 0.6 && (
-        <circle cx={cx} cy={cy} r={r * 2} fill={`rgba(255, 248, 220, ${brightness * 0.08})`} />
+      {/* Breathing glow */}
+      {brightness > 0.3 && (
+        <circle
+          cx={cx} cy={cy} r={r * 2.5}
+          fill={`rgba(255, 248, 220, ${brightness * 0.06})`}
+        >
+          <animate
+            attributeName="r"
+            values={`${r * 2.2};${r * 3};${r * 2.2}`}
+            dur={`${4 + breatheDelay * 0.3}s`}
+            begin={`${breatheDelay * 0.15}s`}
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="opacity"
+            values="1;0.5;1"
+            dur={`${4 + breatheDelay * 0.3}s`}
+            begin={`${breatheDelay * 0.15}s`}
+            repeatCount="indefinite"
+          />
+        </circle>
       )}
       {highlight && (
-        <circle cx={cx} cy={cy} r={r + 3} fill="none" stroke="#FCBF49" strokeWidth="1" opacity="0.5" />
+        <circle cx={cx} cy={cy} r={r + 3} fill="none" stroke="#FCBF49" strokeWidth="1" opacity="0.5">
+          <animate
+            attributeName="opacity"
+            values="0.3;0.7;0.3"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
       )}
       <circle cx={cx} cy={cy} r={r} fill="rgba(255,248,220,0.08)" />
       <defs>
@@ -108,14 +169,81 @@ function Moon({ cx, cy, r, illumination, glow = false, highlight = false }: {
   )
 }
 
+// ═══ STAR FIELD ═══
+
+function StarField() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+        {STARS.map((star, i) => (
+          <circle key={i} cx={star.x} cy={star.y} r={star.r} fill="rgba(255,248,220,0.6)">
+            <animate
+              attributeName="opacity"
+              values={`${star.opacity};${star.opacity * 0.2};${star.opacity}`}
+              dur={`${star.duration}s`}
+              begin={`${star.delay}s`}
+              repeatCount="indefinite"
+            />
+          </circle>
+        ))}
+      </svg>
+    </div>
+  )
+}
+
 // ═══ PAGE ═══
 
 export function RamadanMoonContent() {
   const [hoveredDay, setHoveredDay] = useState<number | null>(null)
   const [hoveredYear, setHoveredYear] = useState<number | null>(null)
+  const [heroRef, heroVisible] = useInView(0.3)
   const [moonRef, moonVisible] = useInView(0.15)
   const [wheelRef, wheelVisible] = useInView(0.15)
   const [barsRef, barsVisible] = useInView(0.15)
+  const [factRef, factVisible] = useInView(0.3)
+
+  // Auto-play: cycle through nights when visible and not hovered
+  const [autoNight, setAutoNight] = useState<number | null>(null)
+  const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    if (!moonVisible) return
+
+    // Start auto-play after initial reveal
+    const startDelay = setTimeout(() => {
+      let night = 0
+      autoPlayRef.current = setInterval(() => {
+        setAutoNight(night)
+        night = (night + 1) % 30
+      }, 800)
+    }, 2000)
+
+    return () => {
+      clearTimeout(startDelay)
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current)
+    }
+  }, [moonVisible])
+
+  // Stop auto-play on manual hover
+  const handleDayEnter = useCallback((i: number) => {
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current)
+      autoPlayRef.current = null
+    }
+    setAutoNight(null)
+    setHoveredDay(i)
+  }, [])
+
+  const handleDayLeave = useCallback(() => {
+    setHoveredDay(null)
+  }, [])
+
+  const activeDay = hoveredDay ?? autoNight
+
+  // Count-up numbers
+  const count354 = useCountUp(354, heroVisible, 1800, 200)
+  const count11 = useCountUp(11, heroVisible, 1200, 500)
+  const count33 = useCountUp(33, heroVisible, 1400, 800)
 
   // Arc layout for the 30 moons
   const W = 800
@@ -139,39 +267,107 @@ export function RamadanMoonContent() {
     }), [CX, CY, ARC_R, START_A, SPREAD]
   )
 
+  // Drift wheel path
+  const driftPath = useMemo(() => {
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const points = SEASONAL_DRIFT.map((y) => {
+      const monthStr = y.start.split(' ')[0]
+      const monthIdx = monthNames.indexOf(monthStr)
+      const dayNum = parseInt(y.start.split(' ')[1])
+      const yearAngle = ((monthIdx + dayNum / 30) / 12) * 2 * Math.PI - Math.PI / 2
+      const hourR = 60 + (y.hours - 10) * 16
+      return {
+        x: 250 + hourR * Math.cos(yearAngle),
+        y: 250 + hourR * Math.sin(yearAngle),
+      }
+    })
+    return points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ')
+  }, [])
+
+  const driftPathLength = useMemo(() => {
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const points = SEASONAL_DRIFT.map((y) => {
+      const monthStr = y.start.split(' ')[0]
+      const monthIdx = monthNames.indexOf(monthStr)
+      const dayNum = parseInt(y.start.split(' ')[1])
+      const yearAngle = ((monthIdx + dayNum / 30) / 12) * 2 * Math.PI - Math.PI / 2
+      const hourR = 60 + (y.hours - 10) * 16
+      return {
+        x: 250 + hourR * Math.cos(yearAngle),
+        y: 250 + hourR * Math.sin(yearAngle),
+      }
+    })
+    let len = 0
+    for (let i = 1; i < points.length; i++) {
+      len += Math.sqrt((points[i].x - points[i - 1].x) ** 2 + (points[i].y - points[i - 1].y) ** 2)
+    }
+    return Math.round(len)
+  }, [])
+
   return (
     <div className="bg-white text-white min-h-screen pt-16">
 
       {/* ═══ HERO ═══ */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] pt-20 pb-8">
-        <p className="micro-label text-[#555] mb-2">Module 006 · Cultural Intelligence</p>
-        <h1 className="font-serif text-[clamp(2.5rem,7vw,4.5rem)] leading-[0.95] tracking-[-0.02em] mb-4">
+      <section ref={heroRef} className="px-8 md:px-[8%] lg:px-[12%] pt-20 pb-8">
+        <p
+          className="micro-label text-[#555] mb-2"
+          style={{
+            opacity: heroVisible ? 1 : 0,
+            transform: heroVisible ? 'translateY(0)' : 'translateY(12px)',
+            transition: 'opacity 0.7s ease, transform 0.7s ease',
+          }}
+        >
+          Module 006 · Cultural Intelligence
+        </p>
+        <h1
+          className="font-serif text-[clamp(2.5rem,7vw,4.5rem)] leading-[0.95] tracking-[-0.02em] mb-4"
+          style={{
+            opacity: heroVisible ? 1 : 0,
+            transform: heroVisible ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'opacity 1s ease 0.2s, transform 1s ease 0.2s',
+          }}
+        >
           <em>Ramadan &amp; the Moon</em>
         </h1>
-        <p className="text-[13px] text-[#666] max-w-[540px] leading-[1.7]">
+        <p
+          className="text-[13px] text-[#666] max-w-[540px] leading-[1.7]"
+          style={{
+            opacity: heroVisible ? 1 : 0,
+            transform: heroVisible ? 'translateY(0)' : 'translateY(16px)',
+            transition: 'opacity 1s ease 0.4s, transform 1s ease 0.4s',
+          }}
+        >
           The Islamic calendar is purely lunar — 354 days, 11 shorter than the Gregorian year.
           Ramadan drifts backward through the seasons, completing a full rotation every 33 years.
           The crescent moon begins it. The crescent moon ends it.
         </p>
-        <div className="flex gap-6 mt-6">
+        <div
+          className="flex gap-6 mt-6"
+          style={{
+            opacity: heroVisible ? 1 : 0,
+            transform: heroVisible ? 'translateY(0)' : 'translateY(16px)',
+            transition: 'opacity 1s ease 0.6s, transform 1s ease 0.6s',
+          }}
+        >
           <div>
-            <p className="font-serif italic text-[28px] text-white/90">354</p>
+            <p className="font-serif italic text-[28px] text-white/90">{count354}</p>
             <p className="micro-label text-[#555]">Days in lunar year</p>
           </div>
           <div>
-            <p className="font-serif italic text-[28px] text-[#FCBF49]">11</p>
+            <p className="font-serif italic text-[28px] text-[#FCBF49]">{count11}</p>
             <p className="micro-label text-[#555]">Day annual drift</p>
           </div>
           <div>
-            <p className="font-serif italic text-[28px] text-white/90">33</p>
+            <p className="font-serif italic text-[28px] text-white/90">{count33}</p>
             <p className="micro-label text-[#555]">Years full cycle</p>
           </div>
         </div>
       </section>
 
       {/* ═══ SECTION 1: THE 30 MOONS ═══ */}
-      <section ref={moonRef} className="px-8 md:px-[8%] lg:px-[12%] pt-12">
-        <div className="border-t border-white/[0.06] pt-8">
+      <section ref={moonRef} className="px-8 md:px-[8%] lg:px-[12%] pt-12 relative">
+        <StarField />
+        <div className="border-t border-white/[0.06] pt-8 relative z-10">
           <p className="micro-label text-[#444] mb-1">30 Nights of Ramadan</p>
           <p className="font-serif italic text-[20px] text-white/50 mb-0">
             From crescent to crescent
@@ -180,7 +376,8 @@ export function RamadanMoonContent() {
       </section>
 
       <div className="max-w-[900px] mx-auto relative">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto">
+        <StarField />
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto relative z-10">
           {/* Faint arc guide */}
           <path
             d={`M ${CX + ARC_R * Math.cos(START_A)} ${CY + ARC_R * Math.sin(START_A)} A ${ARC_R} ${ARC_R} 0 0 1 ${CX + ARC_R * Math.cos(END_A)} ${CY + ARC_R * Math.sin(END_A)}`}
@@ -189,29 +386,34 @@ export function RamadanMoonContent() {
             strokeWidth="1"
           />
 
-          {/* 30 moons */}
+          {/* 30 moons — staggered entrance */}
           {moonPositions.map((m, i) => {
-            const isHovered = hoveredDay === i
-            const moonR = 9
+            const isActive = activeDay === i
+            const revealDelay = i * 50
             return (
               <g
                 key={m.day}
-                opacity={moonVisible ? (hoveredDay !== null && !isHovered ? 0.25 : 1) : 0}
-                style={{ transition: 'opacity 0.4s ease', cursor: 'pointer' }}
-                onMouseEnter={() => setHoveredDay(i)}
-                onMouseLeave={() => setHoveredDay(null)}
+                style={{
+                  opacity: moonVisible ? (activeDay !== null && !isActive ? 0.2 : 1) : 0,
+                  transform: moonVisible ? 'translateY(0)' : 'translateY(15px)',
+                  transition: `opacity 0.5s ease ${revealDelay}ms, transform 0.8s cubic-bezier(0.23,1,0.32,1) ${revealDelay}ms`,
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={() => handleDayEnter(i)}
+                onMouseLeave={handleDayLeave}
               >
                 <Moon
                   cx={m.x}
                   cy={m.y}
-                  r={moonR}
+                  r={9}
                   illumination={m.illumination}
                   glow={m.illumination > 0.7}
                   highlight={m.isQadr}
+                  breatheDelay={i}
                 />
                 <text
                   x={m.x}
-                  y={m.y + moonR + 14}
+                  y={m.y + 23}
                   textAnchor="middle"
                   fill={m.isQadr ? '#FCBF49' : m.isLastTen ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.25)'}
                   fontSize="8"
@@ -223,69 +425,97 @@ export function RamadanMoonContent() {
             )
           })}
 
-          {/* Annotations */}
-          <text x={moonPositions[0].x - 16} y={moonPositions[0].y - 20} textAnchor="end" fill="rgba(255,255,255,0.7)" fontSize="9" fontFamily="var(--font-plex-mono), monospace">
-            First crescent
-          </text>
-          <text x={moonPositions[0].x - 16} y={moonPositions[0].y - 10} textAnchor="end" fill="rgba(255,255,255,0.25)" fontSize="8" fontFamily="var(--font-plex-mono), monospace">
-            hilal sighted →
-          </text>
+          {/* Annotations — fade in after moons */}
+          <g style={{ opacity: moonVisible ? 1 : 0, transition: 'opacity 1s ease 1.8s' }}>
+            <text x={moonPositions[0].x - 16} y={moonPositions[0].y - 20} textAnchor="end" fill="rgba(255,255,255,0.7)" fontSize="9" fontFamily="var(--font-plex-mono), monospace">
+              First crescent
+            </text>
+            <text x={moonPositions[0].x - 16} y={moonPositions[0].y - 10} textAnchor="end" fill="rgba(255,255,255,0.25)" fontSize="8" fontFamily="var(--font-plex-mono), monospace">
+              hilal sighted →
+            </text>
 
-          <text x={CX} y={moonPositions[14].y - 24} textAnchor="middle" fill="rgba(255,248,220,0.6)" fontSize="9" fontFamily="var(--font-plex-mono), monospace">
-            Full moon · Laylat al-Badr
-          </text>
+            <text x={CX} y={moonPositions[14].y - 24} textAnchor="middle" fill="rgba(255,248,220,0.6)" fontSize="9" fontFamily="var(--font-plex-mono), monospace">
+              Full moon · Laylat al-Badr
+            </text>
 
-          <text x={moonPositions[29].x + 16} y={moonPositions[29].y - 20} textAnchor="start" fill="rgba(255,255,255,0.7)" fontSize="9" fontFamily="var(--font-plex-mono), monospace">
-            New crescent
-          </text>
-          <text x={moonPositions[29].x + 16} y={moonPositions[29].y - 10} textAnchor="start" fill="rgba(255,255,255,0.25)" fontSize="8" fontFamily="var(--font-plex-mono), monospace">
-            ← Eid al-Fitr begins
-          </text>
+            <text x={moonPositions[29].x + 16} y={moonPositions[29].y - 20} textAnchor="start" fill="rgba(255,255,255,0.7)" fontSize="9" fontFamily="var(--font-plex-mono), monospace">
+              New crescent
+            </text>
+            <text x={moonPositions[29].x + 16} y={moonPositions[29].y - 10} textAnchor="start" fill="rgba(255,255,255,0.25)" fontSize="8" fontFamily="var(--font-plex-mono), monospace">
+              ← Eid al-Fitr begins
+            </text>
 
-          {/* Last 10 nights bracket */}
-          <line
-            x1={moonPositions[19].x} y1={moonPositions[19].y + 28}
-            x2={moonPositions[29].x} y2={moonPositions[29].y + 28}
-            stroke="#FCBF49" strokeWidth="1" opacity="0.4"
-          />
-          <text
-            x={(moonPositions[19].x + moonPositions[29].x) / 2}
-            y={Math.max(moonPositions[19].y, moonPositions[29].y) + 42}
-            textAnchor="middle"
-            fill="#FCBF49"
-            fontSize="8"
-            fontFamily="var(--font-plex-mono), monospace"
-            opacity="0.7"
-          >
-            LAST 10 NIGHTS · Laylat al-Qadr sought on odd nights
-          </text>
+            {/* Last 10 nights bracket */}
+            <line
+              x1={moonPositions[19].x} y1={moonPositions[19].y + 28}
+              x2={moonPositions[29].x} y2={moonPositions[29].y + 28}
+              stroke="#FCBF49" strokeWidth="1" opacity="0.4"
+            />
+            <text
+              x={(moonPositions[19].x + moonPositions[29].x) / 2}
+              y={Math.max(moonPositions[19].y, moonPositions[29].y) + 42}
+              textAnchor="middle"
+              fill="#FCBF49"
+              fontSize="8"
+              fontFamily="var(--font-plex-mono), monospace"
+              opacity="0.7"
+            >
+              LAST 10 NIGHTS · Laylat al-Qadr sought on odd nights
+            </text>
+          </g>
         </svg>
 
-        {/* Hover detail */}
-        {hoveredDay !== null && (
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-[rgba(20,20,20,0.95)] border border-white/10 px-5 py-3 text-center min-w-[220px]">
-            <p className="micro-label text-[#666] mb-1">Night {DAYS[hoveredDay].day} of Ramadan</p>
-            <p className="font-serif italic text-[18px] text-white mb-1">
-              {Math.round(DAYS[hoveredDay].illumination * 100)}% illuminated
-            </p>
-            {DAYS[hoveredDay].isQadr && (
-              <p className="text-[10px] text-[#FCBF49]">Possible Laylat al-Qadr — the Night of Power</p>
-            )}
-            {DAYS[hoveredDay].day === 1 && (
-              <p className="text-[10px] text-white/50">The first sighting of the hilal marks the start</p>
-            )}
-            {DAYS[hoveredDay].day === 15 && (
-              <p className="text-[10px] text-[rgba(255,248,220,0.6)]">Full moon — Laylat al-Badr</p>
-            )}
-          </div>
-        )}
+        {/* Hover / auto-play detail */}
+        <div
+          className="absolute top-4 left-1/2 -translate-x-1/2 bg-[rgba(20,20,20,0.95)] border border-white/10 px-5 py-3 text-center min-w-[220px] z-20"
+          style={{
+            opacity: activeDay !== null ? 1 : 0,
+            transform: activeDay !== null ? 'translateY(0)' : 'translateY(-6px)',
+            transition: 'opacity 0.3s ease, transform 0.3s ease',
+            pointerEvents: activeDay !== null ? 'auto' : 'none',
+          }}
+        >
+          {activeDay !== null && (
+            <>
+              <p className="micro-label text-[#666] mb-1">Night {DAYS[activeDay].day} of Ramadan</p>
+              <p className="font-serif italic text-[18px] text-white mb-1">
+                {Math.round(DAYS[activeDay].illumination * 100)}% illuminated
+              </p>
+              {DAYS[activeDay].isQadr && (
+                <p className="text-[10px] text-[#FCBF49]">Possible Laylat al-Qadr — the Night of Power</p>
+              )}
+              {DAYS[activeDay].day === 1 && (
+                <p className="text-[10px] text-white/50">The first sighting of the hilal marks the start</p>
+              )}
+              {DAYS[activeDay].day === 15 && (
+                <p className="text-[10px] text-[rgba(255,248,220,0.6)]">Full moon — Laylat al-Badr</p>
+              )}
+            </>
+          )}
+        </div>
       </div>
 
       {/* ═══ SECTION 2: THE 33-YEAR DRIFT ═══ */}
       <section ref={wheelRef} className="px-8 md:px-[8%] lg:px-[12%] pt-12">
         <div className="border-t border-white/[0.06] pt-8">
-          <p className="micro-label text-[#444] mb-1">The 33-Year Rotation</p>
-          <p className="font-serif italic text-[20px] text-white/50 mb-6">
+          <p
+            className="micro-label text-[#444] mb-1"
+            style={{
+              opacity: wheelVisible ? 1 : 0,
+              transform: wheelVisible ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'opacity 0.7s ease, transform 0.7s ease',
+            }}
+          >
+            The 33-Year Rotation
+          </p>
+          <p
+            className="font-serif italic text-[20px] text-white/50 mb-6"
+            style={{
+              opacity: wheelVisible ? 1 : 0,
+              transform: wheelVisible ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s',
+            }}
+          >
             Ramadan drifts 11 days earlier each year. In one lifetime, you fast in every season.
           </p>
 
@@ -308,7 +538,8 @@ export function RamadanMoonContent() {
                   fontSize="9"
                   fontFamily="var(--font-plex-mono), monospace"
                   letterSpacing="0.15em"
-                  opacity="0.5"
+                  opacity={wheelVisible ? 0.5 : 0}
+                  style={{ transition: 'opacity 1s ease 0.5s' }}
                 >
                   {s.label}
                 </text>
@@ -318,6 +549,17 @@ export function RamadanMoonContent() {
               {[60, 100, 140, 170].map(r => (
                 <circle key={r} cx={250} cy={250} r={r} fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
               ))}
+
+              {/* Animated connecting path */}
+              <path
+                d={driftPath}
+                fill="none"
+                stroke="rgba(255,255,255,0.12)"
+                strokeWidth="1"
+                strokeDasharray={driftPathLength}
+                strokeDashoffset={wheelVisible ? 0 : driftPathLength}
+                style={{ transition: `stroke-dashoffset 3s cubic-bezier(0.25,0.46,0.45,0.94) 0.5s` }}
+              />
 
               {/* Year dots */}
               {SEASONAL_DRIFT.map((y, i) => {
@@ -331,18 +573,39 @@ export function RamadanMoonContent() {
                 const py = 250 + hourR * Math.sin(yearAngle)
                 const isHovered = hoveredYear === i
                 const color = SEASON_COLORS[y.season]
+                const dotDelay = 500 + i * 150
 
                 return (
                   <g
                     key={y.year}
-                    opacity={wheelVisible ? (hoveredYear !== null && !isHovered ? 0.2 : 1) : 0}
-                    style={{ transition: 'opacity 0.3s ease', cursor: 'pointer' }}
+                    style={{
+                      opacity: wheelVisible ? (hoveredYear !== null && !isHovered ? 0.2 : 1) : 0,
+                      transition: `opacity 0.5s ease ${dotDelay}ms`,
+                      cursor: 'pointer',
+                    }}
                     onMouseEnter={() => setHoveredYear(i)}
                     onMouseLeave={() => setHoveredYear(null)}
                   >
                     {isHovered && <circle cx={px} cy={py} r={14} fill={color} opacity={0.15} />}
                     <circle cx={px} cy={py} r={5} fill={color} />
                     <circle cx={px} cy={py} r={5} fill="url(#dot-glow)" />
+                    {/* Breathing pulse on dots */}
+                    <circle cx={px} cy={py} r={5} fill="none" stroke={color} strokeWidth="1">
+                      <animate
+                        attributeName="r"
+                        values="5;9;5"
+                        dur={`${3 + i * 0.2}s`}
+                        begin={`${i * 0.3}s`}
+                        repeatCount="indefinite"
+                      />
+                      <animate
+                        attributeName="opacity"
+                        values="0.4;0;0.4"
+                        dur={`${3 + i * 0.2}s`}
+                        begin={`${i * 0.3}s`}
+                        repeatCount="indefinite"
+                      />
+                    </circle>
                     <text
                       x={px} y={py - 10}
                       textAnchor="middle"
@@ -378,14 +641,20 @@ export function RamadanMoonContent() {
           {/* Hover detail */}
           <div className="text-center min-h-[48px] mb-2">
             {hoveredYear !== null ? (
-              <>
+              <div
+                style={{
+                  opacity: 1,
+                  transform: 'translateY(0)',
+                  transition: 'opacity 0.3s, transform 0.3s',
+                }}
+              >
                 <p className="font-serif italic text-[22px] mb-1" style={{ color: SEASON_COLORS[SEASONAL_DRIFT[hoveredYear].season] }}>
                   Ramadan {SEASONAL_DRIFT[hoveredYear].year}
                 </p>
                 <p className="text-[12px] text-white/60">
                   Starts {SEASONAL_DRIFT[hoveredYear].start} · {SEASONAL_DRIFT[hoveredYear].hours} hours fasting · {SEASONAL_DRIFT[hoveredYear].temp} in Marrakech
                 </p>
-              </>
+              </div>
             ) : (
               <p className="font-serif italic text-[15px] text-white/50">
                 Hover a year to see fasting conditions
@@ -398,8 +667,24 @@ export function RamadanMoonContent() {
       {/* ═══ SECTION 3: FASTING HOURS ═══ */}
       <section ref={barsRef} className="px-8 md:px-[8%] lg:px-[12%] pt-6">
         <div className="border-t border-white/[0.06] pt-8">
-          <p className="micro-label text-[#444] mb-1">What Fasting Feels Like</p>
-          <p className="font-serif italic text-[20px] text-white/50 mb-5">
+          <p
+            className="micro-label text-[#444] mb-1"
+            style={{
+              opacity: barsVisible ? 1 : 0,
+              transform: barsVisible ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'opacity 0.7s ease, transform 0.7s ease',
+            }}
+          >
+            What Fasting Feels Like
+          </p>
+          <p
+            className="font-serif italic text-[20px] text-white/50 mb-5"
+            style={{
+              opacity: barsVisible ? 1 : 0,
+              transform: barsVisible ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s',
+            }}
+          >
             Fasting hours in Marrakech, by year
           </p>
 
@@ -415,23 +700,23 @@ export function RamadanMoonContent() {
                   style={{
                     gridTemplateColumns: '56px 1fr 48px',
                     opacity: barsVisible ? (hoveredYear !== null && !isHovered ? 0.2 : 1) : 0,
-                    transition: 'opacity 0.3s ease',
+                    transform: barsVisible ? 'translateX(0)' : 'translateX(-20px)',
+                    transition: `opacity 0.5s ease ${i * 80}ms, transform 0.6s cubic-bezier(0.23,1,0.32,1) ${i * 80}ms`,
                   }}
                   onMouseEnter={() => setHoveredYear(i)}
                   onMouseLeave={() => setHoveredYear(null)}
                 >
                   <span className="text-[11px] text-white/50 text-right">{y.year}</span>
-                  <div className="h-4 bg-white/[0.03] relative">
+                  <div className="h-4 bg-white/[0.03] relative overflow-hidden">
                     <div
-                      className="h-full"
+                      className="h-full relative"
                       style={{
                         width: barsVisible ? `${barWidth}%` : '0%',
                         background: `linear-gradient(90deg, ${color}, ${color}88)`,
-                        transition: 'width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                        transitionDelay: `${i * 60}ms`,
+                        transition: `width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${i * 80 + 200}ms`,
                       }}
                     />
-                    <span className="absolute left-1 top-1/2 -translate-y-1/2 text-[8px] text-white/60">☀</span>
+                    <span className="absolute left-1 top-1/2 -translate-y-1/2 text-[8px] text-white/60">&#9728;</span>
                   </div>
                   <span
                     className="text-[11px] font-serif italic transition-colors"
@@ -443,19 +728,39 @@ export function RamadanMoonContent() {
               )
             })}
           </div>
-          <p className="text-[10px] text-white/20 mt-2">
+          <p
+            className="text-[10px] text-white/20 mt-2"
+            style={{
+              opacity: barsVisible ? 1 : 0,
+              transition: 'opacity 0.7s ease 1.5s',
+            }}
+          >
             Hours from fajr (dawn) to maghrib (sunset) in Marrakech. No food. No water.
           </p>
         </div>
       </section>
 
       {/* ═══ BIG FACT ═══ */}
-      <section className="mt-16" style={{ background: 'linear-gradient(135deg, rgba(252,191,73,0.15) 0%, rgba(10,10,10,1) 60%)' }}>
+      <section ref={factRef} className="mt-16" style={{ background: 'linear-gradient(135deg, rgba(252,191,73,0.15) 0%, rgba(10,10,10,1) 60%)' }}>
         <div className="max-w-[600px] mx-auto px-6 py-16 text-center">
-          <p className="font-serif italic text-[clamp(1.3rem,4vw,2rem)] text-white leading-[1.35]">
+          <p
+            className="font-serif italic text-[clamp(1.3rem,4vw,2rem)] text-white leading-[1.35]"
+            style={{
+              opacity: factVisible ? 1 : 0,
+              transform: factVisible ? 'translateY(0)' : 'translateY(24px)',
+              transition: 'opacity 1.2s ease, transform 1.2s ease',
+            }}
+          >
             A lunar year is 354 days. A solar year is 365. The 11-day gap means Ramadan walks backward through the calendar. In 33 years, it completes the circle.
           </p>
-          <p className="text-[10px] text-white/50 mt-3">
+          <p
+            className="text-[10px] text-white/50 mt-3"
+            style={{
+              opacity: factVisible ? 1 : 0,
+              transform: factVisible ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'opacity 1s ease 0.6s, transform 1s ease 0.6s',
+            }}
+          >
             Someone born in 1990 has already fasted in every season.
           </p>
         </div>

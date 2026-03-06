@@ -160,10 +160,10 @@ export default function MoroccoContent({ cities, stories }: Props) {
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative h-[65vh] min-h-[480px] max-h-[720px] bg-[#1a1612]">
         <Image
-          src="https://res.cloudinary.com/drstfu5yr/image/upload/v1766833142/marrakech_1_nw37ky.png"
+          src="https://res.cloudinary.com/drstfu5yr/image/upload/v1767310439/kasbah_bfd8t4.png"
           alt="Morocco"
           fill
-          className="object-cover opacity-60"
+          className="object-cover object-center opacity-60"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
