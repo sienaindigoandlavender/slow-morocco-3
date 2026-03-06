@@ -196,6 +196,13 @@ export default async function JourneyDetailPage({
   const otherJourneys = await getOtherJourneys(slug);
   const relatedStories = await getRelatedStoriesSSR(data.journey);
 
+  // Find prev/next journeys
+  const allJourneys = await getJourneys({ published: true });
+  const visibleJourneys = allJourneys.filter((j) => j.show_on_journeys_page !== false && j.journey_type !== "epic");
+  const currentIndex = visibleJourneys.findIndex((j) => j.slug === slug);
+  const prevJourney = currentIndex > 0 ? { slug: visibleJourneys[currentIndex - 1].slug, title: visibleJourneys[currentIndex - 1].title } : null;
+  const nextJourney = currentIndex < visibleJourneys.length - 1 ? { slug: visibleJourneys[currentIndex + 1].slug, title: visibleJourneys[currentIndex + 1].title } : null;
+
   return (
     <JourneyDetailContent
       journey={data.journey}
@@ -203,6 +210,8 @@ export default async function JourneyDetailPage({
       otherJourneys={otherJourneys}
       relatedStories={relatedStories}
       slug={slug}
+      prevJourney={prevJourney}
+      nextJourney={nextJourney}
     />
   );
 }
