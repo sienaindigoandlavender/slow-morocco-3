@@ -22,6 +22,7 @@ interface Story {
 interface Props {
   cities: Destination[];
   stories: Story[];
+  cityImages?: Record<string, string>;
 }
 
 // ── Data ──────────────────────────────────────────────────────────────────────
@@ -153,7 +154,7 @@ const CITY_HERO_FALLBACKS: Record<string, string> = {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
-export default function MoroccoContent({ cities, stories }: Props) {
+export default function MoroccoContent({ cities, stories, cityImages = {} }: Props) {
   return (
     <main className="bg-background text-foreground">
 
@@ -163,14 +164,12 @@ export default function MoroccoContent({ cities, stories }: Props) {
           src="https://res.cloudinary.com/drstfu5yr/image/upload/v1767310439/kasbah_bfd8t4.png"
           alt="Morocco"
           fill
+          sizes="100vw"
           className="object-cover object-center opacity-60"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
         <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-20 pb-14">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-white/40 mb-4 font-mono">
-            North Africa · 37 million people · 11 UNESCO sites
-          </p>
           <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl text-white">
             Morocco
           </h1>
@@ -325,7 +324,8 @@ export default function MoroccoContent({ cities, stories }: Props) {
         <SectionLabel>Ten cities</SectionLabel>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
           {cities.map((city) => {
-            const cityImage = city.hero_image || CITY_HERO_FALLBACKS[city.slug] || null;
+            // Priority: gallery image (city_guide_images) > destination hero > hardcoded fallback
+            const cityImage = cityImages[city.slug] || city.hero_image || CITY_HERO_FALLBACKS[city.slug] || null;
             return (
             <Link
               key={city.slug}
@@ -337,6 +337,7 @@ export default function MoroccoContent({ cities, stories }: Props) {
                   src={cityImage}
                   alt={city.title}
                   fill
+                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                   className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                 />
               )}

@@ -151,15 +151,11 @@ export default function StoryDetailContent({
             src={story.heroImage}
             alt={story.title}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
-          {story.heroCaption && (
-            <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[11px] text-white/50 tracking-wide text-center max-w-xl px-6">
-              {story.heroCaption}
-            </p>
-          )}
         </section>
       )}
 

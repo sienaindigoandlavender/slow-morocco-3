@@ -791,6 +791,23 @@ export async function getCityGuideImages(citySlug: string) {
   return data as CityGuideImage[];
 }
 
+export async function getAllCityGuideFirstImages(): Promise<Record<string, string>> {
+  const { data, error } = await supabase
+    .from("city_guide_images")
+    .select("city_slug, image_url")
+    .not("image_url", "is", null)
+    .order("image_order", { ascending: true });
+  if (error) { console.error("Error fetching all city guide images:", error); return {}; }
+  // Return first image per city
+  const result: Record<string, string> = {};
+  for (const row of data || []) {
+    if (row.city_slug && row.image_url && !result[row.city_slug]) {
+      result[row.city_slug] = row.image_url;
+    }
+  }
+  return result;
+}
+
 // =============================================
 // PAGE BANNERS
 // =============================================

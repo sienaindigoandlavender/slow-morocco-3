@@ -252,7 +252,8 @@ export default function CityGuideContent({
   galleryImages = [],
 }: Props) {
   const firstGalleryImage = galleryImages.length > 0 ? galleryImages[0].image_url : null;
-  const heroImage = destination.hero_image || firstGalleryImage || CITY_HERO_FALLBACKS[citySlug] || null;
+  // Priority: gallery image (city_guide_images table) > destination hero > hardcoded fallback
+  const heroImage = firstGalleryImage || destination.hero_image || CITY_HERO_FALLBACKS[citySlug] || null;
   const cityData = CITY_DATA[citySlug] || {
     center: [-6.0, 32.0] as [number, number],
     zoom: 12,
@@ -283,6 +284,7 @@ export default function CityGuideContent({
             src={heroImage}
             alt={destination.title}
             fill
+            sizes="100vw"
             className="object-cover object-center"
             priority
           />
@@ -292,15 +294,9 @@ export default function CityGuideContent({
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
 
         <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-20 pb-14">
-          {destination.subtitle && (
-            <p className="text-[10px] tracking-[0.35em] uppercase text-white/50 mb-3">
-              {destination.subtitle}
-            </p>
-          )}
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white mb-4">
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white">
             {destination.title}
           </h1>
-          <WeatherLine bestMonths={cityData.bestMonths} climate={cityData.climate} />
         </div>
       </section>
 
