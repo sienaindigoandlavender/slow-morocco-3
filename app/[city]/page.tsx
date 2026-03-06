@@ -5,6 +5,7 @@ import {
   getPlaces,
   getStories,
   getJourneys,
+  convertDriveUrl,
 } from "@/lib/supabase";
 import CityGuideContent from "./CityGuideContent";
 
@@ -51,7 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: `${BASE_URL}/${params.city}`,
       images: destination.hero_image
-        ? [{ url: destination.hero_image }]
+        ? [{ url: convertDriveUrl(destination.hero_image) }]
         : [],
     },
     alternates: {
