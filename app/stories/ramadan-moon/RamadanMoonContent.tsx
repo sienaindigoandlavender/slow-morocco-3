@@ -368,8 +368,8 @@ export function RamadanMoonContent() {
       <section ref={moonRef} className="px-8 md:px-[8%] lg:px-[12%] pt-12 relative">
         <StarField />
         <div className="border-t border-white/[0.06] pt-8 relative z-10">
-          <p className="micro-label text-[#444] mb-1">30 Nights of Ramadan</p>
-          <p className="font-serif italic text-[20px] text-white/50 mb-0">
+          <p className="micro-label text-white/60 mb-1">30 Nights of Ramadan</p>
+          <p className="font-serif italic text-[20px] text-white/70 mb-0">
             From crescent to crescent
           </p>
         </div>
@@ -485,7 +485,7 @@ export function RamadanMoonContent() {
                 <p className="text-[10px] text-[#FCBF49]">Possible Laylat al-Qadr — the Night of Power</p>
               )}
               {DAYS[activeDay].day === 1 && (
-                <p className="text-[10px] text-white/50">The first sighting of the hilal marks the start</p>
+                <p className="text-[10px] text-white/70">The first sighting of the hilal marks the start</p>
               )}
               {DAYS[activeDay].day === 15 && (
                 <p className="text-[10px] text-[rgba(255,248,220,0.6)]">Full moon — Laylat al-Badr</p>
@@ -499,7 +499,7 @@ export function RamadanMoonContent() {
       <section ref={wheelRef} className="px-8 md:px-[8%] lg:px-[12%] pt-12">
         <div className="border-t border-white/[0.06] pt-8">
           <p
-            className="micro-label text-[#444] mb-1"
+            className="micro-label text-white/60 mb-1"
             style={{
               opacity: wheelVisible ? 1 : 0,
               transform: wheelVisible ? 'translateY(0)' : 'translateY(12px)',
@@ -509,7 +509,7 @@ export function RamadanMoonContent() {
             The 33-Year Rotation
           </p>
           <p
-            className="font-serif italic text-[20px] text-white/50 mb-6"
+            className="font-serif italic text-[20px] text-white/70 mb-6"
             style={{
               opacity: wheelVisible ? 1 : 0,
               transform: wheelVisible ? 'translateY(0)' : 'translateY(12px)',
@@ -656,7 +656,7 @@ export function RamadanMoonContent() {
                 </p>
               </div>
             ) : (
-              <p className="font-serif italic text-[15px] text-white/50">
+              <p className="font-serif italic text-[15px] text-white/70">
                 Hover a year to see fasting conditions
               </p>
             )}
@@ -668,7 +668,7 @@ export function RamadanMoonContent() {
       <section ref={barsRef} className="px-8 md:px-[8%] lg:px-[12%] pt-6">
         <div className="border-t border-white/[0.06] pt-8">
           <p
-            className="micro-label text-[#444] mb-1"
+            className="micro-label text-white/60 mb-1"
             style={{
               opacity: barsVisible ? 1 : 0,
               transform: barsVisible ? 'translateY(0)' : 'translateY(12px)',
@@ -678,7 +678,7 @@ export function RamadanMoonContent() {
             What Fasting Feels Like
           </p>
           <p
-            className="font-serif italic text-[20px] text-white/50 mb-5"
+            className="font-serif italic text-[20px] text-white/70 mb-5"
             style={{
               opacity: barsVisible ? 1 : 0,
               transform: barsVisible ? 'translateY(0)' : 'translateY(12px)',
@@ -706,7 +706,7 @@ export function RamadanMoonContent() {
                   onMouseEnter={() => setHoveredYear(i)}
                   onMouseLeave={() => setHoveredYear(null)}
                 >
-                  <span className="text-[11px] text-white/50 text-right">{y.year}</span>
+                  <span className="text-[11px] text-white/70 text-right">{y.year}</span>
                   <div className="h-4 bg-white/[0.03] relative overflow-hidden">
                     <div
                       className="h-full relative"
@@ -729,7 +729,7 @@ export function RamadanMoonContent() {
             })}
           </div>
           <p
-            className="text-[10px] text-white/20 mt-2"
+            className="text-[10px] text-white/60 mt-2"
             style={{
               opacity: barsVisible ? 1 : 0,
               transition: 'opacity 0.7s ease 1.5s',
@@ -754,7 +754,7 @@ export function RamadanMoonContent() {
             A lunar year is 354 days. A solar year is 365. The 11-day gap means Ramadan walks backward through the calendar. In 33 years, it completes the circle.
           </p>
           <p
-            className="text-[10px] text-white/50 mt-3"
+            className="text-[10px] text-white/70 mt-3"
             style={{
               opacity: factVisible ? 1 : 0,
               transform: factVisible ? 'translateY(0)' : 'translateY(12px)',
@@ -770,20 +770,20 @@ export function RamadanMoonContent() {
       <section className="px-8 md:px-[8%] lg:px-[12%] pt-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-white/[0.06] pt-6">
           <div>
-            <p className="micro-label text-[#444] mb-2">The Crescent (Hilal)</p>
-            <p className="text-[12px] text-white/50 leading-[1.6]">
+            <p className="micro-label text-white/60 mb-2">The Crescent (Hilal)</p>
+            <p className="text-[12px] text-white/70 leading-[1.6]">
               Ramadan begins when the new crescent is sighted after sunset. Different countries may start on different days — some follow local sighting, others follow Mecca.
             </p>
           </div>
           <div>
-            <p className="micro-label text-[#444] mb-2">Laylat al-Qadr</p>
-            <p className="text-[12px] text-white/50 leading-[1.6]">
+            <p className="micro-label text-white/60 mb-2">Laylat al-Qadr</p>
+            <p className="text-[12px] text-white/70 leading-[1.6]">
               The Night of Power — when the Quran was first revealed. Sought on the odd nights of the last 10 days (21st, 23rd, 25th, 27th, 29th). Marked in <span className="text-[#FCBF49]">gold</span> above.
             </p>
           </div>
           <div>
-            <p className="micro-label text-[#444] mb-2">Eid al-Fitr</p>
-            <p className="text-[12px] text-white/50 leading-[1.6]">
+            <p className="micro-label text-white/60 mb-2">Eid al-Fitr</p>
+            <p className="text-[12px] text-white/70 leading-[1.6]">
               The festival of breaking the fast. Begins at the sighting of the next new crescent — the 1st of Shawwal. Three days of celebration.
             </p>
           </div>
@@ -793,15 +793,15 @@ export function RamadanMoonContent() {
       {/* ═══ SOURCES ═══ */}
       <section style={{ backgroundColor: '#1f1f1f' }} className="px-8 md:px-[8%] lg:px-[12%] py-12">
         <div className="border-t border-white/[0.06] pt-4">
-          <p className="micro-label text-[#333] mb-2">Sources & Methodology</p>
-          <p className="text-[11px] text-white/20 leading-[1.6] max-w-[600px]">
+          <p className="micro-label text-white/60 mb-2">Sources & Methodology</p>
+          <p className="text-[11px] text-white/70 leading-[1.6] max-w-[600px]">
             Ramadan start dates based on Umm al-Qura calendar and historical Islamic calendar data.
             Fasting hours calculated for Marrakech (31.63°N) from astronomical fajr to maghrib.
             Temperatures are historical monthly averages from Marrakech-Menara weather station.
             Moon illumination calculated using sinusoidal approximation of the 29.53-day synodic month.
           </p>
           <div className="flex justify-between items-center mt-6 flex-wrap gap-2">
-            <p className="text-[9px] text-white/20">
+            <p className="text-[9px] text-white/60">
               © {new Date().getFullYear()} Slow Morocco. All rights reserved. This visualization may not be reproduced without visible attribution.
             </p>
             <p className="font-serif italic text-[12px] text-[#FCBF49]">

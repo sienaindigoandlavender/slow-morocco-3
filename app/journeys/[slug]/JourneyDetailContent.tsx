@@ -232,7 +232,7 @@ export default function JourneyDetailContent({
           <div className="container mx-auto px-6 lg:px-16 max-w-4xl">
             <Link
               href="/journeys"
-              className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase text-white/40 hover:text-white transition-colors mb-16"
+              className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase text-white/70 hover:text-white transition-colors mb-16"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to All Journeys
@@ -273,20 +273,20 @@ export default function JourneyDetailContent({
                 <span className="font-serif text-4xl md:text-5xl text-white">
                   Price on request
                 </span>
-                <span className="text-sm text-white/40">
+                <span className="text-sm text-white/70">
                   Private journey for two guests
                 </span>
               </div>
-              <p className="text-white/40 text-sm">
+              <p className="text-white/70 text-sm">
                 Additional guests considered on a case-by-case basis.
               </p>
             </div>
 
             <div className="border-t border-white/10 pt-16 mb-20">
-              <h2 className="text-xs tracking-[0.3em] uppercase text-white/40 mb-8">
+              <h2 className="text-xs tracking-[0.3em] uppercase text-white/70 mb-8">
                 How This Works
               </h2>
-              <div className="space-y-6 text-white/60 leading-relaxed">
+              <div className="space-y-6 text-white/80 leading-relaxed">
                 <p>
                   <strong className="text-white">1. You inquire.</strong> Tell us who you are, 
                   why this journey calls to you, and when you'd like to travel.
@@ -305,7 +305,7 @@ export default function JourneyDetailContent({
                   specifically for your dates, interests, and pace.
                 </p>
               </div>
-              <p className="text-white/40 text-sm mt-8 italic">
+              <p className="text-white/70 text-sm mt-8 italic">
                 The deposit is applied to your final balance. It is non-refundable because 
                 the itinerary itself is the value — once shared, it cannot be unshared.
               </p>
@@ -326,7 +326,7 @@ export default function JourneyDetailContent({
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-xs tracking-[0.15em] uppercase text-white/40 mb-2">
+                    <label className="block text-xs tracking-[0.15em] uppercase text-white/70 mb-2">
                       Name
                     </label>
                     <input
@@ -337,7 +337,7 @@ export default function JourneyDetailContent({
                     />
                   </div>
                   <div>
-                    <label className="block text-xs tracking-[0.15em] uppercase text-white/40 mb-2">
+                    <label className="block text-xs tracking-[0.15em] uppercase text-white/70 mb-2">
                       Email
                     </label>
                     <input
@@ -351,7 +351,7 @@ export default function JourneyDetailContent({
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-xs tracking-[0.15em] uppercase text-white/40 mb-2">
+                    <label className="block text-xs tracking-[0.15em] uppercase text-white/70 mb-2">
                       Preferred Dates
                     </label>
                     <input
@@ -362,7 +362,7 @@ export default function JourneyDetailContent({
                     />
                   </div>
                   <div>
-                    <label className="block text-xs tracking-[0.15em] uppercase text-white/40 mb-2">
+                    <label className="block text-xs tracking-[0.15em] uppercase text-white/70 mb-2">
                       Number of Guests
                     </label>
                     <input
@@ -377,7 +377,7 @@ export default function JourneyDetailContent({
                 </div>
 
                 <div>
-                  <label className="block text-xs tracking-[0.15em] uppercase text-white/40 mb-2">
+                  <label className="block text-xs tracking-[0.15em] uppercase text-white/70 mb-2">
                     Tell us about yourself
                   </label>
                   <textarea
