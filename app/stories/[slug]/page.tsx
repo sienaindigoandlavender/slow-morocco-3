@@ -180,6 +180,12 @@ export default async function StoryPage({
   const relatedJourneys = await getRelatedJourneysSSR(story);
   const storyImages = await getStoryImages(slug);
 
+  // Find prev/next stories
+  const allStoriesList = await getStories({ published: true });
+  const currentIndex = allStoriesList.findIndex((s) => s.slug === slug);
+  const prevStory = currentIndex > 0 ? { slug: allStoriesList[currentIndex - 1].slug, title: allStoriesList[currentIndex - 1].title } : null;
+  const nextStory = currentIndex < allStoriesList.length - 1 ? { slug: allStoriesList[currentIndex + 1].slug, title: allStoriesList[currentIndex + 1].title } : null;
+
   const BASE_URL = "https://www.slowmorocco.com";
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -218,6 +224,8 @@ export default async function StoryPage({
         slug={slug}
         mapData={mapData}
         externalLinks={externalLinks}
+        prevStory={prevStory}
+        nextStory={nextStory}
       />
     </>
   );

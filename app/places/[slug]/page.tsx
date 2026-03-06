@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getPlaceBySlug, getPlaceImages, getJourneys, getStories, getDestinations, convertDriveUrl } from "@/lib/supabase";
+import { getPlaceBySlug, getPlaceImages, getJourneys, getStories, getDestinations, getPlaces, convertDriveUrl } from "@/lib/supabase";
 import PlaceDetailContent from "./PlaceDetailContent";
 import { createClient } from "@supabase/supabase-js";
 
@@ -255,6 +255,12 @@ export default async function PlaceDetailPage({
   const { relatedJourneys, relatedStories } = await getRelatedContent(data.place);
   const nearbyPlaces = await getNearbyPlaces(data.place.nearbySlugs);
 
+  // Find prev/next places
+  const allPlaces = await getPlaces({ published: true });
+  const currentIndex = allPlaces.findIndex((p) => p.slug === slug);
+  const prevPlace = currentIndex > 0 ? { slug: allPlaces[currentIndex - 1].slug, title: allPlaces[currentIndex - 1].title } : null;
+  const nextPlace = currentIndex < allPlaces.length - 1 ? { slug: allPlaces[currentIndex + 1].slug, title: allPlaces[currentIndex + 1].title } : null;
+
   return (
     <PlaceDetailContent
       place={data.place}
@@ -262,6 +268,8 @@ export default async function PlaceDetailPage({
       relatedJourneys={relatedJourneys}
       relatedStories={relatedStories}
       nearbyPlaces={nearbyPlaces}
+      prevPlace={prevPlace}
+      nextPlace={nextPlace}
     />
   );
 }

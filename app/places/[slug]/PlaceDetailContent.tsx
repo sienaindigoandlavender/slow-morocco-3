@@ -54,12 +54,19 @@ interface NearbyPlace {
   excerpt: string;
 }
 
+interface NavItem {
+  slug: string;
+  title: string;
+}
+
 interface PlaceDetailContentProps {
   place: Place;
   images: PlaceImage[];
   relatedJourneys: any[];
   relatedStories: any[];
   nearbyPlaces?: NearbyPlace[];
+  prevPlace?: NavItem | null;
+  nextPlace?: NavItem | null;
 }
 
 function formatBody(text: string): string {
@@ -112,6 +119,8 @@ export default function PlaceDetailContent({
   relatedJourneys,
   relatedStories,
   nearbyPlaces = [],
+  prevPlace,
+  nextPlace,
 }: PlaceDetailContentProps) {
   const isAttraction = !!place.attractionSections;
   const sections = place.attractionSections || {};
@@ -143,11 +152,33 @@ export default function PlaceDetailContent({
           <div className="absolute inset-0 bg-muted" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
-        <div className="absolute top-24 left-6 lg:left-16">
+        <div className="absolute top-24 left-6 lg:left-16 right-6 lg:right-16 flex items-center justify-between">
           <Link href="/places" className="inline-flex items-center gap-2 text-foreground/80 hover:text-foreground transition-colors">
             <ChevronLeft className="w-4 h-4" />
-            <span className="text-sm">All Places</span>
+            <span className="text-sm">Explore all places</span>
           </Link>
+          <div className="flex items-center gap-3">
+            {prevPlace && (
+              <Link
+                href={`/places/${prevPlace.slug}`}
+                className="w-9 h-9 flex items-center justify-center border border-white/30 hover:border-white/60 transition-colors"
+                aria-label={`Previous place: ${prevPlace.title}`}
+                title={prevPlace.title}
+              >
+                <ChevronLeft className="w-4 h-4 text-white/70" />
+              </Link>
+            )}
+            {nextPlace && (
+              <Link
+                href={`/places/${nextPlace.slug}`}
+                className="w-9 h-9 flex items-center justify-center border border-white/30 hover:border-white/60 transition-colors"
+                aria-label={`Next place: ${nextPlace.title}`}
+                title={nextPlace.title}
+              >
+                <svg className="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" /></svg>
+              </Link>
+            )}
+          </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-16">
           <div className="container mx-auto">

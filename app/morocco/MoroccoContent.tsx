@@ -143,6 +143,14 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
+// ── Fallback hero images ──────────────────────────────────────────────────────
+
+const CITY_HERO_FALLBACKS: Record<string, string> = {
+  marrakech: "https://res.cloudinary.com/drstfu5yr/image/upload/v1766833142/marrakech_1_nw37ky.png",
+  essaouira: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310155/essaouira_meymce.png",
+  rabat: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310357/rabat_ofyxwj.png",
+};
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 export default function MoroccoContent({ cities, stories }: Props) {
@@ -316,15 +324,17 @@ export default function MoroccoContent({ cities, stories }: Props) {
       <section className="px-8 md:px-16 lg:px-20 py-16">
         <SectionLabel>Ten cities</SectionLabel>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
-          {cities.map((city) => (
+          {cities.map((city) => {
+            const cityImage = city.hero_image || CITY_HERO_FALLBACKS[city.slug] || null;
+            return (
             <Link
               key={city.slug}
               href={`/${city.slug}`}
               className="group relative aspect-[3/4] overflow-hidden bg-foreground/5"
             >
-              {city.hero_image && (
+              {cityImage && (
                 <Image
-                  src={city.hero_image}
+                  src={cityImage}
                   alt={city.title}
                   fill
                   className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
@@ -342,7 +352,8 @@ export default function MoroccoContent({ cities, stories }: Props) {
                 </p>
               </div>
             </Link>
-          ))}
+            );
+          })}
         </div>
       </section>
 

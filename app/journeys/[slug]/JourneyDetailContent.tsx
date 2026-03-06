@@ -173,12 +173,19 @@ interface RelatedStory {
   score: number;
 }
 
+interface NavItem {
+  slug: string;
+  title: string;
+}
+
 interface JourneyDetailContentProps {
   journey: Journey;
   itinerary: ItineraryDay[];
   otherJourneys: Journey[];
   relatedStories: RelatedStory[];
   slug: string;
+  prevJourney?: NavItem | null;
+  nextJourney?: NavItem | null;
 }
 
 export default function JourneyDetailContent({
@@ -187,6 +194,8 @@ export default function JourneyDetailContent({
   otherJourneys,
   relatedStories,
   slug,
+  prevJourney,
+  nextJourney,
 }: JourneyDetailContentProps) {
 
   // EPIC Journey Layout
@@ -422,13 +431,35 @@ export default function JourneyDetailContent({
               className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to All Journeys
+              Explore all journeys
             </Link>
-            <ShareTools 
-              title={journey.title}
-              description={journey.arcDescription || journey.description}
-              imageUrl={journey.heroImage}
-            />
+            <div className="flex items-center gap-3">
+              {prevJourney && (
+                <Link
+                  href={`/journeys/${prevJourney.slug}`}
+                  className="w-9 h-9 flex items-center justify-center border border-foreground/20 hover:border-foreground/40 transition-colors"
+                  aria-label={`Previous journey: ${prevJourney.title}`}
+                  title={prevJourney.title}
+                >
+                  <ChevronLeft className="w-4 h-4 text-foreground/60" />
+                </Link>
+              )}
+              {nextJourney && (
+                <Link
+                  href={`/journeys/${nextJourney.slug}`}
+                  className="w-9 h-9 flex items-center justify-center border border-foreground/20 hover:border-foreground/40 transition-colors"
+                  aria-label={`Next journey: ${nextJourney.title}`}
+                  title={nextJourney.title}
+                >
+                  <ChevronRight className="w-4 h-4 text-foreground/60" />
+                </Link>
+              )}
+              <ShareTools
+                title={journey.title}
+                description={journey.arcDescription || journey.description}
+                imageUrl={journey.heroImage}
+              />
+            </div>
           </div>
 
           <div className="flex items-baseline gap-6 mb-4">
@@ -558,10 +589,10 @@ export default function JourneyDetailContent({
             </div>
             <div className="mt-10 text-center">
               <Link
-                href="/stories"
+                href="/journeys"
                 className="text-xs tracking-[0.15em] uppercase text-foreground/50 hover:text-foreground transition-colors"
               >
-                Explore all stories →
+                Explore all journeys →
               </Link>
             </div>
           </div>

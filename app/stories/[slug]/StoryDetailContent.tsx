@@ -57,6 +57,11 @@ interface RelatedJourney {
   score: number;
 }
 
+interface NavItem {
+  slug: string;
+  title: string;
+}
+
 interface StoryDetailContentProps {
   story: Story;
   images: StoryImage[];
@@ -65,6 +70,8 @@ interface StoryDetailContentProps {
   slug: string;
   mapData?: any;
   externalLinks?: Array<{ label: string; url: string; type?: string }> | null;
+  prevStory?: NavItem | null;
+  nextStory?: NavItem | null;
 }
 
 export default function StoryDetailContent({
@@ -75,6 +82,8 @@ export default function StoryDetailContent({
   slug,
   mapData,
   externalLinks,
+  prevStory,
+  nextStory,
 }: StoryDetailContentProps) {
   const sources = story.sources
     ? story.sources.split(";;").map((s) => s.trim()).filter(Boolean)
@@ -157,21 +166,45 @@ export default function StoryDetailContent({
       {/* ── Article header ───────────────────────────────────────────── */}
       <div className="border-b border-border">
         <div className="container mx-auto px-8 md:px-16 lg:px-20 py-10 md:py-14 max-w-5xl">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-6">
-            <Link href="/stories" className="hover:text-foreground transition-colors">Stories</Link>
-            {story.category && (
-              <>
-                <span>/</span>
+          {/* Breadcrumb + prev/next */}
+          <div className="flex items-center justify-between mb-6">
+            <nav className="flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-foreground/30">
+              <Link href="/stories" className="hover:text-foreground transition-colors">Explore all stories</Link>
+              {story.category && (
+                <>
+                  <span>/</span>
+                  <Link
+                    href={`/stories/category/${story.category.toLowerCase()}`}
+                    className="hover:text-foreground transition-colors"
+                  >
+                    {story.category}
+                  </Link>
+                </>
+              )}
+            </nav>
+            <div className="flex items-center gap-3">
+              {prevStory && (
                 <Link
-                  href={`/stories/category/${story.category.toLowerCase()}`}
-                  className="hover:text-foreground transition-colors"
+                  href={`/stories/${prevStory.slug}`}
+                  className="w-9 h-9 flex items-center justify-center border border-foreground/20 hover:border-foreground/40 transition-colors"
+                  aria-label={`Previous story: ${prevStory.title}`}
+                  title={prevStory.title}
                 >
-                  {story.category}
+                  <svg className="w-4 h-4 text-foreground/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" /></svg>
                 </Link>
-              </>
-            )}
-          </nav>
+              )}
+              {nextStory && (
+                <Link
+                  href={`/stories/${nextStory.slug}`}
+                  className="w-9 h-9 flex items-center justify-center border border-foreground/20 hover:border-foreground/40 transition-colors"
+                  aria-label={`Next story: ${nextStory.title}`}
+                  title={nextStory.title}
+                >
+                  <svg className="w-4 h-4 text-foreground/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" /></svg>
+                </Link>
+              )}
+            </div>
+          </div>
 
           {/* Title block */}
           <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.1] mb-5 max-w-3xl">
