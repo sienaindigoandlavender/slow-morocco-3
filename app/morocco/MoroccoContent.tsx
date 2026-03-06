@@ -161,7 +161,7 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative h-[65vh] min-h-[480px] max-h-[720px] bg-[#1a1612]">
         <Image
-          src="https://res.cloudinary.com/drstfu5yr/image/upload/v1767310439/kasbah_bfd8t4.png"
+          src="https://res.cloudinary.com/ddcznjibs/image/upload/v1772836225/Moroccan_landscape_yyavpl.png"
           alt="Morocco"
           fill
           sizes="100vw"
