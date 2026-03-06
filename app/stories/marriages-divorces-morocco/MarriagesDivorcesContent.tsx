@@ -749,27 +749,27 @@ export default function MarriagesDivorcesContent() {
       </section>
 
       {/* ━━━ SOURCES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <section className="px-8 md:px-[8%] lg:px-[12%] py-16" style={{ background: "#141414" }}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-4xl">
+      <section style={{ background: "#141414", padding: "64px 12% " }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, maxWidth: 860 }}>
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.5)" }}>Data sources</p>
-            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.75)" }}>
-              <p className="mb-2">HCP — Haut-Commissariat au Plan du Maroc. <em>Femmes Marocaines en Chiffres 2024</em>.</p>
-              <p className="mb-2">Conseil Supérieur du Pouvoir Judiciaire (CSPJ). Marriage and divorce statistics 2017–2024.</p>
-              <p className="mb-2">Ministère de la Justice. Family Code reform proposals, December 2024.</p>
+            <p style={{ fontFamily: "monospace", fontSize: 9, textTransform: "uppercase", letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>Data sources</p>
+            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.8)" }}>
+              <p style={{ marginBottom: 8 }}>HCP — Haut-Commissariat au Plan du Maroc. <em>Femmes Marocaines en Chiffres 2024</em>.</p>
+              <p style={{ marginBottom: 8 }}>Conseil Supérieur du Pouvoir Judiciaire (CSPJ). Marriage and divorce statistics 2017–2024.</p>
+              <p style={{ marginBottom: 8 }}>Ministère de la Justice. Family Code reform proposals, December 2024.</p>
               <p>Morocco World News. Hespress English. Barlamantoday.</p>
             </div>
           </div>
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.5)" }}>Notes</p>
-            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.75)" }}>
-              <p className="mb-2">All figures from official HCP and CSPJ datasets unless noted.</p>
-              <p className="mb-2">Marriage age data latest available: 2018 (HCP gender breakdown).</p>
+            <p style={{ fontFamily: "monospace", fontSize: 9, textTransform: "uppercase", letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>Notes</p>
+            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.8)" }}>
+              <p style={{ marginBottom: 8 }}>All figures from official HCP and CSPJ datasets unless noted.</p>
+              <p style={{ marginBottom: 8 }}>Marriage age data latest available: 2018 (HCP gender breakdown).</p>
               <p>Divorce ratio calculated as (divorces ÷ marriages) × 100 per year.</p>
             </div>
           </div>
         </div>
-        <p className="font-mono text-[10px] mt-10" style={{ color: "#c9a96e" }}>© Slow Morocco · J. Ng</p>
+        <p style={{ fontFamily: "monospace", fontSize: 10, marginTop: 40, color: "#c9a96e" }}>© Slow Morocco · J. Ng</p>
       </section>
 
     </div>
