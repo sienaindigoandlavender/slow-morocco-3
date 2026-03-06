@@ -664,16 +664,16 @@ export default function MarriageEconomyContent({ story, images, relatedJourneys 
       <section className="px-8 md:px-[8%] lg:px-[12%] py-16" style={{ background: "#141414" }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-4xl">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.5)" }}>Data sources</p>
-            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.75)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.7)" }}>Data sources</p>
+            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.9)" }}>
               <p className="mb-2">HCP — Haut-Commissariat au Plan du Maroc. <em>Femmes Marocaines en Chiffres 2024</em>.</p>
               <p className="mb-2">Conseil Supérieur du Pouvoir Judiciaire (CSPJ). Marriage and divorce statistics 2017–2024.</p>
               <p>Ministère de la Justice. Family Code reform proposals, December 2024.</p>
             </div>
           </div>
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.5)" }}>Story sources</p>
-            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.75)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.7)" }}>Story sources</p>
+            <div style={{ fontSize: 12, lineHeight: 1.9, color: "rgba(255,255,255,0.9)" }}>
               {sources.length > 0
                 ? sources.map((s, i) => <p key={i} className="mb-2">{s}</p>)
                 : <p>Field interviews, Marrakech 2023–2024. Morocco World News. Hespress English.</p>

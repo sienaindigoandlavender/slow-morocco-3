@@ -929,19 +929,19 @@ export default function BirdAtlasDossier() {
       <section className="px-8 md:px-[8%] lg:px-[12%] py-16" style={{ background: "#141414" }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>
               Live data
             </p>
-            <p className="text-[11px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <p className="text-[11px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.8)" }}>
               Sightings feed: eBird / Cornell Lab of Ornithology, updated daily.
               Wind data: Windy.com / ECMWF forecast model, live.
             </p>
           </div>
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] mb-4" style={{ color: "rgba(255,255,255,0.6)" }}>
               Reference sources
             </p>
-            <p className="text-[11px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <p className="text-[11px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.8)" }}>
               Bergier & Thévenot, <em>Oiseaux du Maroc</em> (2006).
               BirdLife International IBA database. IUCN Red List 2024.
               GREPOM. HawkWatch International Gibraltar counts.
