@@ -80,6 +80,7 @@ const CITY_HERO_FALLBACKS: Record<string, string> = {
   rabat: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310357/rabat_ofyxwj.png",
   fes: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837045/Fes_medina_rooftop_looeyv.png",
   tangier: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837334/Fes_medina_rooftop_looeyv.png",
+  chefchaouen: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837802/Chefchaouen_blue_medina_wowhdr.png",
 };
 
 // ─── City coordinates + attraction data ───────────────────────────────────────
