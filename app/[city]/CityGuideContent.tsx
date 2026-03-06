@@ -78,6 +78,7 @@ const CITY_HERO_FALLBACKS: Record<string, string> = {
   marrakech: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772836871/Marrakech_skyline_with_terracotta_medina_roof_q06tad.png",
   essaouira: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310155/essaouira_meymce.png",
   rabat: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310357/rabat_ofyxwj.png",
+  fes: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837045/Fes_medina_rooftop_looeyv.png",
 };
 
 // ─── City coordinates + attraction data ───────────────────────────────────────
