@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import { getJourneys } from "@/lib/supabase";
 import EpicContent from "./EpicContent";
+
+export const metadata: Metadata = {
+  title: "Epic Journeys",
+  description: "Morocco's most ambitious private journeys — extended itineraries crossing multiple regions, from imperial cities to Sahara desert to Atlantic coast.",
+  alternates: { canonical: "https://www.slowmorocco.com/epic" },
+  openGraph: {
+    title: "Epic Journeys | Slow Morocco",
+    description: "Morocco's most ambitious private journeys — extended itineraries crossing multiple regions.",
+    url: "https://www.slowmorocco.com/epic",
+  },
+};
 
 export const revalidate = 3600;
 

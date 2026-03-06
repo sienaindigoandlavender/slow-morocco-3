@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
 import { getJourneys } from "@/lib/supabase";
 import PlanYourTripForm from "@/components/PlanYourTripForm";
 import PageBanner from "@/components/PageBanner";
+
+export const metadata: Metadata = {
+  title: "Plan Your Trip",
+  description: "Start planning your private Morocco journey — tell us your dates, interests, and travel style. No obligation, no sales pitch. Every journey begins with a conversation.",
+  alternates: { canonical: "https://www.slowmorocco.com/plan-your-trip" },
+  openGraph: {
+    title: "Plan Your Trip | Slow Morocco",
+    description: "Start planning your private Morocco journey — tell us your dates, interests, and travel style.",
+    url: "https://www.slowmorocco.com/plan-your-trip",
+  },
+};
 
 export const revalidate = 3600;
 

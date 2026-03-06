@@ -1,4 +1,16 @@
+import type { Metadata } from "next";
 import { Check } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "What's Included",
+  description: "Everything included in a Slow Morocco private journey — accommodation, private transport, guided experiences, meals, and 24/7 on-ground support.",
+  alternates: { canonical: "https://www.slowmorocco.com/whats-included" },
+  openGraph: {
+    title: "What's Included | Slow Morocco",
+    description: "Everything included in a Slow Morocco private journey — accommodation, transport, guided experiences, and support.",
+    url: "https://www.slowmorocco.com/whats-included",
+  },
+};
 
 export default function WhatsIncludedPage() {
   const included = [

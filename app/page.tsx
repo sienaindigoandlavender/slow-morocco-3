@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import { getJourneys, getStories, getWebsiteSettings, getTestimonials } from "@/lib/supabase";
 import HomeContent from "./HomeContent";
+
+export const metadata: Metadata = {
+  title: "Slow Morocco | Private Journeys Through Morocco",
+  description: "Thoughtful private journeys across Morocco — from the Atlas Mountains to the Sahara. Designed for travellers who prefer depth over speed, crafted around what matters to you.",
+  alternates: { canonical: "https://www.slowmorocco.com" },
+  openGraph: {
+    title: "Slow Morocco | Private Journeys Through Morocco",
+    description: "Thoughtful private journeys across Morocco — from the Atlas Mountains to the Sahara.",
+    url: "https://www.slowmorocco.com",
+  },
+};
 
 export const revalidate = 3600;
 

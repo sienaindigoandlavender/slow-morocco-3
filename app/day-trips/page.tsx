@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import { getDayTrips } from "@/lib/supabase";
 import DayTripsContent from "./DayTripsContent";
+
+export const metadata: Metadata = {
+  title: "Day Trips",
+  description: "Private day trips from Marrakech, Fes, and Casablanca — Atlas Mountains, Essaouira coast, Ouzoud waterfalls, and more. Half-day and full-day excursions.",
+  alternates: { canonical: "https://www.slowmorocco.com/day-trips" },
+  openGraph: {
+    title: "Day Trips | Slow Morocco",
+    description: "Private day trips from Marrakech, Fes, and Casablanca — Atlas Mountains, Essaouira coast, and more.",
+    url: "https://www.slowmorocco.com/day-trips",
+  },
+};
 
 export const revalidate = 3600;
 
