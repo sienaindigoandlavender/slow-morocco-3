@@ -170,7 +170,7 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
         <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-20 pb-14">
-          <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl text-white">
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white">
             Morocco
           </h1>
         </div>
