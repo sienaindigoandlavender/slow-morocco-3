@@ -82,6 +82,7 @@ const CITY_HERO_FALLBACKS: Record<string, string> = {
   tangier: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837334/Fes_medina_rooftop_looeyv.png",
   chefchaouen: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837802/Chefchaouen_blue_medina_wowhdr.png",
   casablanca: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837985/Hassan_II_Mosque_on_the_Atlantic_qe7t3y.png",
+  meknes: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772838176/Bab_Mansour_gate_in_Meknes_hef5id.png",
 };
 
 // ─── City coordinates + attraction data ───────────────────────────────────────
