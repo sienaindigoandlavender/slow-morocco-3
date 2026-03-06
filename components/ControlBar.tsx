@@ -2,7 +2,7 @@
 
 // ─────────────────────────────────────────────────────────
 // ControlBar
-// Top: count + A→Z sort — left-aligned only.
+// Top: count + A→Z sort — centered.
 // Pagination: centered, rendered as a separate export.
 // Usage:
 //   Top:    <ControlBar ... showPagination={false} />
@@ -109,13 +109,13 @@ export default function ControlBar({
   showSort = true,
   showPagination = true,
 }: ControlBarProps) {
-  const plural = count === 1 ? noun : `${noun}s`;
+  const plural = count === 1 ? noun : noun === "story" ? "stories" : `${noun}s`;
 
   return (
     <div className="space-y-5">
-      {/* Top row: count + sort — left only */}
+      {/* Top row: count + sort — centered */}
       {(showCount || showSort) && (
-        <div className="flex items-center gap-5 border-b border-border pb-4">
+        <div className="flex items-center justify-center gap-5 border-b border-border pb-4">
           {showCount && (
             <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30">
               {count} {plural}

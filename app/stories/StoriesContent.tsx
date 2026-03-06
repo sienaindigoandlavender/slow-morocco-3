@@ -258,7 +258,7 @@ export default function StoriesContent({
             </div>
           ) : (
             <>
-              {/* Top bar: count + sort only */}
+              {/* Top bar: count + sort + pagination */}
               <div className="mb-10">
                 <ControlBar
                   count={filteredStories.length}
@@ -268,7 +268,6 @@ export default function StoriesContent({
                   currentPage={currentPage}
                   totalPages={totalPages}
                   onPageChange={goToPage}
-                  showPagination={false}
                 />
               </div>
 
@@ -309,7 +308,7 @@ export default function StoriesContent({
                 ))}
               </div>
 
-              {/* Bottom pagination — centered */}
+              {/* Bottom: count + sort + pagination */}
               {totalPages > 1 && (
                 <div className="mt-16">
                   <ControlBar
@@ -320,8 +319,6 @@ export default function StoriesContent({
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={goToPage}
-                    showCount={false}
-                    showSort={false}
                   />
                 </div>
               )}
