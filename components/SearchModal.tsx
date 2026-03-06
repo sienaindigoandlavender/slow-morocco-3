@@ -33,6 +33,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     { title: "Morocco — Safety, Data & Infrastructure", slug: "/life", subtitle: "Country intelligence" },
     { title: "Morocco Travel Guide", slug: "/travel", subtitle: "Visa, transport, money, health, packing" },
     { title: "Jewish Heritage of Morocco", slug: "/jewish-heritage-morocco", subtitle: "Interactive map — 60+ sites" },
+    { title: "Morocco World Cup 2030", slug: "/morocco-world-cup-2030", subtitle: "Interactive map — stadiums & infrastructure" },
     { title: "Visa Information", slug: "/visa-info", subtitle: "Entry requirements by nationality" },
     { title: "Health & Safety in Morocco", slug: "/health-safety", subtitle: "Vaccinations, water, safety" },
     { title: "Getting to Morocco", slug: "/getting-to-morocco", subtitle: "Airports and flights" },

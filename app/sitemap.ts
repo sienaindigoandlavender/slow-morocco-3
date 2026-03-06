@@ -73,6 +73,7 @@ const STATIC_PAGES = [
   { path: '/epic', priority: 0.8, changeFrequency: 'weekly' as const },
   { path: '/glossary', priority: 0.7, changeFrequency: 'monthly' as const },
   { path: '/jewish-heritage-morocco', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/morocco-world-cup-2030', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/overnight/agafay-desert', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/health-safety', priority: 0.7, changeFrequency: 'monthly' as const },
   { path: '/travel-insurance', priority: 0.4, changeFrequency: 'yearly' as const },
