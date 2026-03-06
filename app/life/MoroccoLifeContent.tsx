@@ -573,6 +573,12 @@ export default function MoroccoLifeContent() {
                 </div>
               ))}
             </div>
+            <Link
+              href="/morocco-world-cup-2030"
+              className="inline-block mt-6 text-[10px] tracking-[0.15em] uppercase text-[#999] hover:text-[#333] transition-colors border-b border-[#ddd] pb-1"
+            >
+              Interactive stadium &amp; infrastructure map &rarr;
+            </Link>
           </section>
 
           {/* ── 08 COST OF LIVING ── */}

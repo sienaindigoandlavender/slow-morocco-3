@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo, useEffect, useRef } from 'react'
+import Link from 'next/link'
 
 // ═══ EARTH DATA COLORS ═══
 const C = {
@@ -645,6 +646,18 @@ export function WorldCup2030Content() {
         <p className="text-[10px] uppercase tracking-[0.12em] mb-4" style={{ color: '#C17F28' }}>Host Cities — 2030</p>
         <WorldCup2030Map />
       </div></section>
+
+      {/* ═══ RELATED ═══ */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-8 border-t" style={{ borderColor: '#e5e5e5' }}>
+        <div className="flex flex-wrap gap-6">
+          <Link href="/morocco-world-cup-2030" className="text-[11px] hover:underline" style={{ color: '#525252' }}>
+            Interactive stadium &amp; infrastructure map &rarr;
+          </Link>
+          <Link href="/stories/world-cup-blueprint" className="text-[11px] hover:underline" style={{ color: '#525252' }}>
+            Road to 2030 — economic blueprint &rarr;
+          </Link>
+        </div>
+      </section>
 
 {/* ═══ SOURCES ═══ */}
       <section style={{ backgroundColor: '#1f1f1f' }} className="px-8 md:px-[8%] lg:px-[12%] py-12">
