@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import { getGentleJourneys, getWebsiteTeam, getGentleSettings, convertDriveUrl } from "@/lib/supabase";
 import GentleContent from "./GentleContent";
+
+export const metadata: Metadata = {
+  title: "Go Gentle — Accessible Journeys",
+  description: "Accessible private journeys through Morocco — designed for wheelchair users and travellers with mobility needs. Carefully selected routes, riads, and experiences.",
+  alternates: { canonical: "https://www.slowmorocco.com/go/gentle" },
+  openGraph: {
+    title: "Go Gentle — Accessible Journeys | Slow Morocco",
+    description: "Accessible private journeys through Morocco — designed for wheelchair users and travellers with mobility needs.",
+    url: "https://www.slowmorocco.com/go/gentle",
+  },
+};
 
 export const revalidate = 3600;
 

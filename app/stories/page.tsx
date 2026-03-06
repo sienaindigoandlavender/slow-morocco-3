@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import { getStories } from "@/lib/supabase";
 import StoriesContent from "./StoriesContent";
+
+export const metadata: Metadata = {
+  title: "The Edit — Cultural Stories",
+  description: "Original cultural essays on Morocco — craft, music, architecture, history, food, and nature. 170+ stories based on ethnographic research and oral traditions.",
+  alternates: { canonical: "https://www.slowmorocco.com/stories" },
+  openGraph: {
+    title: "The Edit — Cultural Stories | Slow Morocco",
+    description: "Original cultural essays on Morocco — craft, music, architecture, history, food, and nature.",
+    url: "https://www.slowmorocco.com/stories",
+  },
+};
 
 // Revalidate every hour
 export const revalidate = 3600;

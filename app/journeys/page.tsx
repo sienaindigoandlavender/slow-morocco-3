@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import { getJourneys as getJourneysFromSupabase, getDayTrips as getDayTripsFromSupabase } from "@/lib/supabase";
 import JourneysContent from "./JourneysContent";
+
+export const metadata: Metadata = {
+  title: "Private Journeys",
+  description: "Explore Morocco at your own pace — private journeys through imperial cities, Atlas Mountains, Sahara desert, and Atlantic coast. Custom itineraries from €1,200 per person.",
+  alternates: { canonical: "https://www.slowmorocco.com/journeys" },
+  openGraph: {
+    title: "Private Journeys | Slow Morocco",
+    description: "Explore Morocco at your own pace — private journeys through imperial cities, Atlas Mountains, Sahara desert, and Atlantic coast.",
+    url: "https://www.slowmorocco.com/journeys",
+  },
+};
 
 // Revalidate every hour
 export const revalidate = 3600;

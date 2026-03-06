@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 
 const C = {
   ink: '#0a0a0a',
@@ -500,6 +501,18 @@ export function WorldCupBlueprintContent() {
         <p className="text-[10px] uppercase tracking-[0.12em] mb-4" style={{ color: '#C17F28' }}>Stadium Infrastructure</p>
         <WorldCupBlueprintMap />
       </div></section>
+
+      {/* RELATED */}
+      <section className="px-8 md:px-[8%] lg:px-[12%] py-8" style={{ backgroundColor: '#1f1f1f', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="flex flex-wrap gap-6">
+          <Link href="/morocco-world-cup-2030" className="text-[11px] hover:underline" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            Interactive stadium &amp; infrastructure map &rarr;
+          </Link>
+          <Link href="/stories/world-cup-2030" className="text-[11px] hover:underline" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            Full infrastructure data — all 20 stadiums &rarr;
+          </Link>
+        </div>
+      </section>
 
 {/* SOURCES */}
       <section style={{ backgroundColor: '#1f1f1f' }} className="px-8 md:px-[8%] lg:px-[12%] py-12">

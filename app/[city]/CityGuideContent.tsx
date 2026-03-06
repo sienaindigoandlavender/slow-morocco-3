@@ -682,6 +682,13 @@ export default function CityGuideContent({
               <p className="text-sm text-foreground/40 leading-relaxed mt-6">
                 Morocco is investing over $1.4 billion across its six World Cup venues. The high-speed rail network — already connecting Tangier to Casablanca — is planned to extend south to Marrakech and Agadir before 2030.
               </p>
+
+              <Link
+                href="/morocco-world-cup-2030"
+                className="inline-block mt-6 text-[10px] tracking-[0.15em] uppercase text-foreground/30 hover:text-foreground/60 transition-colors border-b border-foreground/15 pb-1"
+              >
+                Interactive stadium &amp; infrastructure map &rarr;
+              </Link>
             </div>
           </section>
         );

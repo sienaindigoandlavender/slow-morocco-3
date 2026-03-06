@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { getRegions, getDestinations, getPlaces, convertDriveUrl } from "@/lib/supabase";
 import PlacesContent from "./PlacesContent";
+
+export const metadata: Metadata = {
+  title: "Places",
+  description: "Discover Morocco's regions, cities, and hidden gems — from Marrakech medina to Sahara dunes. Curated places with maps, stories, and local recommendations.",
+  alternates: { canonical: "https://www.slowmorocco.com/places" },
+  openGraph: {
+    title: "Places | Slow Morocco",
+    description: "Discover Morocco's regions, cities, and hidden gems — from Marrakech medina to Sahara dunes.",
+    url: "https://www.slowmorocco.com/places",
+  },
+};
 
 // Revalidate every hour
 export const revalidate = 3600;
