@@ -146,10 +146,9 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 // ── Fallback hero images ──────────────────────────────────────────────────────
 
 const CITY_HERO_FALLBACKS: Record<string, string> = {
-  marrakech: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767309989/marrakech-and-the-sea_i5aacd.png",
+  marrakech: "https://res.cloudinary.com/drstfu5yr/image/upload/v1766833142/marrakech_1_nw37ky.png",
   essaouira: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310155/essaouira_meymce.png",
   rabat: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310357/rabat_ofyxwj.png",
-  agadir: "https://res.cloudinary.com/drstfu5yr/image/upload/v1769611923/agafay-desert_sp7d6n.jpg",
 };
 
 // ── Main ──────────────────────────────────────────────────────────────────────
