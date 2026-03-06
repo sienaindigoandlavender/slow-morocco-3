@@ -39,17 +39,12 @@ const nextConfig = {
     return [
       // ============================================
       // PLACE REDIRECTS (old /city → /places/city)
+      // Note: marrakech, fes, tangier, rabat, essaouira, casablanca,
+      // meknes, ouarzazate, agadir, dakhla, chefchaouen are now city
+      // guide pages at /[city] — do NOT redirect these slugs.
       // ============================================
-      { source: '/marrakech', destination: '/places/marrakech', permanent: true },
-      { source: '/casablanca', destination: '/places/casablanca', permanent: true },
-      { source: '/essaouira', destination: '/places/essaouira', permanent: true },
-      { source: '/tangier', destination: '/places/tangier', permanent: true },
       { source: '/tangier-2', destination: '/places/tangier', permanent: true },
-      { source: '/rabat', destination: '/places/rabat', permanent: true },
-      { source: '/chefchaouen', destination: '/places/chefchaouen', permanent: true },
       { source: '/fes-meknes', destination: '/places/fes', permanent: true },
-      { source: '/agadir', destination: '/places/agadir', permanent: true },
-      { source: '/dakhla', destination: '/places/dakhla', permanent: true },
       { source: '/oualidia', destination: '/places/oualidia', permanent: true },
       { source: '/el-jadida', destination: '/places/el-jadida', permanent: true },
       { source: '/asilah', destination: '/places/asilah', permanent: true },

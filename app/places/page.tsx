@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getRegions, getDestinations, getPlaces } from "@/lib/supabase";
+import { getRegions, getDestinations, getPlaces, convertDriveUrl } from "@/lib/supabase";
 import PlacesContent from "./PlacesContent";
 
 // Revalidate every hour
@@ -42,7 +42,7 @@ async function fetchPlacesData() {
       slug: r.slug,
       title: r.title,
       subtitle: r.subtitle || "",
-      heroImage: r.hero_image || "",
+      heroImage: r.hero_image ? convertDriveUrl(r.hero_image) : "",
     }));
 
     const destinations: DestinationItem[] = destinationsData.map((d) => ({
@@ -50,7 +50,7 @@ async function fetchPlacesData() {
       title: d.title,
       subtitle: d.subtitle || "",
       region: d.region || "",
-      heroImage: d.hero_image || "",
+      heroImage: d.hero_image ? convertDriveUrl(d.hero_image) : "",
       excerpt: d.excerpt || "",
     }));
 
@@ -59,7 +59,7 @@ async function fetchPlacesData() {
       title: p.title,
       destination: p.destination || "",
       category: p.category || "",
-      heroImage: p.hero_image || "",
+      heroImage: p.hero_image ? convertDriveUrl(p.hero_image) : "",
       excerpt: p.excerpt || "",
     }));
 

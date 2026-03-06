@@ -266,21 +266,6 @@ export default function JourneysContent({
         </div>
       </section>
 
-      {/* Top pagination */}
-      <div className="container mx-auto px-6 lg:px-16 py-6">
-        <ControlBar
-          count={filteredResults.length}
-          noun="journey"
-          sortBy={sortBy}
-          onSortChange={() => { setSortBy(sortBy === "default" ? "alpha" : "default"); setCurrentPage(1); }}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={goToPage}
-          showCount={false}
-          showSort={false}
-        />
-      </div>
-
       {/* SEO Content — always rendered for crawlers */}
       <section className="py-12 md:py-16 border-b border-border/30">
         <div className="container mx-auto px-6 lg:px-16">
@@ -336,6 +321,20 @@ export default function JourneysContent({
             </div>
           ) : (
             <>
+              {/* Top pagination */}
+              <div className="mb-6">
+                <ControlBar
+                  count={filteredResults.length}
+                  noun="journey"
+                  sortBy={sortBy}
+                  onSortChange={() => { setSortBy(sortBy === "default" ? "alpha" : "default"); setCurrentPage(1); }}
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={goToPage}
+                  showCount={false}
+                  showSort={false}
+                />
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
                 {currentItems.map((item) => {
                   const href = item.type === 'daytrip' 

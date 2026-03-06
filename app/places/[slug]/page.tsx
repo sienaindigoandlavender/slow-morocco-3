@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getPlaceBySlug, getPlaceImages, getJourneys, getStories, getDestinations } from "@/lib/supabase";
+import { getPlaceBySlug, getPlaceImages, getJourneys, getStories, getDestinations, convertDriveUrl } from "@/lib/supabase";
 import PlaceDetailContent from "./PlaceDetailContent";
 import { createClient } from "@supabase/supabase-js";
 
@@ -97,7 +97,7 @@ async function getPlaceData(slug: string) {
     openingHours: place.opening_hours || "",
     fees: place.fees || "",
     notes: place.notes || "",
-    heroImage: place.hero_image || "",
+    heroImage: place.hero_image ? convertDriveUrl(place.hero_image) : "",
     heroCaption: place.hero_caption || "",
     excerpt: place.excerpt || "",
     body: place.body || "",
@@ -117,7 +117,7 @@ async function getPlaceData(slug: string) {
   };
 
   const formattedImages: PlaceImage[] = images.map((img) => ({
-    url: img.image_url || "",
+    url: img.image_url ? convertDriveUrl(img.image_url) : "",
     caption: img.caption || "",
     order: img.image_order,
   }));
@@ -232,7 +232,7 @@ async function getNearbyPlaces(slugs: string[] | null): Promise<NearbyPlace[]> {
       slug: p.slug,
       title: p.title,
       category: p.category || "",
-      heroImage: p.hero_image || "",
+      heroImage: p.hero_image ? convertDriveUrl(p.hero_image) : "",
       excerpt: p.excerpt || "",
     }));
   } catch {
