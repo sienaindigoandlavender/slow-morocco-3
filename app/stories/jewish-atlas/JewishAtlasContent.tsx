@@ -203,8 +203,8 @@ export function JewishAtlasContent() {
         </div>
         <p className="text-[13px] max-w-[580px] leading-[1.7] mt-6" style={{ color: C.text }}>
           Two Jewish communities shared Morocco for centuries but were not the same people.
-          The <strong>Toshavim</strong> — "residents" — were there first. <span className="underline underline-offset-2">Amazigh</span>-speaking,
-          Arabic-speaking, present since antiquity. Some lived in the <span className="underline underline-offset-2">Atlas Mountains</span> and the
+          The <strong>Toshavim</strong> — "residents" — were there first. <span className="underline underline-offset-2 hover:text-[#0a0a0a] transition-colors">Amazigh</span>-speaking,
+          Arabic-speaking, present since antiquity. Some lived in the <span className="underline underline-offset-2 hover:text-[#0a0a0a] transition-colors">Atlas Mountains</span> and the
           Saharan fringe. The <strong>Megorashim</strong> — "exiles" — arrived from Spain
           after 1391 and 1492, bringing Sephardic liturgy, Haketia language, and European
           commerce. They worshipped in separate synagogues. Were buried in separate cemeteries.
