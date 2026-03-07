@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getJourneyBySlug, getRoutesByIds, getJourneys, getStories, getAllPlaceFirstImages } from "@/lib/supabase";
+import { getJourneyBySlug, getRoutesByIds, getJourneys, getStories, getAllPlaceFirstImages, convertDriveUrl } from "@/lib/supabase";
 import { findRelatedStories } from "@/lib/content-matcher";
 import JourneyDetailContent from "./JourneyDetailContent";
 
@@ -129,8 +129,8 @@ async function getJourneyData(slug: string) {
           activities: "", meals: "", routeType: "",
         };
       }
-      const imageUrl = isValidImageUrl(route.image_url)
-        || isValidImageUrl(route.hero_image_url)
+      const imageUrl = convertDriveUrl(isValidImageUrl(route.image_url))
+        || convertDriveUrl(isValidImageUrl(route.hero_image_url))
         || findPlaceImage(route.to_city || "")
         || findPlaceImage(route.from_city || "")
         || "";

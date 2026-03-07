@@ -84,15 +84,16 @@ interface ItineraryDay {
 // Day image that hides itself if the URL is broken
 function DayImage({ src, alt }: { src: string; alt: string }) {
   const [failed, setFailed] = useState(false);
-  if (failed) return null;
+  if (failed || !src) return null;
   return (
     <div className="relative aspect-[3/4] w-full max-w-lg overflow-hidden mb-8">
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={src}
         alt={alt}
-        fill
-        className="object-cover"
+        className="absolute inset-0 w-full h-full object-cover"
         onError={() => setFailed(true)}
+        loading="lazy"
       />
     </div>
   );
@@ -484,11 +485,11 @@ export default function JourneyDetailContent({
             </p>
           </div>
 
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight mb-8 uppercase">
+          <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl leading-tight mb-8 uppercase">
             {journey.title}
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-12 font-display italic">
+          <p className="text-lg md:text-xl text-foreground/80 leading-relaxed mb-12 font-display italic">
             {journey.arcDescription || journey.description}
           </p>
 
@@ -542,7 +543,7 @@ export default function JourneyDetailContent({
                     )}
                   </div>
 
-                  <p className="text-muted-foreground leading-relaxed text-lg">
+                  <p className="text-foreground leading-relaxed text-lg">
                     {linkGlossaryTermsText(day.description)}
                   </p>
                 </div>
@@ -619,7 +620,7 @@ export default function JourneyDetailContent({
           <h2 className="font-serif text-3xl md:text-4xl mb-6">
             This journey is a starting point.
           </h2>
-          <p className="text-muted-foreground leading-relaxed mb-10">
+          <p className="text-foreground/80 leading-relaxed mb-10">
             These itineraries aren't fixed. They're designed to bend. Add a day in the desert. Skip the city. Stay longer where something pulls you. This is your journey—we shape it around what matters to you.
           </p>
           <Link

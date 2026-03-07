@@ -69,13 +69,13 @@ function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
     <section className="py-16 md:py-24">
       {/* Header row */}
       <div className="px-6 md:px-[6%] lg:px-[6%] flex items-end justify-between mb-8">
-        <p className="text-[11px] tracking-[0.15em] uppercase text-foreground/70">
+        <p className="text-[11px] tracking-[0.15em] uppercase text-foreground">
           {label}
         </p>
         <div className="flex items-center gap-2">
           <Link
             href="/stories"
-            className="text-[11px] tracking-[0.15em] uppercase text-foreground/60 hover:text-foreground transition-colors mr-4"
+            className="text-[11px] tracking-[0.15em] uppercase text-foreground/80 hover:text-foreground transition-colors mr-4"
           >
             View All
           </Link>
@@ -273,7 +273,7 @@ export default function HomeContent({
             <Link
               key={cat}
               href={`/stories/category/${cat.toLowerCase()}`}
-              className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 hover:text-foreground transition-colors whitespace-nowrap"
+              className="text-[10px] tracking-[0.2em] uppercase text-foreground hover:text-foreground/70 transition-colors whitespace-nowrap"
             >
               {cat}
             </Link>
@@ -281,7 +281,7 @@ export default function HomeContent({
         </div>
         <Link
           href="/stories"
-          className="text-[10px] tracking-[0.2em] uppercase text-foreground/60 hover:text-foreground transition-colors whitespace-nowrap ml-8 flex-shrink-0"
+          className="text-[10px] tracking-[0.2em] uppercase text-foreground/80 hover:text-foreground transition-colors whitespace-nowrap ml-8 flex-shrink-0"
         >
           All stories
         </Link>

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getJourneyBySlug, getRoutesByIds, getAllPlaceFirstImages } from "@/lib/supabase";
+import { getJourneyBySlug, getRoutesByIds, getAllPlaceFirstImages, convertDriveUrl } from "@/lib/supabase";
 
 // CORS headers for cross-origin requests (e.g., from Riad di Siena)
 const corsHeaders = {
@@ -87,8 +87,9 @@ export async function GET(
         };
       }
 
-      const imageUrl = route.image_url
-        || route.hero_image_url
+      const rawImage = route.image_url || route.hero_image_url || "";
+      const validImage = rawImage && !rawImage.includes("soqcqlzerhgacdaggtch") ? rawImage : "";
+      const imageUrl = convertDriveUrl(validImage)
         || findPlaceImage(route.to_city || "")
         || findPlaceImage(route.from_city || "")
         || "";

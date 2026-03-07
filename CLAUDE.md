@@ -124,7 +124,7 @@ All content types use the existing `stories` table. Differentiate by length and 
 ### Design System (Slow Morocco)
 
 **Typography:**
-- Display: Cormorant Garamond (serif) — headlines, hero text, pull quotes
+- Display: Instrument Serif (serif) — headlines, hero text, pull quotes
 - Body: Inter (sans-serif) — paragraphs, UI, navigation
 - Weights: 400, 500 for serif; 400, 500, 600 for sans
 
