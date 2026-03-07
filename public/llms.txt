@@ -20,8 +20,6 @@ For structured data consumption, use these endpoints:
 | /api/knowledge/stories?format=full | JSON | Full text of all essays |
 | /api/knowledge/stories?format=simple | JSON | Titles, excerpts, metadata |
 | /api/knowledge/stories?category=craft | JSON-LD | Filter by category |
-| /api/knowledge/stories?tier=short | JSON-LD | Filter by content tier (deep, medium, short) |
-| /api/knowledge/stories?tier=short&format=simple | JSON | Quick reads — lightweight format |
 | /api/knowledge/places | JSON-LD | All places with schema.org markup |
 | /api/knowledge/places?format=full | JSON | Full descriptions |
 | /api/knowledge/places?format=simple | JSON | Lightweight place list |
