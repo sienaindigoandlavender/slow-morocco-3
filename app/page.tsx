@@ -3,12 +3,12 @@ import { getJourneys, getStories, getWebsiteSettings, getTestimonials } from "@/
 import HomeContent from "./HomeContent";
 
 export const metadata: Metadata = {
-  title: "Slow Morocco | Private Journeys Through Morocco",
-  description: "Thoughtful private journeys across Morocco — from the Atlas Mountains to the Sahara. Designed for travellers who prefer depth over speed, crafted around what matters to you.",
+  title: "Slow Morocco | The Definitive Cultural Guide to Morocco",
+  description: "236 stories on Morocco's history, architecture, food, music, and craft. The knowledge that makes the country unforgettable — written for people who want to understand, not just visit.",
   alternates: { canonical: "https://www.slowmorocco.com" },
   openGraph: {
-    title: "Slow Morocco | Private Journeys Through Morocco",
-    description: "Thoughtful private journeys across Morocco — from the Atlas Mountains to the Sahara.",
+    title: "Slow Morocco | The Definitive Cultural Guide to Morocco",
+    description: "236 stories on Morocco's history, architecture, food, music, and craft. The knowledge that makes the country unforgettable.",
     url: "https://www.slowmorocco.com",
   },
 };
@@ -50,7 +50,7 @@ export default async function HomePage() {
     // Format stories
     stories = storiesData
       .filter((s) => s.hero_image)
-      .slice(0, 8)
+      .slice(0, 14)
       .map((s) => ({
         slug: s.slug,
         title: s.title,
