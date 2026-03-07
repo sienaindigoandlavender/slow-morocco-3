@@ -1,27 +1,33 @@
 import { NextResponse } from "next/server";
-import { getPlaces } from "@/lib/supabase";
+import { getPlaces, getAllPlaceFirstImages, convertDriveUrl } from "@/lib/supabase";
 
 export const revalidate = 60;
 
 export async function GET() {
   try {
-    const placesData = await getPlaces({ published: true });
-    
-    // Map to API format
-    const places = placesData.map((p) => ({
-      slug: p.slug || "",
-      title: p.title || "",
-      destination: p.destination || "",
-      category: p.category || "",
-      heroImage: p.hero_image || "",
-      excerpt: p.excerpt || "",
-      featured: p.featured || false,
-      order: p.sort_order || 999,
-    }));
+    const [placesData, placeFirstImages] = await Promise.all([
+      getPlaces({ published: true }),
+      getAllPlaceFirstImages(),
+    ]);
 
-    return NextResponse.json({ 
+    // Map to API format
+    const places = placesData.map((p) => {
+      const img = p.hero_image || placeFirstImages[p.slug] || "";
+      return {
+        slug: p.slug || "",
+        title: p.title || "",
+        destination: p.destination || "",
+        category: p.category || "",
+        heroImage: img ? convertDriveUrl(img) : "",
+        excerpt: p.excerpt || "",
+        featured: p.featured || false,
+        order: p.sort_order || 999,
+      };
+    });
+
+    return NextResponse.json({
       success: true,
-      places 
+      places
     });
   } catch (error: any) {
     console.error("GET /api/places error:", error);

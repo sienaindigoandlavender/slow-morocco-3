@@ -574,6 +574,23 @@ export async function getPlaceImages(placeSlug: string) {
   return data as PlaceImage[];
 }
 
+/** Get first image per place for listing pages */
+export async function getAllPlaceFirstImages(): Promise<Record<string, string>> {
+  const { data, error } = await supabase
+    .from("place_images")
+    .select("place_slug, image_url")
+    .not("image_url", "is", null)
+    .order("image_order", { ascending: true });
+  if (error) { console.error("Error fetching all place images:", error); return {}; }
+  const result: Record<string, string> = {};
+  for (const row of data || []) {
+    if (row.place_slug && row.image_url && !result[row.place_slug]) {
+      result[row.place_slug] = row.image_url;
+    }
+  }
+  return result;
+}
+
 // =============================================
 // STORIES
 // =============================================

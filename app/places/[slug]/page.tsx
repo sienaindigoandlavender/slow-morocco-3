@@ -144,7 +144,7 @@ async function getRelatedContent(place: FormattedPlace) {
         .map((j) => ({
           slug: j.slug || "",
           title: j.title || "",
-          heroImage: j.hero_image_url || "",
+          heroImage: j.hero_image_url ? convertDriveUrl(j.hero_image_url) : "",
           description: j.short_description || "",
           durationDays: j.duration_days || 0,
         }));
@@ -162,7 +162,7 @@ async function getRelatedContent(place: FormattedPlace) {
           slug: s.slug,
           title: s.title,
           category: s.category,
-          heroImage: s.hero_image,
+          heroImage: s.hero_image ? convertDriveUrl(s.hero_image) : "",
         }));
 
       const pinnedSlugs = new Set(pinnedStories.map((s) => s.slug));
@@ -183,7 +183,7 @@ async function getRelatedContent(place: FormattedPlace) {
           slug: s.slug,
           title: s.title,
           category: s.category,
-          heroImage: s.hero_image,
+          heroImage: s.hero_image ? convertDriveUrl(s.hero_image) : "",
         }));
 
       relatedStories = [...pinnedStories, ...additionalStories];
@@ -201,7 +201,7 @@ async function getRelatedContent(place: FormattedPlace) {
         slug: s.slug,
         title: s.title,
         category: s.category,
-        heroImage: s.hero_image,
+        heroImage: s.hero_image ? convertDriveUrl(s.hero_image) : "",
       }));
 
       relatedStories = matchedStories.length > 0
@@ -210,7 +210,7 @@ async function getRelatedContent(place: FormattedPlace) {
             slug: s.slug,
             title: s.title,
             category: s.category,
-            heroImage: s.hero_image,
+            heroImage: s.hero_image ? convertDriveUrl(s.hero_image) : "",
           }));
     }
   } catch {}

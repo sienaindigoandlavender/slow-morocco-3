@@ -393,13 +393,19 @@ export default function PlacesContent({
                       className="group"
                     >
                       <div className="relative aspect-[3/4] mb-3 overflow-hidden bg-foreground/5">
-                        {place.heroImage && (
+                        {place.heroImage ? (
                           <Image
                             src={place.heroImage}
                             alt={place.title}
                             fill
+                            sizes="(max-width: 768px) 50vw, 25vw"
+                            unoptimized
                             className="object-cover group-hover:scale-105 transition-transform duration-700"
                           />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="font-serif text-lg text-foreground/20">{place.title.charAt(0)}</span>
+                          </div>
                         )}
                       </div>
                       <p className="text-[10px] tracking-[0.15em] uppercase text-foreground/40 mb-1">
