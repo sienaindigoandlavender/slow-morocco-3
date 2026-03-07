@@ -105,6 +105,13 @@ async function getJourneyData(slug: string) {
     getAllPlaceFirstImages(),
   ]);
 
+  // Helper: reject URLs from the deleted old Supabase instance
+  function isValidImageUrl(url: string | null | undefined): string {
+    if (!url) return "";
+    if (url.includes("soqcqlzerhgacdaggtch")) return "";
+    return url;
+  }
+
   // Helper: find a place image by city name (try slug variants)
   function findPlaceImage(cityName: string): string {
     if (!cityName) return "";
@@ -122,8 +129,8 @@ async function getJourneyData(slug: string) {
           activities: "", meals: "", routeType: "",
         };
       }
-      const imageUrl = route.image_url
-        || route.hero_image_url
+      const imageUrl = isValidImageUrl(route.image_url)
+        || isValidImageUrl(route.hero_image_url)
         || findPlaceImage(route.to_city || "")
         || findPlaceImage(route.from_city || "")
         || "";

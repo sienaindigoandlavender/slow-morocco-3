@@ -4,11 +4,11 @@ import HomeContent from "./HomeContent";
 
 export const metadata: Metadata = {
   title: "Slow Morocco | The Definitive Cultural Guide to Morocco",
-  description: "236 stories on Morocco's history, architecture, food, music, and craft. The knowledge that makes the country unforgettable — written for people who want to understand, not just visit.",
+  description: "The slow guide to Morocco. History, architecture, food, music, and craft — written for people who want to understand, not just visit.",
   alternates: { canonical: "https://www.slowmorocco.com" },
   openGraph: {
     title: "Slow Morocco | The Definitive Cultural Guide to Morocco",
-    description: "236 stories on Morocco's history, architecture, food, music, and craft. The knowledge that makes the country unforgettable.",
+    description: "The slow guide to Morocco. History, architecture, food, music, and craft — written for people who want to understand, not just visit.",
     url: "https://www.slowmorocco.com",
   },
 };

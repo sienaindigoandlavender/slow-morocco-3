@@ -183,7 +183,7 @@ export default function PlaceDetailContent({
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-16">
           <div className="container mx-auto">
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white uppercase">{place.title}</h1>
+            <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white uppercase">{place.title}</h1>
           </div>
         </div>
       </section>
