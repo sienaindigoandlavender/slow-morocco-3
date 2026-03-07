@@ -99,7 +99,7 @@ function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
       {/* Scroll track — bleeds right */}
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide pl-8 md:pl-[8%] lg:pl-[12%] pr-8"
+        className="flex gap-5 overflow-x-auto scrollbar-hide pl-8 md:pl-[8%] lg:pl-[8%] pr-8"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {stories.map((story) => (
@@ -187,7 +187,7 @@ function JourneyStrip({ journeys }: { journeys: Journey[] }) {
 
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto pl-8 md:pl-[8%] lg:pl-[12%] pr-8"
+        className="flex gap-5 overflow-x-auto pl-8 md:pl-[8%] lg:pl-[8%] pr-8"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {journeys.map((journey) => (
