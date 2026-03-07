@@ -8,6 +8,8 @@ import Image from "next/image";
 import { Search } from "lucide-react";
 import PageBanner from "@/components/PageBanner";
 
+type ContentTier = "deep" | "medium" | "short";
+
 interface Story {
   slug: string;
   title: string;
@@ -15,6 +17,8 @@ interface Story {
   mood?: string;
   heroImage?: string;
   excerpt?: string;
+  contentTier: ContentTier;
+  readTime?: number;
 }
 
 interface StoriesContentProps {
@@ -29,6 +33,7 @@ export default function StoriesContent({
   dataLoaded = true,
 }: StoriesContentProps) {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [activeTier, setActiveTier] = useState<"all" | ContentTier>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<"default" | "alpha">("default");
@@ -41,6 +46,13 @@ export default function StoriesContent({
     { id: "golden", label: "Golden" },
   ];
 
+  const tierFilters = [
+    { id: "all" as const, label: "All lengths" },
+    { id: "short" as const, label: "Quick reads" },
+    { id: "medium" as const, label: "Mid-length" },
+    { id: "deep" as const, label: "Deep dives" },
+  ];
+
   // Filter and search stories
   const filteredStories = useMemo(() => {
     let result = initialStories;
@@ -50,6 +62,11 @@ export default function StoriesContent({
       result = result.filter(
         (s) => s.mood?.toLowerCase() === activeFilter.toLowerCase()
       );
+    }
+
+    // Apply tier filter
+    if (activeTier !== "all") {
+      result = result.filter((s) => s.contentTier === activeTier);
     }
 
     // Apply search filter
@@ -68,7 +85,7 @@ export default function StoriesContent({
     }
 
     return result;
-  }, [initialStories, activeFilter, searchQuery, sortBy]);
+  }, [initialStories, activeFilter, activeTier, searchQuery, sortBy]);
 
   // Pagination
   const totalPages = Math.ceil(filteredStories.length / STORIES_PER_PAGE);
@@ -86,6 +103,11 @@ export default function StoriesContent({
   // Reset to page 1 when filter or search changes
   const handleFilterChange = (id: string) => {
     setActiveFilter(id);
+    setCurrentPage(1);
+  };
+
+  const handleTierChange = (id: "all" | ContentTier) => {
+    setActiveTier(id);
     setCurrentPage(1);
   };
 
@@ -133,20 +155,37 @@ export default function StoriesContent({
       {/* Filters */}
       <section className="py-4 border-b border-border sticky top-20 md:top-24 bg-background z-40">
         <div className="container mx-auto px-8 md:px-16 lg:px-20">
-          <div className="flex items-center gap-6 overflow-x-auto scrollbar-hide">
-            {filters.map((filter) => (
-              <button
-                key={filter.id}
-                onClick={() => handleFilterChange(filter.id)}
-                className={`text-[11px] tracking-[0.15em] uppercase whitespace-nowrap pb-1 transition-colors ${
-                  activeFilter === filter.id
-                    ? "text-foreground border-b border-foreground"
-                    : "text-foreground/40 hover:text-foreground/70"
-                }`}
-              >
-                {filter.label}
-              </button>
-            ))}
+          <div className="flex items-center justify-between gap-6 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center gap-6">
+              {filters.map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => handleFilterChange(filter.id)}
+                  className={`text-[11px] tracking-[0.15em] uppercase whitespace-nowrap pb-1 transition-colors ${
+                    activeFilter === filter.id
+                      ? "text-foreground border-b border-foreground"
+                      : "text-foreground/40 hover:text-foreground/70"
+                  }`}
+                >
+                  {filter.label}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-4 border-l border-border pl-6">
+              {tierFilters.map((tier) => (
+                <button
+                  key={tier.id}
+                  onClick={() => handleTierChange(tier.id)}
+                  className={`text-[10px] tracking-[0.15em] uppercase whitespace-nowrap pb-1 transition-colors ${
+                    activeTier === tier.id
+                      ? "text-foreground border-b border-foreground"
+                      : "text-foreground/30 hover:text-foreground/60"
+                  }`}
+                >
+                  {tier.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -212,34 +251,75 @@ export default function StoriesContent({
               {/* Stories Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
                 {paginatedStories.map((story) => (
-                  <article key={story.slug} itemScope itemType="https://schema.org/Article">
+                  <article
+                    key={story.slug}
+                    itemScope
+                    itemType="https://schema.org/Article"
+                    className={story.contentTier === "short" ? "md:col-span-1" : ""}
+                  >
                     <Link
                       href={`/stories/${story.slug}`}
                       className="group"
                     >
-                      <div className="aspect-[3/4] relative overflow-hidden bg-[#d4cdc4] mb-5">
-                        {story.heroImage && (
-                          <Image
-                            src={story.heroImage}
-                            alt={story.title}
-                            fill
-                            className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                            itemProp="image"
-                          />
-                        )}
-                      </div>
-                      {story.mood && (
-                        <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-2">
-                          {story.mood}
-                        </p>
-                      )}
-                      <h3 className="font-serif text-xl mb-2 group-hover:text-foreground/70 transition-colors" itemProp="headline">
-                        {story.title}
-                      </h3>
-                      {story.excerpt && (
-                        <p className="text-sm text-foreground/60 leading-relaxed line-clamp-2" itemProp="description">
-                          {story.excerpt}
-                        </p>
+                      {/* SHORT: compact landscape card */}
+                      {story.contentTier === "short" ? (
+                        <div className="flex gap-5">
+                          <div className="aspect-square w-28 md:w-32 relative overflow-hidden bg-[#d4cdc4] flex-shrink-0">
+                            {story.heroImage && (
+                              <Image
+                                src={story.heroImage}
+                                alt={story.title}
+                                fill
+                                className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                                itemProp="image"
+                              />
+                            )}
+                          </div>
+                          <div className="flex flex-col justify-center min-w-0">
+                            <p className="text-[9px] tracking-[0.3em] uppercase text-foreground/30 font-mono mb-1.5">Quick read</p>
+                            <h3 className="font-serif text-lg mb-1 group-hover:text-foreground/70 transition-colors leading-snug" itemProp="headline">
+                              {story.title}
+                            </h3>
+                            {story.readTime && (
+                              <p className="text-[10px] tracking-[0.15em] uppercase text-foreground/30">
+                                {story.readTime} min
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          {/* DEEP / MEDIUM: portrait card */}
+                          <div className={`relative overflow-hidden bg-[#d4cdc4] mb-5 ${story.contentTier === "medium" ? "aspect-[4/5]" : "aspect-[3/4]"}`}>
+                            {story.heroImage && (
+                              <Image
+                                src={story.heroImage}
+                                alt={story.title}
+                                fill
+                                className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                                itemProp="image"
+                              />
+                            )}
+                          </div>
+                          <div className="flex items-center gap-3 mb-2">
+                            {story.mood && (
+                              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40">
+                                {story.mood}
+                              </p>
+                            )}
+                            {story.contentTier === "medium" && (
+                              <p className="text-[9px] tracking-[0.2em] uppercase text-foreground/25 font-mono">The Edit</p>
+                            )}
+                          </div>
+                          <h3 className="font-serif text-xl mb-2 group-hover:text-foreground/70 transition-colors" itemProp="headline">
+                            {story.title}
+                          </h3>
+                          {story.excerpt && (
+                            <p className="text-sm text-foreground/60 leading-relaxed line-clamp-2" itemProp="description">
+                              {story.excerpt}
+                            </p>
+                          )}
+                        </>
                       )}
                     </Link>
                   </article>

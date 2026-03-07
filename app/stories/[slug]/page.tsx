@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getStoryBySlug, getStories, getJourneys, getStoryImages } from "@/lib/supabase";
+import { getStoryBySlug, getStories, getJourneys, getStoryImages, inferContentTier } from "@/lib/supabase";
 import { findRelatedJourneys } from "@/lib/content-matcher";
 import StoryDetailContent from "./StoryDetailContent";
 
@@ -93,8 +93,9 @@ async function getStoryData(slug: string) {
   const mapData = storyData.map_data || null;
   const externalLinks = storyData.external_links || null;
   const relatedJourneySlug = storyData.related_journey_slug || null;
+  const contentTier = inferContentTier(storyData);
 
-  return { story, mapData, externalLinks, relatedJourneySlug };
+  return { story, mapData, externalLinks, relatedJourneySlug, contentTier };
 }
 
 async function getRelatedStories(currentStory: Story, currentSlug: string) {
@@ -175,7 +176,7 @@ export default async function StoryPage({
     notFound();
   }
 
-  const { story, mapData, externalLinks } = storyResult;
+  const { story, mapData, externalLinks, contentTier } = storyResult;
   const relatedStories = await getRelatedStories(story, slug);
   const relatedJourneys = await getRelatedJourneysSSR(story);
   const storyImages = await getStoryImages(slug);
@@ -226,6 +227,7 @@ export default async function StoryPage({
         externalLinks={externalLinks}
         prevStory={prevStory}
         nextStory={nextStory}
+        contentTier={contentTier}
       />
     </>
   );

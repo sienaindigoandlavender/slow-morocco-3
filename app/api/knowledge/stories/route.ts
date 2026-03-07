@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getStories } from "@/lib/supabase";
+import { getStories, inferContentTier } from "@/lib/supabase";
+import type { ContentTier } from "@/lib/supabase";
 
 // Cache for 1 hour, allow AI crawlers to consume
 export const revalidate = 3600;
@@ -48,9 +49,14 @@ export async function GET(request: Request) {
     const format = searchParams.get("format"); // jsonld (default), simple, full
     const category = searchParams.get("category");
     const slug = searchParams.get("slug");
+    const tier = searchParams.get("tier") as ContentTier | null;
     const limit = parseInt(searchParams.get("limit") || "0") || 0;
 
     let stories = await getStories({ published: true });
+
+    if (tier) {
+      stories = stories.filter((s) => inferContentTier(s) === tier);
+    }
 
     if (category) {
       stories = stories.filter(
@@ -73,6 +79,7 @@ export async function GET(request: Request) {
         title: s.title,
         subtitle: s.subtitle,
         category: s.category,
+        contentTier: inferContentTier(s),
         region: s.region,
         era: s.era,
         year: s.year,
@@ -100,6 +107,7 @@ export async function GET(request: Request) {
           title: s.title,
           subtitle: s.subtitle,
           category: s.category,
+          contentTier: inferContentTier(s),
           region: s.region,
           country: s.country || "Morocco",
           era: s.era,
@@ -202,7 +210,7 @@ export async function GET(request: Request) {
       "@type": "CollectionPage",
       "@id": `${BASE_URL}/api/knowledge/stories#collection`,
       name: "The Edit — Cultural Essays on Morocco",
-      description: `${stories.length} original cultural essays exploring Morocco's history, craft, music, architecture, and traditions. Written by a Moroccan Cultural Authority based in Marrakech based in Marrakech.`,
+      description: `${stories.length} original cultural pieces exploring Morocco's history, craft, music, architecture, and traditions. Content spans three tiers: deep cultural essays (1,500-3,000 words), mid-length features (600-1,200 words), and quick reads (300-500 words). Published by Slow Morocco, a Moroccan Cultural Authority based in Marrakech.`,
       url: `${BASE_URL}/stories`,
       numberOfItems: stories.length,
       about: {

@@ -625,6 +625,7 @@ export interface Story {
   journey_bridge: string | null;
   era_start: number | null;
   era_end: number | null;
+  content_tier: "deep" | "medium" | "short" | null;
   related_journey_slug: string | null;
   map_data: {
     style?: string;
@@ -664,11 +665,14 @@ export interface Story {
   updated_at: string;
 }
 
+export type ContentTier = "deep" | "medium" | "short";
+
 export async function getStories(options?: {
   published?: boolean;
   featured?: boolean;
   category?: string;
   region?: string;
+  content_tier?: ContentTier;
   limit?: number;
 }) {
   let query = supabase.from("stories").select("*");
@@ -676,11 +680,24 @@ export async function getStories(options?: {
   if (options?.featured !== undefined) query = query.eq("featured", options.featured);
   if (options?.category) query = query.eq("category", options.category);
   if (options?.region) query = query.eq("region", options.region);
+  if (options?.content_tier) query = query.eq("content_tier", options.content_tier);
   query = query.order("sort_order", { ascending: true });
   if (options?.limit) query = query.limit(options.limit);
   const { data, error } = await query;
   if (error) { console.error("Error fetching stories:", error); return []; }
   return data as Story[];
+}
+
+/**
+ * Infer content tier from read_time when content_tier column is null.
+ * SHORT: 1-2 min (~300-500 words), MEDIUM: 3-5 min (~600-1200 words), DEEP: 6+ min
+ */
+export function inferContentTier(story: Story): ContentTier {
+  if (story.content_tier) return story.content_tier;
+  const rt = story.read_time ?? 7;
+  if (rt <= 2) return "short";
+  if (rt <= 5) return "medium";
+  return "deep";
 }
 
 export async function getStoryBySlug(slug: string) {

@@ -62,6 +62,8 @@ interface NavItem {
   title: string;
 }
 
+type ContentTier = "deep" | "medium" | "short";
+
 interface StoryDetailContentProps {
   story: Story;
   images: StoryImage[];
@@ -72,6 +74,7 @@ interface StoryDetailContentProps {
   externalLinks?: Array<{ label: string; url: string; type?: string }> | null;
   prevStory?: NavItem | null;
   nextStory?: NavItem | null;
+  contentTier?: ContentTier;
 }
 
 export default function StoryDetailContent({
@@ -84,7 +87,11 @@ export default function StoryDetailContent({
   externalLinks,
   prevStory,
   nextStory,
+  contentTier = "deep",
 }: StoryDetailContentProps) {
+  const isShort = contentTier === "short";
+  const isMedium = contentTier === "medium";
+  const isLight = isShort || isMedium;
   const sources = story.sources
     ? story.sources.split(";;").map((s) => s.trim()).filter(Boolean)
     : [];
@@ -135,6 +142,7 @@ export default function StoryDetailContent({
     ],
     isAccessibleForFree: true,
     license: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+    additionalType: contentTier === "short" ? "https://schema.org/ShortStory" : contentTier === "medium" ? "https://schema.org/NewsArticle" : "https://schema.org/ScholarlyArticle",
   };
 
   return (
@@ -146,7 +154,7 @@ export default function StoryDetailContent({
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       {story.heroImage && (
-        <section className="relative w-full h-[55vh] md:h-[65vh]">
+        <section className={`relative w-full ${isShort ? "h-[35vh] md:h-[40vh]" : isMedium ? "h-[45vh] md:h-[55vh]" : "h-[55vh] md:h-[65vh]"}`}>
           <Image
             src={story.heroImage}
             alt={story.title}
@@ -161,7 +169,7 @@ export default function StoryDetailContent({
 
       {/* ── Article header ───────────────────────────────────────────── */}
       <div className="border-b border-border">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20 py-10 md:py-14 max-w-5xl">
+        <div className={`container mx-auto px-8 md:px-16 lg:px-20 py-10 md:py-14 ${isShort ? "max-w-3xl" : "max-w-5xl"}`}>
           {/* Breadcrumb + prev/next */}
           <div className="flex items-center justify-between mb-6">
             <nav className="flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-foreground/30">
@@ -202,8 +210,16 @@ export default function StoryDetailContent({
             </div>
           </div>
 
+          {/* Tier label for lighter content */}
+          {isShort && (
+            <p className="text-[9px] tracking-[0.3em] uppercase text-foreground/30 font-mono mb-4">Quick read</p>
+          )}
+          {isMedium && (
+            <p className="text-[9px] tracking-[0.3em] uppercase text-foreground/30 font-mono mb-4">The Edit</p>
+          )}
+
           {/* Title block */}
-          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.1] mb-5 max-w-3xl">
+          <h1 className={`font-serif leading-[1.1] mb-5 ${isShort ? "text-2xl md:text-4xl lg:text-5xl max-w-2xl" : "text-3xl md:text-5xl lg:text-6xl max-w-3xl"}`}>
             {story.title}
           </h1>
           {story.subtitle && (
@@ -229,9 +245,9 @@ export default function StoryDetailContent({
         </div>
       </div>
 
-      {/* ── Two-column body ──────────────────────────────────────────── */}
-      <div className="container mx-auto px-8 md:px-16 lg:px-20 max-w-5xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-0 lg:gap-16 py-14 md:py-20">
+      {/* ── Body layout ──────────────────────────────────────────────── */}
+      <div className={`container mx-auto px-8 md:px-16 lg:px-20 ${isShort ? "max-w-3xl" : "max-w-5xl"}`}>
+        <div className={`${isShort ? "py-10 md:py-14" : "grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-0 lg:gap-16 py-14 md:py-20"}`}>
 
           {/* LEFT — article */}
           <article className="min-w-0">
@@ -397,8 +413,8 @@ export default function StoryDetailContent({
 
           </article>
 
-          {/* RIGHT — sticky sidebar */}
-          <aside className="hidden lg:block">
+          {/* RIGHT — sticky sidebar (hidden for short pieces) */}
+          <aside className={`${isShort ? "hidden" : "hidden lg:block"}`}>
             <div className="sticky top-28 space-y-10">
 
               {/* Category link */}
@@ -493,7 +509,7 @@ export default function StoryDetailContent({
 
       {/* ── Keep Exploring — full bleed ──────────────────────────────── */}
       {relatedStories.length > 0 && (
-        <section className="border-t border-border py-16 md:py-20">
+        <section className={`border-t border-border ${isShort ? "py-10 md:py-14" : "py-16 md:py-20"}`}>
           <div className="container mx-auto px-8 md:px-16 lg:px-20">
             <div className="flex items-baseline justify-between mb-10">
               <div>
@@ -547,8 +563,8 @@ export default function StoryDetailContent({
         </section>
       )}
 
-      {/* ── Related Journeys ─────────────────────────────────────────── */}
-      {relatedJourneys.length > 0 && (
+      {/* ── Related Journeys (hidden for short pieces — keep it light) ── */}
+      {!isShort && relatedJourneys.length > 0 && (
         <section className="py-16 md:py-20 bg-[#1a1916] text-white">
           <div className="container mx-auto px-8 md:px-16 lg:px-20">
             <div className="flex items-baseline justify-between mb-10">
