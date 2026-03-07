@@ -53,14 +53,6 @@ export default function Header() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
               <Link
-                href="/journeys"
-                className={`text-[11px] tracking-[0.15em] uppercase transition-colors ${
-                  scrolled ? "text-foreground/70 hover:text-foreground" : "text-white/80 hover:text-white"
-                }`}
-              >
-                Journeys
-              </Link>
-<Link
                 href="/stories"
                 className={`text-[11px] tracking-[0.15em] uppercase transition-colors ${
                   scrolled ? "text-foreground/70 hover:text-foreground" : "text-white/80 hover:text-white"
@@ -76,7 +68,15 @@ export default function Header() {
               >
                 Places
               </Link>
-{/* Search Icon */}
+              <Link
+                href="/journeys"
+                className={`text-[11px] tracking-[0.15em] uppercase transition-colors ${
+                  scrolled ? "text-foreground/70 hover:text-foreground" : "text-white/80 hover:text-white"
+                }`}
+              >
+                Journeys
+              </Link>
+              {/* Search Icon */}
               <button
                 onClick={() => setSearchOpen(true)}
                 className={`p-2 transition-colors ${
@@ -88,16 +88,13 @@ export default function Header() {
                 <Search className="w-4 h-4" />
               </button>
 
-              {/* Plan Your Trip button */}
               <Link
                 href="/plan-your-trip"
-                className={`text-[11px] tracking-[0.15em] uppercase border px-6 py-3 transition-colors ${
-                  scrolled 
-                    ? "border-foreground hover:bg-foreground hover:text-background" 
-                    : "border-white text-white hover:bg-white hover:text-foreground"
+                className={`text-[11px] tracking-[0.15em] uppercase transition-colors ${
+                  scrolled ? "text-foreground/70 hover:text-foreground" : "text-white/80 hover:text-white"
                 }`}
               >
-                Plan Your Trip
+                Plan a trip
               </Link>
             </nav>
 
@@ -130,13 +127,6 @@ export default function Header() {
           <div className="md:hidden bg-background border-t border-border shadow-lg">
             <nav className="px-8 py-8 space-y-1">
               <Link
-                href="/journeys"
-                className="block text-sm tracking-[0.15em] uppercase py-4"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Journeys
-              </Link>
-<Link
                 href="/stories"
                 className="block text-sm tracking-[0.15em] uppercase py-4"
                 onClick={() => setMobileMenuOpen(false)}
@@ -150,15 +140,20 @@ export default function Header() {
               >
                 Places
               </Link>
-<div className="pt-6">
-                <Link
-                  href="/plan-your-trip"
-                  className="inline-block text-sm tracking-[0.15em] uppercase border border-foreground px-8 py-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Plan Your Trip
-                </Link>
-              </div>
+              <Link
+                href="/journeys"
+                className="block text-sm tracking-[0.15em] uppercase py-4"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Journeys
+              </Link>
+              <Link
+                href="/plan-your-trip"
+                className="block text-sm tracking-[0.15em] uppercase py-4 text-foreground/60"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Plan a trip
+              </Link>
             </nav>
           </div>
         )}

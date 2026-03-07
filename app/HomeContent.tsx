@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -50,19 +50,179 @@ interface HomeContentProps {
   settings: Record<string, string>;
 }
 
-const CATEGORIES = [
-  { slug: "history",      label: "History",      count: 53 },
-  { slug: "architecture", label: "Architecture", count: 26 },
-  { slug: "culture",      label: "Culture",      count: 20 },
-  { slug: "people",       label: "People",       count: 19 },
-  { slug: "systems",      label: "Systems",      count: 19 },
-  { slug: "food",         label: "Food",         count: 18 },
-  { slug: "nature",       label: "Nature",       count: 13 },
-  { slug: "art",          label: "Art",          count: 10 },
-  { slug: "design",       label: "Design",       count: 9  },
-  { slug: "music",        label: "Music",        count: 7  },
-  { slug: "craft",        label: "Craft",        count: 6  },
-];
+/* ─── Horizontal scroll strip (Kinfolk-style) ─── */
+function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = useCallback((dir: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const amount = scrollRef.current.clientWidth * 0.6;
+    scrollRef.current.scrollBy({
+      left: dir === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
+  }, []);
+
+  if (stories.length === 0) return null;
+
+  return (
+    <section className="py-16 md:py-24">
+      {/* Header row */}
+      <div className="px-8 md:px-[8%] lg:px-[12%] flex items-end justify-between mb-10">
+        <p className="text-[11px] tracking-[0.25em] uppercase text-foreground/40">
+          {label}
+        </p>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/stories"
+            className="text-[11px] tracking-[0.15em] uppercase text-foreground/30 hover:text-foreground transition-colors mr-4"
+          >
+            View All
+          </Link>
+          <button
+            onClick={() => scroll("left")}
+            className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="w-4 h-4 text-foreground/40" />
+          </button>
+          <button
+            onClick={() => scroll("right")}
+            className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="w-4 h-4 text-foreground/40" />
+          </button>
+        </div>
+      </div>
+
+      {/* Scroll track — bleeds right */}
+      <div
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto scrollbar-hide pl-8 md:pl-[8%] lg:pl-[12%] pr-8"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {stories.map((story) => (
+          <Link
+            key={story.slug}
+            href={`/stories/${story.slug}`}
+            className="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px]"
+          >
+            {/* Tall portrait image — Kinfolk ratio */}
+            <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-4">
+              {story.heroImage && (
+                <Image
+                  src={story.heroImage}
+                  alt={story.title}
+                  fill
+                  sizes="320px"
+                  className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                />
+              )}
+            </div>
+            {/* Category */}
+            {story.category && (
+              <p className="text-[11px] tracking-[0.1em] text-foreground/40 mb-2">
+                {story.category}
+              </p>
+            )}
+            {/* Title — uppercase like Kinfolk */}
+            <h3 className="text-[13px] tracking-[0.06em] uppercase leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
+              {story.title}
+            </h3>
+            {/* Subtitle */}
+            {story.subtitle && (
+              <p className="text-[13px] text-foreground/50 leading-snug mt-1 line-clamp-2">
+                {story.subtitle}
+              </p>
+            )}
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ─── Journey horizontal strip ─── */
+function JourneyStrip({ journeys }: { journeys: Journey[] }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = useCallback((dir: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const amount = scrollRef.current.clientWidth * 0.6;
+    scrollRef.current.scrollBy({
+      left: dir === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
+  }, []);
+
+  if (journeys.length === 0) return null;
+
+  return (
+    <section className="py-16 md:py-24">
+      <div className="px-8 md:px-[8%] lg:px-[12%] flex items-end justify-between mb-10">
+        <p className="text-[11px] tracking-[0.25em] uppercase text-foreground/40">
+          Private Journeys
+        </p>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/journeys"
+            className="text-[11px] tracking-[0.15em] uppercase text-foreground/30 hover:text-foreground transition-colors mr-4"
+          >
+            View All
+          </Link>
+          <button onClick={() => scroll("left")}
+            className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors"
+            aria-label="Scroll left">
+            <ChevronLeft className="w-4 h-4 text-foreground/40" />
+          </button>
+          <button onClick={() => scroll("right")}
+            className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors"
+            aria-label="Scroll right">
+            <ChevronRight className="w-4 h-4 text-foreground/40" />
+          </button>
+        </div>
+      </div>
+
+      <div
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto pl-8 md:pl-[8%] lg:pl-[12%] pr-8"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {journeys.map((journey) => (
+          <Link
+            key={journey.slug}
+            href={`/journeys/${journey.slug}`}
+            className="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px]"
+          >
+            <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-4">
+              {journey.heroImage && (
+                <Image
+                  src={journey.heroImage}
+                  alt={journey.title}
+                  fill
+                  sizes="320px"
+                  className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                />
+              )}
+            </div>
+            <p className="text-[11px] tracking-[0.1em] text-foreground/40 mb-2">
+              {journey.duration} · {journey.destinations}
+            </p>
+            <h3 className="text-[13px] tracking-[0.06em] uppercase leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
+              {journey.title}
+            </h3>
+            {journey.description && (
+              <p className="text-[13px] text-foreground/50 leading-snug mt-1 line-clamp-2">
+                {journey.description}
+              </p>
+            )}
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export default function HomeContent({
   journeys,
@@ -74,10 +234,8 @@ export default function HomeContent({
   const [testimonialIndex, setTestimonialIndex] = useState(0);
 
   const heroImage = settings.hero_image_url;
-  const featuredStory = stories[0] || null;
-  const digestStories = stories.slice(1, 5);
-  const moreStories = stories.slice(5, 8);
-  const gridStories = stories.slice(8, 14);
+  const stripOneStories = stories.slice(0, 7);
+  const stripTwoStories = stories.slice(7, 14);
 
   return (
     <div className="bg-background min-h-screen">
@@ -104,9 +262,10 @@ export default function HomeContent({
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          DATELINE BAR — newspaper masthead energy
+          DATELINE BAR
           ═══════════════════════════════════════════════════════════════ */}
-      <div className="border-y border-border py-3 px-8 md:px-[8%] lg:px-[12%] flex items-center justify-between overflow-x-auto scrollbar-hide">
+      <div className="border-y border-border py-3 px-8 md:px-[8%] lg:px-[12%] flex items-center justify-between overflow-x-auto"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
         <div className="flex items-center gap-6 md:gap-8 flex-shrink-0">
           {["History", "Architecture", "Food", "Culture", "People", "Music", "Craft"].map((cat) => (
             <Link
@@ -122,225 +281,23 @@ export default function HomeContent({
           href="/stories"
           className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 hover:text-foreground transition-colors whitespace-nowrap ml-8 flex-shrink-0"
         >
-          All stories →
+          All stories
         </Link>
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════
-          MAGAZINE FRONT PAGE — 3 column editorial layout
+          STORY STRIP 1 — Kinfolk-style horizontal scroll
           ═══════════════════════════════════════════════════════════════ */}
-      <section className="border-b border-border">
-        <div className="px-8 md:px-[8%] lg:px-[12%] py-12 md:py-16">
+      <StoryStrip stories={stripOneStories} label="From the Archive" />
 
-          <div className="flex items-baseline justify-between mb-8 pb-4 border-b border-border">
-            <p className="text-[10px] tracking-[0.35em] uppercase text-foreground/30 font-mono">
-              From the archive
-            </p>
-            <Link
-              href="/stories"
-              className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 hover:text-foreground transition-colors"
-            >
-              View all stories →
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr_280px] gap-0 lg:divide-x lg:divide-border">
-
-            {/* LEFT — category index */}
-            <div className="hidden lg:block pr-8">
-              <p className="text-[9px] tracking-[0.3em] uppercase text-foreground/25 font-mono mb-5">
-                Browse by subject
-              </p>
-              <div className="space-y-1">
-                {CATEGORIES.map((cat) => (
-                  <Link
-                    key={cat.slug}
-                    href={`/stories/category/${cat.slug}`}
-                    className="group flex items-baseline justify-between py-1.5 border-b border-border/40 hover:border-foreground/20 transition-colors"
-                  >
-                    <span className="text-sm text-foreground/60 group-hover:text-foreground transition-colors">
-                      {cat.label}
-                    </span>
-                    <span className="text-[9px] font-mono text-foreground/25 group-hover:text-foreground/40 transition-colors ml-2">
-                      {cat.count}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-              <Link
-                href="/stories"
-                className="block mt-6 text-[9px] tracking-[0.25em] uppercase text-foreground/25 hover:text-foreground transition-colors"
-              >
-                All 236 stories →
-              </Link>
-            </div>
-
-            {/* CENTRE — featured story */}
-            {featuredStory && (
-              <div className="lg:px-10">
-                <Link href={`/stories/${featuredStory.slug}`} className="group block">
-                  <div className="aspect-[16/10] relative overflow-hidden bg-[#f0f0f0] mb-6">
-                    {featuredStory.heroImage && (
-                      <Image
-                        src={featuredStory.heroImage}
-                        alt={featuredStory.title}
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                      />
-                    )}
-                  </div>
-                  {featuredStory.category && (
-                    <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/35 mb-3">
-                      {featuredStory.category}
-                    </p>
-                  )}
-                  <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl leading-[1.2] mb-4 group-hover:text-foreground/70 transition-colors">
-                    {featuredStory.title}
-                  </h2>
-                  {featuredStory.subtitle && (
-                    <p className="font-serif italic text-lg text-foreground/50 mb-4">
-                      {featuredStory.subtitle}
-                    </p>
-                  )}
-                  {featuredStory.excerpt && (
-                    <p className="text-sm text-foreground/60 leading-relaxed mb-5 max-w-prose">
-                      {featuredStory.excerpt}
-                    </p>
-                  )}
-                  <span className="text-[10px] tracking-[0.2em] uppercase text-foreground/40 group-hover:text-foreground transition-colors">
-                    Read more →
-                  </span>
-                </Link>
-              </div>
-            )}
-
-            {/* RIGHT — digest */}
-            <div className="lg:pl-8 mt-10 lg:mt-0 pt-8 lg:pt-0 border-t lg:border-t-0 border-border">
-              <p className="text-[9px] tracking-[0.3em] uppercase text-foreground/25 font-mono mb-5">
-                Also in the archive
-              </p>
-              <div className="space-y-0 divide-y divide-border">
-                {digestStories.map((story) => (
-                  <Link
-                    key={story.slug}
-                    href={`/stories/${story.slug}`}
-                    className="group flex gap-4 py-4 hover:bg-[#fafafa] -mx-2 px-2 transition-colors"
-                  >
-                    <div className="w-16 h-16 relative overflow-hidden bg-[#f0f0f0] flex-shrink-0">
-                      {story.heroImage && (
-                        <Image
-                          src={story.heroImage}
-                          alt={story.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      {story.category && (
-                        <p className="text-[9px] tracking-[0.2em] uppercase text-foreground/30 mb-1">
-                          {story.category}
-                        </p>
-                      )}
-                      <h3 className="font-serif text-sm leading-snug group-hover:text-foreground/60 transition-colors line-clamp-2">
-                        {story.title}
-                      </h3>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-
-              {/* MORE STORIES — smaller list */}
-              {moreStories.length > 0 && (
-                <div className="mt-6 pt-6 border-t border-border space-y-3">
-                  {moreStories.map((story) => (
-                    <Link
-                      key={story.slug}
-                      href={`/stories/${story.slug}`}
-                      className="group block"
-                    >
-                      {story.category && (
-                        <p className="text-[9px] tracking-[0.2em] uppercase text-foreground/25 mb-0.5">
-                          {story.category}
-                        </p>
-                      )}
-                      <h4 className="font-serif text-sm leading-snug text-foreground/60 group-hover:text-foreground transition-colors">
-                        {story.title}
-                      </h4>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-          </div>
-        </div>
-      </section>
+      <hr className="border-border mx-8 md:mx-[8%] lg:mx-[12%]" />
 
       {/* ═══════════════════════════════════════════════════════════════
-          STORY GRID — more from the archive, visual browsing
+          STATEMENT
           ═══════════════════════════════════════════════════════════════ */}
-      {gridStories.length > 0 && (
-        <section className="py-20 md:py-28 border-b border-border">
-          <div className="px-8 md:px-[8%] lg:px-[12%]">
-            <div className="flex items-baseline justify-between mb-10">
-              <p className="text-[10px] tracking-[0.35em] uppercase text-foreground/30 font-mono">
-                Keep reading
-              </p>
-              <Link
-                href="/stories"
-                className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 hover:text-foreground transition-colors"
-              >
-                Explore all stories →
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-              {gridStories.map((story) => (
-                <Link
-                  key={story.slug}
-                  href={`/stories/${story.slug}`}
-                  className="group block"
-                >
-                  <div className="aspect-[4/3] relative overflow-hidden bg-[#f0f0f0] mb-4">
-                    {story.heroImage && (
-                      <Image
-                        src={story.heroImage}
-                        alt={story.title}
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                      />
-                    )}
-                  </div>
-                  {story.category && (
-                    <p className="text-[9px] tracking-[0.25em] uppercase text-foreground/30 mb-2">
-                      {story.category}
-                      {story.read_time ? <span className="ml-3 text-foreground/20">{story.read_time} min</span> : null}
-                    </p>
-                  )}
-                  <h3 className="font-serif text-lg md:text-xl leading-snug group-hover:text-foreground/60 transition-colors">
-                    {story.title}
-                  </h3>
-                  {story.subtitle && (
-                    <p className="font-serif italic text-sm text-foreground/40 mt-1 line-clamp-1">
-                      {story.subtitle}
-                    </p>
-                  )}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ═══════════════════════════════════════════════════════════════
-          STATEMENT — about the knowledge, not the product
-          ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-24 md:py-32 border-b border-border">
+      <section className="py-24 md:py-32">
         <div className="px-8 md:px-[8%] lg:px-[12%]">
           <div className="max-w-4xl">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/30 mb-8">
-              What this is
-            </p>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-[1.2] text-foreground">
               Morocco has been written about for centuries. Most of it skims the
               surface. We went <span className="italic">deeper</span> — into the history, the craft,
@@ -350,14 +307,23 @@ export default function HomeContent({
         </div>
       </section>
 
+      <hr className="border-border mx-8 md:mx-[8%] lg:mx-[12%]" />
+
+      {/* ═══════════════════════════════════════════════════════════════
+          STORY STRIP 2 — second batch
+          ═══════════════════════════════════════════════════════════════ */}
+      <StoryStrip stories={stripTwoStories} label="Keep Reading" />
+
+      <hr className="border-border mx-8 md:mx-[8%] lg:mx-[12%]" />
+
       {/* ═══════════════════════════════════════════════════════════════
           CITY MAP
           ═══════════════════════════════════════════════════════════════ */}
-      <section className="border-b border-border">
+      <section>
         <div className="px-8 md:px-[8%] lg:px-[12%] pt-16 pb-8">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/30 mb-3 font-mono">
+              <p className="text-[11px] tracking-[0.25em] uppercase text-foreground/40 mb-3">
                 Where to go
               </p>
               <h2 className="font-serif text-3xl md:text-4xl text-foreground">
@@ -374,103 +340,27 @@ export default function HomeContent({
         </div>
       </section>
 
+      <hr className="border-border mx-8 md:mx-[8%] lg:mx-[12%]" />
+
       {/* ═══════════════════════════════════════════════════════════════
-          JOURNEYS — editorial treatment, secondary placement
+          JOURNEYS — Kinfolk-style horizontal strip
           ═══════════════════════════════════════════════════════════════ */}
-      {journeys.length > 0 && (
-        <section className="py-20 md:py-28 border-b border-border">
-          <div className="px-8 md:px-[8%] lg:px-[12%]">
-            <div className="flex items-baseline justify-between mb-12">
-              <div>
-                <p className="text-[10px] tracking-[0.35em] uppercase text-foreground/30 font-mono mb-3">
-                  Private journeys
-                </p>
-                <h2 className="font-serif text-3xl md:text-4xl">Routes worth taking</h2>
-              </div>
-              <Link
-                href="/journeys"
-                className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 hover:text-foreground transition-colors"
-              >
-                All journeys →
-              </Link>
-            </div>
+      <JourneyStrip journeys={journeys} />
 
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-6">
-              {journeys.slice(0, 1).map((journey) => (
-                <Link
-                  key={journey.slug}
-                  href={`/journeys/${journey.slug}`}
-                  className="group lg:col-span-2"
-                >
-                  <div className="aspect-[16/9] relative overflow-hidden bg-[#f0f0f0] mb-4">
-                    {journey.heroImage && (
-                      <Image
-                        src={journey.heroImage}
-                        alt={journey.title}
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                      />
-                    )}
-                  </div>
-                  <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/30 mb-2">
-                    {journey.duration} · Private
-                  </p>
-                  <h3 className="font-serif text-2xl md:text-3xl group-hover:text-foreground/60 transition-colors">
-                    {journey.title}
-                  </h3>
-                  {journey.description && (
-                    <p className="text-sm text-foreground/50 leading-relaxed mt-2 max-w-prose line-clamp-2">
-                      {journey.description}
-                    </p>
-                  )}
-                </Link>
-              ))}
-
-              <div className="flex flex-col gap-6 lg:pl-6 lg:border-l border-border">
-                {journeys.slice(1, 4).map((journey) => (
-                  <Link
-                    key={journey.slug}
-                    href={`/journeys/${journey.slug}`}
-                    className="group flex gap-4"
-                  >
-                    <div className="w-20 h-20 relative overflow-hidden bg-[#f0f0f0] flex-shrink-0">
-                      {journey.heroImage && (
-                        <Image
-                          src={journey.heroImage}
-                          alt={journey.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      )}
-                    </div>
-                    <div>
-                      <p className="text-[9px] tracking-[0.2em] uppercase text-foreground/30 mb-1">
-                        {journey.duration}
-                      </p>
-                      <h4 className="font-serif text-base leading-snug group-hover:text-foreground/60 transition-colors">
-                        {journey.title}
-                      </h4>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
+      <hr className="border-border mx-8 md:mx-[8%] lg:mx-[12%]" />
 
       {/* ═══════════════════════════════════════════════════════════════
           TESTIMONIALS
           ═══════════════════════════════════════════════════════════════ */}
       {testimonials.length > 0 && (
-        <section className="py-20 md:py-28 border-b border-border">
+        <section className="py-20 md:py-28">
           <div className="px-8 md:px-[8%] lg:px-[12%]">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center gap-8">
                 <button onClick={() => setTestimonialIndex((p) => (p - 1 + testimonials.length) % testimonials.length)}
-                  className="p-2 border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-colors hidden md:flex items-center justify-center flex-shrink-0"
+                  className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors hidden md:flex flex-shrink-0"
                   aria-label="Previous">
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-4 h-4 text-foreground/40" />
                 </button>
                 <div className="text-center flex-grow">
                   <blockquote className="font-serif text-xl md:text-2xl lg:text-3xl leading-relaxed text-foreground mb-6">
@@ -481,15 +371,15 @@ export default function HomeContent({
                   </p>
                 </div>
                 <button onClick={() => setTestimonialIndex((p) => (p + 1) % testimonials.length)}
-                  className="p-2 border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-colors hidden md:flex items-center justify-center flex-shrink-0"
+                  className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors hidden md:flex flex-shrink-0"
                   aria-label="Next">
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4 text-foreground/40" />
                 </button>
               </div>
               <div className="flex justify-center gap-2 mt-8">
                 {testimonials.map((_, idx) => (
                   <button key={idx} onClick={() => setTestimonialIndex(idx)}
-                    className={`w-1.5 h-1.5 transition-colors ${idx === testimonialIndex ? "bg-foreground" : "bg-foreground/20"}`}
+                    className={`w-1.5 h-1.5 transition-colors ${idx === testimonialIndex ? "bg-foreground" : "bg-foreground/15"}`}
                     aria-label={`Testimonial ${idx + 1}`} />
                 ))}
               </div>
@@ -499,8 +389,9 @@ export default function HomeContent({
       )}
 
       {/* ═══════════════════════════════════════════════════════════════
-          QUIET CLOSE — publisher, not salesperson
+          QUIET CLOSE
           ═══════════════════════════════════════════════════════════════ */}
+      <hr className="border-border mx-8 md:mx-[8%] lg:mx-[12%]" />
       <section className="py-24 md:py-32">
         <div className="px-8 md:px-[8%] lg:px-[12%]">
           <div className="max-w-3xl">
@@ -511,7 +402,7 @@ export default function HomeContent({
               No forms. No packages. Just a conversation about what you&apos;re hoping to find.
             </p>
             <Link href="/plan-your-trip"
-              className="inline-block border border-foreground px-10 py-4 text-xs tracking-[0.15em] uppercase hover:bg-foreground hover:text-background transition-colors">
+              className="inline-block border border-foreground/15 px-10 py-4 text-[11px] tracking-[0.15em] uppercase hover:border-foreground transition-colors">
               Start a conversation
             </Link>
           </div>
