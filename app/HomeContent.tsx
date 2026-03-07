@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -112,7 +113,7 @@ function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
             <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
               {story.heroImage && (
                 <Image
-                  src={story.heroImage}
+                  src={cloudinaryUrl(story.heroImage)}
                   alt={story.title}
                   fill
                   sizes="220px"
@@ -199,7 +200,7 @@ function JourneyStrip({ journeys }: { journeys: Journey[] }) {
             <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
               {journey.heroImage && (
                 <Image
-                  src={journey.heroImage}
+                  src={cloudinaryUrl(journey.heroImage)}
                   alt={journey.title}
                   fill
                   sizes="220px"
@@ -247,7 +248,9 @@ export default function HomeContent({
           ═══════════════════════════════════════════════════════════════ */}
       <section className="relative h-screen">
         {heroImage ? (
-          <Image src={heroImage} alt="Slow Morocco" fill sizes="100vw" className="object-cover" priority />
+          <Image src={cloudinaryUrl(heroImage)} alt="Slow Morocco" fill sizes="100vw" className="object-cover" priority
+              unoptimized
+            />
         ) : (
           <div className="absolute inset-0 bg-foreground/90" />
         )}

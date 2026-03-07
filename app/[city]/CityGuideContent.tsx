@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 
 const CityMap = dynamic(() => import("@/components/CityMap"), { ssr: false });
+import { cloudinaryUrl } from "@/lib/cloudinary";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -80,7 +81,7 @@ const CITY_HERO_FALLBACKS: Record<string, string> = {
   rabat: "https://res.cloudinary.com/drstfu5yr/image/upload/v1767310357/rabat_ofyxwj.png",
   fes: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837045/Fes_medina_rooftop_looeyv.png",
   tangier: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837334/Fes_medina_rooftop_looeyv.png",
-  chefchaouen: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837802/Chefchaouen_blue_medina_wowhdr.png",
+  chefchaouen: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772906971/Chefchaouen_blue_medina_or42s5.png",
   casablanca: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772837985/Hassan_II_Mosque_on_the_Atlantic_qe7t3y.png",
   meknes: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772838176/Bab_Mansour_gate_in_Meknes_hef5id.png",
   dakhla: "https://res.cloudinary.com/ddcznjibs/image/upload/v1772838561/Dakhla_lagoon_aerial_view_with_turquoise_water_veanox.png",
@@ -287,12 +288,13 @@ export default function CityGuideContent({
       <section className="relative h-[70vh] min-h-[500px] max-h-[800px]">
         {heroImage ? (
           <Image
-            src={heroImage}
+            src={cloudinaryUrl(heroImage, 1920)}
             alt={destination.title}
             fill
             sizes="100vw"
             className="object-cover object-center"
             priority
+            unoptimized
           />
         ) : (
           <div className="absolute inset-0 bg-foreground/10" />
@@ -347,10 +349,11 @@ export default function CityGuideContent({
                 <div className="relative aspect-[16/10] overflow-hidden bg-foreground/5">
                   {img.image_url && (
                     <Image
-                      src={img.image_url}
+                      src={cloudinaryUrl(img.image_url, 800)}
                       alt={img.caption || destination.title}
                       fill
                       className="object-cover"
+                      unoptimized
                     />
                   )}
                 </div>
@@ -449,10 +452,11 @@ export default function CityGuideContent({
                   <div className="aspect-[3/4] relative overflow-hidden bg-foreground/5 mb-5">
                     {story.hero_image && (
                       <Image
-                        src={story.hero_image}
+                        src={cloudinaryUrl(story.hero_image, 600)}
                         alt={story.title}
                         fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        unoptimized
                       />
                     )}
                   </div>
@@ -501,10 +505,11 @@ export default function CityGuideContent({
                   <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-5">
                     {journey.hero_image_url && (
                       <Image
-                        src={journey.hero_image_url}
+                        src={cloudinaryUrl(journey.hero_image_url, 600)}
                         alt={journey.title}
                         fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        unoptimized
                       />
                     )}
                   </div>
@@ -573,10 +578,11 @@ export default function CityGuideContent({
                     <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-5">
                       {journey.hero_image_url && (
                         <Image
-                          src={journey.hero_image_url}
+                          src={cloudinaryUrl(journey.hero_image_url, 600)}
                           alt={journey.title}
                           fill
                           className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                          unoptimized
                         />
                       )}
                     </div>

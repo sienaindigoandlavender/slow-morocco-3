@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 import { Phone, Mail } from "lucide-react";
 
@@ -233,12 +234,13 @@ export default function GentleContent({
                   <div className="relative aspect-[4/3] overflow-hidden mb-6 bg-[#f0f0f0]">
                     {exp.heroImage ? (
                       <Image
-                        src={exp.heroImage}
+                        src={cloudinaryUrl(exp.heroImage)}
                         alt={`${exp.title} — accessible Morocco journey through ${exp.cities}`}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                         sizes="(max-width: 768px) 100vw, 50vw"
-                      />
+              unoptimized
+            />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <span className="text-[#1a1a1a]/10 text-6xl font-serif">{exp.title[0]}</span>
@@ -425,12 +427,13 @@ export default function GentleContent({
                     <div className="w-20 h-20 mb-5 bg-[#f0f0f0] overflow-hidden">
                       {member.image ? (
                         <Image
-                          src={member.image}
+                          src={cloudinaryUrl(member.image)}
                           alt={`${member.name}, ${member.role} at Slow Morocco`}
                           width={80}
                           height={80}
                           className="object-cover w-full h-full"
-                        />
+              unoptimized
+            />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <span className="text-2xl text-[#1a1a1a]/20 font-serif">{member.name[0]}</span>

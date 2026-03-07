@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 
 interface ContentBlock {
   id: string;
@@ -577,10 +578,11 @@ export default function EditQuotePage() {
                           <label className="block text-sm text-muted-foreground mb-1">Image Preview</label>
                           <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-muted">
                             <Image
-                              src={day.imageUrl}
+                              src={cloudinaryUrl(day.imageUrl)}
                               alt={day.title || "Day image"}
                               fill
                               className="object-cover"
+                              unoptimized
                               onError={(e) => {
                                 (e.target as HTMLImageElement).style.display = 'none';
                               }}

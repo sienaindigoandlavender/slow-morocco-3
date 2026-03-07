@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 
 interface Journey {
   journeyId: string;
@@ -72,7 +73,7 @@ export default function AdminJourneysPage() {
                 <div className="relative aspect-[16/9] overflow-hidden bg-muted">
                   {journey.heroImage ? (
                     <Image
-                      src={journey.heroImage}
+                      src={cloudinaryUrl(journey.heroImage)}
                       alt={journey.title}
                       fill
                       className="object-cover"
