@@ -403,9 +403,7 @@ export default function PlacesContent({
                             className="object-cover group-hover:scale-105 transition-transform duration-700"
                           />
                         ) : (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="font-serif text-lg text-foreground/20">{place.title.charAt(0)}</span>
-                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-b from-foreground/[0.03] to-foreground/[0.08]" />
                         )}
                       </div>
                       <p className="text-[10px] tracking-[0.15em] uppercase text-foreground/40 mb-1">
