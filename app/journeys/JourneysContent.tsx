@@ -364,6 +364,7 @@ export default function JourneysContent({
                               alt={`${item.title} - Morocco ${item.type === 'daytrip' ? 'day trip' : 'journey'}`}
                               fill
                               sizes="(max-width: 768px) 50vw, 20vw"
+                              unoptimized
                               className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                               itemProp="image"
                             />
