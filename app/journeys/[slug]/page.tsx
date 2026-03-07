@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getJourneyBySlug, getRoutesByIds, getJourneys, getStories, convertDriveUrl } from "@/lib/supabase";
+import { getJourneyBySlug, getRoutesByIds, getJourneys, getStories, getAllPlaceFirstImages } from "@/lib/supabase";
 import { findRelatedStories } from "@/lib/content-matcher";
 import JourneyDetailContent from "./JourneyDetailContent";
 
@@ -100,7 +100,17 @@ async function getJourneyData(slug: string) {
     .map((id: string) => id.trim())
     .filter((id: string) => id.length > 0);
 
-  const routes = await getRoutesByIds(routeIds);
+  const [routes, placeImages] = await Promise.all([
+    getRoutesByIds(routeIds),
+    getAllPlaceFirstImages(),
+  ]);
+
+  // Helper: find a place image by city name (try slug variants)
+  function findPlaceImage(cityName: string): string {
+    if (!cityName) return "";
+    const slug = cityName.toLowerCase().replace(/\s+/g, "-");
+    return placeImages[slug] || placeImages[cityName] || "";
+  }
 
   const itinerary: ItineraryDay[] = routeIds.map(
     (routeId: string, index: number) => {
@@ -112,13 +122,18 @@ async function getJourneyData(slug: string) {
           activities: "", meals: "", routeType: "",
         };
       }
+      const imageUrl = route.image_url
+        || route.hero_image_url
+        || findPlaceImage(route.to_city || "")
+        || findPlaceImage(route.from_city || "")
+        || "";
       return {
         dayNumber: index + 1,
         cityName: route.to_city || "",
         fromCity: route.from_city || "",
         toCity: route.to_city || "",
         description: route.route_narrative || "",
-        imageUrl: convertDriveUrl(route.image_url || route.hero_image_url || ""),
+        imageUrl,
         travelTime: String(route.travel_time_hours || ""),
         difficulty: route.difficulty_level || "",
         activities: route.activities || "",
