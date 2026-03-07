@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { getRegions, getDestinations, getPlaces, convertDriveUrl } from "@/lib/supabase";
+import { getRegions, getDestinations, getPlaces, getAllPlaceFirstImages, convertDriveUrl } from "@/lib/supabase";
 import PlacesContent from "./PlacesContent";
 
 export const metadata: Metadata = {
@@ -44,10 +44,11 @@ interface PlaceItem {
 
 async function fetchPlacesData() {
   try {
-    const [regionsData, destinationsData, placesData] = await Promise.all([
+    const [regionsData, destinationsData, placesData, placeFirstImages] = await Promise.all([
       getRegions(),
       getDestinations({ published: true }),
       getPlaces({ published: true }),
+      getAllPlaceFirstImages(),
     ]);
 
     const regions: RegionItem[] = regionsData.map((r) => ({
@@ -66,14 +67,17 @@ async function fetchPlacesData() {
       excerpt: d.excerpt || "",
     }));
 
-    const places: PlaceItem[] = placesData.map((p) => ({
-      slug: p.slug,
-      title: p.title,
-      destination: p.destination || "",
-      category: p.category || "",
-      heroImage: p.hero_image ? convertDriveUrl(p.hero_image) : "",
-      excerpt: p.excerpt || "",
-    }));
+    const places: PlaceItem[] = placesData.map((p) => {
+      const img = p.hero_image || placeFirstImages[p.slug] || "";
+      return {
+        slug: p.slug,
+        title: p.title,
+        destination: p.destination || "",
+        category: p.category || "",
+        heroImage: img ? convertDriveUrl(img) : "",
+        excerpt: p.excerpt || "",
+      };
+    });
 
     return { regions, destinations, places, dataLoaded: places.length > 0 };
   } catch (error) {
