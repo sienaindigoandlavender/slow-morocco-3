@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getPlaces } from "@/lib/supabase";
+import { getPlaces, convertDriveUrl } from "@/lib/supabase";
 
 export const revalidate = 60;
 
@@ -13,7 +13,7 @@ export async function GET() {
       title: p.title || "",
       destination: p.destination || "",
       category: p.category || "",
-      heroImage: p.hero_image || "",
+      heroImage: p.hero_image ? convertDriveUrl(p.hero_image) : "",
       excerpt: p.excerpt || "",
       featured: p.featured || false,
       order: p.sort_order || 999,
