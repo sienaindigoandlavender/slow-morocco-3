@@ -116,6 +116,7 @@ function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
                   alt={story.title}
                   fill
                   sizes="320px"
+                  unoptimized
                   className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                 />
               )}
@@ -202,6 +203,7 @@ function JourneyStrip({ journeys }: { journeys: Journey[] }) {
                   alt={journey.title}
                   fill
                   sizes="320px"
+                  unoptimized
                   className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                 />
               )}
