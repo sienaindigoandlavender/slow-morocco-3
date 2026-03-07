@@ -76,7 +76,7 @@ function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-3 py-2 text-xs tracking-[0.1em] uppercase text-foreground/40 hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+        className="px-3 py-2 text-xs tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
       >
         ←
       </button>
@@ -84,7 +84,7 @@ function Pagination({
         page === "..." ? (
           <span
             key={`ellipsis-${i}`}
-            className="px-2 py-2 text-xs text-foreground/30"
+            className="px-2 py-2 text-xs text-foreground/70"
           >
             …
           </span>
@@ -95,7 +95,7 @@ function Pagination({
             className={`min-w-[36px] py-2 text-xs tracking-[0.1em] transition-colors ${
               currentPage === page
                 ? "bg-foreground text-background"
-                : "text-foreground/50 hover:text-foreground"
+                : "text-foreground/70 hover:text-foreground"
             }`}
           >
             {page}
@@ -105,7 +105,7 @@ function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-2 text-xs tracking-[0.1em] uppercase text-foreground/40 hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+        className="px-3 py-2 text-xs tracking-[0.1em] uppercase text-foreground/70 hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
       >
         →
       </button>
@@ -213,12 +213,12 @@ export default function PlacesContent({
       {/* Map link bar */}
       <div className="border-b border-foreground/10 py-4">
         <div className="container mx-auto px-6 lg:px-16 flex items-center justify-between">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-foreground/40">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-foreground/70">
             {initialPlaces.length} places in the atlas
           </p>
           <Link
             href="/places/map"
-            className="text-[11px] tracking-[0.2em] uppercase text-foreground/50 hover:text-foreground transition-colors flex items-center gap-2"
+            className="text-[11px] tracking-[0.2em] uppercase text-foreground/70 hover:text-foreground transition-colors flex items-center gap-2"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-foreground/40 inline-block" />
             View all on one map →
@@ -230,7 +230,7 @@ export default function PlacesContent({
       {places.length > 0 && (
         <section className="py-12">
           <div className="container mx-auto px-6 lg:px-16">
-            <p className="text-xs tracking-[0.3em] uppercase text-foreground/40 mb-6">
+            <p className="text-xs tracking-[0.3em] uppercase text-foreground/70 mb-6">
               Discover Morocco
             </p>
             <MoroccoMapWrapper
@@ -251,7 +251,7 @@ export default function PlacesContent({
       {/* Region Cards */}
       <section className="py-12 border-y border-foreground/10">
         <div className="container mx-auto px-6 lg:px-16">
-          <h2 className="text-xs tracking-[0.2em] uppercase text-foreground/40 mb-6 text-center">
+          <h2 className="text-xs tracking-[0.2em] uppercase text-foreground/70 mb-6 text-center">
             Explore by Region
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -313,7 +313,7 @@ export default function PlacesContent({
       {filteredDestinations.length > 0 && (
         <section className="py-8 border-b border-foreground/10">
           <div className="container mx-auto px-6 lg:px-16">
-            <h2 className="text-xs tracking-[0.2em] uppercase text-foreground/40 mb-4 text-center">
+            <h2 className="text-xs tracking-[0.2em] uppercase text-foreground/70 mb-4 text-center">
               {selectedRegion === "all"
                 ? "All Destinations"
                 : `Destinations in ${
@@ -327,7 +327,7 @@ export default function PlacesContent({
                 className={`text-xs tracking-[0.15em] uppercase px-4 py-2 border transition-colors ${
                   selectedDestination === "all"
                     ? "bg-white text-[#0a0a0a] border-foreground"
-                    : "bg-transparent text-foreground/60 border-foreground/20 hover:border-foreground/40"
+                    : "bg-transparent text-foreground/70 border-foreground/20 hover:border-foreground/40"
                 }`}
               >
                 All
@@ -343,7 +343,7 @@ export default function PlacesContent({
                   className={`text-xs tracking-[0.15em] uppercase px-4 py-2 border transition-colors ${
                     selectedDestination === dest.slug
                       ? "bg-white text-[#0a0a0a] border-foreground"
-                      : "bg-transparent text-foreground/60 border-foreground/20 hover:border-foreground/40"
+                      : "bg-transparent text-foreground/70 border-foreground/20 hover:border-foreground/40"
                   }`}
                 >
                   {dest.title}
@@ -359,7 +359,7 @@ export default function PlacesContent({
         <div className="container mx-auto px-6 lg:px-16">
           {!dataLoaded ? (
             <div className="text-center py-20">
-              <p className="text-foreground/50">
+              <p className="text-foreground/70">
                 Places are being updated. Check back soon.
               </p>
             </div>
@@ -381,7 +381,7 @@ export default function PlacesContent({
               </div>
 
               {/* Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-10">
                 {paginatedPlaces.map((place) => {
                   const dest = destinations.find(
                     (d) => d.slug === place.destination
@@ -392,24 +392,22 @@ export default function PlacesContent({
                       href={`/places/${place.slug}`}
                       className="group"
                     >
-                      <div className="relative aspect-[3/4] mb-3 overflow-hidden bg-foreground/5">
+                      <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
                         {place.heroImage ? (
                           <Image
                             src={place.heroImage}
                             alt={place.title}
                             fill
-                            sizes="(max-width: 768px) 50vw, 25vw"
+                            sizes="(max-width: 768px) 50vw, 20vw"
                             unoptimized
-                            className="object-cover group-hover:scale-105 transition-transform duration-700"
+                            className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                           />
-                        ) : (
-                          <div className="absolute inset-0 bg-gradient-to-b from-foreground/[0.03] to-foreground/[0.08]" />
-                        )}
+                        ) : null}
                       </div>
-                      <p className="text-[10px] tracking-[0.15em] uppercase text-foreground/40 mb-1">
+                      <p className="text-[11px] text-foreground/70 mb-1">
                         {dest?.title || place.destination}
                       </p>
-                      <h2 className="font-serif text-base md:text-lg text-foreground group-hover:text-foreground/70 transition-colors">
+                      <h2 className="text-[13px] tracking-[0.04em] uppercase leading-snug text-foreground group-hover:text-foreground/70 transition-colors">
                         {place.title}
                       </h2>
                     </Link>
@@ -436,7 +434,7 @@ export default function PlacesContent({
             </>
           ) : (
             <div className="text-center py-20">
-              <p className="text-foreground/50">
+              <p className="text-foreground/70">
                 No places found for this selection.
               </p>
               <button
@@ -444,7 +442,7 @@ export default function PlacesContent({
                   setSelectedRegion("all");
                   setSelectedDestination("all");
                 }}
-                className="mt-4 text-sm text-foreground/40 hover:text-foreground underline transition-colors"
+                className="mt-4 text-sm text-foreground/70 hover:text-foreground underline transition-colors"
               >
                 Clear filters
               </button>

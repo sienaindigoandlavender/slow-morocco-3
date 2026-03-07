@@ -193,13 +193,13 @@ export default function JourneysContent({
           {/* Search Bar */}
           <div className="mb-8">
             <div className="relative max-w-xl">
-              <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/30" aria-hidden="true" />
+              <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/70" aria-hidden="true" />
               <input
                 type="search"
                 placeholder="Search journeys, destinations, or experiences..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-4 py-3 bg-transparent border-b border-foreground/20 focus:border-foreground/60 focus:outline-none text-base placeholder:text-foreground/30 transition-colors text-foreground"
+                className="w-full pl-8 pr-4 py-3 bg-transparent border-b border-foreground/20 focus:border-foreground/60 focus:outline-none text-base placeholder:text-foreground/70 transition-colors text-foreground"
                 aria-label="Search Morocco journeys"
               />
             </div>
@@ -209,7 +209,7 @@ export default function JourneysContent({
           <nav className="flex flex-col md:flex-row md:items-start gap-8 md:gap-16" aria-label="Journey filters">
             {/* Duration Filter */}
             <div>
-              <h2 className="text-xs tracking-[0.2em] uppercase text-foreground/40 mb-4">
+              <h2 className="text-xs tracking-[0.2em] uppercase text-foreground/70 mb-4">
                 Duration
               </h2>
               <div className="flex flex-wrap items-center gap-2">
@@ -220,7 +220,7 @@ export default function JourneysContent({
                     className={`text-xs tracking-[0.15em] uppercase px-4 py-2 border transition-colors ${
                       selectedDuration === duration.slug
                         ? "bg-foreground text-background border-foreground"
-                        : "bg-transparent text-foreground/60 border-foreground/20 hover:border-foreground/40"
+                        : "bg-transparent text-foreground/70 border-foreground/20 hover:border-foreground/40"
                     }`}
                   >
                     {duration.label}
@@ -231,7 +231,7 @@ export default function JourneysContent({
 
             {/* Focus Filter */}
             <div>
-              <h2 className="text-xs tracking-[0.2em] uppercase text-foreground/40 mb-4">
+              <h2 className="text-xs tracking-[0.2em] uppercase text-foreground/70 mb-4">
                 Focus
               </h2>
               <div className="flex flex-wrap items-center gap-2">
@@ -242,7 +242,7 @@ export default function JourneysContent({
                     className={`text-xs tracking-[0.15em] uppercase px-4 py-2 border transition-colors ${
                       selectedFocus === focus.slug
                         ? "bg-foreground text-background border-foreground"
-                        : "bg-transparent text-foreground/60 border-foreground/20 hover:border-foreground/40"
+                        : "bg-transparent text-foreground/70 border-foreground/20 hover:border-foreground/40"
                     }`}
                   >
                     {focus.label}
@@ -256,7 +256,7 @@ export default function JourneysContent({
               <div className="md:ml-auto md:self-end">
                 <button
                   onClick={clearFilters}
-                  className="text-xs tracking-[0.15em] uppercase text-foreground/40 hover:text-foreground transition-colors"
+                  className="text-xs tracking-[0.15em] uppercase text-foreground/70 hover:text-foreground transition-colors"
                 >
                   Clear filters ×
                 </button>
@@ -270,10 +270,10 @@ export default function JourneysContent({
       <section className="py-12 md:py-16 border-b border-border/30">
         <div className="container mx-auto px-6 lg:px-16">
           <div className="max-w-3xl">
-            <p className="text-foreground/60 leading-relaxed text-lg mb-4">
+            <p className="text-foreground/70 leading-relaxed text-lg mb-4">
               Every Slow Morocco journey is private, fully customizable, and led by local guides we've worked with for years. From Sahara desert expeditions and Atlas Mountain treks to Imperial City cultural tours and Atlantic coastal escapes—each itinerary is a starting point you can shape around what matters to you.
             </p>
-            <p className="text-foreground/50 leading-relaxed">
+            <p className="text-foreground/70 leading-relaxed">
               Browse multi-day journeys, day trips from Marrakech, and overnight experiences below. Filter by duration or focus to find your route.
             </p>
           </div>
@@ -308,14 +308,14 @@ export default function JourneysContent({
             </div>
           ) : filteredResults.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-foreground/50 mb-4">No journeys match your current filters.</p>
+              <p className="text-foreground/70 mb-4">No journeys match your current filters.</p>
               <button
                 onClick={clearFilters}
-                className="text-sm text-foreground/40 hover:text-foreground underline transition-colors"
+                className="text-sm text-foreground/70 hover:text-foreground underline transition-colors"
               >
                 Clear all filters
               </button>
-              <p className="text-foreground/40 text-sm mt-8 max-w-lg mx-auto">
+              <p className="text-foreground/70 text-sm mt-8 max-w-lg mx-auto">
                 Can't find what you're looking for? <a href="/plan-your-trip" className="underline hover:text-foreground">Tell us what you have in mind</a> and we'll design something custom.
               </p>
             </div>
@@ -335,128 +335,52 @@ export default function JourneysContent({
                   showSort={false}
                 />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-10">
                 {currentItems.map((item) => {
-                  const href = item.type === 'daytrip' 
+                  const href = item.type === 'daytrip'
                     ? `/day-trips/${item.slug}`
                     : item.type === 'overnight'
                     ? `/overnight/${item.slug}`
                     : `/journeys/${item.slug}`;
-                  
+
                   const durationLabel = item.type === 'daytrip'
                     ? `${item.durationHours} Hours`
                     : item.type === 'overnight'
                     ? '2 Days'
                     : `${item.durationDays} Days`;
-                  
-                  // Show meaningful badge: focus type for journeys, type for day trips/overnight
-                  // Hide vague categories like "Interest", "Route", "Classic"
-                  const vagueLabels = ['interest', 'route', 'classic', 'traveler type', 'grand tour'];
-                  const getFocusBadge = () => {
-                    if (item.type === 'daytrip') return 'Day Trip';
-                    if (item.type === 'overnight') return 'Overnight';
-                    
-                    // Prefer focus over category, format nicely
-                    const focus = item.focus?.toLowerCase() || '';
-                    const category = item.category?.toLowerCase() || '';
-                    
-                    // Map focus types to display labels
-                    const focusLabels: Record<string, string> = {
-                      'desert': 'Desert',
-                      'sahara': 'Desert',
-                      'trekking': 'Trekking',
-                      'hiking': 'Hiking',
-                      'culture': 'Culture',
-                      'coastal': 'Coastal',
-                      'coast': 'Coastal',
-                      'sea': 'Coastal',
-                      'surf': 'Surf',
-                      'food': 'Culinary',
-                      'culinary': 'Culinary',
-                      'craft': 'Craft',
-                      'architecture': 'Architecture',
-                      'heritage': 'Heritage',
-                      'adventure': 'Adventure',
-                      'nature': 'Nature',
-                      'mountains': 'Mountains',
-                      'wellness': 'Wellness',
-                      'photography': 'Photography',
-                      'wildlife': 'Wildlife',
-                      'romance': 'Romance',
-                      'family': 'Family',
-                      'luxury': 'Luxury',
-                      'literature': 'Literature',
-                      'art': 'Art',
-                    };
-                    
-                    // Check focus first
-                    for (const [key, label] of Object.entries(focusLabels)) {
-                      if (focus.includes(key)) return label;
-                    }
-                    
-                    // Check category if focus didn't match
-                    if (category && !vagueLabels.includes(category)) {
-                      return item.category;
-                    }
-                    
-                    return null; // Hide badge if nothing meaningful
-                  };
-                  
-                  const typeBadge = getFocusBadge();
 
                   return (
-                    <article 
+                    <article
                       key={`${item.type}-${item.slug}`}
                       className="group"
-                      itemScope 
+                      itemScope
                       itemType="https://schema.org/TouristTrip"
                     >
                       <Link href={href} className="block">
-                        <figure className="relative aspect-[4/5] mb-4 overflow-hidden bg-foreground/5">
+                        <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
                           {item.heroImage && (
                             <Image
                               src={item.heroImage}
                               alt={`${item.title} - Morocco ${item.type === 'daytrip' ? 'day trip' : 'journey'}`}
                               fill
-                              className="object-cover group-hover:scale-105 transition-transform duration-700"
+                              sizes="(max-width: 768px) 50vw, 20vw"
+                              className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                               itemProp="image"
                             />
                           )}
-                          {typeBadge && (
-                            <div className="absolute top-4 left-4">
-                              <span className="text-[10px] tracking-[0.15em] uppercase bg-background/90 text-foreground/80 px-3 py-1.5 flex items-center gap-1.5">
-                                {item.type === 'daytrip' && <Clock className="w-3 h-3" aria-hidden="true" />}
-                                {item.type === 'overnight' && <Moon className="w-3 h-3" aria-hidden="true" />}
-                                {typeBadge}
-                              </span>
-                            </div>
-                          )}
-                          {item.hidden && (
-                            <div className="absolute top-4 right-4">
-                              <span className="text-[10px] tracking-[0.15em] uppercase bg-foreground/80 text-background px-2 py-1">
-                                Unlisted
-                              </span>
-                            </div>
-                          )}
-                        </figure>
-                        <div className="flex items-baseline justify-between mb-1">
-                          <span className="text-xs tracking-[0.15em] uppercase text-foreground/40" itemProp="duration">
-                            {durationLabel}
-                          </span>
-                          {Number(item.price) > 0 && (
-                            <span className="text-xs text-foreground/40" itemProp="offers" itemScope itemType="https://schema.org/Offer">
-                              From <span className="text-foreground/70" itemProp="price">{format(Number(item.price))}</span>
-                              <meta itemProp="priceCurrency" content="EUR" />
-                            </span>
-                          )}
                         </div>
-                        <h3 className="font-serif text-xl text-foreground mb-2 group-hover:text-foreground/70 transition-colors" itemProp="name">
+                        <p className="text-[11px] text-foreground/70 mb-1" itemProp="duration">
+                          {durationLabel}
+                        </p>
+                        <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug text-foreground group-hover:text-foreground/70 transition-colors" itemProp="name">
                           {item.title}
                         </h3>
-                        <p className="text-sm text-foreground/50 leading-relaxed line-clamp-2" itemProp="description">
-                          {item.description}
-                        </p>
-                        <meta itemProp="touristType" content={typeBadge || 'Cultural Tourism'} />
+                        {item.description && (
+                          <p className="text-[12px] text-foreground/70 leading-relaxed mt-1 line-clamp-2" itemProp="description">
+                            {item.description}
+                          </p>
+                        )}
+                        <meta itemProp="touristType" content="Cultural Tourism" />
                       </Link>
                     </article>
                   );

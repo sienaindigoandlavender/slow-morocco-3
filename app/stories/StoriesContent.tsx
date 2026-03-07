@@ -133,7 +133,7 @@ export default function StoriesContent({
                   className={`text-[11px] tracking-[0.15em] uppercase whitespace-nowrap pb-1 transition-colors ${
                     activeFilter === filter.id
                       ? "text-foreground border-b border-foreground"
-                      : "text-foreground/40 hover:text-foreground/70"
+                      : "text-foreground/70 hover:text-foreground/70"
                   }`}
                 >
                   {filter.label}
@@ -144,16 +144,16 @@ export default function StoriesContent({
             {/* Search + count */}
             <div className="flex items-center gap-6 flex-shrink-0">
               <div className="relative hidden md:block">
-                <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-foreground/30" />
+                <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-foreground/70" />
                 <input
                   type="text"
                   placeholder="Search..."
                   value={searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  className="w-48 bg-transparent border-b border-foreground/15 py-2 pl-6 pr-2 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground focus:outline-none transition-colors"
+                  className="w-48 bg-transparent border-b border-foreground/15 py-2 pl-6 pr-2 text-sm text-foreground placeholder:text-foreground/70 focus:border-foreground focus:outline-none transition-colors"
                 />
               </div>
-              <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/25 whitespace-nowrap">
+              <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/70 whitespace-nowrap">
                 {filteredStories.length} {filteredStories.length === 1 ? "story" : "stories"}
               </p>
             </div>
@@ -164,13 +164,13 @@ export default function StoriesContent({
       {/* ── Mobile search ────────────────────────────────────────── */}
       <div className="md:hidden px-8 py-6">
         <div className="relative">
-          <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/30" />
+          <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/70" />
           <input
             type="text"
             placeholder="Search stories..."
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className="w-full bg-transparent border-b border-foreground/20 py-3 pl-8 pr-4 text-foreground placeholder:text-foreground/40 focus:border-foreground focus:outline-none transition-colors"
+            className="w-full bg-transparent border-b border-foreground/20 py-3 pl-8 pr-4 text-foreground placeholder:text-foreground/70 focus:border-foreground focus:outline-none transition-colors"
           />
         </div>
       </div>
@@ -191,12 +191,12 @@ export default function StoriesContent({
       ) : filteredStories.length === 0 ? (
         /* ── No results ──────────────────────────────────────────── */
         <div className="text-center py-20">
-          <p className="text-foreground/50 mb-4">
+          <p className="text-foreground/70 mb-4">
             {searchQuery ? "No stories match your search." : "No stories match this filter."}
           </p>
           <button
             onClick={() => { setActiveFilter("all"); setSearchQuery(""); }}
-            className="text-sm underline text-foreground/60 hover:text-foreground transition-colors"
+            className="text-sm underline text-foreground/70 hover:text-foreground transition-colors"
           >
             View all stories
           </button>
@@ -226,7 +226,7 @@ export default function StoriesContent({
                         )}
                       </div>
                       {leadStory.mood && (
-                        <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/35 mb-3">
+                        <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/70 mb-3">
                           {leadStory.mood}
                         </p>
                       )}
@@ -234,12 +234,12 @@ export default function StoriesContent({
                         {leadStory.title}
                       </h2>
                       {leadStory.subtitle && (
-                        <p className="font-serif italic text-lg text-foreground/50 mb-4 max-w-xl">
+                        <p className="font-serif italic text-lg text-foreground/70 mb-4 max-w-xl">
                           {leadStory.subtitle}
                         </p>
                       )}
                       {leadStory.excerpt && (
-                        <p className="text-sm text-foreground/60 leading-relaxed max-w-prose line-clamp-3">
+                        <p className="text-sm text-foreground/70 leading-relaxed max-w-prose line-clamp-3">
                           {leadStory.excerpt}
                         </p>
                       )}
@@ -249,7 +249,7 @@ export default function StoriesContent({
                   {/* SECONDARY — stacked list */}
                   {secondaryStories.length > 0 && (
                     <div className="lg:pl-10 mt-10 lg:mt-0 pt-8 lg:pt-0 border-t lg:border-t-0 border-border">
-                      <p className="text-[9px] tracking-[0.3em] uppercase text-foreground/25 font-mono mb-5">
+                      <p className="text-[9px] tracking-[0.3em] uppercase text-foreground/70 font-mono mb-5">
                         Also in the archive
                       </p>
                       <div className="space-y-0 divide-y divide-border">
@@ -271,11 +271,11 @@ export default function StoriesContent({
                             </div>
                             <div className="flex-1 min-w-0 flex flex-col justify-center">
                               {story.mood && (
-                                <p className="text-[9px] tracking-[0.2em] uppercase text-foreground/30 mb-1.5">
+                                <p className="text-[9px] tracking-[0.2em] uppercase text-foreground/70 mb-1.5">
                                   {story.mood}
                                 </p>
                               )}
-                              <h3 className="font-serif text-base leading-snug group-hover:text-foreground/60 transition-colors line-clamp-2">
+                              <h3 className="font-serif text-base leading-snug group-hover:text-foreground/70 transition-colors line-clamp-2">
                                 {story.title}
                               </h3>
                             </div>
@@ -298,7 +298,7 @@ export default function StoriesContent({
               {/* Section header — only when editorial lead is showing */}
               {leadStory && (
                 <div className="flex items-baseline justify-between mb-10 pb-4 border-b border-border">
-                  <p className="text-[10px] tracking-[0.35em] uppercase text-foreground/30 font-mono">
+                  <p className="text-[10px] tracking-[0.35em] uppercase text-foreground/70 font-mono">
                     The archive
                   </p>
                   <button
@@ -306,7 +306,7 @@ export default function StoriesContent({
                     className={`text-[10px] tracking-[0.2em] uppercase font-mono transition-colors ${
                       sortBy === "alpha"
                         ? "text-foreground"
-                        : "text-foreground/30 hover:text-foreground/60"
+                        : "text-foreground/70 hover:text-foreground/70"
                     }`}
                   >
                     A → Z
@@ -315,34 +315,35 @@ export default function StoriesContent({
               )}
 
               {/* Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-10">
                 {paginatedStories.map((story) => (
                   <article key={story.slug} itemScope itemType="https://schema.org/Article">
                     <Link
                       href={`/stories/${story.slug}`}
                       className="group"
                     >
-                      <div className="aspect-[3/4] relative overflow-hidden bg-[#d4cdc4] mb-5">
+                      <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
                         {story.heroImage && (
                           <Image
                             src={story.heroImage}
                             alt={story.title}
                             fill
-                            className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                            sizes="(max-width: 768px) 50vw, 20vw"
+                            className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                             itemProp="image"
                           />
                         )}
                       </div>
                       {story.mood && (
-                        <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-2">
+                        <p className="text-[11px] text-foreground/70 mb-1">
                           {story.mood}
                         </p>
                       )}
-                      <h3 className="font-serif text-xl mb-2 group-hover:text-foreground/70 transition-colors" itemProp="headline">
+                      <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug text-foreground group-hover:text-foreground/70 transition-colors" itemProp="headline">
                         {story.title}
                       </h3>
                       {story.excerpt && (
-                        <p className="text-sm text-foreground/60 leading-relaxed line-clamp-2" itemProp="description">
+                        <p className="text-[12px] text-foreground/70 leading-relaxed mt-1 line-clamp-2" itemProp="description">
                           {story.excerpt}
                         </p>
                       )}
@@ -376,7 +377,7 @@ export default function StoriesContent({
           <section className="border-t border-border py-14 md:py-20">
             <div className="container mx-auto px-8 md:px-16 lg:px-20">
               <div className="max-w-3xl">
-                <p className="text-foreground/40 leading-relaxed text-sm">
+                <p className="text-foreground/70 leading-relaxed text-sm">
                   Cultural essays, artisan profiles, and deep-cuts from life in Morocco. Each story explores a thread of the country&apos;s living heritage — from Gnawa music and Amazigh weaving traditions to the architecture of Fes and the silence of the Sahara. {filteredStories.length} stories and growing.
                 </p>
               </div>
