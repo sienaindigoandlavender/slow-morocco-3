@@ -257,7 +257,7 @@ export default function HomeContent({
             Morocco, slowly.
           </h1>
           <p className="font-serif text-lg md:text-xl lg:text-2xl text-white/80 mb-8 max-w-2xl">
-            236 stories. 122 places. The knowledge that makes it unforgettable.
+            The slow guide to Morocco.
           </p>
           <HeroSearch />
         </div>
