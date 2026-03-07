@@ -52,16 +52,16 @@ interface HomeContentProps {
 
 const CATEGORIES = [
   { slug: "history",      label: "History",      count: 53 },
-  { slug: "architecture", label: "Architecture",  count: 26 },
-  { slug: "culture",      label: "Culture",       count: 20 },
-  { slug: "people",       label: "People",        count: 19 },
-  { slug: "systems",      label: "Systems",       count: 19 },
-  { slug: "food",         label: "Food",          count: 18 },
-  { slug: "nature",       label: "Nature",        count: 13 },
-  { slug: "art",          label: "Art",           count: 10 },
-  { slug: "design",       label: "Design",        count: 9  },
-  { slug: "music",        label: "Music",         count: 7  },
-  { slug: "craft",        label: "Craft",         count: 6  },
+  { slug: "architecture", label: "Architecture", count: 26 },
+  { slug: "culture",      label: "Culture",      count: 20 },
+  { slug: "people",       label: "People",       count: 19 },
+  { slug: "systems",      label: "Systems",      count: 19 },
+  { slug: "food",         label: "Food",         count: 18 },
+  { slug: "nature",       label: "Nature",       count: 13 },
+  { slug: "art",          label: "Art",          count: 10 },
+  { slug: "design",       label: "Design",       count: 9  },
+  { slug: "music",        label: "Music",        count: 7  },
+  { slug: "craft",        label: "Craft",        count: 6  },
 ];
 
 export default function HomeContent({
@@ -77,6 +77,7 @@ export default function HomeContent({
   const featuredStory = stories[0] || null;
   const digestStories = stories.slice(1, 5);
   const moreStories = stories.slice(5, 8);
+  const gridStories = stories.slice(8, 14);
 
   return (
     <div className="bg-background min-h-screen">
@@ -91,12 +92,12 @@ export default function HomeContent({
           <div className="absolute inset-0 bg-foreground/90" />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/70" />
-        <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-16 lg:px-20 pb-16 md:pb-24">
+        <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-[8%] lg:px-[12%] pb-16 md:pb-24">
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-3 max-w-3xl leading-[1.05]">
             Morocco, slowly.
           </h1>
           <p className="font-serif text-lg md:text-xl lg:text-2xl text-white/80 mb-8 max-w-2xl">
-            The definitive guide to Morocco.
+            236 stories. 122 places. The knowledge that makes it unforgettable.
           </p>
           <HeroSearch />
         </div>
@@ -105,7 +106,7 @@ export default function HomeContent({
       {/* ═══════════════════════════════════════════════════════════════
           DATELINE BAR — newspaper masthead energy
           ═══════════════════════════════════════════════════════════════ */}
-      <div className="border-y border-border py-3 px-8 md:px-16 lg:px-20 flex items-center justify-between overflow-x-auto scrollbar-hide">
+      <div className="border-y border-border py-3 px-8 md:px-[8%] lg:px-[12%] flex items-center justify-between overflow-x-auto scrollbar-hide">
         <div className="flex items-center gap-6 md:gap-8 flex-shrink-0">
           {["History", "Architecture", "Food", "Culture", "People", "Music", "Craft"].map((cat) => (
             <Link
@@ -121,7 +122,7 @@ export default function HomeContent({
           href="/stories"
           className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 hover:text-foreground transition-colors whitespace-nowrap ml-8 flex-shrink-0"
         >
-          173 stories →
+          All stories →
         </Link>
       </div>
 
@@ -129,7 +130,7 @@ export default function HomeContent({
           MAGAZINE FRONT PAGE — 3 column editorial layout
           ═══════════════════════════════════════════════════════════════ */}
       <section className="border-b border-border">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20 py-12 md:py-16">
+        <div className="px-8 md:px-[8%] lg:px-[12%] py-12 md:py-16">
 
           <div className="flex items-baseline justify-between mb-8 pb-4 border-b border-border">
             <p className="text-[10px] tracking-[0.35em] uppercase text-foreground/30 font-mono">
@@ -170,7 +171,7 @@ export default function HomeContent({
                 href="/stories"
                 className="block mt-6 text-[9px] tracking-[0.25em] uppercase text-foreground/25 hover:text-foreground transition-colors"
               >
-                All 173 stories →
+                All 236 stories →
               </Link>
             </div>
 
@@ -277,18 +278,73 @@ export default function HomeContent({
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          STATEMENT
+          STORY GRID — more from the archive, visual browsing
+          ═══════════════════════════════════════════════════════════════ */}
+      {gridStories.length > 0 && (
+        <section className="py-20 md:py-28 border-b border-border">
+          <div className="px-8 md:px-[8%] lg:px-[12%]">
+            <div className="flex items-baseline justify-between mb-10">
+              <p className="text-[10px] tracking-[0.35em] uppercase text-foreground/30 font-mono">
+                Keep reading
+              </p>
+              <Link
+                href="/stories"
+                className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 hover:text-foreground transition-colors"
+              >
+                Explore all stories →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+              {gridStories.map((story) => (
+                <Link
+                  key={story.slug}
+                  href={`/stories/${story.slug}`}
+                  className="group block"
+                >
+                  <div className="aspect-[4/3] relative overflow-hidden bg-[#f0f0f0] mb-4">
+                    {story.heroImage && (
+                      <Image
+                        src={story.heroImage}
+                        alt={story.title}
+                        fill
+                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                      />
+                    )}
+                  </div>
+                  {story.category && (
+                    <p className="text-[9px] tracking-[0.25em] uppercase text-foreground/30 mb-2">
+                      {story.category}
+                      {story.read_time ? <span className="ml-3 text-foreground/20">{story.read_time} min</span> : null}
+                    </p>
+                  )}
+                  <h3 className="font-serif text-lg md:text-xl leading-snug group-hover:text-foreground/60 transition-colors">
+                    {story.title}
+                  </h3>
+                  {story.subtitle && (
+                    <p className="font-serif italic text-sm text-foreground/40 mt-1 line-clamp-1">
+                      {story.subtitle}
+                    </p>
+                  )}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════════
+          STATEMENT — about the knowledge, not the product
           ═══════════════════════════════════════════════════════════════ */}
       <section className="py-24 md:py-32 border-b border-border">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20">
+        <div className="px-8 md:px-[8%] lg:px-[12%]">
           <div className="max-w-4xl">
             <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/30 mb-8">
-              Our philosophy
+              What this is
             </p>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-[1.2] text-foreground">
-              We don&apos;t do bucket lists. We build routes that let Morocco reveal
-              itself—<span className="italic">slowly</span>, on its own terms,
-              through the people and places that make it unforgettable.
+              Morocco has been written about for centuries. Most of it skims the
+              surface. We went <span className="italic">deeper</span> — into the history, the craft,
+              the food, the music, the people who make the country what it is.
             </h2>
           </div>
         </div>
@@ -298,7 +354,7 @@ export default function HomeContent({
           CITY MAP
           ═══════════════════════════════════════════════════════════════ */}
       <section className="border-b border-border">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20 pt-16 pb-8">
+        <div className="px-8 md:px-[8%] lg:px-[12%] pt-16 pb-8">
           <div className="flex items-end justify-between">
             <div>
               <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/30 mb-3 font-mono">
@@ -319,11 +375,11 @@ export default function HomeContent({
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          JOURNEYS — editorial treatment, not carousel
+          JOURNEYS — editorial treatment, secondary placement
           ═══════════════════════════════════════════════════════════════ */}
       {journeys.length > 0 && (
         <section className="py-20 md:py-28 border-b border-border">
-          <div className="container mx-auto px-8 md:px-16 lg:px-20">
+          <div className="px-8 md:px-[8%] lg:px-[12%]">
             <div className="flex items-baseline justify-between mb-12">
               <div>
                 <p className="text-[10px] tracking-[0.35em] uppercase text-foreground/30 font-mono mb-3">
@@ -339,7 +395,6 @@ export default function HomeContent({
               </Link>
             </div>
 
-            {/* Featured journey — large + two smaller */}
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-6">
               {journeys.slice(0, 1).map((journey) => (
                 <Link
@@ -409,7 +464,7 @@ export default function HomeContent({
           ═══════════════════════════════════════════════════════════════ */}
       {testimonials.length > 0 && (
         <section className="py-20 md:py-28 border-b border-border">
-          <div className="container mx-auto px-8 md:px-16 lg:px-20">
+          <div className="px-8 md:px-[8%] lg:px-[12%]">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center gap-8">
                 <button onClick={() => setTestimonialIndex((p) => (p - 1 + testimonials.length) % testimonials.length)}
@@ -444,54 +499,22 @@ export default function HomeContent({
       )}
 
       {/* ═══════════════════════════════════════════════════════════════
-          HOW IT WORKS
+          QUIET CLOSE — publisher, not salesperson
           ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-20 md:py-28 bg-[#1a1916] text-white">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20">
-          <div className="mb-16">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-white/30 mb-4 font-mono">The process</p>
-            <h2 className="font-serif text-3xl md:text-4xl">How it works</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 max-w-5xl">
-            {[
-              { n: "1", title: "You reach out", body: "Tell us what's calling you. A journey that caught your eye. A question. A sense that something here is yours." },
-              { n: "2", title: "We shape it", body: "We build the route around what matters to you. Add days. Remove cities. Stay longer where something pulls you." },
-              { n: "3", title: "You go", body: "Deposit secures your dates. Balance due 60 days before. Then you pack light and show up." },
-            ].map((step) => (
-              <div key={step.n}>
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="w-8 h-8 border border-white/20 flex items-center justify-center font-serif text-sm flex-shrink-0">{step.n}</span>
-                  <div className="flex-1 h-px bg-white/10" />
-                </div>
-                <h3 className="font-serif text-xl mb-3">{step.title}</h3>
-                <p className="text-sm text-white/50 leading-relaxed">{step.body}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-16">
+      <section className="py-24 md:py-32">
+        <div className="px-8 md:px-[8%] lg:px-[12%]">
+          <div className="max-w-3xl">
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl mb-6">
+              When you&apos;re ready, we&apos;ll build the route.
+            </h2>
+            <p className="text-foreground/50 leading-relaxed mb-10 max-w-lg">
+              No forms. No packages. Just a conversation about what you&apos;re hoping to find.
+            </p>
             <Link href="/plan-your-trip"
-              className="inline-block bg-white text-[#1a1916] px-10 py-4 text-xs tracking-[0.15em] uppercase hover:bg-white/90 transition-colors">
-              Start the conversation
+              className="inline-block border border-foreground px-10 py-4 text-xs tracking-[0.15em] uppercase hover:bg-foreground hover:text-background transition-colors">
+              Start a conversation
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════════
-          FINAL CTA
-          ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-24 md:py-32 border-t border-border">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20">
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl mb-6 max-w-2xl">
-            Ready to go slowly?
-          </h2>
-          <p className="text-foreground/50 max-w-lg mb-10 leading-relaxed">
-            No forms. No packages. Just a conversation about what you&apos;re hoping to find.
-          </p>
-          <Link href="/plan-your-trip"
-            className="inline-block border border-foreground px-10 py-4 text-xs tracking-[0.15em] uppercase hover:bg-foreground hover:text-background transition-colors">
-            Plan your trip
-          </Link>
         </div>
       </section>
 

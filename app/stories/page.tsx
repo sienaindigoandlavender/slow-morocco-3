@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { getStories, inferContentTier } from "@/lib/supabase";
-import type { ContentTier } from "@/lib/supabase";
+import { getStories } from "@/lib/supabase";
 import StoriesContent from "./StoriesContent";
 
 export const metadata: Metadata = {
@@ -24,8 +23,6 @@ interface StoryItem {
   mood?: string;
   heroImage?: string;
   excerpt?: string;
-  contentTier: ContentTier;
-  readTime?: number;
 }
 
 async function fetchStories(): Promise<StoryItem[]> {
@@ -38,8 +35,6 @@ async function fetchStories(): Promise<StoryItem[]> {
       mood: story.category || undefined,
       heroImage: story.hero_image || undefined,
       excerpt: story.excerpt || undefined,
-      contentTier: inferContentTier(story),
-      readTime: story.read_time ?? undefined,
     }));
   } catch (error) {
     console.error("Error fetching stories:", error);
