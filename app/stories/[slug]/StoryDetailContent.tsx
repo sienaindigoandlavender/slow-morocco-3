@@ -203,7 +203,7 @@ export default function StoryDetailContent({
           </div>
 
           {/* Title block */}
-          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.1] mb-5 max-w-3xl">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.1] mb-5 max-w-3xl uppercase">
             {story.title}
           </h1>
           {story.subtitle && (
