@@ -68,8 +68,8 @@ function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
   return (
     <section className="py-16 md:py-24">
       {/* Header row */}
-      <div className="px-8 md:px-[8%] lg:px-[12%] flex items-end justify-between mb-10">
-        <p className="text-[11px] tracking-[0.25em] uppercase text-foreground/40">
+      <div className="px-6 md:px-[6%] lg:px-[6%] flex items-end justify-between mb-8">
+        <p className="text-[11px] tracking-[0.15em] uppercase text-foreground/40">
           {label}
         </p>
         <div className="flex items-center gap-2">
@@ -99,23 +99,23 @@ function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
       {/* Scroll track — bleeds right */}
       <div
         ref={scrollRef}
-        className="flex gap-5 overflow-x-auto scrollbar-hide pl-8 md:pl-[8%] lg:pl-[8%] pr-8"
+        className="flex gap-4 overflow-x-auto scrollbar-hide pl-6 md:pl-[6%] lg:pl-[6%] pr-6"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {stories.map((story) => (
           <Link
             key={story.slug}
             href={`/stories/${story.slug}`}
-            className="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px]"
+            className="group flex-shrink-0 w-[200px] md:w-[210px] lg:w-[220px]"
           >
-            {/* Tall portrait image — Kinfolk ratio */}
-            <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-4">
+            {/* Portrait image */}
+            <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
               {story.heroImage && (
                 <Image
                   src={story.heroImage}
                   alt={story.title}
                   fill
-                  sizes="320px"
+                  sizes="220px"
                   unoptimized
                   className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                 />
@@ -123,17 +123,17 @@ function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
             </div>
             {/* Category */}
             {story.category && (
-              <p className="text-[11px] tracking-[0.1em] text-foreground/40 mb-2">
+              <p className="text-[11px] text-foreground/40 mb-1">
                 {story.category}
               </p>
             )}
-            {/* Title — Kinfolk: serif, sentence case */}
-            <h3 className="font-serif text-lg leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
+            {/* Title */}
+            <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
               {story.title}
             </h3>
             {/* Subtitle */}
             {story.subtitle && (
-              <p className="text-[13px] text-foreground/40 leading-relaxed mt-1.5 line-clamp-2">
+              <p className="text-[12px] text-foreground/40 leading-relaxed mt-1 line-clamp-2">
                 {story.subtitle}
               </p>
             )}
@@ -161,8 +161,8 @@ function JourneyStrip({ journeys }: { journeys: Journey[] }) {
 
   return (
     <section className="py-16 md:py-24">
-      <div className="px-8 md:px-[8%] lg:px-[12%] flex items-end justify-between mb-10">
-        <p className="text-[11px] tracking-[0.25em] uppercase text-foreground/40">
+      <div className="px-6 md:px-[6%] lg:px-[6%] flex items-end justify-between mb-8">
+        <p className="text-[11px] tracking-[0.15em] uppercase text-foreground/40">
           Private Journeys
         </p>
         <div className="flex items-center gap-2">
@@ -187,35 +187,35 @@ function JourneyStrip({ journeys }: { journeys: Journey[] }) {
 
       <div
         ref={scrollRef}
-        className="flex gap-5 overflow-x-auto pl-8 md:pl-[8%] lg:pl-[8%] pr-8"
+        className="flex gap-4 overflow-x-auto pl-6 md:pl-[6%] lg:pl-[6%] pr-6"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {journeys.map((journey) => (
           <Link
             key={journey.slug}
             href={`/journeys/${journey.slug}`}
-            className="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px]"
+            className="group flex-shrink-0 w-[200px] md:w-[210px] lg:w-[220px]"
           >
-            <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-4">
+            <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
               {journey.heroImage && (
                 <Image
                   src={journey.heroImage}
                   alt={journey.title}
                   fill
-                  sizes="320px"
+                  sizes="220px"
                   unoptimized
                   className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                 />
               )}
             </div>
-            <p className="text-[11px] tracking-[0.1em] text-foreground/40 mb-2">
+            <p className="text-[11px] text-foreground/40 mb-1">
               {journey.duration} · {journey.destinations}
             </p>
-            <h3 className="font-serif text-lg leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
+            <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
               {journey.title}
             </h3>
             {journey.description && (
-              <p className="text-[13px] text-foreground/40 leading-relaxed mt-1.5 line-clamp-2">
+              <p className="text-[12px] text-foreground/40 leading-relaxed mt-1 line-clamp-2">
                 {journey.description}
               </p>
             )}
