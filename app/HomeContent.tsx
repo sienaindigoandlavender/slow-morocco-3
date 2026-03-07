@@ -127,13 +127,13 @@ function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
                 {story.category}
               </p>
             )}
-            {/* Title — uppercase like Kinfolk */}
-            <h3 className="text-[13px] tracking-[0.06em] uppercase leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
+            {/* Title — Kinfolk: serif, sentence case */}
+            <h3 className="font-serif text-lg leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
               {story.title}
             </h3>
             {/* Subtitle */}
             {story.subtitle && (
-              <p className="text-[13px] text-foreground/50 leading-snug mt-1 line-clamp-2">
+              <p className="text-[13px] text-foreground/40 leading-relaxed mt-1.5 line-clamp-2">
                 {story.subtitle}
               </p>
             )}
@@ -211,11 +211,11 @@ function JourneyStrip({ journeys }: { journeys: Journey[] }) {
             <p className="text-[11px] tracking-[0.1em] text-foreground/40 mb-2">
               {journey.duration} · {journey.destinations}
             </p>
-            <h3 className="text-[13px] tracking-[0.06em] uppercase leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
+            <h3 className="font-serif text-lg leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
               {journey.title}
             </h3>
             {journey.description && (
-              <p className="text-[13px] text-foreground/50 leading-snug mt-1 line-clamp-2">
+              <p className="text-[13px] text-foreground/40 leading-relaxed mt-1.5 line-clamp-2">
                 {journey.description}
               </p>
             )}
