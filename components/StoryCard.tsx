@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { cloudinaryUrl } from "@/lib/cloudinary";
 
 interface Story {
   slug: string;
@@ -23,10 +24,12 @@ export default function StoryCard({ story }: StoryCardProps) {
       <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-white/5">
         {story.heroImage ? (
           <Image
-            src={story.heroImage}
+            src={cloudinaryUrl(story.heroImage, 600)}
             alt={story.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
+          
+            unoptimized
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">

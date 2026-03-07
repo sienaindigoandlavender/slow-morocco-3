@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 
 interface RelatedStory {
   slug: string;
@@ -80,12 +81,14 @@ export default function RelatedStories({ destinations, focus, limit = 4 }: Relat
                 <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
                   {story.heroImage ? (
                     <Image
-                      src={story.heroImage}
+                      src={cloudinaryUrl(story.heroImage, 600)}
                       alt={story.title}
                       fill
                       sizes="(max-width: 768px) 50vw, 25vw"
                       className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
-                    />
+                    
+            unoptimized
+          />
                   ) : null}
                 </div>
                 {story.category && (

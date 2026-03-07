@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 
 interface RelatedJourney {
   slug: string;
@@ -93,12 +94,14 @@ export default function RelatedJourneys({ region, tags, category, limit = 3 }: R
                 <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
                   {journey.heroImage ? (
                     <Image
-                      src={journey.heroImage}
+                      src={cloudinaryUrl(journey.heroImage, 600)}
                       alt={journey.title}
                       fill
                       sizes="(max-width: 768px) 50vw, 33vw"
                       className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
-                    />
+                    
+            unoptimized
+          />
                   ) : null}
                 </div>
                 {journey.duration && journey.duration > 0 && (
