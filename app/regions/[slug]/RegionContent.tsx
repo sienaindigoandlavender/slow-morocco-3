@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 
 interface Region {
@@ -104,12 +105,13 @@ export default function RegionContent({
       <section className="relative h-[65vh] min-h-[480px] max-h-[720px]">
         {region.hero_image && (
           <Image
-            src={region.hero_image}
+            src={cloudinaryUrl(region.hero_image)}
             alt={region.title}
             fill
             className="object-cover"
             priority
-          />
+              unoptimized
+            />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/65" />
         <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-20 pb-14">
@@ -148,11 +150,12 @@ export default function RegionContent({
               >
                 {dest.hero_image && (
                   <Image
-                    src={dest.hero_image}
+                    src={cloudinaryUrl(dest.hero_image)}
                     alt={dest.title}
                     fill
                     className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
-                  />
+              unoptimized
+            />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -183,11 +186,12 @@ export default function RegionContent({
                 <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-4">
                   {place.hero_image && (
                     <Image
-                      src={place.hero_image}
+                      src={cloudinaryUrl(place.hero_image)}
                       alt={place.title}
                       fill
                       className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                    />
+              unoptimized
+            />
                   )}
                 </div>
                 {place.category && (
@@ -230,11 +234,12 @@ export default function RegionContent({
                   <div className="aspect-[3/4] relative overflow-hidden bg-foreground/5 mb-5">
                     {story.hero_image && (
                       <Image
-                        src={story.hero_image}
+                        src={cloudinaryUrl(story.hero_image)}
                         alt={story.title}
                         fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                      />
+              unoptimized
+            />
                     )}
                   </div>
                   {story.category && (
@@ -268,11 +273,12 @@ export default function RegionContent({
                   <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-5">
                     {journey.hero_image_url && (
                       <Image
-                        src={journey.hero_image_url}
+                        src={cloudinaryUrl(journey.hero_image_url)}
                         alt={journey.title}
                         fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                      />
+              unoptimized
+            />
                     )}
                   </div>
                   <div className="flex items-center gap-3 mb-2">

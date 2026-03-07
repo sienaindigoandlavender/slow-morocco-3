@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 
 interface Destination {
@@ -167,7 +168,8 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
           sizes="100vw"
           className="object-cover object-center opacity-60"
           priority
-        />
+              unoptimized
+            />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
         <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-20 pb-14">
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white">
@@ -334,12 +336,13 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
             >
               {cityImage && (
                 <Image
-                  src={cityImage}
+                  src={cloudinaryUrl(cityImage)}
                   alt={city.title}
                   fill
                   sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                   className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
-                />
+              unoptimized
+            />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -379,11 +382,12 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
                   <div className="aspect-[3/4] relative overflow-hidden bg-foreground/5 mb-5">
                     {story.hero_image && (
                       <Image
-                        src={story.hero_image}
+                        src={cloudinaryUrl(story.hero_image)}
                         alt={story.title}
                         fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                      />
+              unoptimized
+            />
                     )}
                   </div>
                   {story.category && (

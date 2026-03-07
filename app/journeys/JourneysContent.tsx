@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 import ControlBar from "@/components/ControlBar";
 import { Search, Clock, Moon, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCurrency } from "@/lib/currency";
@@ -360,7 +361,7 @@ export default function JourneysContent({
                         <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
                           {item.heroImage && (
                             <Image
-                              src={item.heroImage}
+                              src={cloudinaryUrl(item.heroImage)}
                               alt={`${item.title} - Morocco ${item.type === 'daytrip' ? 'day trip' : 'journey'}`}
                               fill
                               sizes="(max-width: 768px) 50vw, 20vw"

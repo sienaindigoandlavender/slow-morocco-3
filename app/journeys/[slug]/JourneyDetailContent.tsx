@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import dynamic from "next/dynamic";
 import { linkGlossaryTermsText } from "@/lib/glossary-linker";
@@ -88,11 +89,12 @@ function DayImage({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="relative aspect-[3/4] w-full max-w-lg overflow-hidden mb-8">
       <Image
-        src={src}
+        src={cloudinaryUrl(src)}
         alt={alt}
         fill
         className="object-cover"
         onError={() => setFailed(true)}
+        unoptimized
       />
     </div>
   );
@@ -151,11 +153,12 @@ function JourneysCarousel({ journeys }: { journeys: Journey[] }) {
             <div className="relative aspect-[4/5] mb-3 overflow-hidden bg-[#f0f0f0]">
               {journey.heroImage && (
                 <Image
-                  src={journey.heroImage}
+                  src={cloudinaryUrl(journey.heroImage)}
                   alt={journey.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
+              unoptimized
+            />
               )}
             </div>
             <h3 className="font-serif text-lg mb-1">{journey.title}</h3>
@@ -223,12 +226,13 @@ export default function JourneyDetailContent({
         <section className="relative h-[70vh] md:h-[80vh]">
           {journey.heroImage ? (
             <Image
-              src={journey.heroImage}
+              src={cloudinaryUrl(journey.heroImage)}
               alt={journey.title}
               fill
               sizes="100vw"
               className="object-cover opacity-70"
               priority
+              unoptimized
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a]" />
@@ -428,13 +432,14 @@ export default function JourneyDetailContent({
       <section className="relative h-[60vh] md:h-[70vh] bg-[#f0f0f0]">
         {journey.heroImage && (
           <Image
-            src={journey.heroImage}
+            src={cloudinaryUrl(journey.heroImage)}
             alt={journey.title}
             fill
             sizes="100vw"
             className="object-cover"
             priority
-          />
+              unoptimized
+            />
         )}
       </section>
 
@@ -574,12 +579,13 @@ export default function JourneyDetailContent({
                     <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-foreground/5">
                       {story.heroImage ? (
                         <Image
-                          src={story.heroImage}
+                          src={cloudinaryUrl(story.heroImage)}
                           alt={story.title}
                           width={300}
                           height={375}
                           className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
-                        />
+              unoptimized
+            />
                       ) : (
                         <div className="w-full h-full bg-foreground/5" />
                       )}

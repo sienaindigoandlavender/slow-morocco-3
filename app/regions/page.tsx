@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 import { getRegions } from "@/lib/supabase";
 
 export const revalidate = 3600;
@@ -59,12 +60,13 @@ export default async function RegionsPage() {
             >
               {region.hero_image && (
                 <Image
-                  src={region.hero_image}
+                  src={cloudinaryUrl(region.hero_image)}
                   alt={region.title}
                   fill
                   className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
                   priority={i < 2}
-                />
+              unoptimized
+            />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">

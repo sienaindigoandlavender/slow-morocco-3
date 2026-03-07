@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 import dynamic from "next/dynamic";
 
 const DesertDustRouteMap = dynamic(() => import("@/components/DesertDustRouteMap"), {
@@ -28,7 +29,8 @@ export default function ColinItineraryPage() {
           fill
           className="object-cover"
           priority
-        />
+              unoptimized
+            />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         <div className="relative z-10 container mx-auto px-8 md:px-16 lg:px-20 pb-16 md:pb-24">
           <p className="text-[10px] tracking-[0.3em] uppercase text-white/50 mb-4">
