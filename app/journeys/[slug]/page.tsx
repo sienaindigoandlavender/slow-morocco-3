@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getJourneyBySlug, getRoutesByIds, getJourneys, getStories } from "@/lib/supabase";
+import { getJourneyBySlug, getRoutesByIds, getJourneys, getStories, convertDriveUrl } from "@/lib/supabase";
 import { findRelatedStories } from "@/lib/content-matcher";
 import JourneyDetailContent from "./JourneyDetailContent";
 
@@ -118,7 +118,7 @@ async function getJourneyData(slug: string) {
         fromCity: route.from_city || "",
         toCity: route.to_city || "",
         description: route.route_narrative || "",
-        imageUrl: route.image_url || "",
+        imageUrl: convertDriveUrl(route.image_url || route.hero_image_url || ""),
         travelTime: String(route.travel_time_hours || ""),
         difficulty: route.difficulty_level || "",
         activities: route.activities || "",

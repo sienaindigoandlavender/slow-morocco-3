@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getJourneyBySlug, getRoutesByIds } from "@/lib/supabase";
+import { getJourneyBySlug, getRoutesByIds, convertDriveUrl } from "@/lib/supabase";
 
 // CORS headers for cross-origin requests (e.g., from Riad di Siena)
 const corsHeaders = {
@@ -85,7 +85,7 @@ export async function GET(
         fromCity: route.from_city || "",
         toCity: route.to_city || "",
         description: route.route_narrative || "",
-        imageUrl: route.image_url || "",
+        imageUrl: convertDriveUrl(route.image_url || route.hero_image_url || ""),
         travelTime: route.travel_time_hours || "",
         difficulty: route.difficulty_level || "",
         activities: route.activities || "",
