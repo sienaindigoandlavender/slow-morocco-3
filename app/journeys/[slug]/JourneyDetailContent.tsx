@@ -81,6 +81,23 @@ interface ItineraryDay {
   routeType: string;
 }
 
+// Day image that hides itself if the URL is broken
+function DayImage({ src, alt }: { src: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
+  return (
+    <div className="relative aspect-[3/4] w-full max-w-lg overflow-hidden mb-8">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-cover"
+        onError={() => setFailed(true)}
+      />
+    </div>
+  );
+}
+
 // Journeys Carousel Component
 function JourneysCarousel({ journeys }: { journeys: Journey[] }) {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -490,14 +507,7 @@ export default function JourneyDetailContent({
               .map((day) => (
                 <div key={day.dayNumber}>
                   {day.imageUrl && (
-                    <div className="relative aspect-[3/4] w-full max-w-lg overflow-hidden mb-8">
-                      <Image
-                        src={day.imageUrl}
-                        alt={`Day ${day.dayNumber} - ${day.cityName}`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
+                    <DayImage src={day.imageUrl} alt={`Day ${day.dayNumber} - ${day.cityName}`} />
                   )}
 
                   <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">
