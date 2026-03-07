@@ -65,10 +65,10 @@ const config: Config = {
          TYPOGRAPHY
          ═══════════════════════════════════════════════════════════ */
       fontFamily: {
-        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        sans: ["var(--font-body)", "Georgia", "serif"],
         serif: ["var(--font-display)", "Georgia", "serif"],
         display: ["var(--font-display)", "Georgia", "serif"],
-        body: ["var(--font-body)", "system-ui", "sans-serif"],
+        body: ["var(--font-body)", "Georgia", "serif"],
       },
 
       /* ═══════════════════════════════════════════════════════════
