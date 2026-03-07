@@ -149,15 +149,26 @@ export default async function CityGuidePage({ params }: Props) {
 
   const data = await fetchCityData(params.city);
 
+  // Convert Google Drive URLs before passing to client component
+  const destination = {
+    ...data.destination,
+    hero_image: data.destination.hero_image ? convertDriveUrl(data.destination.hero_image) : null,
+  };
+
+  const galleryImages = data.galleryImages.map((img) => ({
+    ...img,
+    image_url: img.image_url ? convertDriveUrl(img.image_url) : null,
+  }));
+
   return (
     <CityGuideContent
-      destination={data.destination}
+      destination={destination}
       journeys={data.featuredJourneys}
       connectingJourneys={data.connectingJourneys}
       places={data.places}
       stories={data.stories}
       citySlug={params.city}
-      galleryImages={data.galleryImages}
+      galleryImages={galleryImages}
     />
   );
 }
