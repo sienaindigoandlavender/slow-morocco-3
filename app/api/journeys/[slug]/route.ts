@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getJourneyBySlug, getRoutesByIds, convertDriveUrl } from "@/lib/supabase";
+import { getJourneyBySlug, getRoutesByIds, getAllPlaceFirstImages } from "@/lib/supabase";
 
 // CORS headers for cross-origin requests (e.g., from Riad di Siena)
 const corsHeaders = {
@@ -55,14 +55,22 @@ export async function GET(
       .map((id: string) => id.trim())
       .filter((id: string) => id.length > 0);
 
-    // Get routes from Supabase
-    const routes = await getRoutesByIds(routeIds);
-    
+    // Get routes and place images in parallel
+    const [routes, placeImages] = await Promise.all([
+      getRoutesByIds(routeIds),
+      getAllPlaceFirstImages(),
+    ]);
+
+    const findPlaceImage = (cityName: string): string => {
+      if (!cityName) return "";
+      const slug = cityName.toLowerCase().replace(/\s+/g, "-");
+      return placeImages[slug] || placeImages[cityName] || "";
+    };
+
     // Build itinerary from Route_Sequence
     const itinerary = routeIds.map((routeId: string, index: number) => {
-      // Find the route by ID
       const route = routes.find((r) => r.id === routeId);
-      
+
       if (!route) {
         return {
           dayNumber: index + 1,
@@ -79,13 +87,19 @@ export async function GET(
         };
       }
 
+      const imageUrl = route.image_url
+        || route.hero_image_url
+        || findPlaceImage(route.to_city || "")
+        || findPlaceImage(route.from_city || "")
+        || "";
+
       return {
         dayNumber: index + 1,
         cityName: route.to_city || "",
         fromCity: route.from_city || "",
         toCity: route.to_city || "",
         description: route.route_narrative || "",
-        imageUrl: convertDriveUrl(route.image_url || route.hero_image_url || ""),
+        imageUrl,
         travelTime: route.travel_time_hours || "",
         difficulty: route.difficulty_level || "",
         activities: route.activities || "",
