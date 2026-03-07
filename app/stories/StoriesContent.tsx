@@ -221,6 +221,7 @@ export default function StoriesContent({
                             src={leadStory.heroImage}
                             alt={leadStory.title}
                             fill
+                            unoptimized
                             className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
                           />
                         )}
@@ -265,6 +266,7 @@ export default function StoriesContent({
                                   src={story.heroImage}
                                   alt={story.title}
                                   fill
+                                  unoptimized
                                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
                               )}
@@ -329,6 +331,7 @@ export default function StoriesContent({
                             alt={story.title}
                             fill
                             sizes="(max-width: 768px) 50vw, 20vw"
+                            unoptimized
                             className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                             itemProp="image"
                           />
