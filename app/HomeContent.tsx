@@ -69,29 +69,29 @@ function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
     <section className="py-16 md:py-24">
       {/* Header row */}
       <div className="px-6 md:px-[6%] lg:px-[6%] flex items-end justify-between mb-8">
-        <p className="text-[11px] tracking-[0.15em] uppercase text-foreground/40">
+        <p className="text-[11px] tracking-[0.15em] uppercase text-foreground/70">
           {label}
         </p>
         <div className="flex items-center gap-2">
           <Link
             href="/stories"
-            className="text-[11px] tracking-[0.15em] uppercase text-foreground/30 hover:text-foreground transition-colors mr-4"
+            className="text-[11px] tracking-[0.15em] uppercase text-foreground/60 hover:text-foreground transition-colors mr-4"
           >
             View All
           </Link>
           <button
             onClick={() => scroll("left")}
-            className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors"
+            className="w-9 h-9 border border-foreground/20 flex items-center justify-center hover:border-foreground/60 transition-colors"
             aria-label="Scroll left"
           >
-            <ChevronLeft className="w-4 h-4 text-foreground/40" />
+            <ChevronLeft className="w-4 h-4 text-foreground/60" />
           </button>
           <button
             onClick={() => scroll("right")}
-            className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors"
+            className="w-9 h-9 border border-foreground/20 flex items-center justify-center hover:border-foreground/60 transition-colors"
             aria-label="Scroll right"
           >
-            <ChevronRight className="w-4 h-4 text-foreground/40" />
+            <ChevronRight className="w-4 h-4 text-foreground/60" />
           </button>
         </div>
       </div>
@@ -123,17 +123,17 @@ function StoryStrip({ stories, label }: { stories: Story[]; label: string }) {
             </div>
             {/* Category */}
             {story.category && (
-              <p className="text-[11px] text-foreground/40 mb-1">
+              <p className="text-[11px] text-foreground/70 mb-1">
                 {story.category}
               </p>
             )}
             {/* Title */}
-            <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
+            <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug text-foreground group-hover:text-foreground/70 transition-colors">
               {story.title}
             </h3>
             {/* Subtitle */}
             {story.subtitle && (
-              <p className="text-[12px] text-foreground/40 leading-relaxed mt-1 line-clamp-2">
+              <p className="text-[12px] text-foreground/60 leading-relaxed mt-1 line-clamp-2">
                 {story.subtitle}
               </p>
             )}
@@ -162,25 +162,25 @@ function JourneyStrip({ journeys }: { journeys: Journey[] }) {
   return (
     <section className="py-16 md:py-24">
       <div className="px-6 md:px-[6%] lg:px-[6%] flex items-end justify-between mb-8">
-        <p className="text-[11px] tracking-[0.15em] uppercase text-foreground/40">
+        <p className="text-[11px] tracking-[0.15em] uppercase text-foreground/70">
           Private Journeys
         </p>
         <div className="flex items-center gap-2">
           <Link
             href="/journeys"
-            className="text-[11px] tracking-[0.15em] uppercase text-foreground/30 hover:text-foreground transition-colors mr-4"
+            className="text-[11px] tracking-[0.15em] uppercase text-foreground/60 hover:text-foreground transition-colors mr-4"
           >
             View All
           </Link>
           <button onClick={() => scroll("left")}
-            className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors"
+            className="w-9 h-9 border border-foreground/20 flex items-center justify-center hover:border-foreground/60 transition-colors"
             aria-label="Scroll left">
-            <ChevronLeft className="w-4 h-4 text-foreground/40" />
+            <ChevronLeft className="w-4 h-4 text-foreground/60" />
           </button>
           <button onClick={() => scroll("right")}
-            className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors"
+            className="w-9 h-9 border border-foreground/20 flex items-center justify-center hover:border-foreground/60 transition-colors"
             aria-label="Scroll right">
-            <ChevronRight className="w-4 h-4 text-foreground/40" />
+            <ChevronRight className="w-4 h-4 text-foreground/60" />
           </button>
         </div>
       </div>
@@ -208,14 +208,14 @@ function JourneyStrip({ journeys }: { journeys: Journey[] }) {
                 />
               )}
             </div>
-            <p className="text-[11px] text-foreground/40 mb-1">
+            <p className="text-[11px] text-foreground/70 mb-1">
               {journey.duration} · {journey.destinations}
             </p>
-            <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug text-foreground group-hover:text-foreground/60 transition-colors">
+            <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug text-foreground group-hover:text-foreground/70 transition-colors">
               {journey.title}
             </h3>
             {journey.description && (
-              <p className="text-[12px] text-foreground/40 leading-relaxed mt-1 line-clamp-2">
+              <p className="text-[12px] text-foreground/60 leading-relaxed mt-1 line-clamp-2">
                 {journey.description}
               </p>
             )}
@@ -273,7 +273,7 @@ export default function HomeContent({
             <Link
               key={cat}
               href={`/stories/category/${cat.toLowerCase()}`}
-              className="text-[10px] tracking-[0.2em] uppercase text-foreground/40 hover:text-foreground transition-colors whitespace-nowrap"
+              className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 hover:text-foreground transition-colors whitespace-nowrap"
             >
               {cat}
             </Link>
@@ -281,7 +281,7 @@ export default function HomeContent({
         </div>
         <Link
           href="/stories"
-          className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 hover:text-foreground transition-colors whitespace-nowrap ml-8 flex-shrink-0"
+          className="text-[10px] tracking-[0.2em] uppercase text-foreground/60 hover:text-foreground transition-colors whitespace-nowrap ml-8 flex-shrink-0"
         >
           All stories
         </Link>
@@ -325,14 +325,14 @@ export default function HomeContent({
         <div className="px-8 md:px-[8%] lg:px-[12%] pt-16 pb-8">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-[11px] tracking-[0.25em] uppercase text-foreground/40 mb-3">
+              <p className="text-[11px] tracking-[0.25em] uppercase text-foreground/70 mb-3">
                 Where to go
               </p>
               <h2 className="font-serif text-3xl md:text-4xl text-foreground">
                 Eleven cities. One country.
               </h2>
             </div>
-            <p className="hidden md:block text-xs text-foreground/25 tracking-[0.1em] pb-1">
+            <p className="hidden md:block text-xs text-foreground/50 tracking-[0.1em] pb-1">
               Hover to explore. Click to go.
             </p>
           </div>
@@ -360,28 +360,28 @@ export default function HomeContent({
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center gap-8">
                 <button onClick={() => setTestimonialIndex((p) => (p - 1 + testimonials.length) % testimonials.length)}
-                  className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors hidden md:flex flex-shrink-0"
+                  className="w-9 h-9 border border-foreground/20 flex items-center justify-center hover:border-foreground/60 transition-colors hidden md:flex flex-shrink-0"
                   aria-label="Previous">
-                  <ChevronLeft className="w-4 h-4 text-foreground/40" />
+                  <ChevronLeft className="w-4 h-4 text-foreground/60" />
                 </button>
                 <div className="text-center flex-grow">
                   <blockquote className="font-serif text-xl md:text-2xl lg:text-3xl leading-relaxed text-foreground mb-6">
                     &ldquo;{testimonials[testimonialIndex]?.quote}&rdquo;
                   </blockquote>
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40">
+                  <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/70">
                     — {testimonials[testimonialIndex]?.author}
                   </p>
                 </div>
                 <button onClick={() => setTestimonialIndex((p) => (p + 1) % testimonials.length)}
-                  className="w-9 h-9 border border-foreground/15 flex items-center justify-center hover:border-foreground/40 transition-colors hidden md:flex flex-shrink-0"
+                  className="w-9 h-9 border border-foreground/20 flex items-center justify-center hover:border-foreground/60 transition-colors hidden md:flex flex-shrink-0"
                   aria-label="Next">
-                  <ChevronRight className="w-4 h-4 text-foreground/40" />
+                  <ChevronRight className="w-4 h-4 text-foreground/60" />
                 </button>
               </div>
               <div className="flex justify-center gap-2 mt-8">
                 {testimonials.map((_, idx) => (
                   <button key={idx} onClick={() => setTestimonialIndex(idx)}
-                    className={`w-1.5 h-1.5 transition-colors ${idx === testimonialIndex ? "bg-foreground" : "bg-foreground/15"}`}
+                    className={`w-1.5 h-1.5 transition-colors ${idx === testimonialIndex ? "bg-foreground" : "bg-foreground/20"}`}
                     aria-label={`Testimonial ${idx + 1}`} />
                 ))}
               </div>
@@ -400,11 +400,11 @@ export default function HomeContent({
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl mb-6">
               When you&apos;re ready, we&apos;ll build the route.
             </h2>
-            <p className="text-foreground/50 leading-relaxed mb-10 max-w-lg">
+            <p className="text-foreground/70 leading-relaxed mb-10 max-w-lg">
               No forms. No packages. Just a conversation about what you&apos;re hoping to find.
             </p>
             <Link href="/plan-your-trip"
-              className="inline-block border border-foreground/15 px-10 py-4 text-[11px] tracking-[0.15em] uppercase hover:border-foreground transition-colors">
+              className="inline-block border border-foreground px-10 py-4 text-[11px] tracking-[0.15em] uppercase hover:bg-foreground hover:text-background transition-colors">
               Start a conversation
             </Link>
           </div>

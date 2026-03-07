@@ -60,7 +60,7 @@ export default function RelatedStories({ destinations, focus, limit = 4 }: Relat
       <div className="container mx-auto px-6 lg:px-16">
         {/* Section Header */}
         <div className="mb-10">
-          <p className="text-xs tracking-[0.3em] uppercase text-foreground/40 mb-3">
+          <p className="text-xs tracking-[0.3em] uppercase text-foreground/70 mb-3">
             From the Archive
           </p>
           <h2 className="font-serif text-2xl md:text-3xl">
@@ -69,7 +69,7 @@ export default function RelatedStories({ destinations, focus, limit = 4 }: Relat
         </div>
 
         {/* Stories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10">
           {stories.map((story) => (
             <Link
               key={story.slug}
@@ -77,24 +77,23 @@ export default function RelatedStories({ destinations, focus, limit = 4 }: Relat
               className="group"
             >
               <article>
-                <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-foreground/5">
+                <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
                   {story.heroImage ? (
                     <Image
                       src={story.heroImage}
                       alt={story.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                     />
-                  ) : (
-                    <div className="w-full h-full bg-foreground/5" />
-                  )}
+                  ) : null}
                 </div>
                 {story.category && (
-                  <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/40 mb-2">
+                  <p className="text-[11px] text-foreground/70 mb-1">
                     {story.category}
                   </p>
                 )}
-                <h3 className="font-serif text-lg leading-tight group-hover:text-foreground/70 transition-colors">
+                <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug group-hover:text-foreground/60 transition-colors">
                   {story.title}
                 </h3>
               </article>
@@ -106,7 +105,7 @@ export default function RelatedStories({ destinations, focus, limit = 4 }: Relat
         <div className="mt-10 text-center">
           <Link
             href="/stories"
-            className="text-xs tracking-[0.15em] uppercase text-foreground/50 hover:text-foreground transition-colors"
+            className="text-xs tracking-[0.15em] uppercase text-foreground/70 hover:text-foreground transition-colors"
           >
             Explore all stories →
           </Link>

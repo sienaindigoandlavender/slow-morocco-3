@@ -73,7 +73,7 @@ export default function RelatedJourneys({ region, tags, category, limit = 3 }: R
       <div className="container mx-auto px-6 lg:px-16">
         {/* Section Header */}
         <div className="mb-10">
-          <p className="text-xs tracking-[0.3em] uppercase text-foreground/40 mb-3">
+          <p className="text-xs tracking-[0.3em] uppercase text-foreground/70 mb-3">
             Continue the Journey
           </p>
           <h2 className="font-serif text-2xl md:text-3xl">
@@ -82,7 +82,7 @@ export default function RelatedJourneys({ region, tags, category, limit = 3 }: R
         </div>
 
         {/* Journeys Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-10">
           {journeys.map((journey) => (
             <Link
               key={journey.slug}
@@ -90,31 +90,23 @@ export default function RelatedJourneys({ region, tags, category, limit = 3 }: R
               className="group"
             >
               <article>
-                <div className="relative aspect-[4/3] mb-4 overflow-hidden bg-foreground/5">
+                <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
                   {journey.heroImage ? (
                     <Image
                       src={journey.heroImage}
                       alt={journey.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                     />
-                  ) : (
-                    <div className="w-full h-full bg-foreground/10" />
-                  )}
+                  ) : null}
                 </div>
-                <div className="flex items-baseline justify-between mb-2">
-                  {journey.duration && journey.duration > 0 && (
-                    <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/40">
-                      {journey.duration} Days
-                    </p>
-                  )}
-                  {journey.price && journey.price > 0 && (
-                    <p className="text-xs text-foreground/40">
-                      From <span className="text-foreground/70">{formatPrice(journey.price)}</span>
-                    </p>
-                  )}
-                </div>
-                <h3 className="font-serif text-lg leading-tight group-hover:text-foreground/70 transition-colors">
+                {journey.duration && journey.duration > 0 && (
+                  <p className="text-[11px] text-foreground/70 mb-1">
+                    {journey.duration} Days
+                  </p>
+                )}
+                <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug group-hover:text-foreground/70 transition-colors">
                   {journey.title}
                 </h3>
               </article>
