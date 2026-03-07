@@ -1,148 +1,165 @@
-# Slow Morocco - Deployment Guide
+# Slow Morocco — Deployment Guide
 
-## What's Included
+## Prerequisites
 
-This is the complete **pre-Nexus** version of Slow Morocco with:
+- Node.js 18+
+- npm
+- A Vercel account
+- A Supabase project with the database schema populated
 
-✅ **Plan Your Trip** form (saves to Google Sheets)
-✅ All public pages (Home, About, Contact, Journeys, Guides, FAQ)
-✅ 4-level Footer (hardcoded, not dynamic from Nexus)
-✅ Google Sheets integration for journeys and form submissions
-✅ Lovable design system (cream/sand colors)
-✅ Fully responsive
-✅ Ready to deploy
+## Environment Variables
 
-## Quick Start
+Add these in **Vercel Dashboard → Settings → Environment Variables**:
 
-### 1. Upload to GitHub
+### Required
+
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous/public key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (server-side only) |
+
+### Optional — Nexus (Multi-Site Layer)
+
+| Variable | Description |
+|---|---|
+| `NEXUS_SUPABASE_URL` | Nexus Supabase project URL |
+| `NEXUS_SUPABASE_ANON_KEY` | Nexus Supabase anon key |
+| `SITE_ID` | Site identifier (default: `slow-morocco`) |
+
+### Optional — Email
+
+| Variable | Description |
+|---|---|
+| `RESEND_API_KEY` | Resend API key for transactional email |
+| `CONTACT_EMAIL` | Email address for form notifications |
+
+### Optional — Maps
+
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox GL JS access token |
+
+### Optional — SEO & Indexing
+
+| Variable | Description |
+|---|---|
+| `GOOGLE_INDEXING_CLIENT_EMAIL` | Google service account email for Indexing API |
+| `GOOGLE_INDEXING_PRIVATE_KEY` | Google service account private key |
+| `GOOGLE_INDEX_SECRET` | Secret token for Google indexing webhook |
+| `INDEXNOW_SECRET` | Secret for IndexNow API |
+| `EBIRD_API_KEY` | eBird API key (birding data) |
+
+### Optional — Site
+
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | Public site URL (default: `https://www.slowmorocco.com`) |
+| `NEXT_PUBLIC_SITE_NAME` | Site name (default: `Slow Morocco`) |
+
+## Deploy to Vercel
+
+### 1. Push to GitHub
 
 ```bash
-# Extract the zip file
-unzip slow-morocco-pre-nexus.zip
-cd slow-morocco-complete
-
-# Initialize git
-git init
-git add .
-git commit -m "Initial commit - Pre-Nexus version"
-
-# Connect to your GitHub repo
 git remote add origin https://github.com/YOUR_USERNAME/slow-morocco.git
 git branch -M main
 git push -u origin main
 ```
 
-### 2. Deploy to Vercel
+### 2. Connect to Vercel
 
 1. Go to [vercel.com](https://vercel.com)
-2. Click "New Project"
+2. Click **New Project**
 3. Import your GitHub repository
-4. Add environment variables (see below)
-5. Click "Deploy"
+4. Add environment variables (see above)
+5. Click **Deploy**
 
-### 3. Environment Variables
+### 3. Custom Domain
 
-Add these in Vercel Dashboard → Settings → Environment Variables:
+1. In Vercel Dashboard → **Domains**
+2. Add `slowmorocco.com` and `www.slowmorocco.com`
+3. Update DNS records at your registrar
 
-```
-GOOGLE_SHEET_ID=your_sheet_id_here
-GOOGLE_SERVICE_ACCOUNT_BASE64=your_base64_key_here
-RESEND_API_KEY=your_resend_key_here (optional)
-CONTACT_EMAIL=hello@slowmorocco.com (optional)
-NEXT_PUBLIC_SITE_URL=https://slowmorocco.com
-NEXT_PUBLIC_SITE_NAME=Slow Morocco
-```
+## Supabase Setup
 
-**Important:** The `RESEND_API_KEY` is optional. If you don't add it, form submissions will still save to Google Sheets, you just won't get email notifications.
+The site reads from the following core tables:
 
-### 4. Google Sheets Setup
+- `destinations` — city/region data with slugs, descriptions, coordinates
+- `places` — individual places with categories, descriptions, hero images
+- `place_images` — gallery images for places
+- `city_guide_images` — hero and gallery images for city guide pages
+- `journeys` — multi-day itineraries with metadata
+- `journey_days` — day-by-day itinerary details
+- `stories` — editorial content with body, tags, categories
+- `guides` — practical travel guides
+- `glossary` — Moroccan terms and definitions
+- `day_trips` — bookable day trip experiences
+- `overnight_experiences` — bookable overnight stays
+- `page_banners` — hero images keyed by page path
+- `newsletter_subscribers` — email signups
+- `quotes` — trip request form submissions
+- `settings` — site-wide settings
+- `footer_links` — footer navigation structure
 
-Your Google Sheet needs these tabs:
+Ensure the Supabase service account has read access to all tables and write access to `quotes`, `newsletter_subscribers`, `day_trip_bookings`, and `overnight_bookings`.
 
-**Journeys** (with columns):
-- id
-- slug
-- title
-- duration
-- route
-- featuredImage
-- summary
-- status
+## Image Hosting
 
-**Quotes** (with columns):
-- id
-- submittedDate
-- firstName
-- lastName
-- email
-- phone
-- journey
-- month
-- year
-- travelers
-- days
-- language
-- budget
-- requests
-- hearAboutUs
-- status
+Images are primarily hosted on **Cloudinary** under the `ddcznjibs` cloud name. Some legacy images reference Google Drive URLs and are converted at runtime.
 
-## What Works
+Allowed image domains are configured in `next.config.js`:
+- `res.cloudinary.com`
+- `images.unsplash.com`
+- `drive.google.com`
+- `lh3.googleusercontent.com`
+- `*.googleusercontent.com`
+- `*.supabase.co`
 
-✅ Homepage with featured journeys
-✅ Journeys listing (pulls from Google Sheets)
-✅ Plan Your Trip form → saves to Quotes sheet
-✅ All static pages (About, Contact, Guides, FAQ)
-✅ 4-level footer with newsletter signup
-✅ Responsive design
-✅ SEO-friendly structure
+## Caching
 
-## What's NOT Included (Pre-Nexus)
+- Pages use `revalidate = 3600` (1 hour ISR) by default
+- Static pages are built at deploy time
+- Dynamic routes use on-demand revalidation
 
-❌ Dynamic footer from Nexus sheet
-❌ Dynamic content pages from Nexus sheet
-❌ Admin tools (quote builder, dashboard, etc.)
+## Redirects
 
-**This is the stable, working version before Nexus integration.**
+Over 200 Squarespace-to-Next.js 301 redirects are configured in `next.config.js` to preserve SEO from the previous site. These cover:
+
+- Old place URLs → `/places/[slug]`
+- Old journey URLs → `/journeys`
+- Old static pages → new equivalents
+- Squarespace junk URLs → homepage
+- Story slug renames for SEO
 
 ## Testing After Deployment
 
-1. Visit your site
-2. Navigate to `/plan-your-trip`
-3. Fill out the form
-4. Check your Google Sheet → should see new row in Quotes tab
-5. Check email (if Resend configured)
+1. Visit the homepage — hero image and city cards should load
+2. Navigate to `/morocco` — country guide page
+3. Navigate to `/journeys` — journey listings
+4. Navigate to `/stories` — editorial stories
+5. Navigate to `/places` — places directory
+6. Navigate to `/plan-your-trip` — submit a test form, check Supabase `quotes` table
+7. Check `/sitemap.xml` — should list all published pages
+8. Check OG images — share a URL on social media or use a debugger tool
 
 ## Troubleshooting
 
+**Images not loading?**
+- Check Cloudinary URLs are accessible
+- Verify `next.config.js` has the correct remote patterns
+- Check browser console for Next.js Image optimization errors
+
+**Pages showing empty content?**
+- Verify Supabase environment variables are set
+- Check that tables have `published = true` rows
+- Check Vercel function logs for Supabase query errors
+
 **Form not submitting?**
-- Check Google Sheets API credentials
-- Verify GOOGLE_SERVICE_ACCOUNT_BASE64 is set correctly
-- Check Vercel logs for errors
+- Verify `SUPABASE_SERVICE_ROLE_KEY` is set in Vercel
+- Check Vercel function logs for errors
+- Ensure `quotes` table has insert permissions
 
-**Journeys not showing?**
-- Make sure Journeys tab has `status` column set to "Active"
-- Check that GOOGLE_SHEET_ID is correct
-- Verify service account has access to the sheet
-
-**Styling looks off?**
-- Check that globals.css is properly imported
-- Verify tailwind.config.ts is in root directory
-- Clear browser cache and hard reload
-
-## Next Steps
-
-Once this is deployed and working:
-1. Test all pages
-2. Test form submission
-3. Verify Google Sheets integration
-4. Then (optionally) add Nexus integration for dynamic content
-
-## Support
-
-If something isn't working, check:
-1. Vercel deployment logs
-2. Browser console for errors
-3. Google Sheets API quota/permissions
-
-Good luck with deployment! 🚀
+**Maps not rendering?**
+- Verify `NEXT_PUBLIC_MAPBOX_TOKEN` is set
+- Check Mapbox usage dashboard for quota limits
