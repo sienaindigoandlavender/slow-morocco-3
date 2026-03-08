@@ -76,7 +76,10 @@ function isHTML(str: string): boolean {
 }
 
 function prepareHTML(html: string): string {
-  return html
+  // Convert any remaining <br> tags to paragraph breaks
+  let processed = html.replace(/<br\s*\/?>/gi, '</p><p>');
+  
+  return processed
     .replace(/<p>/gi, '<p class="text-foreground leading-[1.85] mb-8">')
     .replace(/<h1>/gi, '<h1 class="font-serif text-3xl text-foreground mt-14 mb-8">')
     .replace(/<h2>/gi, '<h2 class="font-serif text-2xl text-foreground mt-14 mb-8">')
