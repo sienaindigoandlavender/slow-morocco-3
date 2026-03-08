@@ -68,7 +68,7 @@ export default async function HomePage() {
     const timeBucket = Math.floor(Date.now() / THREE_HOURS);
 
     // Simple seeded shuffle — deterministic per time bucket
-    function seededShuffle<T>(arr: T[], seed: number): T[] {
+    const seededShuffle = <T,>(arr: T[], seed: number): T[] => {
       const shuffled = [...arr];
       let s = seed;
       for (let i = shuffled.length - 1; i > 0; i--) {
@@ -77,7 +77,7 @@ export default async function HomePage() {
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
       }
       return shuffled;
-    }
+    };
 
     stories = seededShuffle(allStories, timeBucket).slice(0, 14);
 
