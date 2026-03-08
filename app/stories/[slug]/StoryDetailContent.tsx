@@ -208,7 +208,7 @@ export default function StoryDetailContent({
       <article className="max-w-3xl mx-auto px-8 md:px-12 py-14 md:py-20">
 
         {/* Body text */}
-        {story.body && <StoryBody content={story.body} inlineImages={images} />}
+        {story.body && <StoryBody content={story.body} inlineImages={images} currentSlug={slug} />}
 
         {/* Seasonal */}
         {story.category && (
