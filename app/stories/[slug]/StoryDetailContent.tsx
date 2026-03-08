@@ -406,13 +406,13 @@ export default function StoryDetailContent({
           RELATED JOURNEYS — dark editorial panel
           ══════════════════════════════════════════════════════════════ */}
       {relatedJourneys.length > 0 && (
-        <section className="bg-[#1a1916] text-white py-20 md:py-28">
+        <section className="py-20 md:py-28 border-t border-foreground/[0.08]">
           <div className="px-8 md:px-16 lg:px-20">
             <div className="text-center mb-14 md:mb-16">
-              <p className="text-[11px] tracking-[0.3em] uppercase text-white/30 mb-3">
+              <p className="text-[11px] tracking-[0.3em] uppercase text-foreground/30 mb-3">
                 Private Journeys
               </p>
-              <h2 className="font-serif text-2xl md:text-[1.75rem] text-white/80">
+              <h2 className="font-serif text-2xl md:text-[1.75rem] text-foreground/80">
                 Travel through this region.
               </h2>
             </div>
@@ -420,7 +420,7 @@ export default function StoryDetailContent({
             <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-10">
               {relatedJourneys.slice(0, 3).map((journey) => (
                 <Link key={journey.slug} href={`/journeys/${journey.slug}`} className="group">
-                  <div className="aspect-[29/39] relative overflow-hidden bg-white/5 mb-4">
+                  <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-4">
                     {journey.heroImage && (
                       <Image
                         src={cloudinaryUrl(journey.heroImage, 480)}
@@ -431,12 +431,12 @@ export default function StoryDetailContent({
                       />
                     )}
                   </div>
-                  <p className="text-[10px] text-white/30 mb-1.5">
+                  <p className="text-[10px] text-foreground/40 mb-1.5">
                     {journey.duration && journey.duration > 0
                       ? `${journey.duration}-Day Journey`
                       : "Private Journey"}
                   </p>
-                  <h3 className="text-[12px] tracking-[0.04em] uppercase leading-[1.35] text-white group-hover:text-white/60 transition-colors duration-500">
+                  <h3 className="text-[12px] tracking-[0.04em] uppercase leading-[1.35] text-foreground group-hover:text-foreground/60 transition-colors duration-500">
                     {journey.title}
                   </h3>
                 </Link>
@@ -446,7 +446,7 @@ export default function StoryDetailContent({
             <div className="text-center mt-12">
               <Link
                 href="/journeys"
-                className="text-[11px] tracking-[0.15em] uppercase text-white/35 hover:text-white/60 transition-colors"
+                className="text-[11px] tracking-[0.15em] uppercase text-foreground/35 hover:text-foreground/60 transition-colors"
               >
                 All journeys
               </Link>
