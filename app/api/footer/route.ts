@@ -96,8 +96,8 @@ export async function GET() {
     const footerData = {
       brandId: SITE_ID,
       newsletter: newsletterConfig,
-      columns: finalColumns,
-      contentSites: contentSites.map((s) => ({ label: s.site_label, url: s.site_url })),
+      columns: finalColumns.slice(0, 4),
+      contentSites: [],
       legal,
       copyright: { year: new Date().getFullYear(), name: newsletterConfig.brandName },
     };
