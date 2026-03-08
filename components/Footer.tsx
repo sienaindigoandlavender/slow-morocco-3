@@ -133,54 +133,43 @@ export default function Footer() {
   return (
     <footer>
       {/* ═══════════════════════════════════════════════════════════════
-          LEVEL 1: Newsletter
+          LEVEL 1: Newsletter — Kinfolk inline bar
           ═══════════════════════════════════════════════════════════════ */}
       {newsletter.show && (
-        <section 
-          className="py-20 md:py-24 bg-[#1f1f1f] relative"
-          style={newsletter.backgroundImage ? {
-            backgroundImage: `url(${newsletter.backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          } : undefined}
-        >
-          {/* Dark overlay when background image is present */}
-          {newsletter.backgroundImage && (
-            <div className="absolute inset-0 bg-black/60" />
-          )}
-          
-          <div className="container mx-auto px-8 md:px-16 lg:px-20 relative z-10">
-            <div className="max-w-2xl mx-auto text-center flex flex-col items-center">
-              <h3 className="font-serif text-2xl md:text-3xl text-white mb-4">
-                {newsletter.title}
-              </h3>
-              <p className="text-white/50 text-sm mb-8">
-                {newsletter.description}
+        <section className="border-t border-foreground/10 bg-background">
+          <div className="px-8 md:px-10 lg:px-14 py-8 md:py-10">
+            {subscribed ? (
+              <p className="font-serif text-lg text-foreground/60">
+                Thank you. Your first story arrives next week.
               </p>
-
-              {subscribed ? (
-                <p className="text-white/70">Thank you for subscribing.</p>
-              ) : (
-                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto justify-center">
+            ) : (
+              <form
+                onSubmit={handleSubscribe}
+                className="flex flex-col md:flex-row md:items-baseline justify-between gap-6"
+              >
+                <p className="font-serif text-lg md:text-xl text-foreground shrink-0">
+                  One story about Morocco, every week.
+                </p>
+                <div className="flex items-center gap-4 flex-1 max-w-md">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email"
+                    placeholder="Email Address"
                     required
                     disabled={isSubscribing}
-                    className="flex-1 px-5 py-4 bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors"
+                    className="flex-1 bg-transparent border-b border-foreground/20 py-2 text-sm text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground/50 transition-colors"
                   />
                   <button
                     type="submit"
                     disabled={isSubscribing}
-                    className="px-8 py-4 bg-white text-[#1f1f1f] text-xs tracking-[0.15em] uppercase font-medium hover:bg-white/90 transition-colors disabled:opacity-50"
+                    className="text-[11px] tracking-[0.12em] uppercase text-foreground/50 hover:text-foreground transition-colors shrink-0"
                   >
-                    {isSubscribing ? "..." : "Subscribe"}
+                    {isSubscribing ? "..." : "Submit"}
                   </button>
-                </form>
-              )}
-            </div>
+                </div>
+              </form>
+            )}
           </div>
         </section>
       )}
