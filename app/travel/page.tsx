@@ -6,7 +6,7 @@ const BASE_URL = "https://www.slowmorocco.com";
 export const metadata: Metadata = {
   title: "Morocco Travel Guide 2026 — Visa, Transport, Money, Health & Packing",
   description:
-    "Complete Morocco travel guide. Visa-free for US, UK, EU, Canada, Australia. Currency: dirham (MAD), 1 EUR ≈ 11.1 DH. Train, bus, taxi, rental car routes explained. No vaccinations required. Best months March–May and September–November. Written from eleven years living in Marrakech.",
+    "Complete Morocco travel guide. Visa-free for US, UK, EU, Canada, Australia. Currency: dirham (MAD), 1 EUR ≈ 11.1 DH. Train, bus, taxi, rental car routes explained. No vaccinations required. Best months March–May and September–November. Written from experience living in Morocco.",
   keywords: [
     "Morocco travel guide 2026",
     "Morocco visa requirements",
@@ -50,8 +50,8 @@ const howToJsonLd = {
   url: `${BASE_URL}/travel`,
   author: {
     "@type": "Person",
-    name: "J. Ng",
-    jobTitle: "Founder",
+    name: "Slow Morocco",
+    jobTitle: "Publisher",
     worksFor: { "@type": "Organization", name: "Dancing with Lions", url: "https://www.dancingwiththelions.com" },
   },
   publisher: {
@@ -180,8 +180,8 @@ const articleJsonLd = {
   dateModified: "2026-03-01",
   author: {
     "@type": "Person",
-    name: "J. Ng",
-    description: "Founder of Dancing with Lions. Has lived in Marrakech for eleven years.",
+    name: "Slow Morocco",
+    description: "Founder of Dancing with Lions. Cultural research group based in Marrakech.",
   },
   publisher: {
     "@type": "Organization",
