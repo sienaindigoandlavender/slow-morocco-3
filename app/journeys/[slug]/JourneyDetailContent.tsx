@@ -428,7 +428,7 @@ export default function JourneyDetailContent({
   // Regular Journey Layout
   return (
     <div className="bg-background min-h-screen">
-      {/* Hero Image */}
+      {/* Hero Image with title overlay */}
       <section className="relative h-[100svh] min-h-[600px] bg-[#f0f0f0]">
         {journey.heroImage && (
           <Image
@@ -441,61 +441,43 @@ export default function JourneyDetailContent({
               unoptimized
             />
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
+
+        {/* Title on image */}
+        <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-12 lg:px-16 pb-14 md:pb-20">
+          <p className="text-[10px] tracking-[0.25em] uppercase text-white/50 mb-4">
+            {journey.durationDays} Days
+          </p>
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] max-w-5xl mb-4">
+            {journey.title}
+          </h1>
+          {(journey.arcDescription || journey.description) && (
+            <p className="font-serif text-white/60 text-lg md:text-xl max-w-2xl leading-relaxed">
+              {journey.arcDescription || journey.description}
+            </p>
+          )}
+        </div>
       </section>
+
+      {/* Meta bar */}
+      <div className="border-b border-foreground/10">
+        <div className="max-w-3xl mx-auto px-8 md:px-12 py-5 flex items-center justify-between">
+          <div className="flex items-center gap-4 text-[11px] tracking-[0.12em] uppercase text-foreground/35">
+            <Link href="/journeys" className="hover:text-foreground/60 transition-colors">Journeys</Link>
+            <span>{journey.durationDays} Days</span>
+            {journey.startCity && <span>From {journey.startCity}</span>}
+          </div>
+          <ShareTools
+            title={journey.title}
+            description={journey.arcDescription || journey.description}
+            imageUrl={journey.heroImage}
+          />
+        </div>
+      </div>
 
       {/* Content */}
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-6 lg:px-16 max-w-3xl">
-          <div className="flex items-center justify-between mb-12">
-            <Link
-              href="/journeys"
-              className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Explore all journeys
-            </Link>
-            <div className="flex items-center gap-3">
-              {prevJourney && (
-                <Link
-                  href={`/journeys/${prevJourney.slug}`}
-                  className="w-9 h-9 flex items-center justify-center border border-foreground/20 hover:border-foreground/40 transition-colors"
-                  aria-label={`Previous journey: ${prevJourney.title}`}
-                  title={prevJourney.title}
-                >
-                  <ChevronLeft className="w-4 h-4 text-foreground/60" />
-                </Link>
-              )}
-              {nextJourney && (
-                <Link
-                  href={`/journeys/${nextJourney.slug}`}
-                  className="w-9 h-9 flex items-center justify-center border border-foreground/20 hover:border-foreground/40 transition-colors"
-                  aria-label={`Next journey: ${nextJourney.title}`}
-                  title={nextJourney.title}
-                >
-                  <ChevronRight className="w-4 h-4 text-foreground/60" />
-                </Link>
-              )}
-              <ShareTools
-                title={journey.title}
-                description={journey.arcDescription || journey.description}
-                imageUrl={journey.heroImage}
-              />
-            </div>
-          </div>
-
-          <div className="flex items-baseline gap-6 mb-4">
-            <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground">
-              {journey.durationDays} Days
-            </p>
-          </div>
-
-          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] mb-8">
-            {journey.title}
-          </h1>
-
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-12 font-display italic">
-            {journey.arcDescription || journey.description}
-          </p>
 
           {itinerary.length > 0 && (
             <div className="mb-16">
