@@ -37,7 +37,7 @@ export default function MoroccoLayout({
     "@type": "WebPage",
     "name": "Morocco — Country Guide",
     "description":
-      "Morocco travel guide: cities, culture, when to visit, visas, currency, and language. Written from eleven years living in Marrakech.",
+      "Morocco travel guide: cities, culture, when to visit, visas, currency, and language. Written from experience living in Morocco.",
     "url": `${BASE_URL}/morocco`,
     "publisher": {
       "@type": "Organization",
@@ -46,8 +46,8 @@ export default function MoroccoLayout({
     },
     "author": {
       "@type": "Person",
-      "name": "J. Ng",
-      "description": "Cultural travel writer based in Marrakech for eleven years.",
+      "name": "Slow Morocco",
+      "description": "Cultural research group based in Marrakech.",
     },
     "about": {
       "@type": "Country",
