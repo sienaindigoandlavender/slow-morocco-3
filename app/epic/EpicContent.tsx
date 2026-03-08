@@ -30,7 +30,7 @@ export default function EpicContent({ journeys }: EpicContentProps) {
   return (
     <div className="bg-[#0a0a0a] min-h-screen text-white">
       {/* Hero - Full Screen */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-[100svh] min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-[#0a0a0a] to-[#1a1a1a]">
           <div 
             className="absolute inset-0 opacity-20"
@@ -50,7 +50,7 @@ export default function EpicContent({ journeys }: EpicContentProps) {
           </h1>
 
           <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto mb-12">
-            Journeys that cannot be copied. Built over eleven years. 
+            Journeys that cannot be copied. Built from experience. 
             Shared only with those ready to receive them.
           </p>
 
