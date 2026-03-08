@@ -175,174 +175,54 @@ export default function Footer() {
       )}
 
       {/* ═══════════════════════════════════════════════════════════════
-          LEVEL 2: Navigation (from API columns)
+          LEVEL 2: Navigation — clean, minimal
           ═══════════════════════════════════════════════════════════════ */}
       <section className="py-16 bg-[#161616]">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20">
+        <div className="px-8 md:px-10 lg:px-14">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
-            {/* Brand Column */}
+            {/* Brand */}
             <div className="col-span-2 md:col-span-1">
               <Link href="/" className="inline-block mb-6">
-                <span className="font-serif text-sm tracking-[0.2em] text-white">
-                  {newsletter.brandName.toUpperCase()}
+                <span className="text-[13px] tracking-[0.25em] uppercase text-white/80">
+                  Slow Morocco
                 </span>
               </Link>
-              <p className="text-sm text-white/40 leading-relaxed max-w-xs">
-                Private cultural journeys through Morocco, shaped around what matters to you.
+              <p className="text-sm text-white/30 leading-relaxed max-w-xs">
+                The definitive cultural guide to Morocco.
               </p>
             </div>
 
-            {/* Dynamic Columns from API */}
-            {columns.slice(1, 4).map((column, colIdx) => (
-              <div key={column.number}>
-                <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-5">
-                  {column.title}
-                </h4>
-                <ul className="space-y-3">
-                  {column.links.slice(0, 5).map((link, idx) => (
-                    <li key={idx}>
-                      {link.href ? (
-                        <Link
-                          href={link.href}
-                          className="text-sm text-white/60 hover:text-white transition-colors"
-                        >
-                          {link.label}
-                        </Link>
-                      ) : (
-                        <span className="text-sm text-white/40">{link.label}</span>
-                      )}
-                    </li>
-                  ))}
-                  {/* Brand-specific: Contact Us on last column */}
-                  {colIdx === columns.slice(1, 4).length - 1 && (
-                    <li>
-                      <Link
-                        href="/contact"
-                        className="text-sm text-white/60 hover:text-white transition-colors"
-                      >
-                        Contact Us
-                      </Link>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            ))}
-
-            {/* Fallback columns if API returns empty */}
-            {columns.length === 0 && (
-              <>
-                <div>
-                  <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-5">
-                    Explore
-                  </h4>
-                  <ul className="space-y-3">
-                    <li><Link href="/journeys" className="text-sm text-white/60 hover:text-white transition-colors">Journeys</Link></li>
-                    <li><Link href="/epic" className="text-sm text-white/60 hover:text-white transition-colors">Epic</Link></li>
-                    <li><Link href="/stories" className="text-sm text-white/60 hover:text-white transition-colors">Stories</Link></li>
-                    <li><Link href="/places" className="text-sm text-white/60 hover:text-white transition-colors">Places</Link></li>
-                    <li><Link href="/glossary" className="text-sm text-white/60 hover:text-white transition-colors">Glossary</Link></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-5">
-                    About Morocco
-                  </h4>
-                  <ul className="space-y-3">
-                    <li><Link href="/stories" className="text-sm text-white/60 hover:text-white transition-colors">All Stories</Link></li>
-                    <li><Link href="/life" className="text-sm text-white/60 hover:text-white transition-colors">Life — Data</Link></li>
-                    <li><Link href="/travel" className="text-sm text-white/60 hover:text-white transition-colors">Travel — Planning</Link></li>
-                    <li><Link href="/visa-info" className="text-sm text-white/60 hover:text-white transition-colors">Visa Information</Link></li>
-                    <li><Link href="/health-safety" className="text-sm text-white/60 hover:text-white transition-colors">Health &amp; Safety</Link></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-5">
-                    Plan &amp; Book
-                  </h4>
-                  <ul className="space-y-3">
-                    <li><Link href="/plan-your-trip" className="text-sm text-white/60 hover:text-white transition-colors">Plan Your Trip</Link></li>
-                    <li><Link href="/faq" className="text-sm text-white/60 hover:text-white transition-colors">FAQ</Link></li>
-                    <li><Link href="/whats-included" className="text-sm text-white/60 hover:text-white transition-colors">What's Included</Link></li>
-                    <li><Link href="/about" className="text-sm text-white/60 hover:text-white transition-colors">Who We Are</Link></li>
-                    <li><Link href="/contact" className="text-sm text-white/60 hover:text-white transition-colors">Contact</Link></li>
-                  </ul>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════════
-          LEVEL 3: Content Network (from Nexus)
-          ═══════════════════════════════════════════════════════════════ */}
-      {contentSites.length > 0 && (
-        <section className="py-8 bg-[#141414]">
-          <div className="container mx-auto px-8 md:px-16 lg:px-20">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 md:gap-8">
-              <span className="text-[10px] tracking-[0.2em] uppercase text-white/20">
-                Explore
-              </span>
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-                {contentSites.map((site, idx) => (
-                  <a
-                    key={idx}
-                    href={site.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs tracking-[0.1em] text-white/40 hover:text-white/70 transition-colors"
-                  >
-                    {site.label}
-                  </a>
-                ))}
-              </div>
+            {/* Stories */}
+            <div>
+              <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/25 mb-5">Stories</h4>
+              <ul className="space-y-3">
+                <li><Link href="/stories" className="text-sm text-white/50 hover:text-white/80 transition-colors">All Stories</Link></li>
+                <li><Link href="/stories/category/history" className="text-sm text-white/50 hover:text-white/80 transition-colors">History</Link></li>
+                <li><Link href="/stories/category/architecture" className="text-sm text-white/50 hover:text-white/80 transition-colors">Architecture</Link></li>
+                <li><Link href="/stories/category/food" className="text-sm text-white/50 hover:text-white/80 transition-colors">Food</Link></li>
+                <li><Link href="/stories/category/culture" className="text-sm text-white/50 hover:text-white/80 transition-colors">Culture</Link></li>
+              </ul>
             </div>
-          </div>
-        </section>
-      )}
 
-      {/* ═══════════════════════════════════════════════════════════════
-          LEVEL 4: Slow World Network
-          ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-8 bg-[#121212]">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 md:gap-8">
-            <span className="text-[10px] tracking-[0.2em] uppercase text-white/20">
-              Slow World
-            </span>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              <a
-                href="https://slowmauritius.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs tracking-[0.1em] text-white/40 hover:text-white/70 transition-colors"
-              >
-                Mauritius
-              </a>
-              <a
-                href="https://slownamibia.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs tracking-[0.1em] text-white/40 hover:text-white/70 transition-colors"
-              >
-                Namibia
-              </a>
-              <a
-                href="https://slowtunisia.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs tracking-[0.1em] text-white/40 hover:text-white/70 transition-colors"
-              >
-                Tunisia
-              </a>
-              <a
-                href="https://slowturkiye.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs tracking-[0.1em] text-white/40 hover:text-white/70 transition-colors"
-              >
-                Türkiye
-              </a>
+            {/* Places & Journeys */}
+            <div>
+              <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/25 mb-5">Explore</h4>
+              <ul className="space-y-3">
+                <li><Link href="/places" className="text-sm text-white/50 hover:text-white/80 transition-colors">Places</Link></li>
+                <li><Link href="/journeys" className="text-sm text-white/50 hover:text-white/80 transition-colors">Journeys</Link></li>
+                <li><Link href="/glossary" className="text-sm text-white/50 hover:text-white/80 transition-colors">Glossary</Link></li>
+              </ul>
+            </div>
+
+            {/* About */}
+            <div>
+              <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/25 mb-5">About</h4>
+              <ul className="space-y-3">
+                <li><Link href="/about" className="text-sm text-white/50 hover:text-white/80 transition-colors">Who We Are</Link></li>
+                <li><Link href="/plan-your-trip" className="text-sm text-white/50 hover:text-white/80 transition-colors">Plan a Trip</Link></li>
+                <li><Link href="/faq" className="text-sm text-white/50 hover:text-white/80 transition-colors">FAQ</Link></li>
+                <li><Link href="/contact" className="text-sm text-white/50 hover:text-white/80 transition-colors">Contact</Link></li>
+              </ul>
             </div>
           </div>
         </div>
