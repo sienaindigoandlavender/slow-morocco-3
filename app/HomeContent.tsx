@@ -245,7 +245,7 @@ export default function HomeContent({
                     {leadStory.category}
                   </p>
                 )}
-                <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] mb-4 group-hover:text-white/80 transition-colors duration-500">
+                <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl text-white leading-[1.1] mb-4 uppercase tracking-[0.01em] group-hover:text-white/80 transition-colors duration-500">
                   {leadStory.title}
                 </h2>
                 {leadStory.subtitle && (
