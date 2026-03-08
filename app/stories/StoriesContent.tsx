@@ -99,9 +99,6 @@ export default function StoriesContent({
             >
               A–Z
             </button>
-            <span className="text-[11px] text-foreground/25">
-              {filteredStories.length}
-            </span>
           </div>
         </div>
       </section>
@@ -178,7 +175,7 @@ export default function StoriesContent({
       {/* ── SEO paragraph ────────────────────────────────────────────── */}
       <section className="px-8 md:px-10 lg:px-14 pb-16 border-t border-foreground/[0.08] pt-14">
         <p className="text-[12.5px] text-foreground/35 leading-[1.7] max-w-2xl">
-          Cultural essays, artisan profiles, and deep-cuts from life in Morocco. {filteredStories.length} stories and growing.
+          Cultural essays, artisan profiles, and deep-cuts from life in Morocco.
         </p>
       </section>
 
