@@ -160,7 +160,7 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
     <main className="bg-background text-foreground">
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="relative h-[65vh] min-h-[480px] max-h-[720px] bg-[#1a1612]">
+      <section className="relative h-[100svh] min-h-[600px] bg-[#1a1612]">
         <Image
           src="https://res.cloudinary.com/ddcznjibs/image/upload/v1772838482/Taourirt_Kasbah_rising_above_the_desert_town_lqljat.png"
           alt="Morocco"
@@ -170,9 +170,9 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
           priority
               unoptimized
             />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
-        <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-20 pb-14">
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
+        <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-12 lg:px-16 pb-14 md:pb-20">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1]">
             Morocco
           </h1>
         </div>
@@ -188,14 +188,12 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
             receiving travellers long enough to have developed a particular patience with the surprised.
           </p>
           <p className="text-sm text-foreground/50 leading-relaxed">
-            Eleven years of living inside the medina teaches you that Morocco is not a 
+            Morocco is not a 
             destination you understand on the first visit. It reveals itself laterally — 
             through a conversation, a detour, a door left open. This is a country best 
             approached slowly.
           </p>
-          <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/25 mt-4">
-            — J. Ng, Marrakech
-          </p>
+
         </div>
       </section>
 
