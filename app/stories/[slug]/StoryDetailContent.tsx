@@ -118,389 +118,236 @@ export default function StoryDetailContent({
     "@id": `https://www.slowmorocco.com/stories/${slug}#article`,
     headline: story.title,
     alternativeHeadline: story.subtitle || undefined,
-    description: story.subtitle || story.excerpt || "",
-    image: story.heroImage,
-    datePublished,
-    dateModified: new Date().toISOString(),
-    author: sovereignEntity,
-    publisher: sovereignEntity,
-    articleSection: story.category,
-    keywords: tags.join(", "),
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://www.slowmorocco.com/stories/${slug}`,
+    description: story.excerpt || story.subtitle || story.title,
+    image: story.heroImage ? cloudinaryUrl(story.heroImage, 1200) : undefined,
+    author: {
+      "@type": "Person",
+      name: story.textBy || "J. Ng",
     },
-    about: [
-      ...(story.region ? [{ "@type": "Place", name: story.region, containedInPlace: { "@type": "Country", name: "Morocco" } }] : []),
-      ...culturalEntities.map(entity => ({ "@type": "Thing", name: entity })),
-    ],
-    isAccessibleForFree: true,
-    license: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+    publisher: sovereignEntity,
+    datePublished,
+    dateModified: datePublished,
+    mainEntityOfPage: `https://www.slowmorocco.com/stories/${slug}`,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Slow Morocco",
+      url: "https://www.slowmorocco.com",
+    },
+    about: culturalEntities.length > 0
+      ? culturalEntities.map((entity) => ({ "@type": "Thing", name: entity }))
+      : undefined,
   };
 
   return (
     <div className="bg-background text-foreground min-h-screen">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
+      {/* JSON-LD */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
 
-      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      {/* ══════════════════════════════════════════════════════════════
+          HERO — Full-bleed image with title overlaid (Kinfolk style)
+          ══════════════════════════════════════════════════════════════ */}
       {story.heroImage && (
-        <section className="relative w-full h-[55vh] md:h-[65vh]">
+        <section className="relative h-[85vh] min-h-[550px] max-h-[950px]">
           <Image
-            src={cloudinaryUrl(story.heroImage)}
+            src={cloudinaryUrl(story.heroImage, 1920)}
             alt={story.title}
             fill
             sizes="100vw"
             className="object-cover"
             priority
-              unoptimized
-            />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+            unoptimized
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
+
+          {/* Title on image — bottom left, massive */}
+          <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-12 lg:px-16 pb-14 md:pb-20">
+            <h1
+              className="font-serif text-white uppercase leading-[0.95] tracking-[-0.01em] max-w-5xl"
+              style={{ fontSize: "clamp(2rem, 6vw, 5.5rem)" }}
+            >
+              {story.title}
+            </h1>
+            {story.subtitle && (
+              <p className="font-serif text-white/60 text-lg md:text-xl mt-4 max-w-2xl leading-relaxed">
+                {story.subtitle}
+              </p>
+            )}
+          </div>
         </section>
       )}
 
-      {/* ── Article header ───────────────────────────────────────────── */}
-      <div className="border-b border-border">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20 py-10 md:py-14 max-w-5xl">
-          {/* Breadcrumb + prev/next */}
-          <div className="flex items-center justify-between mb-6">
-            <nav className="flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase text-foreground/30">
-              <Link href="/stories" className="hover:text-foreground transition-colors">Explore all stories</Link>
-              {story.category && (
-                <>
-                  <span>/</span>
-                  <Link
-                    href={`/stories/category/${story.category.toLowerCase()}`}
-                    className="hover:text-foreground transition-colors"
-                  >
-                    {story.category}
-                  </Link>
-                </>
-              )}
-            </nav>
-            <div className="flex items-center gap-3">
-              {prevStory && (
-                <Link
-                  href={`/stories/${prevStory.slug}`}
-                  className="w-9 h-9 flex items-center justify-center border border-foreground/20 hover:border-foreground/40 transition-colors"
-                  aria-label={`Previous story: ${prevStory.title}`}
-                  title={prevStory.title}
-                >
-                  <svg className="w-4 h-4 text-foreground/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" /></svg>
-                </Link>
-              )}
-              {nextStory && (
-                <Link
-                  href={`/stories/${nextStory.slug}`}
-                  className="w-9 h-9 flex items-center justify-center border border-foreground/20 hover:border-foreground/40 transition-colors"
-                  aria-label={`Next story: ${nextStory.title}`}
-                  title={nextStory.title}
-                >
-                  <svg className="w-4 h-4 text-foreground/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" /></svg>
-                </Link>
-              )}
-            </div>
-          </div>
-
-          {/* Title block */}
-          <h1 className="font-serif text-2xl md:text-4xl lg:text-5xl leading-[1.1] mb-5 max-w-3xl uppercase">
-            {story.title}
-          </h1>
-          {story.subtitle && (
-            <p className="font-serif italic text-xl md:text-2xl text-foreground/50 mb-8 max-w-2xl">
-              {story.subtitle}
-            </p>
-          )}
-
-          {/* Meta row */}
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] tracking-[0.15em] uppercase text-foreground/35">
-            {story.textBy && <span>By {story.textBy}</span>}
-            {story.year && <span>{story.year}</span>}
-            {story.readTime && <span>{story.readTime} min read</span>}
-            {story.region && <span>{story.region}</span>}
-            <div className="ml-auto">
-              <ShareTools
-                title={story.title}
-                description={story.subtitle || story.excerpt}
-                imageUrl={story.heroImage}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Two-column body ──────────────────────────────────────────── */}
-      <div className="container mx-auto px-8 md:px-16 lg:px-20 max-w-5xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-0 lg:gap-16 py-14 md:py-20">
-
-          {/* LEFT — article */}
-          <article className="min-w-0">
-
-            {/* Body */}
-            {story.body && <StoryBody content={story.body} inlineImages={images} />}
-
-            {/* Seasonal */}
+      {/* ══════════════════════════════════════════════════════════════
+          META BAR — category, author, read time, share
+          ══════════════════════════════════════════════════════════════ */}
+      <div className="border-b border-foreground/10">
+        <div className="max-w-3xl mx-auto px-8 md:px-12 py-5 flex items-center justify-between">
+          <div className="flex items-center gap-4 text-[11px] tracking-[0.12em] uppercase text-foreground/35">
             {story.category && (
-              <div className="my-10">
-                <SeasonalBadge category={story.category} region={story.region} variant="story" />
-              </div>
+              <Link
+                href={`/stories/category/${story.category.toLowerCase()}`}
+                className="hover:text-foreground/60 transition-colors"
+              >
+                {story.category}
+              </Link>
             )}
-
-            {/* Map */}
-            {mapData?.markers?.length > 0 && (
-              <>
-                <hr className="border-border my-12" />
-                <StoryMapRenderer mapData={mapData} title={story.title} />
-              </>
-            )}
-
-            {/* Journey bridge */}
-            {story.journeyBridge && (
-              <div className="my-12 py-8 border-t border-b border-border">
-                <p className="text-foreground/60 italic font-serif text-lg leading-relaxed">
-                  {story.journeyBridge}
-                </p>
-                <Link
-                  href="/plan-your-trip"
-                  className="inline-block mt-4 text-[10px] tracking-[0.2em] uppercase text-foreground/40 hover:text-foreground transition-colors"
-                >
-                  Tell us about your trip →
-                </Link>
-              </div>
-            )}
-
-            {/* Embed */}
-            {story.embedUrl && (
-              <>
-                <hr className="border-border my-12" />
-                <div className="text-center mb-4">
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/30">Interactive Module</p>
-                </div>
-                <iframe
-                  src={story.embedUrl}
-                  title={`${story.title} — Interactive Module`}
-                  className="w-full border-0"
-                  style={{ height: "80vh", minHeight: "600px" }}
-                  loading="lazy"
-                  allow="fullscreen"
-                />
-                <p className="text-[11px] text-foreground/30 mt-3 text-center">
-                  Data and visualisation by{" "}
-                  <a href={story.embedUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
-                    Dancing with Lions
-                  </a>
-                </p>
-              </>
-            )}
-
-            {/* Facts */}
-            {facts.length > 0 && (
-              <>
-                <hr className="border-border my-12" />
-                <div className="bg-foreground/[0.03] border border-border p-8">
-                  <h3 className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 font-mono mb-6">
-                    The Facts
-                  </h3>
-                  <ul className="space-y-3">
-                    {facts.map((fact, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-foreground/70 leading-relaxed">
-                        <span className="text-foreground/25 mt-0.5 flex-shrink-0">—</span>
-                        <span>{fact}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </>
-            )}
-
-            {/* Gallery */}
-            {images.length > 0 && (
-              <>
-                <hr className="border-border my-12" />
-                <div className="space-y-8">
-                  {images.map((img, i) => (
-                    <figure key={i}>
-                      <div className="relative aspect-[16/10] overflow-hidden">
-                        <Image src={cloudinaryUrl(img.image_url)} alt={img.caption || story.title} fill className="object-cover"
-              unoptimized
-            />
-                      </div>
-                      {img.caption && (
-                        <figcaption className="text-[11px] text-foreground/40 mt-3 text-center italic">
-                          {img.caption}
-                        </figcaption>
-                      )}
-                    </figure>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {/* Sources */}
-            {sources.length > 0 && (
-              <>
-                <hr className="border-border my-12" />
-                <div>
-                  <h3 className="text-[10px] tracking-[0.3em] uppercase text-foreground/30 font-mono mb-4">
-                    Sources
-                  </h3>
-                  <ul className="space-y-2">
-                    {sources.map((source, i) => (
-                      <li key={i} className="text-sm text-foreground/40 leading-relaxed">{source}</li>
-                    ))}
-                  </ul>
-                </div>
-              </>
-            )}
-
-            {/* Further reading */}
-            {externalLinks && externalLinks.length > 0 && (
-              <div className="mt-8">
-                <h3 className="text-[10px] tracking-[0.3em] uppercase text-foreground/30 font-mono mb-4">
-                  Further Reading
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {externalLinks.map((link, i) => (
-                    <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
-                      className="text-[11px] tracking-[0.1em] uppercase text-foreground/40 hover:text-foreground border border-border hover:border-foreground/30 px-3 py-1.5 transition-colors">
-                      {link.label} ↗
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Footer + tags */}
-            <hr className="border-border my-12" />
-            <footer>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-foreground/35 mb-8">
-                {story.textBy && <span>Text — {story.textBy}</span>}
-                {story.imagesBy && <span>Images — {story.imagesBy}</span>}
-                {story.year && <span>{story.year}</span>}
-                <span className="text-foreground/20">·</span>
-                <span>© Slow Morocco</span>
-              </div>
-
-              {/* Tag chips */}
-              {tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {tags.map((tag, i) => (
-                    <Link
-                      key={i}
-                      href={`/stories?q=${encodeURIComponent(tag)}`}
-                      className="text-[10px] tracking-[0.15em] uppercase text-foreground/40 hover:text-foreground border border-border hover:border-foreground/40 px-3 py-1.5 transition-colors"
-                    >
-                      {tag}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </footer>
-
-          </article>
-
-          {/* RIGHT — sticky sidebar */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-28 space-y-10">
-
-              {/* Category link */}
-              {story.category && (
-                <div>
-                  <p className="text-[9px] tracking-[0.3em] uppercase text-foreground/25 font-mono mb-3">
-                    Filed under
-                  </p>
-                  <Link
-                    href={`/stories/category/${story.category.toLowerCase()}`}
-                    className="font-serif text-lg text-foreground/60 hover:text-foreground transition-colors"
-                  >
-                    {story.category}
-                  </Link>
-                </div>
-              )}
-
-              {/* Related stories — numbered */}
-              {relatedStories.length > 0 && (
-                <div>
-                  <p className="text-[9px] tracking-[0.3em] uppercase text-foreground/25 font-mono mb-5 pb-3 border-b border-border">
-                    Related stories
-                  </p>
-                  <div className="space-y-0 divide-y divide-border">
-                    {relatedStories.map((s, i) => (
-                      <Link key={s.slug} href={`/stories/${s.slug}`} className="group flex gap-3 py-4">
-                        <span className="font-serif text-2xl text-foreground/10 leading-none flex-shrink-0 w-6">
-                          {i + 1}
-                        </span>
-                        <div>
-                          {s.category && (
-                            <p className="text-[9px] tracking-[0.2em] uppercase text-foreground/25 mb-1">
-                              {s.category}
-                            </p>
-                          )}
-                          <h4 className="text-sm font-serif leading-snug text-foreground/60 group-hover:text-foreground transition-colors">
-                            {s.title}
-                          </h4>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                  <Link
-                    href={story.category ? `/stories/category/${story.category.toLowerCase()}` : "/stories"}
-                    className="block mt-4 text-[9px] tracking-[0.25em] uppercase text-foreground/25 hover:text-foreground transition-colors"
-                  >
-                    More {story.category || "stories"} →
-                  </Link>
-                </div>
-              )}
-
-              {/* Journey whisper */}
-              {relatedJourneys.length > 0 && (
-                <div className="border border-border p-5">
-                  <p className="text-[9px] tracking-[0.3em] uppercase text-foreground/25 font-mono mb-4">
-                    Travel this region
-                  </p>
-                  <Link href={`/journeys/${relatedJourneys[0].slug}`} className="group block">
-                    {relatedJourneys[0].heroImage && (
-                      <div className="relative aspect-[4/3] overflow-hidden mb-3 bg-[#f0f0f0]">
-                        <Image
-                          src={cloudinaryUrl(relatedJourneys[0].heroImage)}
-                          alt={relatedJourneys[0].title}
-                          fill
-                          className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-              unoptimized
-            />
-                      </div>
-                    )}
-                    <h4 className="font-serif text-sm leading-snug group-hover:text-foreground/60 transition-colors mb-2">
-                      {relatedJourneys[0].title}
-                    </h4>
-                    {relatedJourneys[0].duration && (
-                      <p className="text-[10px] tracking-[0.15em] uppercase text-foreground/30">
-                        {relatedJourneys[0].duration} days
-                      </p>
-                    )}
-                  </Link>
-                  <Link
-                    href="/plan-your-trip"
-                    className="block mt-4 text-[10px] tracking-[0.2em] uppercase text-foreground/30 hover:text-foreground transition-colors border-t border-border pt-4"
-                  >
-                    Plan your trip →
-                  </Link>
-                </div>
-              )}
-
-            </div>
-          </aside>
-
+            {story.textBy && <span>{story.textBy}</span>}
+            {story.readTime && <span>{story.readTime} min</span>}
+          </div>
+          <ShareTools
+            title={story.title}
+            description={story.subtitle || story.excerpt}
+            imageUrl={story.heroImage}
+          />
         </div>
       </div>
 
-      {/* ── Related Stories — sage editorial panel ─────────────────────── */}
+      {/* ══════════════════════════════════════════════════════════════
+          BODY — Single centered column, no sidebar
+          ══════════════════════════════════════════════════════════════ */}
+      <article className="max-w-3xl mx-auto px-8 md:px-12 py-14 md:py-20">
+
+        {/* Body text */}
+        {story.body && <StoryBody content={story.body} inlineImages={images} />}
+
+        {/* Seasonal */}
+        {story.category && (
+          <div className="my-10">
+            <SeasonalBadge category={story.category} region={story.region} variant="story" />
+          </div>
+        )}
+
+        {/* Map */}
+        {mapData?.markers?.length > 0 && (
+          <>
+            <hr className="border-foreground/10 my-12" />
+            <StoryMapRenderer mapData={mapData} title={story.title} />
+          </>
+        )}
+
+        {/* Journey bridge */}
+        {story.journeyBridge && (
+          <div className="my-12 py-8 border-t border-b border-foreground/10">
+            <p className="text-foreground/60 italic font-serif text-lg leading-relaxed">
+              {story.journeyBridge}
+            </p>
+            <Link
+              href="/plan-your-trip"
+              className="inline-block mt-4 text-[10px] tracking-[0.2em] uppercase text-foreground/35 hover:text-foreground/60 transition-colors"
+            >
+              Tell us about your trip →
+            </Link>
+          </div>
+        )}
+
+        {/* Embed */}
+        {story.embedUrl && (
+          <>
+            <hr className="border-foreground/10 my-12" />
+            <iframe
+              src={story.embedUrl}
+              title={`${story.title} — Interactive Module`}
+              className="w-full border-0"
+              style={{ height: "80vh", minHeight: "600px" }}
+              loading="lazy"
+              allow="fullscreen"
+            />
+            <p className="text-[11px] text-foreground/30 mt-3 text-center">
+              Data and visualisation by{" "}
+              <a href={story.embedUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+                Dancing with Lions
+              </a>
+            </p>
+          </>
+        )}
+
+        {/* Facts */}
+        {facts.length > 0 && (
+          <>
+            <hr className="border-foreground/10 my-12" />
+            <div>
+              <h3 className="text-[10px] tracking-[0.25em] uppercase text-foreground/35 mb-6">
+                The Facts
+              </h3>
+              <ul className="space-y-3">
+                {facts.map((fact, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-foreground/60 leading-relaxed">
+                    <span className="text-foreground/20 mt-0.5 flex-shrink-0">—</span>
+                    <span>{fact}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
+
+        {/* Sources */}
+        {sources.length > 0 && (
+          <>
+            <hr className="border-foreground/10 my-12" />
+            <div>
+              <h3 className="text-[10px] tracking-[0.25em] uppercase text-foreground/35 mb-4">
+                Sources
+              </h3>
+              <ul className="space-y-2">
+                {sources.map((source, i) => (
+                  <li key={i} className="text-sm text-foreground/35 leading-relaxed">{source}</li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
+
+        {/* Further reading */}
+        {externalLinks && externalLinks.length > 0 && (
+          <div className="mt-8">
+            <h3 className="text-[10px] tracking-[0.25em] uppercase text-foreground/35 mb-4">
+              Further Reading
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {externalLinks.map((link, i) => (
+                <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
+                  className="text-[11px] tracking-[0.1em] uppercase text-foreground/35 hover:text-foreground/60 border border-foreground/10 hover:border-foreground/25 px-3 py-1.5 transition-colors">
+                  {link.label} ↗
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Footer credits + tags */}
+        <hr className="border-foreground/10 my-12" />
+        <footer>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-foreground/30 mb-8">
+            {story.textBy && <span>Text — {story.textBy}</span>}
+            {story.imagesBy && <span>Images — {story.imagesBy}</span>}
+            {story.year && <span>{story.year}</span>}
+            <span className="text-foreground/15">·</span>
+            <span>© Slow Morocco</span>
+          </div>
+
+          {tags.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag, i) => (
+                <Link
+                  key={i}
+                  href={`/stories?q=${encodeURIComponent(tag)}`}
+                  className="text-[10px] tracking-[0.12em] uppercase text-foreground/30 hover:text-foreground/50 border border-foreground/10 hover:border-foreground/25 px-3 py-1.5 transition-colors"
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+          )}
+        </footer>
+
+      </article>
+
+      {/* ══════════════════════════════════════════════════════════════
+          RELATED STORIES — sage editorial panel
+          ══════════════════════════════════════════════════════════════ */}
       {relatedStories.length > 0 && (
         <section className="bg-[#c8c4b8]/30 py-20 md:py-28">
           <div className="px-8 md:px-16 lg:px-20">
-            {/* Centered editorial header */}
             <div className="text-center mb-14 md:mb-16">
               <p className="text-[11px] tracking-[0.3em] uppercase text-foreground/30 mb-3">
                 Keep Reading
@@ -510,7 +357,6 @@ export default function StoryDetailContent({
               </h2>
             </div>
 
-            {/* 3-across cards, centered with max-width */}
             <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-10">
               {relatedStories.slice(0, 3).map((s) => (
                 <Link key={s.slug} href={`/stories/${s.slug}`} className="group">
@@ -544,7 +390,6 @@ export default function StoryDetailContent({
               ))}
             </div>
 
-            {/* View all link */}
             <div className="text-center mt-12">
               <Link
                 href="/stories"
@@ -557,11 +402,12 @@ export default function StoryDetailContent({
         </section>
       )}
 
-      {/* ── Related Journeys — dark editorial panel ───────────────────── */}
+      {/* ══════════════════════════════════════════════════════════════
+          RELATED JOURNEYS — dark editorial panel
+          ══════════════════════════════════════════════════════════════ */}
       {relatedJourneys.length > 0 && (
         <section className="bg-[#1a1916] text-white py-20 md:py-28">
           <div className="px-8 md:px-16 lg:px-20">
-            {/* Centered editorial header */}
             <div className="text-center mb-14 md:mb-16">
               <p className="text-[11px] tracking-[0.3em] uppercase text-white/30 mb-3">
                 Private Journeys
