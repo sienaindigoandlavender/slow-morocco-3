@@ -26,7 +26,7 @@ export async function GET(
       mj_prompt: storyData.mj_prompt,
       heroCaption: storyData.hero_caption,
       excerpt: storyData.excerpt,
-      body: storyData.body ? storyData.body.replace(/<br>/g, '\n') : '',
+      body: storyData.body ? storyData.body.replace(/<br\s*\/?>/gi, '\n') : '',
       readTime: storyData.read_time,
       year: storyData.year,
       textBy: storyData.text_by,
