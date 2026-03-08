@@ -4,11 +4,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About | Slow Morocco",
   description:
-    "Slow Morocco is a cultural intelligence platform on Morocco — 222 stories, 120+ places, living archives on language, food, textiles, architecture, and music.",
+    "Slow Morocco is a cultural intelligence platform — stories, places, and living archives on language, food, textiles, architecture, and music.",
   openGraph: {
     title: "About Slow Morocco",
     description:
-      "Slow Morocco is a cultural intelligence platform on Morocco — 222 stories, 120+ places, living archives on language, food, textiles, architecture, and music.",
+      "Slow Morocco is a cultural intelligence platform — stories, places, and living archives on language, food, textiles, architecture, and music.",
     url: "https://www.slowmorocco.com/about",
   },
   alternates: {
@@ -47,13 +47,13 @@ export default function AboutPage() {
             </p>
 
             <p>
-              222 stories. 120 places. Reference works on language, food, textiles,
+              Stories, places, reference works on language, food, textiles,
               architecture, and music. Private journeys for those who want to move
               through the material rather than past it.
             </p>
 
             <p>
-              The work is built on 11 years inside Morocco — inside its medinas, its
+              The work is built on deep knowledge of Morocco — its medinas, its
               markets, its kitchens, its craft workshops, its libraries. The things
               that took years to understand are the things that take minutes to read here.
             </p>
@@ -81,12 +81,12 @@ export default function AboutPage() {
             {[
               {
                 title: "Stories",
-                body: "222 cultural essays across history, architecture, food, craft, nature, music, and people. Specific facts. No museum voice.",
+                body: "Cultural essays across history, architecture, food, craft, nature, music, and people. Specific facts. No museum voice.",
                 href: "/stories",
               },
               {
                 title: "Places",
-                body: "120+ places documented with context — not ratings, not reviews. Where things are and what they mean.",
+                body: "Places documented with context — not ratings, not reviews. Where things are and what they mean.",
                 href: "/places",
               },
               {
