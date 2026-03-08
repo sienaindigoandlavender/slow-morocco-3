@@ -713,7 +713,7 @@ export default function CityGuideContent({
             Coming to {destination.title}?
           </h2>
           <p className="text-sm text-foreground/50 leading-relaxed mb-8">
-            Every journey we design includes private guiding, accommodation chosen for character rather than category, and the kind of access that takes eleven years in Morocco to arrange.
+            Every journey we design includes private guiding, accommodation chosen for character rather than category, and the kind of access that takes years in Morocco to arrange.
           </p>
           <Link
             href="/plan-your-trip"
