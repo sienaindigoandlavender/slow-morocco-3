@@ -30,7 +30,7 @@ export default function StoriesContent({
   const [sortBy, setSortBy] = useState<"default" | "alpha">("default");
 
   const categories = useMemo(() => {
-    const cats = new Set(initialStories.map((s) => s.mood).filter(Boolean));
+    const cats = new Set(initialStories.map((s) => s.mood).filter((m): m is string => !!m));
     return ["all", ...Array.from(cats).sort()];
   }, [initialStories]);
 
