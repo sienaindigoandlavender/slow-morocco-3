@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
@@ -183,8 +184,10 @@ export default function HomeContent({
   epicJourneys,
   stories,
   places,
+  testimonials,
   settings,
 }: HomeContentProps) {
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
   const heroImage = settings.hero_image_url;
 
   // Editorial curation
@@ -355,6 +358,38 @@ export default function HomeContent({
             {journeyRow.map((journey) => (
               <JourneyCard key={journey.slug} journey={journey} />
             ))}
+          </div>
+        </section>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          TESTIMONIALS — quiet, centered, editorial
+          ═══════════════════════════════════════════════════════════════════ */}
+      {testimonials.length > 0 && (
+        <section className="py-20 md:py-28 border-t border-foreground/[0.08]">
+          <div className="px-8 md:px-10 lg:px-14">
+            <div className="max-w-3xl mx-auto text-center">
+              <blockquote className="font-serif text-xl md:text-2xl lg:text-[1.7rem] leading-[1.5] text-foreground/70 mb-6">
+                &ldquo;{testimonials[testimonialIndex]?.quote}&rdquo;
+              </blockquote>
+              <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/35">
+                — {testimonials[testimonialIndex]?.author}
+              </p>
+              {testimonials.length > 1 && (
+                <div className="flex justify-center gap-2 mt-8">
+                  {testimonials.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setTestimonialIndex(idx)}
+                      className={`w-1.5 h-1.5 transition-colors ${
+                        idx === testimonialIndex ? "bg-foreground" : "bg-foreground/15"
+                      }`}
+                      aria-label={`Testimonial ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </section>
       )}
