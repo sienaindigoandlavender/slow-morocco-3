@@ -144,7 +144,7 @@ export default function StoryDetailContent({
           HERO — Full-bleed image with title overlaid (Kinfolk style)
           ══════════════════════════════════════════════════════════════ */}
       {story.heroImage && (
-        <section className="relative h-[85vh] min-h-[550px] max-h-[950px]">
+        <section className="relative h-[100svh] min-h-[600px]">
           <Image
             src={cloudinaryUrl(story.heroImage, 1920)}
             alt={story.title}
