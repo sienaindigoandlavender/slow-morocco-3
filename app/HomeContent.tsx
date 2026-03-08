@@ -259,7 +259,7 @@ export default function HomeContent({
             {/* Latest Stories sidebar — desktop only */}
             <div className="hidden lg:block flex-shrink-0 w-[280px]">
               <p className="text-[10px] tracking-[0.25em] uppercase text-white/40 mb-4">
-                Latest Stories
+                From the Archive
               </p>
               <div className="space-y-2.5">
                 {stories.slice(1, 9).map((story, i) => (
@@ -292,7 +292,7 @@ export default function HomeContent({
       {rowOne.length > 0 && (
         <section className="px-8 md:px-10 lg:px-14 pt-14 md:pt-20 pb-16 md:pb-24">
           <SectionHeader
-            title="The latest stories from Slow Morocco."
+            title="Stories from Slow Morocco."
             linkHref="/stories"
             linkLabel="View All"
           />

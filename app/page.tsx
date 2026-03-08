@@ -63,15 +63,23 @@ export default async function HomePage() {
         read_time: s.read_time,
       }));
 
-    // Time-seeded rotation: changes every 3 hours, same for all visitors in that window
+    // Time-seeded shuffle: changes every 3 hours, same for all visitors in that window
     const THREE_HOURS = 3 * 60 * 60 * 1000;
     const timeBucket = Math.floor(Date.now() / THREE_HOURS);
-    const leadIndex = timeBucket % Math.max(allStories.length, 1);
 
-    // Put the rotated lead first, then fill the rest (no duplicates)
-    const leadStory = allStories[leadIndex];
-    const remaining = [...allStories.slice(0, leadIndex), ...allStories.slice(leadIndex + 1)];
-    stories = [leadStory, ...remaining].filter(Boolean).slice(0, 14);
+    // Simple seeded shuffle — deterministic per time bucket
+    function seededShuffle<T>(arr: T[], seed: number): T[] {
+      const shuffled = [...arr];
+      let s = seed;
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        s = (s * 1664525 + 1013904223) & 0xFFFFFFFF;
+        const j = ((s >>> 0) % (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    stories = seededShuffle(allStories, timeBucket).slice(0, 14);
 
     // Format settings
     settingsData.forEach((row) => {
