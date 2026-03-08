@@ -165,29 +165,59 @@ export default function HomeContent({
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
 
-        {/* Cover content — bottom-aligned */}
-        {leadStory && (
-          <Link
-            href={`/stories/${leadStory.slug}`}
-            className="absolute inset-0 flex flex-col justify-end group"
-          >
-            <div className="px-8 md:px-12 lg:px-16 pb-16 md:pb-20 max-w-4xl">
-              {leadStory.category && (
-                <p className="text-[10px] tracking-[0.25em] uppercase text-white/50 mb-4">
-                  {leadStory.category}
-                </p>
-              )}
-              <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] mb-4 group-hover:text-white/80 transition-colors duration-500">
-                {leadStory.title}
-              </h2>
-              {leadStory.subtitle && (
-                <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-xl">
-                  {leadStory.subtitle}
-                </p>
-              )}
+        {/* Cover content — title bottom-left, latest stories sidebar bottom-right */}
+        <div className="absolute inset-0 flex flex-col justify-end">
+          <div className="px-8 md:px-12 lg:px-16 pb-16 md:pb-20 flex items-end justify-between gap-12">
+            {/* Left — Lead story title */}
+            {leadStory && (
+              <Link
+                href={`/stories/${leadStory.slug}`}
+                className="group max-w-2xl lg:max-w-3xl"
+              >
+                {leadStory.category && (
+                  <p className="text-[10px] tracking-[0.25em] uppercase text-white/50 mb-4">
+                    {leadStory.category}
+                  </p>
+                )}
+                <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] mb-4 group-hover:text-white/80 transition-colors duration-500">
+                  {leadStory.title}
+                </h2>
+                {leadStory.subtitle && (
+                  <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-xl">
+                    {leadStory.subtitle}
+                  </p>
+                )}
+              </Link>
+            )}
+
+            {/* Right — Latest Stories sidebar (desktop only) */}
+            <div className="hidden lg:block flex-shrink-0 w-[280px]">
+              <p className="text-[10px] tracking-[0.25em] uppercase text-white/40 mb-4">
+                Latest Stories
+              </p>
+              <div className="space-y-2.5">
+                {stories.slice(1, 9).map((story, i) => (
+                  <Link
+                    key={story.slug}
+                    href={`/stories/${story.slug}`}
+                    className={`flex items-baseline gap-3 group/item ${
+                      i === 0 ? "text-white" : "text-white/50 hover:text-white/80"
+                    } transition-colors`}
+                  >
+                    <span className="text-[10px] text-white/30 tracking-[0.15em] uppercase flex-shrink-0 w-16">
+                      {story.category || ""}
+                    </span>
+                    <span className={`text-[12px] leading-snug ${
+                      i === 0 ? "text-white font-medium" : ""
+                    }`}>
+                      {story.title}
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </Link>
-        )}
+          </div>
+        </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════════
