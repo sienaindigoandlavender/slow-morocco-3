@@ -47,10 +47,9 @@ export default async function HomePage() {
     journeys = allJourneys.filter((j) => j.journeyType !== "epic").slice(0, 4);
     epicJourneys = allJourneys.filter((j) => j.journeyType === "epic").slice(0, 5);
 
-    // Format stories
-    stories = storiesData
+    // Format stories — rotate the lead (hero) story every 3 hours
+    const allStories = storiesData
       .filter((s) => s.hero_image)
-      .slice(0, 14)
       .map((s) => ({
         slug: s.slug,
         title: s.title,
@@ -61,6 +60,16 @@ export default async function HomePage() {
         category: s.category,
         read_time: s.read_time,
       }));
+
+    // Time-seeded rotation: changes every 3 hours, same for all visitors in that window
+    const THREE_HOURS = 3 * 60 * 60 * 1000;
+    const timeBucket = Math.floor(Date.now() / THREE_HOURS);
+    const leadIndex = timeBucket % Math.max(allStories.length, 1);
+
+    // Put the rotated lead first, then fill the rest (no duplicates)
+    const leadStory = allStories[leadIndex];
+    const remaining = [...allStories.slice(0, leadIndex), ...allStories.slice(leadIndex + 1)];
+    stories = [leadStory, ...remaining].filter(Boolean).slice(0, 14);
 
     // Format settings
     settingsData.forEach((row) => {
