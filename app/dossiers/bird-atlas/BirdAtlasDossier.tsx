@@ -949,7 +949,7 @@ export default function BirdAtlasDossier() {
           </div>
         </div>
         <p className="font-mono text-[10px] mt-10" style={{ color: "#92702a" }}>
-          © Slow Morocco · J. Ng
+          © Slow Morocco
         </p>
       </section>
 
