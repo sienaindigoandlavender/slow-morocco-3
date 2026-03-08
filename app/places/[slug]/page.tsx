@@ -100,7 +100,7 @@ async function getPlaceData(slug: string) {
     heroImage: place.hero_image ? convertDriveUrl(place.hero_image) : "",
     heroCaption: place.hero_caption || "",
     excerpt: place.excerpt || "",
-    body: place.body || "",
+    body: (place.body || "").replace(/<br\s*\/?>/gi, '\n'),
     sources: place.sources || "",
     tags: place.tags || "",
     journeyBridge: place.journey_bridge || "",
