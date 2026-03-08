@@ -221,7 +221,7 @@ export default function JourneyDetailContent({
   // EPIC Journey Layout
   if (journey.journeyType === 'epic') {
     return (
-      <div className="bg-[#1a1a1a] min-h-screen text-white">
+      <div className="bg-background min-h-screen text-foreground">
         {/* Hero Image */}
         <section className="relative h-[70vh] md:h-[80vh]">
           {journey.heroImage ? (
@@ -235,9 +235,9 @@ export default function JourneyDetailContent({
               unoptimized
             />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a]" />
+            <div className="absolute inset-0 bg-foreground/10" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-[#1a1a1a]/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/15" />
           
           <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
             <div className="container mx-auto max-w-4xl">
@@ -253,86 +253,86 @@ export default function JourneyDetailContent({
           <div className="container mx-auto px-6 lg:px-16 max-w-4xl">
             <Link
               href="/journeys"
-              className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase text-white/70 hover:text-white transition-colors mb-16"
+              className="inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase text-foreground/60 hover:text-foreground transition-colors mb-16"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to All Journeys
             </Link>
 
             <div className="mb-20">
-              <p className="text-xl md:text-2xl text-white/80 leading-relaxed font-display italic">
+              <p className="text-xl md:text-2xl text-foreground/70 leading-relaxed font-display italic">
                 {linkGlossaryTermsText(journey.description)}
               </p>
             </div>
 
             {journey.arcDescription && (
               <div className="mb-20">
-                <p className="text-white/60 leading-relaxed text-lg whitespace-pre-line">
+                <p className="text-foreground/50 leading-relaxed text-lg whitespace-pre-line">
                   {linkGlossaryTermsText(journey.arcDescription)}
                 </p>
               </div>
             )}
 
-            <div className="border-t border-white/10 pt-16 mb-16">
+            <div className="border-t border-foreground/10 pt-16 mb-16">
               <h2 className="text-xs tracking-[0.3em] uppercase text-[#8B2635] mb-8">
                 Sacred Knowledge
               </h2>
-              <p className="text-white/60 leading-relaxed">
+              <p className="text-foreground/50 leading-relaxed">
                 This is not a tour. This is transmission — access to knowledge held by 
                 a handful of people alive today. Knowledge that took lifetimes to acquire 
                 and cannot be found in any book, on any website, or through any other operator.
               </p>
-              <p className="text-white/60 leading-relaxed mt-4">
+              <p className="text-foreground/50 leading-relaxed mt-4">
                 We earned the trust that makes these journeys possible — 
                 not as visitors, but as people who stayed. We do not share itineraries publicly. 
                 We do not reveal our sources. We protect what is rare because that is how it stays rare.
               </p>
             </div>
 
-            <div className="border-t border-white/10 pt-16 mb-16">
+            <div className="border-t border-foreground/10 pt-16 mb-16">
               <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-8 mb-6">
-                <span className="font-serif text-4xl md:text-5xl text-white">
+                <span className="font-serif text-4xl md:text-5xl text-foreground">
                   Price on request
                 </span>
-                <span className="text-sm text-white/70">
+                <span className="text-sm text-foreground/60">
                   Private journey for two guests
                 </span>
               </div>
-              <p className="text-white/70 text-sm">
+              <p className="text-foreground/60 text-sm">
                 Additional guests considered on a case-by-case basis.
               </p>
             </div>
 
-            <div className="border-t border-white/10 pt-16 mb-20">
-              <h2 className="text-xs tracking-[0.3em] uppercase text-white/70 mb-8">
+            <div className="border-t border-foreground/10 pt-16 mb-20">
+              <h2 className="text-xs tracking-[0.3em] uppercase text-foreground/60 mb-8">
                 How This Works
               </h2>
-              <div className="space-y-6 text-white/80 leading-relaxed">
+              <div className="space-y-6 text-foreground/70 leading-relaxed">
                 <p>
-                  <strong className="text-white">1. You inquire.</strong> Tell us who you are, 
+                  <strong className="text-foreground">1. You inquire.</strong> Tell us who you are, 
                   why this journey calls to you, and when you'd like to travel.
                 </p>
                 <p>
-                  <strong className="text-white">2. We respond.</strong> If we believe this 
+                  <strong className="text-foreground">2. We respond.</strong> If we believe this 
                   journey is right for you, we'll arrange a conversation.
                 </p>
                 <p>
-                  <strong className="text-white">3. You commit.</strong> A non-refundable 
+                  <strong className="text-foreground">3. You commit.</strong> A non-refundable 
                   deposit of <span className="text-[#8B2635] font-medium">€1,000</span> secures 
                   your place and unlocks the full itinerary, logistics, and preparation details.
                 </p>
                 <p>
-                  <strong className="text-white">4. We build.</strong> Your journey is crafted 
+                  <strong className="text-foreground">4. We build.</strong> Your journey is crafted 
                   specifically for your dates, interests, and pace.
                 </p>
               </div>
-              <p className="text-white/70 text-sm mt-8 italic">
+              <p className="text-foreground/60 text-sm mt-8 italic">
                 The deposit is applied to your final balance. It is non-refundable because 
                 the itinerary itself is the value — once shared, it cannot be unshared.
               </p>
             </div>
 
-            <div className="bg-white/5 p-8 md:p-12">
+            <div className="bg-foreground/[0.03] p-8 md:p-12">
               <h2 className="font-serif text-2xl md:text-3xl mb-8">
                 Request This Journey
               </h2>
@@ -347,43 +347,43 @@ export default function JourneyDetailContent({
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-xs tracking-[0.15em] uppercase text-white/70 mb-2">
+                    <label className="block text-xs tracking-[0.15em] uppercase text-foreground/60 mb-2">
                       Name
                     </label>
                     <input
                       type="text"
                       name="name"
                       required
-                      className="w-full bg-transparent border-b border-white/20 py-3 text-white focus:border-white focus:outline-none transition-colors"
+                      className="w-full bg-transparent border-b border-foreground/15 py-3 text-foreground focus:border-foreground focus:outline-none transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs tracking-[0.15em] uppercase text-white/70 mb-2">
+                    <label className="block text-xs tracking-[0.15em] uppercase text-foreground/60 mb-2">
                       Email
                     </label>
                     <input
                       type="email"
                       name="email"
                       required
-                      className="w-full bg-transparent border-b border-white/20 py-3 text-white focus:border-white focus:outline-none transition-colors"
+                      className="w-full bg-transparent border-b border-foreground/15 py-3 text-foreground focus:border-foreground focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-xs tracking-[0.15em] uppercase text-white/70 mb-2">
+                    <label className="block text-xs tracking-[0.15em] uppercase text-foreground/60 mb-2">
                       Preferred Dates
                     </label>
                     <input
                       type="text"
                       name="dates"
                       placeholder="e.g., March 2025"
-                      className="w-full bg-transparent border-b border-white/20 py-3 text-white placeholder:text-white/30 focus:border-white focus:outline-none transition-colors"
+                      className="w-full bg-transparent border-b border-foreground/15 py-3 text-foreground placeholder:text-foreground/25 focus:border-foreground focus:outline-none transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs tracking-[0.15em] uppercase text-white/70 mb-2">
+                    <label className="block text-xs tracking-[0.15em] uppercase text-foreground/60 mb-2">
                       Number of Guests
                     </label>
                     <input
@@ -392,27 +392,27 @@ export default function JourneyDetailContent({
                       min="1"
                       max="8"
                       placeholder="2"
-                      className="w-full bg-transparent border-b border-white/20 py-3 text-white placeholder:text-white/30 focus:border-white focus:outline-none transition-colors"
+                      className="w-full bg-transparent border-b border-foreground/15 py-3 text-foreground placeholder:text-foreground/25 focus:border-foreground focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs tracking-[0.15em] uppercase text-white/70 mb-2">
+                  <label className="block text-xs tracking-[0.15em] uppercase text-foreground/60 mb-2">
                     Tell us about yourself
                   </label>
                   <textarea
                     name="message"
                     rows={4}
                     placeholder="What draws you to this journey? Any relevant experience?"
-                    className="w-full bg-transparent border-b border-white/20 py-3 text-white placeholder:text-white/30 focus:border-white focus:outline-none transition-colors resize-none"
+                    className="w-full bg-transparent border-b border-foreground/15 py-3 text-foreground placeholder:text-foreground/25 focus:border-foreground focus:outline-none transition-colors resize-none"
                   />
                 </div>
 
                 <div className="pt-4">
                   <button
                     type="submit"
-                    className="w-full md:w-auto bg-white text-[#1a1a1a] px-12 py-4 text-xs tracking-[0.2em] uppercase hover:bg-white/90 transition-colors"
+                    className="w-full md:w-auto bg-foreground text-background px-12 py-4 text-xs tracking-[0.2em] uppercase hover:bg-foreground/90 transition-colors"
                   >
                     Request Details
                   </button>
@@ -429,7 +429,7 @@ export default function JourneyDetailContent({
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Image */}
-      <section className="relative h-[60vh] md:h-[70vh] bg-[#f0f0f0]">
+      <section className="relative h-[100svh] min-h-[600px] bg-[#f0f0f0]">
         {journey.heroImage && (
           <Image
             src={cloudinaryUrl(journey.heroImage)}
