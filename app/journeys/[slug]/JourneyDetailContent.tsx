@@ -241,7 +241,7 @@ export default function JourneyDetailContent({
           
           <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
             <div className="container mx-auto max-w-4xl">
-              <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl leading-tight mb-4 uppercase">
+              <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl leading-[1.1] mb-4">
                 {journey.title}
               </h1>
             </div>
@@ -489,7 +489,7 @@ export default function JourneyDetailContent({
             </p>
           </div>
 
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight mb-8 uppercase">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] mb-8">
             {journey.title}
           </h1>
 
