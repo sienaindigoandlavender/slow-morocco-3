@@ -19,7 +19,7 @@ export async function GET() {
       mj_prompt: story.mj_prompt,
       heroCaption: story.hero_caption,
       excerpt: story.excerpt,
-      body: story.body ? story.body.replace(/<br>/g, '\n') : '',
+      body: story.body ? story.body.replace(/<br\s*\/?>/gi, '\n') : '',
       readTime: story.read_time,
       year: story.year,
       textBy: story.text_by,
