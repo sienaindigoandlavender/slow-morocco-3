@@ -120,10 +120,7 @@ export default function StoryDetailContent({
     alternativeHeadline: story.subtitle || undefined,
     description: story.excerpt || story.subtitle || story.title,
     image: story.heroImage ? cloudinaryUrl(story.heroImage, 1200) : undefined,
-    author: {
-      "@type": "Person",
-      name: story.textBy || "J. Ng",
-    },
+    author: sovereignEntity,
     publisher: sovereignEntity,
     datePublished,
     dateModified: datePublished,
@@ -195,7 +192,6 @@ export default function StoryDetailContent({
                 {story.category}
               </Link>
             )}
-            {story.textBy && <span>{story.textBy}</span>}
             {story.readTime && <span>{story.readTime} min</span>}
           </div>
           <ShareTools
@@ -323,10 +319,7 @@ export default function StoryDetailContent({
         <hr className="border-foreground/10 my-12" />
         <footer>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-foreground/30 mb-8">
-            {story.textBy && <span>Text — {story.textBy}</span>}
-            {story.imagesBy && <span>Images — {story.imagesBy}</span>}
             {story.year && <span>{story.year}</span>}
-            <span className="text-foreground/15">·</span>
             <span>© Slow Morocco</span>
           </div>
 
