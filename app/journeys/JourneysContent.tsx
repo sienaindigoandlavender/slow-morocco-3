@@ -1,13 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
-import ControlBar from "@/components/ControlBar";
-import { Search, Clock, Moon, ChevronLeft, ChevronRight } from "lucide-react";
-import { useCurrency } from "@/lib/currency";
-import PageBanner from "@/components/PageBanner";
 
 interface SearchableItem {
   type: 'journey' | 'daytrip' | 'overnight';
@@ -33,7 +29,7 @@ interface JourneysContentProps {
   dataLoaded?: boolean;
 }
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 24;
 
 export default function JourneysContent({
   initialJourneys,
@@ -46,388 +42,190 @@ export default function JourneysContent({
   const [visibleJourneys] = useState<SearchableItem[]>(initialVisibleJourneys);
   const [dayTrips] = useState<SearchableItem[]>(initialDayTrips);
   const [overnightTrips] = useState<SearchableItem[]>(initialOvernightTrips);
-  const [filteredResults, setFilteredResults] = useState<SearchableItem[]>(initialVisibleJourneys);
-  const { format } = useCurrency();
-  
-  // Pagination state
+  const [activeFilter, setActiveFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<"default" | "alpha">("default");
-  
-  // Search and filter states
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDuration, setSelectedDuration] = useState("all");
-  const [selectedFocus, setSelectedFocus] = useState("all");
 
-  // Get unique values for filters
-  const durations = [
-    { slug: "all", label: "All" },
-    { slug: "short", label: "1-5 Days" },
-    { slug: "medium", label: "6-10 Days" },
-    { slug: "long", label: "11+ Days" },
-  ];
+  const allItems = useMemo(() =>
+    [...visibleJourneys, ...dayTrips, ...overnightTrips],
+    [visibleJourneys, dayTrips, overnightTrips]
+  );
 
-  const focuses = [
-    { slug: "all", label: "All" },
-    { slug: "desert", label: "Desert" },
-    { slug: "mountains", label: "Mountains" },
-    { slug: "culture", label: "Culture" },
-    { slug: "coast", label: "Coast" },
-    { slug: "food", label: "Food" },
-  ];
+  const filteredItems = useMemo(() => {
+    let result = allItems;
+    if (activeFilter === "journeys") result = result.filter((i) => i.type === "journey");
+    else if (activeFilter === "daytrips") result = result.filter((i) => i.type === "daytrip");
+    else if (activeFilter === "overnight") result = result.filter((i) => i.type === "overnight");
+    if (sortBy === "alpha") result = [...result].sort((a, b) => a.title.localeCompare(b.title));
+    return result;
+  }, [allItems, activeFilter, sortBy]);
 
-  // Map filter slugs to actual data values
-  const focusMapping: Record<string, string[]> = {
-    desert: ["desert", "sahara"],
-    mountains: ["mountains", "trekking", "hiking", "adventure", "nature"],
-    culture: ["culture", "craft", "architecture", "heritage", "literature", "art"],
-    coast: ["coastal", "coast", "sea", "surf"],
-    food: ["food", "culinary"],
-  };
-
-  // Apply search and filters
-
-  // Apply search and filters
-  useEffect(() => {
-    const isSearching = searchQuery.trim().length > 0;
-    
-    let sourceItems: SearchableItem[] = [];
-    
-    if (isSearching) {
-      sourceItems = [...allJourneys, ...dayTrips, ...overnightTrips];
-    } else {
-      sourceItems = visibleJourneys;
-    }
-    
-    let filtered = [...sourceItems];
-
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter((item) =>
-        item.title?.toLowerCase().includes(query) ||
-        item.description?.toLowerCase().includes(query) ||
-        item.destinations?.toLowerCase().includes(query) ||
-        item.startCity?.toLowerCase().includes(query) ||
-        item.category?.toLowerCase().includes(query)
-      );
-    }
-
-    if (selectedDuration !== "all") {
-      filtered = filtered.filter((item) => {
-        if (item.type === 'daytrip') return selectedDuration === 'short';
-        const days = item.durationDays || 0;
-        if (selectedDuration === "short") return days >= 1 && days <= 5;
-        if (selectedDuration === "medium") return days >= 6 && days <= 10;
-        if (selectedDuration === "long") return days >= 11;
-        return true;
-      });
-    }
-
-    if (selectedFocus !== "all") {
-      const matchTerms = focusMapping[selectedFocus] || [selectedFocus];
-      filtered = filtered.filter((item) => {
-        const focusLower = item.focus?.toLowerCase() || "";
-        const categoryLower = item.category?.toLowerCase() || "";
-        return matchTerms.some(term => 
-          focusLower.includes(term) || categoryLower.includes(term)
-        );
-      });
-    }
-
-    setFilteredResults(filtered);
-    setCurrentPage(1); // Reset to first page when filters change
-  }, [allJourneys, visibleJourneys, dayTrips, overnightTrips, searchQuery, selectedDuration, selectedFocus]);
-
-  const clearFilters = () => {
-    setSearchQuery("");
-    setSelectedDuration("all");
-    setSelectedFocus("all");
-    setCurrentPage(1);
-  };
-
-  const hasActiveFilters = searchQuery || selectedDuration !== "all" || selectedFocus !== "all";
-
-  // Pagination calculations
-  const totalPages = Math.ceil(filteredResults.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentItems = filteredResults.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
+  const paginatedItems = filteredItems.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 400, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Generate page numbers to display
-  const getPageNumbers = () => {
-    const pages: (number | string)[] = [];
-    
-    if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
-      if (currentPage <= 3) {
-        pages.push(1, 2, 3, 4, '...', totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
-      } else {
-        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
-      }
-    }
-    
-    return pages;
-  };
+  const filters = [
+    { id: "all", label: "All" },
+    { id: "journeys", label: "Multi-Day" },
+    { id: "daytrips", label: "Day Trips" },
+    { id: "overnight", label: "Overnight" },
+  ];
 
   return (
-    <main className="bg-background min-h-screen" role="main" aria-label="Morocco Journeys Collection">
-      {/* Immersive Hero Banner */}
-      <PageBanner
-        slug="journeys"
-        fallback={{
-          title: "Routes worth taking",
-          subtitle: "Every journey is private and fully customizable. Choose a starting point, then we'll shape it around what matters to you.",
-          label: "Journeys",
-        }}
-      />
+    <main className="bg-background min-h-screen">
 
-      {/* Search & Filters */}
-      <section className="py-8 border-b border-border" aria-label="Filter journeys">
-        <div className="container mx-auto px-6 lg:px-16">
-          {/* Search Bar */}
-          <div className="mb-8">
-            <div className="relative max-w-xl">
-              <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/70" aria-hidden="true" />
-              <input
-                type="search"
-                placeholder="Search journeys, destinations, or experiences..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-4 py-3 bg-transparent border-b border-foreground/20 focus:border-foreground/60 focus:outline-none text-base placeholder:text-foreground/70 transition-colors text-foreground"
-                aria-label="Search Morocco journeys"
-              />
-            </div>
-          </div>
-
-          {/* Filters Row */}
-          <nav className="flex flex-col md:flex-row md:items-start gap-8 md:gap-16" aria-label="Journey filters">
-            {/* Duration Filter */}
-            <div>
-              <h2 className="text-xs tracking-[0.2em] uppercase text-foreground/70 mb-4">
-                Duration
-              </h2>
-              <div className="flex flex-wrap items-center gap-2">
-                {durations.map((duration) => (
-                  <button
-                    key={duration.slug}
-                    onClick={() => setSelectedDuration(duration.slug === selectedDuration ? "all" : duration.slug)}
-                    className={`text-xs tracking-[0.15em] uppercase px-4 py-2 border transition-colors ${
-                      selectedDuration === duration.slug
-                        ? "bg-foreground text-background border-foreground"
-                        : "bg-transparent text-foreground/70 border-foreground/20 hover:border-foreground/40"
-                    }`}
-                  >
-                    {duration.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Focus Filter */}
-            <div>
-              <h2 className="text-xs tracking-[0.2em] uppercase text-foreground/70 mb-4">
-                Focus
-              </h2>
-              <div className="flex flex-wrap items-center gap-2">
-                {focuses.map((focus) => (
-                  <button
-                    key={focus.slug}
-                    onClick={() => setSelectedFocus(focus.slug === selectedFocus ? "all" : focus.slug)}
-                    className={`text-xs tracking-[0.15em] uppercase px-4 py-2 border transition-colors ${
-                      selectedFocus === focus.slug
-                        ? "bg-foreground text-background border-foreground"
-                        : "bg-transparent text-foreground/70 border-foreground/20 hover:border-foreground/40"
-                    }`}
-                  >
-                    {focus.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Clear filters */}
-            {hasActiveFilters && (
-              <div className="md:ml-auto md:self-end">
-                <button
-                  onClick={clearFilters}
-                  className="text-xs tracking-[0.15em] uppercase text-foreground/70 hover:text-foreground transition-colors"
-                >
-                  Clear filters ×
-                </button>
-              </div>
-            )}
-          </nav>
-        </div>
+      {/* ── Page header ──────────────────────────────────────────────── */}
+      <section className="pt-28 md:pt-36 pb-8 px-8 md:px-10 lg:px-14">
+        <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-3">
+          Journeys
+        </h1>
+        <p className="text-sm text-foreground/45 max-w-xl mb-10">
+          Every journey is private and fully customizable. Choose a starting point — we shape it around you.
+        </p>
+        <div className="h-[1px] bg-foreground/12" />
       </section>
 
-      {/* SEO Content — always rendered for crawlers */}
-      <section className="py-12 md:py-16 border-b border-border/30">
-        <div className="container mx-auto px-6 lg:px-16">
-          <div className="max-w-3xl">
-            <p className="text-foreground/70 leading-relaxed text-lg mb-4">
-              Every Slow Morocco journey is private, fully customizable, and led by local guides we've worked with for years. From Sahara desert expeditions and Atlas Mountain treks to Imperial City cultural tours and Atlantic coastal escapes—each itinerary is a starting point you can shape around what matters to you.
-            </p>
-            <p className="text-foreground/70 leading-relaxed">
-              Browse multi-day journeys, day trips from Marrakech, and overnight experiences below. Filter by duration or focus to find your route.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Results Grid */}
-      <section className="py-8 md:py-12" aria-label="Journey listings">
-        <div className="container mx-auto px-6 lg:px-16">
-          {!dataLoaded ? (
-            <div className="py-12 max-w-3xl">
-              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">Our Most Popular Routes</h2>
-              <div className="space-y-6 text-foreground/70 leading-relaxed">
-                <p>
-                  <strong className="text-foreground">Sahara Desert Expeditions</strong> — Multi-day journeys from Marrakech through the Atlas Mountains to the dunes of Erg Chebbi and Erg Chigaga. Camel treks, luxury desert camps, and nights under the stars.
-                </p>
-                <p>
-                  <strong className="text-foreground">Imperial Cities Circuit</strong> — Discover Marrakech, Fes, Meknes, and Rabat. Ancient medinas, artisan workshops, and centuries of history brought to life by local guides.
-                </p>
-                <p>
-                  <strong className="text-foreground">Atlas Mountain Trekking</strong> — From day hikes in the Ourika Valley to multi-day treks to the summit of Toubkal, North Africa's highest peak.
-                </p>
-                <p>
-                  <strong className="text-foreground">Coastal Escapes</strong> — Atlantic winds, Portuguese ramparts, and fishing villages. Essaouira, Taghazout, and the wild coast south of Agadir.
-                </p>
-                <p className="mt-8">
-                  <a href="/plan-your-trip" className="inline-block bg-foreground text-background px-8 py-3 text-xs tracking-[0.15em] uppercase hover:bg-foreground/90 transition-colors">
-                    Tell us what you're looking for
-                  </a>
-                </p>
-              </div>
-            </div>
-          ) : filteredResults.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-foreground/70 mb-4">No journeys match your current filters.</p>
+      {/* ── Filter bar ───────────────────────────────────────────────── */}
+      <section className="px-8 md:px-10 lg:px-14 pb-10 sticky top-16 md:top-20 bg-background z-40">
+        <div className="flex items-center justify-between py-3">
+          <div className="flex items-center gap-5 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+            {filters.map((f) => (
               <button
-                onClick={clearFilters}
-                className="text-sm text-foreground/70 hover:text-foreground underline transition-colors"
+                key={f.id}
+                onClick={() => { setActiveFilter(f.id); setCurrentPage(1); }}
+                className={`text-[11px] tracking-[0.12em] uppercase whitespace-nowrap transition-colors ${
+                  activeFilter === f.id
+                    ? "text-foreground"
+                    : "text-foreground/35 hover:text-foreground/60"
+                }`}
               >
-                Clear all filters
+                {f.label}
               </button>
-              <p className="text-foreground/70 text-sm mt-8 max-w-lg mx-auto">
-                Can't find what you're looking for? <a href="/plan-your-trip" className="underline hover:text-foreground">Tell us what you have in mind</a> and we'll design something custom.
-              </p>
-            </div>
-          ) : (
-            <>
-              {/* Top pagination */}
-              <div className="mb-6">
-                <ControlBar
-                  count={filteredResults.length}
-                  noun="journey"
-                  sortBy={sortBy}
-                  onSortChange={() => { setSortBy(sortBy === "default" ? "alpha" : "default"); setCurrentPage(1); }}
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={goToPage}
-                  showCount={false}
-                  showSort={false}
-                />
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-10">
-                {currentItems.map((item) => {
-                  const href = item.type === 'daytrip'
-                    ? `/day-trips/${item.slug}`
-                    : item.type === 'overnight'
-                    ? `/overnight/${item.slug}`
-                    : `/journeys/${item.slug}`;
-
-                  const durationLabel = item.type === 'daytrip'
-                    ? `${item.durationHours} Hours`
-                    : item.type === 'overnight'
-                    ? '2 Days'
-                    : `${item.durationDays} Days`;
-
-                  return (
-                    <article
-                      key={`${item.type}-${item.slug}`}
-                      className="group"
-                      itemScope
-                      itemType="https://schema.org/TouristTrip"
-                    >
-                      <Link href={href} className="block">
-                        <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
-                          {item.heroImage && (
-                            <Image
-                              src={cloudinaryUrl(item.heroImage)}
-                              alt={`${item.title} - Morocco ${item.type === 'daytrip' ? 'day trip' : 'journey'}`}
-                              fill
-                              sizes="(max-width: 768px) 50vw, 20vw"
-                              unoptimized
-                              className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
-                              itemProp="image"
-                            />
-                          )}
-                        </div>
-                        <p className="text-[11px] text-foreground/70 mb-1" itemProp="duration">
-                          {durationLabel}
-                        </p>
-                        <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug text-foreground group-hover:text-foreground/70 transition-colors" itemProp="name">
-                          {item.title}
-                        </h3>
-                        {item.description && (
-                          <p className="text-[12px] text-foreground/70 leading-relaxed mt-1 line-clamp-2" itemProp="description">
-                            {item.description}
-                          </p>
-                        )}
-                        <meta itemProp="touristType" content="Cultural Tourism" />
-                      </Link>
-                    </article>
-                  );
-                })}
-              </div>
-
-              {/* Bottom pagination */}
-              {totalPages > 1 && (
-                <div className="mt-16 pt-8 border-t border-foreground/10">
-                  <ControlBar
-                    count={filteredResults.length}
-                    noun="journey"
-                    sortBy={sortBy}
-                    onSortChange={() => { setSortBy(sortBy === "default" ? "alpha" : "default"); setCurrentPage(1); }}
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={goToPage}
-                    showCount={false}
-                    showSort={false}
-                  />
-                </div>
-              )}
-            </>
-          )}
+            ))}
+          </div>
+          <div className="flex items-center gap-5 flex-shrink-0 ml-6">
+            <button
+              onClick={() => { setSortBy(sortBy === "default" ? "alpha" : "default"); setCurrentPage(1); }}
+              className={`text-[11px] tracking-[0.12em] uppercase transition-colors ${
+                sortBy === "alpha" ? "text-foreground" : "text-foreground/35 hover:text-foreground/60"
+              }`}
+            >
+              A–Z
+            </button>
+            <span className="text-[11px] text-foreground/25">
+              {filteredItems.length}
+            </span>
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 md:py-32 bg-[#1a1916] text-white" aria-labelledby="cta-heading">
-        <div className="container mx-auto px-6 lg:px-16 max-w-3xl text-center">
-          <h2 id="cta-heading" className="font-serif text-3xl md:text-4xl lg:text-5xl mb-6">
-            Looking for something different?
-          </h2>
-          <p className="text-white/70 leading-relaxed mb-12 text-lg">
-            These are starting points, not scripts. Tell us what matters to you—we'll shape a route around it. Add a day in the desert. Skip the city. Stay longer where something pulls you.
-          </p>
-          <Link
-            href="/plan-your-trip"
-            className="inline-block bg-white text-[#1a1916] px-12 py-4 text-xs tracking-[0.15em] uppercase hover:bg-white/90 transition-colors"
-            aria-label="Start planning your custom Morocco journey"
-          >
-            Start the conversation
-          </Link>
-        </div>
+      {/* ── Grid ─────────────────────────────────────────────────────── */}
+      <section className="px-8 md:px-10 lg:px-14 pb-16 md:pb-24">
+        {!dataLoaded || filteredItems.length === 0 ? (
+          <div className="py-20 text-center">
+            <p className="text-foreground/40 mb-4">No journeys match your current filter.</p>
+            <button
+              onClick={() => { setActiveFilter("all"); setCurrentPage(1); }}
+              className="text-[11px] text-foreground/40 hover:text-foreground/70 underline transition-colors"
+            >
+              Clear filter
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 md:gap-x-5 gap-y-10">
+            {paginatedItems.map((item) => {
+              const href = item.type === "daytrip"
+                ? `/day-trips/${item.slug}`
+                : item.type === "overnight"
+                ? `/overnight/${item.slug}`
+                : `/journeys/${item.slug}`;
+
+              const durationLabel = item.type === "daytrip"
+                ? `${item.durationHours || ""}h`
+                : item.type === "overnight"
+                ? "2 Days"
+                : `${item.durationDays || ""} Days`;
+
+              return (
+                <article key={`${item.type}-${item.slug}`} itemScope itemType="https://schema.org/TouristTrip">
+                  <Link href={href} className="group block">
+                    <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-3.5">
+                      {item.heroImage && (
+                        <Image
+                          src={cloudinaryUrl(item.heroImage, 480)}
+                          alt={item.title}
+                          fill
+                          sizes="(max-width: 768px) 50vw, 16.6vw"
+                          className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+                          unoptimized
+                          itemProp="image"
+                        />
+                      )}
+                    </div>
+                    <p className="text-[10px] text-foreground/40 mb-1.5" itemProp="duration">
+                      {durationLabel}
+                    </p>
+                    <h3 className="text-[12px] tracking-[0.04em] uppercase leading-[1.35] text-foreground group-hover:text-foreground/60 transition-colors duration-500" itemProp="name">
+                      {item.title}
+                    </h3>
+                    {item.description && (
+                      <p className="text-[11.5px] text-foreground/45 leading-[1.5] mt-1 line-clamp-2" itemProp="description">
+                        {item.description}
+                      </p>
+                    )}
+                  </Link>
+                </article>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-1 mt-16 pt-10 border-t border-foreground/[0.08]">
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 py-2 text-[11px] text-foreground/35 hover:text-foreground disabled:opacity-20 transition-colors"
+            >
+              ←
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => goToPage(page)}
+                className={`min-w-[32px] py-2 text-[11px] transition-colors ${
+                  currentPage === page ? "text-foreground" : "text-foreground/30 hover:text-foreground/60"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-3 py-2 text-[11px] text-foreground/35 hover:text-foreground disabled:opacity-20 transition-colors"
+            >
+              →
+            </button>
+          </div>
+        )}
       </section>
+
+      {/* ── SEO paragraph ────────────────────────────────────────────── */}
+      <section className="px-8 md:px-10 lg:px-14 pb-16 border-t border-foreground/[0.08] pt-14">
+        <p className="text-[12.5px] text-foreground/35 leading-[1.7] max-w-2xl">
+          Private journeys, day trips from Marrakech, and overnight experiences across Morocco. Every route is a starting point you can shape around what matters to you. {filteredItems.length} routes and growing.
+        </p>
+      </section>
+
     </main>
   );
 }
