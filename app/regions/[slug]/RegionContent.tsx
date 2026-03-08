@@ -328,7 +328,7 @@ export default function RegionContent({
             Ready to go?
           </h2>
           <p className="text-sm text-foreground/50 leading-relaxed mb-8">
-            Every journey we design is private, built around what you want to see, and shaped by eleven years inside Morocco.
+            Every journey we design is private, built around what you want to see, and shaped by deep experience inside Morocco.
           </p>
           <Link
             href="/plan-your-trip"
