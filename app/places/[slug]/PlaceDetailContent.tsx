@@ -71,12 +71,13 @@ interface PlaceDetailContentProps {
 }
 
 function formatBody(text: string): string {
-  return linkGlossaryTermsHTML(
-    text
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/^/, '<p>')
-      .replace(/$/, '</p>')
-  );
+  // Convert <br> variants to newlines first
+  const cleaned = text.replace(/<br\s*\/?>/gi, '\n');
+  // Split on double or single newlines
+  const hasDoubleBreaks = /\n\n/.test(cleaned);
+  const paragraphs = cleaned.split(hasDoubleBreaks ? /\n\n+/ : /\n/).filter(p => p.trim());
+  const wrapped = paragraphs.map(p => `<p class="mb-8 leading-[1.85]">${p.trim()}</p>`).join('');
+  return linkGlossaryTermsHTML(wrapped);
 }
 
 function FAQAccordion({ items }: { items: Array<{ q: string; a: string }> }) {
@@ -185,7 +186,7 @@ export default function PlaceDetailContent({
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-16">
           <div className="container mx-auto">
-            <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white uppercase">{place.title}</h1>
+            <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1]">{place.title}</h1>
           </div>
         </div>
       </section>
