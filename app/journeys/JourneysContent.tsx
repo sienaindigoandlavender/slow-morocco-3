@@ -119,9 +119,6 @@ export default function JourneysContent({
             >
               A–Z
             </button>
-            <span className="text-[11px] text-foreground/25">
-              {filteredItems.length}
-            </span>
           </div>
         </div>
       </section>
@@ -222,7 +219,7 @@ export default function JourneysContent({
       {/* ── SEO paragraph ────────────────────────────────────────────── */}
       <section className="px-8 md:px-10 lg:px-14 pb-16 border-t border-foreground/[0.08] pt-14">
         <p className="text-[12.5px] text-foreground/35 leading-[1.7] max-w-2xl">
-          Private journeys, day trips from Marrakech, and overnight experiences across Morocco. Every route is a starting point you can shape around what matters to you. {filteredItems.length} routes and growing.
+          Private journeys, day trips from Marrakech, and overnight experiences across Morocco. Every route is a starting point you can shape around what matters to you.
         </p>
       </section>
 
