@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { linkGlossaryTermsText } from '@/lib/glossary-linker';
 import { linkDerbTermsText } from '@/lib/derb-linker';
+import { linkCrossReferences } from '@/lib/story-linker';
 
 interface InlineImage {
   image_url: string;
@@ -18,26 +19,40 @@ interface InlineImage {
 interface StoryBodyProps {
   content: string;
   inlineImages?: InlineImage[];
+  currentSlug?: string;
 }
 
-function linkAllTerms(text: string): React.ReactNode {
-  const derbResult = linkDerbTermsText(text);
-  if (typeof derbResult === 'string') return linkGlossaryTermsText(derbResult);
-  if (!derbResult || !React.isValidElement(derbResult)) return linkGlossaryTermsText(text);
-  const children = React.Children.toArray((derbResult as React.ReactElement).props.children);
-  return (
-    <>
-      {children.map((child, i) => {
-        if (typeof child === 'string') return <React.Fragment key={i}>{linkGlossaryTermsText(child)}</React.Fragment>;
-        return child;
-      })}
-    </>
+// Apply all linkers: cross-references → derb → glossary
+// Each works on remaining plain text strings after previous linker
+function applyToStringChildren(node: React.ReactNode, fn: (text: string) => React.ReactNode): React.ReactNode {
+  if (typeof node === 'string') return fn(node);
+  if (!React.isValidElement(node)) return node;
+  const children = React.Children.toArray((node as React.ReactElement).props.children);
+  if (children.length === 0) return node;
+  const mapped = children.map((child, i) => {
+    if (typeof child === 'string') return <React.Fragment key={i}>{fn(child)}</React.Fragment>;
+    return child;
+  });
+  return React.cloneElement(node as React.ReactElement, {}, ...mapped);
+}
+
+function linkAllTerms(text: string, currentSlug?: string): React.ReactNode {
+  // Layer 1: Cross-references (story-to-story, story-to-place)
+  const crossLinked = linkCrossReferences(text, currentSlug);
+  
+  // Layer 2: Derb links on remaining strings
+  const withDerb = applyToStringChildren(
+    typeof crossLinked === 'string' ? <>{crossLinked}</> : <>{crossLinked}</>,
+    (t) => linkDerbTermsText(t) || t
   );
+  
+  // Layer 3: Glossary links on remaining strings
+  return applyToStringChildren(withDerb, (t) => linkGlossaryTermsText(t));
 }
 
-function processText(text: string): React.ReactNode {
+function processText(text: string, currentSlug?: string): React.ReactNode {
   const parts = text.split(/(https?:\/\/[^\s,)]+)/g);
-  if (parts.length === 1) return linkAllTerms(text);
+  if (parts.length === 1) return linkAllTerms(text, currentSlug);
   return (
     <>
       {parts.map((part, i) => {
@@ -49,7 +64,7 @@ function processText(text: string): React.ReactNode {
             </a>
           );
         }
-        if (part.trim()) return <React.Fragment key={`txt-${i}`}>{linkAllTerms(part)}</React.Fragment>;
+        if (part.trim()) return <React.Fragment key={`txt-${i}`}>{linkAllTerms(part, currentSlug)}</React.Fragment>;
         return <React.Fragment key={`emp-${i}`}>{part}</React.Fragment>;
       })}
     </>
@@ -116,7 +131,7 @@ function InlineImageBlock({ img }: { img: InlineImage }) {
   );
 }
 
-export default function StoryBody({ content, inlineImages = [] }: StoryBodyProps) {
+export default function StoryBody({ content, inlineImages = [], currentSlug }: StoryBodyProps) {
   if (!content) return null;
 
   // Build a map of position → images
@@ -174,7 +189,7 @@ export default function StoryBody({ content, inlineImages = [] }: StoryBodyProps
           node = (
             <blockquote key={`q-${index}`}
               className="border-l-2 border-foreground/20 pl-6 my-8 text-xl italic text-foreground/70">
-              {processText(quoteText)}
+              {processText(quoteText, currentSlug)}
             </blockquote>
           );
         } else if (paragraph.trim().startsWith('## ')) {
@@ -204,7 +219,7 @@ export default function StoryBody({ content, inlineImages = [] }: StoryBodyProps
         } else {
           node = (
             <p key={`p-${index}`} className="text-foreground leading-relaxed mb-6">
-              {processText(paragraph)}
+              {processText(paragraph, currentSlug)}
             </p>
           );
         }
