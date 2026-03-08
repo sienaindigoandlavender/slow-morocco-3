@@ -65,10 +65,10 @@ const config: Config = {
          TYPOGRAPHY
          ═══════════════════════════════════════════════════════════ */
       fontFamily: {
-        sans: ["var(--font-body)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        sans: ["var(--font-sans)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
         serif: ["var(--font-display)", "Georgia", "serif"],
         display: ["var(--font-display)", "Georgia", "serif"],
-        body: ["var(--font-body)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        body: ["var(--font-body)", "Georgia", "serif"],
       },
 
       /* ═══════════════════════════════════════════════════════════
