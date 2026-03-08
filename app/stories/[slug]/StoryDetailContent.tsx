@@ -161,8 +161,13 @@ export default function StoryDetailContent({
 
           {/* Title on image — bottom left, massive */}
           <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-12 lg:px-16 pb-14 md:pb-20">
+            {story.category && (
+              <p className="text-[10px] tracking-[0.25em] uppercase text-white/50 mb-4">
+                {story.category}
+              </p>
+            )}
             <h1
-              className="font-serif text-white uppercase leading-[0.95] tracking-[-0.01em] max-w-5xl"
+              className="font-serif text-white leading-[0.95] tracking-[-0.01em] max-w-5xl"
               style={{ fontSize: "clamp(2rem, 6vw, 5.5rem)" }}
             >
               {story.title}
