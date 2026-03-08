@@ -173,7 +173,7 @@ export default function MoroccoTravelContent() {
             <p className="text-base text-[#444] leading-relaxed max-w-xl">
               Visa requirements, flights, transport, money, tipping, health,
               safety, and what to pack. Everything on one page. Written from
-              eleven years of living here, not from a week of research.
+              living here, not from a week of research.
             </p>
           </div>
           <div className="md:col-span-4">
