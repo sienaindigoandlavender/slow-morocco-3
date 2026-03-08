@@ -140,7 +140,7 @@ export default function PlaceDetailContent({
       ]} />
 
       {/* Hero */}
-      <section className="relative h-[60vh] md:h-[70vh]">
+      <section className="relative h-[100svh] min-h-[600px]">
         {place.heroImage ? (
           <Image
             src={cloudinaryUrl(place.heroImage)}
