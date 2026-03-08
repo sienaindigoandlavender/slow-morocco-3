@@ -285,7 +285,7 @@ export default function CityGuideContent({
     <main className="bg-background text-foreground">
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative h-[70vh] min-h-[500px] max-h-[800px]">
+      <section className="relative h-[100svh] min-h-[600px]">
         {heroImage ? (
           <Image
             src={cloudinaryUrl(heroImage, 1920)}
