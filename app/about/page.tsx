@@ -74,25 +74,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Stat row */}
-      <section className="border-t border-foreground/10 py-16">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-            {[
-              { n: "222", label: "Stories" },
-              { n: "16", label: "Categories" },
-              { n: "120+", label: "Places" },
-              { n: "11", label: "Years in Morocco" },
-            ].map((item) => (
-              <div key={item.label}>
-                <p className="font-serif text-4xl md:text-5xl text-foreground mb-2">{item.n}</p>
-                <p className="text-[11px] tracking-[0.2em] uppercase text-foreground/40">{item.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* What lives here */}
       <section className="py-24 md:py-32 border-t border-foreground/10">
         <div className="container mx-auto px-8 md:px-16 lg:px-20">
