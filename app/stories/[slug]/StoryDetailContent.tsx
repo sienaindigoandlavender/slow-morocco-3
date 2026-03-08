@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 import StoryBody from "@/components/StoryBody";
 import ShareTools from "@/components/ShareTools";
@@ -148,13 +149,14 @@ export default function StoryDetailContent({
       {story.heroImage && (
         <section className="relative w-full h-[55vh] md:h-[65vh]">
           <Image
-            src={story.heroImage}
+            src={cloudinaryUrl(story.heroImage)}
             alt={story.title}
             fill
             sizes="100vw"
             className="object-cover"
             priority
-          />
+              unoptimized
+            />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
         </section>
       )}
@@ -321,7 +323,9 @@ export default function StoryDetailContent({
                   {images.map((img, i) => (
                     <figure key={i}>
                       <div className="relative aspect-[16/10] overflow-hidden">
-                        <Image src={img.image_url} alt={img.caption || story.title} fill className="object-cover" />
+                        <Image src={cloudinaryUrl(img.image_url)} alt={img.caption || story.title} fill className="object-cover"
+              unoptimized
+            />
                       </div>
                       {img.caption && (
                         <figcaption className="text-[11px] text-foreground/40 mt-3 text-center italic">
@@ -460,11 +464,12 @@ export default function StoryDetailContent({
                     {relatedJourneys[0].heroImage && (
                       <div className="relative aspect-[4/3] overflow-hidden mb-3 bg-[#f0f0f0]">
                         <Image
-                          src={relatedJourneys[0].heroImage}
+                          src={cloudinaryUrl(relatedJourneys[0].heroImage)}
                           alt={relatedJourneys[0].title}
                           fill
                           className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                        />
+              unoptimized
+            />
                       </div>
                     )}
                     <h4 className="font-serif text-sm leading-snug group-hover:text-foreground/60 transition-colors mb-2">
@@ -491,116 +496,113 @@ export default function StoryDetailContent({
         </div>
       </div>
 
-      {/* ── Keep Exploring — full bleed ──────────────────────────────── */}
+      {/* ── Related Stories — sage editorial panel ─────────────────────── */}
       {relatedStories.length > 0 && (
-        <section className="border-t border-border py-16 md:py-20">
-          <div className="container mx-auto px-8 md:px-16 lg:px-20">
-            <div className="flex items-baseline justify-between mb-10">
-              <div>
-                <p className="text-[10px] tracking-[0.35em] uppercase text-foreground/30 font-mono mb-2">
-                  Keep exploring
-                </p>
-                <h2 className="font-serif text-2xl md:text-3xl">
-                  More from the archive
-                </h2>
-              </div>
-              <Link
-                href="/stories"
-                className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 hover:text-foreground transition-colors"
-              >
-                All stories →
-              </Link>
+        <section className="bg-[#c8c4b8]/30 py-20 md:py-28">
+          <div className="px-8 md:px-16 lg:px-20">
+            {/* Centered editorial header */}
+            <div className="text-center mb-14 md:mb-16">
+              <p className="text-[11px] tracking-[0.3em] uppercase text-foreground/30 mb-3">
+                Keep Reading
+              </p>
+              <h2 className="font-serif text-2xl md:text-[1.75rem] text-foreground/80">
+                More from the archive.
+              </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {relatedStories.map((s) => (
+            {/* 3-across cards, centered with max-width */}
+            <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-10">
+              {relatedStories.slice(0, 3).map((s) => (
                 <Link key={s.slug} href={`/stories/${s.slug}`} className="group">
-                  <div className="aspect-[3/2] relative overflow-hidden bg-[#f0f0f0] mb-4">
+                  <div className="aspect-[29/39] relative overflow-hidden bg-[#d5d0c8] mb-4">
                     {s.heroImage ? (
                       <Image
-                        src={s.heroImage}
+                        src={cloudinaryUrl(s.heroImage, 480)}
                         alt={s.title}
                         fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+                        unoptimized
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-[#f0f0f0]" />
+                      <div className="absolute inset-0 bg-[#d5d0c8]" />
                     )}
                   </div>
                   {s.category && (
-                    <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/30 mb-2">
+                    <p className="text-[10px] text-foreground/40 mb-1.5">
                       {s.category}
                     </p>
                   )}
-                  <h3 className="font-serif text-lg leading-snug group-hover:text-foreground/60 transition-colors mb-2">
+                  <h3 className="text-[12px] tracking-[0.04em] uppercase leading-[1.35] text-foreground group-hover:text-foreground/60 transition-colors duration-500">
                     {s.title}
                   </h3>
                   {s.excerpt && (
-                    <p className="text-sm text-foreground/50 leading-relaxed line-clamp-2">
+                    <p className="text-[11.5px] text-foreground/45 leading-[1.5] mt-1 line-clamp-2">
                       {s.excerpt}
                     </p>
                   )}
                 </Link>
               ))}
             </div>
+
+            {/* View all link */}
+            <div className="text-center mt-12">
+              <Link
+                href="/stories"
+                className="text-[11px] tracking-[0.15em] uppercase text-foreground/35 hover:text-foreground/60 transition-colors"
+              >
+                All stories
+              </Link>
+            </div>
           </div>
         </section>
       )}
 
-      {/* ── Related Journeys ─────────────────────────────────────────── */}
+      {/* ── Related Journeys — dark editorial panel ───────────────────── */}
       {relatedJourneys.length > 0 && (
-        <section className="py-16 md:py-20 bg-[#1a1916] text-white">
-          <div className="container mx-auto px-8 md:px-16 lg:px-20">
-            <div className="flex items-baseline justify-between mb-10">
-              <div>
-                <p className="text-[10px] tracking-[0.35em] uppercase text-white/30 font-mono mb-2">
-                  Private journeys
-                </p>
-                <h2 className="font-serif text-2xl md:text-3xl">
-                  Travel through this region
-                </h2>
-              </div>
-              <Link
-                href="/journeys"
-                className="text-[10px] tracking-[0.2em] uppercase text-white/30 hover:text-white transition-colors"
-              >
-                All journeys →
-              </Link>
+        <section className="bg-[#1a1916] text-white py-20 md:py-28">
+          <div className="px-8 md:px-16 lg:px-20">
+            {/* Centered editorial header */}
+            <div className="text-center mb-14 md:mb-16">
+              <p className="text-[11px] tracking-[0.3em] uppercase text-white/30 mb-3">
+                Private Journeys
+              </p>
+              <h2 className="font-serif text-2xl md:text-[1.75rem] text-white/80">
+                Travel through this region.
+              </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              {relatedJourneys.map((journey) => (
+
+            <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-10">
+              {relatedJourneys.slice(0, 3).map((journey) => (
                 <Link key={journey.slug} href={`/journeys/${journey.slug}`} className="group">
-                  <div className="relative aspect-[4/3] mb-4 overflow-hidden bg-white/10">
+                  <div className="aspect-[29/39] relative overflow-hidden bg-white/5 mb-4">
                     {journey.heroImage && (
                       <Image
-                        src={journey.heroImage}
+                        src={cloudinaryUrl(journey.heroImage, 480)}
                         alt={journey.title}
                         fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+                        unoptimized
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   </div>
-                  <div className="flex items-baseline justify-between mb-2">
-                    {journey.duration && journey.duration > 0 && (
-                      <p className="text-[10px] tracking-[0.2em] uppercase text-white/40">
-                        {journey.duration} days
-                      </p>
-                    )}
-
-                  </div>
-                  <h3 className="font-serif text-lg leading-snug group-hover:text-white/60 transition-colors">
+                  <p className="text-[10px] text-white/30 mb-1.5">
+                    {journey.duration && journey.duration > 0
+                      ? `${journey.duration}-Day Journey`
+                      : "Private Journey"}
+                  </p>
+                  <h3 className="text-[12px] tracking-[0.04em] uppercase leading-[1.35] text-white group-hover:text-white/60 transition-colors duration-500">
                     {journey.title}
                   </h3>
                 </Link>
               ))}
             </div>
-            <div className="mt-12">
+
+            <div className="text-center mt-12">
               <Link
-                href="/plan-your-trip"
-                className="inline-block bg-white text-[#1a1916] px-10 py-4 text-xs tracking-[0.15em] uppercase hover:bg-white/90 transition-colors"
+                href="/journeys"
+                className="text-[11px] tracking-[0.15em] uppercase text-white/35 hover:text-white/60 transition-colors"
               >
-                Plan your trip
+                All journeys
               </Link>
             </div>
           </div>
