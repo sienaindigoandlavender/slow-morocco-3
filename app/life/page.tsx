@@ -81,8 +81,8 @@ const pageJsonLd = {
   isAccessibleForFree: true,
   author: {
     "@type": "Person",
-    name: "J. Ng",
-    jobTitle: "Founder",
+    name: "Slow Morocco",
+    jobTitle: "Publisher",
     worksFor: { "@type": "Organization", name: "Dancing with Lions", url: "https://www.dancingwiththelions.com" },
   },
   publisher: {
