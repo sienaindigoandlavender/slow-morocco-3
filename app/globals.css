@@ -20,7 +20,8 @@
 :root {
   /* Typography */
   --font-display: 'EB Garamond', Georgia, serif;
-  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --font-body: 'EB Garamond', Georgia, serif;
+  --font-sans: 'DM Sans', -apple-system, sans-serif;
   
   /* Colors - HSL format for Tailwind compatibility */
   --background: 0 0% 100%;         /* White */
@@ -81,8 +82,8 @@ body {
 
 body {
   font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.8;
   letter-spacing: 0.005em;
   color: #000000;
   -webkit-font-smoothing: antialiased;
