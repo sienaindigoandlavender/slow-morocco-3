@@ -73,7 +73,7 @@ async function getStoryData(slug: string) {
     heroImage: storyData.hero_image ?? undefined,
     heroCaption: storyData.hero_caption ?? undefined,
     excerpt: storyData.excerpt ?? undefined,
-    body: storyData.body ? storyData.body.replace(/<br>/g, '\n') : undefined,
+    body: storyData.body ? storyData.body.replace(/<br\s*\/?>/gi, '\n') : undefined,
     readTime: storyData.read_time ? String(storyData.read_time) : undefined,
     year: storyData.year ? String(storyData.year) : undefined,
     textBy: storyData.text_by ?? undefined,
