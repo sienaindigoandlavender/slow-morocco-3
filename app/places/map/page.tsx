@@ -5,11 +5,11 @@ import AllPlacesMap from "./AllPlacesMap";
 export const metadata: Metadata = {
   title: "All Places on One Map | Slow Morocco",
   description:
-    "Every place in the Slow Morocco atlas — 120+ locations across Morocco mapped in one view. Medinas, kasbahs, oases, tanneries, shrines, souks, and more.",
+    "Every place in the Slow Morocco atlas — Morocco mapped in one view. Medinas, kasbahs, oases, tanneries, shrines, souks, and more.",
   openGraph: {
     title: "All Places on One Map — Slow Morocco",
     description:
-      "120+ places across Morocco. Every medina, kasbah, oasis, tannery, shrine, and souk in the atlas.",
+      "Every medina, kasbah, oasis, tannery, shrine, and souk in the atlas.",
     url: "https://www.slowmorocco.com/places/map",
   },
   alternates: {
