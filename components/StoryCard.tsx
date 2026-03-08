@@ -1,69 +1,42 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
+import Link from "next/link";
 
 interface Story {
   slug: string;
   title: string;
-  subtitle?: string;
-  category?: string;
-  sourceType?: string;
   heroImage?: string;
-  excerpt?: string;
-  readTime?: string;
+  category?: string;
+  subtitle?: string;
 }
 
-interface StoryCardProps {
-  story: Story;
-}
-
-export default function StoryCard({ story }: StoryCardProps) {
+export default function StoryCard({ story }: { story: Story }) {
   return (
-    <Link href={`/story/${story.slug}`} className="group block">
-      {/* Image */}
-      <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-white/5">
+    <Link href={`/stories/${story.slug}`} className="group block">
+      <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-3.5">
         {story.heroImage ? (
           <Image
-            src={cloudinaryUrl(story.heroImage, 600)}
+            src={cloudinaryUrl(story.heroImage, 480)}
             alt={story.title}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          
+            sizes="(max-width: 768px) 50vw, 16.6vw"
+            className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
             unoptimized
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <span className="text-white/20 text-sm">No image</span>
+            <span className="text-foreground/15 text-sm">No image</span>
           </div>
         )}
       </div>
-
-      {/* Content */}
-      <div>
-        <div className="flex items-center gap-2 mb-2">
-          {story.category && (
-            <span className="text-xs uppercase tracking-wide text-white/50">
-              {story.category}
-            </span>
-          )}
-          {story.category && story.readTime && (
-            <span className="text-white/30">·</span>
-          )}
-          {story.readTime && (
-            <span className="text-xs text-white/40">
-              {story.readTime}
-            </span>
-          )}
-        </div>
-        <h3 className="font-serif text-xl text-white mb-2 group-hover:text-white/80 transition-colors">
-          {story.title}
-        </h3>
-        {story.subtitle && (
-          <p className="text-sm text-white/60 line-clamp-2">
-            {story.subtitle}
-          </p>
-        )}
-      </div>
+      {story.category && (
+        <p className="text-[10px] text-foreground/40 mb-1.5">
+          {story.category}
+        </p>
+      )}
+      <h3 className="text-[12px] tracking-[0.04em] uppercase leading-[1.35] text-foreground group-hover:text-foreground/60 transition-colors duration-500">
+        {story.title}
+      </h3>
     </Link>
   );
 }

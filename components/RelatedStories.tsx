@@ -1,118 +1,63 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
+import Link from "next/link";
 
-interface RelatedStory {
+interface Story {
   slug: string;
   title: string;
-  category?: string;
   heroImage?: string;
+  category?: string;
   excerpt?: string;
-  score: number;
 }
 
-interface RelatedStoriesProps {
-  destinations: string;
-  focus?: string;
-  limit?: number;
-}
-
-export default function RelatedStories({ destinations, focus, limit = 4 }: RelatedStoriesProps) {
-  const [stories, setStories] = useState<RelatedStory[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!destinations) {
-      setLoading(false);
-      return;
-    }
-
-    const params = new URLSearchParams({
-      destinations,
-      ...(focus && { focus }),
-      limit: limit.toString(),
-    });
-
-    fetch(`/api/related-stories?${params}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setStories(data.stories || []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error loading related stories:", err);
-        setLoading(false);
-      });
-  }, [destinations, focus, limit]);
-
-  if (loading) {
-    return null; // Don't show loading state, just hide until ready
-  }
-
-  if (stories.length === 0) {
-    return null; // No related stories found
-  }
+export default function RelatedStories({ stories }: { stories: Story[] }) {
+  if (stories.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-20 border-t border-border">
-      <div className="container mx-auto px-6 lg:px-16">
-        {/* Section Header */}
-        <div className="mb-10">
-          <p className="text-xs tracking-[0.3em] uppercase text-foreground/70 mb-3">
-            From the Archive
-          </p>
-          <h2 className="font-serif text-2xl md:text-3xl">
-            Stories from this route
-          </h2>
+    <section className="px-8 md:px-10 lg:px-14 py-16 md:py-24 border-t border-foreground/[0.08]">
+      <div className="flex items-baseline justify-between mb-10">
+        <div className="mb-0">
+          <div className="flex items-baseline justify-between mb-4">
+            <h2 className="font-serif text-xl md:text-2xl text-foreground">
+              Related stories.
+            </h2>
+          </div>
+          <div className="h-[1px] bg-foreground/15" />
         </div>
-
-        {/* Stories Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10">
-          {stories.map((story) => (
-            <Link
-              key={story.slug}
-              href={`/stories/${story.slug}`}
-              className="group"
-            >
-              <article>
-                <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-3">
-                  {story.heroImage ? (
-                    <Image
-                      src={cloudinaryUrl(story.heroImage, 600)}
-                      alt={story.title}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
-                    
-            unoptimized
-          />
-                  ) : null}
-                </div>
-                {story.category && (
-                  <p className="text-[11px] text-foreground/70 mb-1">
-                    {story.category}
-                  </p>
-                )}
-                <h3 className="text-[13px] tracking-[0.04em] uppercase leading-snug group-hover:text-foreground/60 transition-colors">
-                  {story.title}
-                </h3>
-              </article>
-            </Link>
-          ))}
-        </div>
-
-        {/* View All Link */}
-        <div className="mt-10 text-center">
-          <Link
-            href="/stories"
-            className="text-xs tracking-[0.15em] uppercase text-foreground/70 hover:text-foreground transition-colors"
-          >
-            Explore all stories →
+        <Link
+          href="/stories"
+          className="text-[11px] text-foreground/35 hover:text-foreground/60 transition-colors"
+        >
+          View All
+        </Link>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 md:gap-x-5 gap-y-10">
+        {stories.slice(0, 6).map((story) => (
+          <Link key={story.slug} href={`/stories/${story.slug}`} className="group block">
+            <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-3.5">
+              {story.heroImage && (
+                <Image
+                  src={cloudinaryUrl(story.heroImage, 480)}
+                  alt={story.title}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 16.6vw"
+                  className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+                  unoptimized
+                />
+              )}
+            </div>
+            {story.category && (
+              <p className="text-[10px] text-foreground/40 mb-1.5">
+                {story.category}
+              </p>
+            )}
+            <h3 className="text-[12px] tracking-[0.04em] uppercase leading-[1.35] text-foreground group-hover:text-foreground/60 transition-colors duration-500">
+              {story.title}
+            </h3>
           </Link>
-        </div>
+        ))}
       </div>
     </section>
   );
