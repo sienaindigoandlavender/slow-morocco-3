@@ -191,10 +191,10 @@ export default function HomeContent({
   const leadStory = stories[0];
   const rowOne = stories.slice(1, 7);
   const rowTwo = stories.slice(7, 13);
-  const interstitialJourney = epicJourneys[0] || journeys[0];
-  const allJourneys = [...epicJourneys, ...journeys]
-    .filter((j) => j.slug !== interstitialJourney?.slug);
-  const journeyRow = allJourneys.slice(0, 6);
+  const interstitialJourney = journeys[0];
+  const journeyRow = journeys
+    .filter((j) => j.slug !== interstitialJourney?.slug)
+    .slice(0, 6);
 
   return (
     <div className="bg-background min-h-screen">
@@ -250,6 +250,9 @@ export default function HomeContent({
                     {leadStory.subtitle}
                   </p>
                 )}
+                <span className="inline-block mt-6 text-[11px] tracking-[0.15em] uppercase text-white/50 group-hover:text-white transition-colors border-b border-white/25 pb-0.5">
+                  Read
+                </span>
               </Link>
             )}
 
