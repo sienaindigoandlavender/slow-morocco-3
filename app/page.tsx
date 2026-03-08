@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getJourneys, getStories, getWebsiteSettings, getTestimonials } from "@/lib/supabase";
+import { getJourneys, getStories, getPlaces, getWebsiteSettings, getTestimonials } from "@/lib/supabase";
 import HomeContent from "./HomeContent";
 
 export const metadata: Metadata = {
@@ -19,13 +19,15 @@ export default async function HomePage() {
   let journeys: any[] = [];
   let epicJourneys: any[] = [];
   let stories: any[] = [];
+  let places: any[] = [];
   let testimonials: any[] = [];
   let settings: Record<string, string> = {};
 
   try {
-    const [journeysData, storiesData, settingsData, testimonialsData] = await Promise.all([
+    const [journeysData, storiesData, placesData, settingsData, testimonialsData] = await Promise.all([
       getJourneys({ published: true }),
       getStories({ published: true }),
+      getPlaces({ published: true }),
       getWebsiteSettings(),
       getTestimonials({ published: true }),
     ]);
@@ -76,6 +78,18 @@ export default async function HomePage() {
       if (row.key) settings[row.key] = row.value || "";
     });
 
+    // Format places
+    places = placesData
+      .filter((p) => p.hero_image)
+      .slice(0, 6)
+      .map((p) => ({
+        slug: p.slug,
+        title: p.title,
+        heroImage: p.hero_image,
+        destination: p.destination || "",
+        category: p.category || "",
+      }));
+
     // Format testimonials
     testimonials = testimonialsData.map((t) => ({
       id: t.testimonial_id,
@@ -92,6 +106,7 @@ export default async function HomePage() {
       journeys={journeys}
       epicJourneys={epicJourneys}
       stories={stories}
+      places={places}
       testimonials={testimonials}
       settings={settings}
     />

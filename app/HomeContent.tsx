@@ -29,6 +29,14 @@ interface Story {
   read_time?: number;
 }
 
+interface Place {
+  slug: string;
+  title: string;
+  heroImage?: string;
+  destination?: string;
+  category?: string;
+}
+
 interface Testimonial {
   id: string;
   quote: string;
@@ -40,6 +48,7 @@ interface HomeContentProps {
   journeys: Journey[];
   epicJourneys: Journey[];
   stories: Story[];
+  places: Place[];
   testimonials: Testimonial[];
   settings: Record<string, string>;
 }
@@ -111,6 +120,35 @@ function JourneyCard({ journey }: { journey: Journey }) {
   );
 }
 
+// ─── Place Card ─────────────────────────────────────────────────────────────
+
+function PlaceCard({ place }: { place: Place }) {
+  return (
+    <Link href={`/places/${place.slug}`} className="group block">
+      <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-3.5">
+        {place.heroImage && (
+          <Image
+            src={cloudinaryUrl(place.heroImage, 480)}
+            alt={place.title}
+            fill
+            sizes="(max-width: 768px) 50vw, 16.6vw"
+            className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+            unoptimized
+          />
+        )}
+      </div>
+      {place.destination && (
+        <p className="text-[10px] text-foreground/40 mb-1.5 capitalize">
+          {place.destination}
+        </p>
+      )}
+      <h3 className="text-[12px] tracking-[0.04em] uppercase leading-[1.35] text-foreground group-hover:text-foreground/60 transition-colors duration-500">
+        {place.title}
+      </h3>
+    </Link>
+  );
+}
+
 // ─── Editorial Section Header (with rule line) ──────────────────────────────
 
 function SectionHeader({ title, linkHref, linkLabel }: {
@@ -144,6 +182,7 @@ export default function HomeContent({
   journeys,
   epicJourneys,
   stories,
+  places,
   settings,
 }: HomeContentProps) {
   const heroImage = settings.hero_image_url;
@@ -312,6 +351,24 @@ export default function HomeContent({
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 md:gap-x-5 gap-y-10">
             {journeyRow.map((journey) => (
               <JourneyCard key={journey.slug} journey={journey} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          PLACES — 6 across, editorial
+          ═══════════════════════════════════════════════════════════════════ */}
+      {places.length > 0 && (
+        <section className="px-8 md:px-10 lg:px-14 pt-14 md:pt-20 pb-16 md:pb-24 border-t border-foreground/[0.08]">
+          <SectionHeader
+            title="Places worth knowing."
+            linkHref="/places"
+            linkLabel="View All"
+          />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 md:gap-x-5 gap-y-10">
+            {places.map((place) => (
+              <PlaceCard key={place.slug} place={place} />
             ))}
           </div>
         </section>
