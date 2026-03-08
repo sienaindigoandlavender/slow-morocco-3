@@ -164,8 +164,8 @@ export default function StoryDetailContent({
               </p>
             )}
             <h1
-              className="font-serif text-white leading-[0.95] tracking-[-0.01em] max-w-5xl"
-              style={{ fontSize: "clamp(2rem, 6vw, 5.5rem)" }}
+              className="font-serif text-white uppercase leading-[1.05] tracking-[0.01em] max-w-5xl"
+              style={{ fontSize: "clamp(1.75rem, 4.5vw, 3.5rem)" }}
             >
               {story.title}
             </h1>
