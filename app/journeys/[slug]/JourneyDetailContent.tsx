@@ -608,13 +608,13 @@ export default function JourneyDetailContent({
 
       {/* ── Related Stories — dark editorial panel ─────────────────── */}
       {relatedStories.length > 0 && (
-        <section className="bg-[#1a1916] text-white py-20 md:py-28">
+        <section className="py-20 md:py-28 border-t border-foreground/[0.08]">
           <div className="px-8 md:px-10 lg:px-14">
             <div className="text-center mb-14 md:mb-16">
-              <p className="text-[11px] tracking-[0.3em] uppercase text-white/30 mb-3">
+              <p className="text-[11px] tracking-[0.3em] uppercase text-foreground/30 mb-3">
                 From the Archive
               </p>
-              <h2 className="font-serif text-2xl md:text-[1.75rem] text-white/80">
+              <h2 className="font-serif text-2xl md:text-[1.75rem] text-foreground/80">
                 Stories from this route.
               </h2>
             </div>
@@ -622,7 +622,7 @@ export default function JourneyDetailContent({
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 md:gap-x-5 gap-y-10">
               {relatedStories.slice(0, 6).map((story) => (
                 <Link key={story.slug} href={`/stories/${story.slug}`} className="group block">
-                  <div className="aspect-[29/39] relative overflow-hidden bg-white/5 mb-3.5">
+                  <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-3.5">
                     {story.heroImage ? (
                       <Image
                         src={cloudinaryUrl(story.heroImage, 480)}
@@ -633,15 +633,15 @@ export default function JourneyDetailContent({
                         unoptimized
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-white/5" />
+                      <div className="absolute inset-0 bg-[#e8e6e1]" />
                     )}
                   </div>
                   {story.category && (
-                    <p className="text-[10px] text-white/30 mb-1.5">
+                    <p className="text-[10px] text-foreground/40 mb-1.5">
                       {story.category}
                     </p>
                   )}
-                  <h3 className="text-[12px] tracking-[0.04em] uppercase leading-[1.35] text-white group-hover:text-white/60 transition-colors duration-500">
+                  <h3 className="text-[12px] tracking-[0.04em] uppercase leading-[1.35] text-foreground group-hover:text-foreground/60 transition-colors duration-500">
                     {story.title}
                   </h3>
                 </Link>
@@ -651,7 +651,7 @@ export default function JourneyDetailContent({
             <div className="text-center mt-12">
               <Link
                 href="/stories"
-                className="text-[11px] tracking-[0.15em] uppercase text-white/35 hover:text-white/60 transition-colors"
+                className="text-[11px] tracking-[0.15em] uppercase text-foreground/35 hover:text-foreground/60 transition-colors"
               >
                 All stories
               </Link>
