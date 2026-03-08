@@ -155,9 +155,6 @@ export default function PlacesContent({
             >
               A–Z
             </button>
-            <span className="text-[11px] text-foreground/25">
-              {filteredPlaces.length}
-            </span>
           </div>
         </div>
       </section>
@@ -260,7 +257,7 @@ export default function PlacesContent({
       {/* ── SEO paragraph ────────────────────────────────────────────── */}
       <section className="px-8 md:px-10 lg:px-14 pb-16 border-t border-foreground/[0.08] pt-14">
         <p className="text-[12.5px] text-foreground/35 leading-[1.7] max-w-2xl">
-          {initialPlaces.length} places across Morocco — from the medinas of Fes and Marrakech to the kasbahs of the south and the Atlantic coast.
+          Places across Morocco — from the medinas of Fes and Marrakech to the kasbahs of the south and the Atlantic coast.
         </p>
       </section>
 
