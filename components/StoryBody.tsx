@@ -77,18 +77,20 @@ function isHTML(str: string): boolean {
 
 function prepareHTML(html: string): string {
   return html
-    .replace(/<p>/gi, '<p class="text-foreground leading-relaxed mb-6">')
-    .replace(/<h1>/gi, '<h1 class="font-serif text-3xl text-foreground mt-12 mb-6">')
-    .replace(/<h2>/gi, '<h2 class="font-serif text-2xl text-foreground mt-12 mb-6">')
+    .replace(/<p>/gi, '<p class="text-foreground leading-[1.85] mb-8">')
+    .replace(/<h1>/gi, '<h1 class="font-serif text-3xl text-foreground mt-14 mb-8">')
+    .replace(/<h2>/gi, '<h2 class="font-serif text-2xl text-foreground mt-14 mb-8">')
     .replace(/<h3>/gi, '<h3 class="font-serif text-xl text-foreground mt-10 mb-4">')
     .replace(/<h4>/gi, '<h4 class="font-serif text-lg text-foreground mt-8 mb-3">')
     .replace(/<h5>/gi, '<h5 class="text-sm font-medium tracking-wider uppercase text-foreground/60 mt-6 mb-2">')
-    .replace(/<a\s+href="([^"]+)"[^>]*>/gi,
+    .replace(/<a\s+href="(\/[^"]*)"[^>]*>/gi,
+      '<a href="$1" class="underline decoration-foreground/20 underline-offset-2 text-foreground hover:decoration-foreground/50 transition-colors">')
+    .replace(/<a\s+href="(https?:\/\/[^"]+)"[^>]*>/gi,
       '<a href="$1" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 text-foreground hover:text-foreground/60 transition-colors">')
-    .replace(/<ul>/gi, '<ul class="list-none space-y-2 mb-6 pl-0">')
-    .replace(/<ol>/gi, '<ol class="list-decimal pl-6 space-y-2 mb-6">')
-    .replace(/<li>/gi, '<li class="text-foreground/70 leading-relaxed">')
-    .replace(/<blockquote>/gi, '<blockquote class="border-l-2 border-foreground/20 pl-6 my-8 text-xl italic text-foreground/70">')
+    .replace(/<ul>/gi, '<ul class="list-none space-y-2 mb-8 pl-0">')
+    .replace(/<ol>/gi, '<ol class="list-decimal pl-6 space-y-2 mb-8">')
+    .replace(/<li>/gi, '<li class="text-foreground/70 leading-[1.85]">')
+    .replace(/<blockquote>/gi, '<blockquote class="border-l-2 border-foreground/20 pl-6 my-10 text-xl italic text-foreground/70">')
     .replace(/<strong>/gi, '<strong class="font-medium text-foreground">')
     .replace(/<em>/gi, '<em class="italic">')
     .replace(/<figure>/gi, '<figure class="my-12 -mx-4 md:-mx-8">')
@@ -218,7 +220,7 @@ export default function StoryBody({ content, inlineImages = [], currentSlug }: S
           );
         } else {
           node = (
-            <p key={`p-${index}`} className="text-foreground leading-relaxed mb-6">
+            <p key={`p-${index}`} className="text-foreground leading-[1.85] mb-8">
               {processText(paragraph, currentSlug)}
             </p>
           );
