@@ -44,7 +44,7 @@ export default function PageBanner({ slug, fallback }: PageBannerProps) {
   const image = banner?.hero_image_url || fallback?.image || "";
 
   return (
-    <section className="relative h-[70vh] md:h-[80vh] flex items-end">
+    <section className="relative h-[100svh] min-h-[600px] flex items-end">
       {/* Background Image */}
       {image ? (
         <Image
@@ -61,11 +61,11 @@ export default function PageBanner({ slug, fallback }: PageBannerProps) {
       )}
 
       {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
 
       {/* Content — always rendered for SSR/crawlers */}
       <div className="relative z-10 w-full">
-        <div className="container mx-auto px-8 md:px-16 lg:px-20 pb-16 md:pb-20">
+        <div className="container mx-auto px-8 md:px-12 lg:px-16 pb-14 md:pb-20">
           <div className="max-w-3xl">
             {/* Label */}
             {label && (
@@ -75,13 +75,13 @@ export default function PageBanner({ slug, fallback }: PageBannerProps) {
             )}
 
             {/* Title as H1 for SEO */}
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white leading-[1.1] mb-4">
+            <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] mb-4">
               {title}
             </h1>
 
             {/* Subtitle */}
             {subtitle && (
-              <p className="text-white/90 text-lg md:text-xl leading-relaxed max-w-2xl">
+              <p className="font-serif text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl">
                 {subtitle}
               </p>
             )}
