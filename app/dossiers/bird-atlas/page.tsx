@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "white stork migration Africa",
     "bird atlas Morocco",
   ],
-  authors: [{ name: "J. Ng", url: "https://www.slowmorocco.com/about" }],
+  authors: [{ name: "Slow Morocco", url: "https://www.slowmorocco.com/about" }],
   alternates: {
     canonical: "https://www.slowmorocco.com/stories/bird-atlas-morocco",
   },
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: "article",
     publishedTime: "2025-01-01T00:00:00Z",
     modifiedTime: new Date().toISOString(),
-    authors: ["J. Ng"],
+    authors: ["Slow Morocco"],
     tags: ["birds", "migration", "Morocco", "wildlife", "nature", "Atlantic flyway"],
   },
   twitter: {
@@ -74,9 +74,9 @@ const jsonLd = {
       "dateModified": new Date().toISOString().split("T")[0],
       "author": {
         "@type": "Person",
-        "name": "J. Ng",
+        "name": "Slow Morocco",
         "url": "https://www.slowmorocco.com/about",
-        "description": "Founder of Slow Morocco and Dancing with Lions. Based in Marrakech for 11 years.",
+        "description": "Cultural research group based in Marrakech.",
       },
       "publisher": {
         "@type": "Organization",
