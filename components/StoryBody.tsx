@@ -176,7 +176,9 @@ export default function StoryBody({ content, inlineImages = [], currentSlug }: S
   }
 
   // Plain text / markdown — paragraph renderer with inline image injection
-  const paragraphs = content.split(/\n\n+/).filter(Boolean);
+  // Note: API converts <br> to \n, so we split on single \n if no \n\n exists
+  const hasDoubleBreaks = /\n\n/.test(content);
+  const paragraphs = content.split(hasDoubleBreaks ? /\n\n+/ : /\n/).filter(p => p.trim());
 
   return (
     <div className="prose prose-lg max-w-none">
