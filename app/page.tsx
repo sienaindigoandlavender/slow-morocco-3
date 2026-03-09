@@ -46,7 +46,7 @@ export default async function HomePage() {
       epicPrice: j.epic_price_eur || undefined,
     }));
 
-    journeys = allJourneys.filter((j) => j.journeyType !== "epic").slice(0, 4);
+    journeys = seededShuffle(allJourneys.filter((j) => j.journeyType !== "epic"), timeBucket + 7).slice(0, 8);
     epicJourneys = allJourneys.filter((j) => j.journeyType === "epic").slice(0, 5);
 
     // Format stories — rotate the lead (hero) story every 3 hours
