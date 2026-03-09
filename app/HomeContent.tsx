@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
@@ -190,6 +190,15 @@ export default function HomeContent({
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const heroImage = settings.hero_image_url;
 
+  // Auto-rotate testimonials every 6 seconds
+  useEffect(() => {
+    if (testimonials.length <= 1) return;
+    const interval = setInterval(() => {
+      setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
+
   // Editorial curation
   const leadStory = stories[0];
   const rowOne = stories.slice(1, 7);
@@ -369,20 +378,25 @@ export default function HomeContent({
         <section className="py-20 md:py-28 border-t border-foreground/[0.08]">
           <div className="px-8 md:px-10 lg:px-14">
             <div className="max-w-3xl mx-auto text-center">
-              <blockquote className="font-serif text-xl md:text-2xl lg:text-[1.7rem] leading-[1.5] text-foreground/70 mb-6">
-                &ldquo;{testimonials[testimonialIndex]?.quote}&rdquo;
-              </blockquote>
-              <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/35">
-                — {testimonials[testimonialIndex]?.author}
-              </p>
+              <div className="transition-opacity duration-700 ease-in-out">
+                <blockquote className="font-serif text-xl md:text-2xl lg:text-[1.7rem] leading-[1.5] text-foreground/70 mb-6">
+                  &ldquo;{testimonials[testimonialIndex]?.quote}&rdquo;
+                </blockquote>
+                <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/35">
+                  — {testimonials[testimonialIndex]?.author}
+                  {testimonials[testimonialIndex]?.journeyTitle && (
+                    <span className="text-foreground/20 ml-2">· {testimonials[testimonialIndex].journeyTitle}</span>
+                  )}
+                </p>
+              </div>
               {testimonials.length > 1 && (
                 <div className="flex justify-center gap-2 mt-8">
                   {testimonials.map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setTestimonialIndex(idx)}
-                      className={`w-1.5 h-1.5 transition-colors ${
-                        idx === testimonialIndex ? "bg-foreground" : "bg-foreground/15"
+                      className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
+                        idx === testimonialIndex ? "bg-foreground/40 scale-110" : "bg-foreground/10"
                       }`}
                       aria-label={`Testimonial ${idx + 1}`}
                     />
