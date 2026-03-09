@@ -46,7 +46,7 @@ export default async function HomePage() {
       epicPrice: j.epic_price_eur || undefined,
     }));
 
-    journeys = seededShuffle(allJourneys.filter((j) => j.journeyType !== "epic"), timeBucket + 7).slice(0, 8);
+    journeys = allJourneys.filter((j) => j.journeyType !== "epic");
     epicJourneys = allJourneys.filter((j) => j.journeyType === "epic").slice(0, 5);
 
     // Format stories — rotate the lead (hero) story every 3 hours
@@ -80,6 +80,7 @@ export default async function HomePage() {
     };
 
     stories = seededShuffle(allStories, timeBucket).slice(0, 14);
+    journeys = seededShuffle(journeys, timeBucket + 7).slice(0, 8);
 
     // Format settings
     settingsData.forEach((row) => {
