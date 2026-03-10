@@ -25,6 +25,7 @@ const CATEGORIES: Record<string, { label: string; description: string; count?: n
   wildlife:     { label: "Wildlife", description: "Barbary macaques, flamingos, migratory raptors, and the endangered species that still find refuge in Morocco's varied landscapes." },
   knowledge:    { label: "Knowledge", description: "The libraries, the scholars, the transmission of learning across the medieval Mediterranean world." },
   economy:      { label: "Economy", description: "Phosphate, argan, tourism, remittances, rail. The forces shaping modern Morocco and its place in the world." },
+  "before-you-go": { label: "Before You Go", description: "The things you wish someone had told you before you landed. Practical, honest, written by someone who lives here." },
 };
 
 export async function generateStaticParams() {
