@@ -1,24 +1,12 @@
-import { createClient } from "@supabase/supabase-js";
+// ============================================
+// Formerly Nexus — now self-contained
+// Newsletter uses Slow Morocco's own Supabase
+// Legal content and content sites are hardcoded
+// ============================================
 
-// Nexus Supabase — shared across all brands
-const nexusUrl = process.env.NEXUS_SUPABASE_URL || "https://placeholder.supabase.co";
-const nexusKey = process.env.NEXUS_SUPABASE_ANON_KEY || "placeholder";
+import { supabase } from "./supabase";
 
-const nexus = createClient(nexusUrl, nexusKey);
-
-const SITE_ID = process.env.SITE_ID || "slow-morocco";
-
-const BRAND_NAMES: Record<string, string> = {
-  "slow-morocco": "Slow Morocco",
-  "slow-namibia": "Slow Namibia",
-  "slow-turkiye": "Slow Türkiye",
-  "slow-tunisia": "Slow Tunisia",
-  "slow-mauritius": "Slow Mauritius",
-  "riad-di-siena": "Riad di Siena",
-  "dancing-with-lions": "Dancing with Lions",
-  "slow-world": "Slow World",
-  "architecture-morocco": "Architecture of Morocco",
-};
+const BRAND_NAME = "Slow Morocco";
 
 function generateUnsubscribeToken(): string {
   const chars =
@@ -31,18 +19,17 @@ function generateUnsubscribeToken(): string {
 }
 
 // ============================================
-// NEWSLETTER
+// NEWSLETTER (uses Slow Morocco's own Supabase)
 // ============================================
 
 export async function subscribeToNewsletter(
   email: string,
   brand?: string
 ): Promise<{ success: boolean; message: string; isResubscribe?: boolean }> {
-  const brandName = brand || BRAND_NAMES[SITE_ID] || SITE_ID;
+  const brandName = brand || BRAND_NAME;
 
   try {
-    // Check if already subscribed
-    const { data: existing } = await nexus
+    const { data: existing } = await supabase
       .from("newsletter_subscribers")
       .select("*")
       .eq("email", email.toLowerCase())
@@ -54,8 +41,7 @@ export async function subscribeToNewsletter(
         return { success: true, message: "You're already subscribed." };
       }
 
-      // Reactivate
-      await nexus
+      await supabase
         .from("newsletter_subscribers")
         .update({ status: "active", updated_at: new Date().toISOString() })
         .eq("id", existing.id);
@@ -67,9 +53,8 @@ export async function subscribeToNewsletter(
       };
     }
 
-    // New subscription
     const token = generateUnsubscribeToken();
-    const { error } = await nexus.from("newsletter_subscribers").insert({
+    const { error } = await supabase.from("newsletter_subscribers").insert({
       email: email.toLowerCase(),
       brand: brandName,
       status: "active",
@@ -92,7 +77,7 @@ export async function unsubscribeFromNewsletter(
   token: string
 ): Promise<{ success: boolean; message: string }> {
   try {
-    const { data: existing } = await nexus
+    const { data: existing } = await supabase
       .from("newsletter_subscribers")
       .select("*")
       .eq("unsubscribe_token", token)
@@ -106,7 +91,7 @@ export async function unsubscribeFromNewsletter(
       return { success: true, message: "You've already been removed." };
     }
 
-    const { error } = await nexus
+    const { error } = await supabase
       .from("newsletter_subscribers")
       .update({
         status: "unsubscribed",
@@ -128,7 +113,7 @@ export async function unsubscribeFromNewsletter(
 }
 
 // ============================================
-// NEXUS SHARED DATA (legal, site config, etc.)
+// LEGAL PAGES (hardcoded — no database)
 // ============================================
 
 export interface NexusSite {
@@ -155,75 +140,118 @@ export interface NexusLegalPage {
   section_content: string;
 }
 
-export async function getNexusSite(): Promise<NexusSite | null> {
-  const { data, error } = await nexus
-    .from("nexus_sites")
-    .select("*")
-    .eq("site_id", SITE_ID)
-    .single();
-  if (error) {
-    console.error("[Nexus] Site error:", error.message);
-    return null;
-  }
-  return data as NexusSite;
+const SITE_CONFIG: NexusSite = {
+  site_id: "slow-morocco",
+  site_name: "Slow Morocco",
+  site_url: "https://slowmorocco.com",
+  legal_entity: "Slow Morocco SARL",
+  contact_email: "hello@slowmorocco.com",
+  contact_phone: null,
+  whatsapp: null,
+  jurisdiction_country: "Morocco",
+  jurisdiction_city: "Marrakech",
+  address_line1: "35 Derb Fhal Zfriti Kennaria",
+  address_line2: "Marrakech 40000 Morocco",
+  site_type: "travel",
+  parent_brand: null,
+};
+
+const LEGAL_PAGES: Record<string, { title: string; sections: { order: number; title: string; content: string }[] }> = {
+  terms: {
+    title: "Terms of Service",
+    sections: [
+      { order: 1, title: "Agreement", content: "By accessing or using https://slowmorocco.com, operated by Slow Morocco SARL, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services." },
+      { order: 2, title: "Services", content: "Slow Morocco provides services as described on our website. All content, features, and functionality are owned by Slow Morocco SARL and are protected by international copyright, trademark, and other intellectual property laws." },
+      { order: 3, title: "User Responsibilities", content: "You agree to provide accurate and complete information, maintain the confidentiality of your account, comply with all applicable laws, and not misuse or attempt to disrupt our services." },
+      { order: 4, title: "Intellectual Property", content: "All content on this site, including text, graphics, logos, images, photography, videos, and design, is the property of Slow Morocco SARL and is protected by copyright laws." },
+      { order: 5, title: "Limitation of Liability", content: "To the maximum extent permitted by law, Slow Morocco SARL shall not be liable for indirect, incidental, or consequential damages arising from use of our services." },
+      { order: 6, title: "Governing Law", content: "These terms are governed by the laws of Morocco. Any disputes shall be resolved in the courts of Marrakech." },
+      { order: 7, title: "Contact", content: "Slow Morocco SARL, 35 Derb Fhal Zfriti Kennaria, Marrakech 40000 Morocco. Email: hello@slowmorocco.com" },
+    ],
+  },
+  privacy: {
+    title: "Privacy Policy",
+    sections: [
+      { order: 1, title: "Introduction", content: "Slow Morocco SARL (\"we\", \"us\", or \"our\") respects your privacy and is committed to protecting your personal data. This policy explains how we collect, use, and safeguard your information when you visit https://slowmorocco.com." },
+      { order: 2, title: "Information We Collect", content: "Information you provide: contact information (name, email, phone, WhatsApp), booking information (travel dates, preferences), and communications you send us. Information collected automatically: device information, usage data, and cookies." },
+      { order: 3, title: "How We Use Your Information", content: "To process and manage your bookings, communicate with you about inquiries and reservations, send confirmations and documents, and improve our website and services." },
+      { order: 4, title: "Your Rights", content: "You have the right to access, correct, or delete your personal data. To exercise these rights, contact us at hello@slowmorocco.com." },
+      { order: 5, title: "Data Security", content: "We implement appropriate security measures including SSL/TLS encryption and secure payment processing." },
+      { order: 6, title: "Contact", content: "Slow Morocco SARL, 35 Derb Fhal Zfriti Kennaria, Marrakech 40000 Morocco. Email: hello@slowmorocco.com" },
+    ],
+  },
+  disclaimer: {
+    title: "Disclaimer",
+    sections: [
+      { order: 1, title: "General", content: "The information provided on https://slowmorocco.com by Slow Morocco SARL is for general informational purposes only. This content does not constitute professional travel, medical, legal, or financial advice." },
+      { order: 2, title: "Accuracy", content: "While we make every effort to ensure information is accurate and up-to-date, we cannot guarantee completeness. Conditions and regulations change frequently. Prices and availability are subject to change." },
+      { order: 3, title: "Independent Resource", content: "This is an independent resource. We are not affiliated with any government agency or official institution. Information may change\u2014please verify before travel." },
+      { order: 4, title: "Photography", content: "Images on this site are representative of destinations and experiences. They may not reflect current conditions and should not be relied upon as exact representations." },
+      { order: 5, title: "Limitation of Liability", content: "Slow Morocco SARL shall not be liable for any damages arising from use or inability to use this site, reliance on information provided, or errors or omissions in content." },
+      { order: 6, title: "Contact", content: "Slow Morocco SARL, 35 Derb Fhal Zfriti Kennaria, Marrakech 40000 Morocco. Email: hello@slowmorocco.com" },
+    ],
+  },
+  "intellectual-property": {
+    title: "Intellectual Property",
+    sections: [
+      { order: 1, title: "Ownership", content: "All intellectual property on https://slowmorocco.com is owned by or licensed to Slow Morocco SARL." },
+      { order: 2, title: "Trademarks", content: "Protected content includes the Slow Morocco name and logo, related brand names and slogans, and service marks." },
+      { order: 3, title: "Copyrighted Material", content: "Website design and layout, written content and copy, photography and images, videos and multimedia, and descriptions are all protected." },
+      { order: 4, title: "Permitted Use", content: "You may view content for personal, non-commercial use, share links to our pages, print pages for personal reference, and quote brief excerpts with proper attribution." },
+      { order: 5, title: "Prohibited Use", content: "Without written permission, you may not copy, reproduce, or duplicate content, modify or create derivative works, distribute or use content commercially, remove copyright notices, or scrape content using automated tools." },
+      { order: 6, title: "Permission Requests", content: "To request permission to use our content, contact hello@slowmorocco.com with subject line 'IP License Request'." },
+      { order: 7, title: "Contact", content: "Slow Morocco SARL, 35 Derb Fhal Zfriti Kennaria, Marrakech 40000 Morocco. Email: hello@slowmorocco.com" },
+    ],
+  },
+};
+
+export async function getNexusSite(): Promise<NexusSite> {
+  return SITE_CONFIG;
 }
 
 export async function getNexusLegalPages(): Promise<NexusLegalPage[]> {
-  const { data, error } = await nexus
-    .from("nexus_legal_pages")
-    .select("*")
-    .order("page_id")
-    .order("section_order", { ascending: true });
-  if (error) {
-    console.error("[Nexus] Legal error:", error.message);
-    return [];
+  const all: NexusLegalPage[] = [];
+  for (const [pageId, page] of Object.entries(LEGAL_PAGES)) {
+    for (const section of page.sections) {
+      all.push({
+        page_id: pageId,
+        page_title: page.title,
+        section_order: section.order,
+        section_title: section.title,
+        section_content: section.content,
+      });
+    }
   }
-  return data as NexusLegalPage[];
+  return all;
 }
 
 export async function getNexusLegalPage(
   pageId: string
 ): Promise<NexusLegalPage[]> {
-  const { data, error } = await nexus
-    .from("nexus_legal_pages")
-    .select("*")
-    .eq("page_id", pageId)
-    .order("section_order", { ascending: true });
-  if (error) {
-    console.error("[Nexus] Legal page error:", error.message);
-    return [];
-  }
-  return data as NexusLegalPage[];
+  const page = LEGAL_PAGES[pageId];
+  if (!page) return [];
+  return page.sections.map((s) => ({
+    page_id: pageId,
+    page_title: page.title,
+    section_order: s.order,
+    section_title: s.title,
+    section_content: s.content,
+  }));
 }
 
-export function resolveVariables(text: string, site: NexusSite): string {
-  return text
-    .replace(/\{\{site_name\}\}/g, site.site_name)
-    .replace(/\{\{site_url\}\}/g, site.site_url)
-    .replace(/\{\{legal_entity\}\}/g, site.legal_entity)
-    .replace(/\{\{contact_email\}\}/g, site.contact_email || "")
-    .replace(/\{\{contact_phone\}\}/g, site.contact_phone || "")
-    .replace(/\{\{jurisdiction_country\}\}/g, site.jurisdiction_country || "")
-    .replace(/\{\{jurisdiction_city\}\}/g, site.jurisdiction_city || "")
-    .replace(/\{\{address_line1\}\}/g, site.address_line1 || "")
-    .replace(/\{\{address_line2\}\}/g, site.address_line2 || "");
+// No-op — variables already resolved in hardcoded content
+export function resolveVariables(text: string, _site: NexusSite): string {
+  return text;
 }
 
 export async function getNexusSetting(
-  key: string
+  _key: string
 ): Promise<string | null> {
-  const { data } = await nexus
-    .from("site_settings")
-    .select("value")
-    .eq("site_id", SITE_ID)
-    .eq("key", key)
-    .maybeSingle();
-
-  return data?.value || null;
+  return null;
 }
 
 // ============================================
-// CONTENT SITES (for footer network display)
+// CONTENT SITES (hardcoded — empty for now)
 // ============================================
 
 export interface NexusContentSite {
@@ -235,22 +263,5 @@ export interface NexusContentSite {
 }
 
 export async function getNexusContentSites(): Promise<NexusContentSite[]> {
-  try {
-    const { data, error } = await nexus
-      .from("nexus_content_sites")
-      .select("*")
-      .eq("is_active", true)
-      .order("display_order", { ascending: true });
-
-    if (error) {
-      console.error("[Nexus] Content sites error:", error.message);
-      return [];
-    }
-    return (data as NexusContentSite[]) || [];
-  } catch (err) {
-    console.error("[Nexus] Content sites fetch failed:", err);
-    return [];
-  }
+  return [];
 }
-
-export { nexus };
