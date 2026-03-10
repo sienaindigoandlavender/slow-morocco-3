@@ -184,7 +184,6 @@ export default function Header() {
                 { href: "/stories/category/people", label: "People" },
                 { href: "/stories/category/nature", label: "Nature" },
                 { href: "/stories/category/sacred", label: "Sacred" },
-                { href: "/stories/category/before-you-go", label: "Before You Go" },
               ].map((item) => (
                 <Link
                   key={item.href}
