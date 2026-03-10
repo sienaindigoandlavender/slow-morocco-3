@@ -360,7 +360,6 @@ export const glossaryData: GlossaryCategory[] = [
         seeAlso: ["dar", "medina"],
         relatedStories: [
           { slug: "the-riad", title: "The Riad" },
-          { slug: "the-riad", title: "The Riad" },
         ],
         relatedPlaces: [
           { slug: "jemaa-el-fna", title: "Marrakech" },
@@ -481,7 +480,6 @@ export const glossaryData: GlossaryCategory[] = [
         related: ["market", "bazaar", "marketplace"],
         seeAlso: ["medina", "fondouk"],
         relatedStories: [
-          { slug: "souk-decoded", title: "Souk Decoded" },
           { slug: "souk-decoded", title: "Souk Decoded" },
         ],
         relatedPlaces: [
@@ -723,47 +721,6 @@ export const glossaryData: GlossaryCategory[] = [
     title: "Geography",
     description: "Mountains, valleys, and regional terminology.",
     terms: [
-      {
-        id: "high-atlas",
-        term: "High Atlas",
-        arabicScript: "الأطلس الكبير",
-        category: "geography",
-        definition: "Morocco's highest mountain range, running southwest to northeast for approximately 1,000 kilometers. Includes Jebel Toubkal (4,167m), the highest peak in North Africa.",
-        context: "The High Atlas separates the Mediterranean climate of the north from the Saharan climate of the south.",
-        related: ["Atlas Mountains", "Toubkal", "mountain range"],
-        seeAlso: ["jebel", "middle-atlas", "anti-atlas"],
-      },
-      {
-        id: "middle-atlas",
-        term: "Middle Atlas",
-        arabicScript: "الأطلس المتوسط",
-        category: "geography",
-        definition: "The northernmost of Morocco's Atlas ranges, characterized by cedar forests, lakes, and Amazigh villages. Lower and wetter than the High Atlas.",
-        context: "The Middle Atlas is home to the endangered Barbary macaque and the cedar forests of Azrou.",
-        related: ["Atlas Mountains", "Azrou", "Ifrane"],
-        seeAlso: ["high-atlas"],
-      },
-      {
-        id: "anti-atlas",
-        term: "Anti-Atlas",
-        arabicScript: "الأطلس الصغير",
-        category: "geography",
-        definition: "The southernmost Atlas range, older and more eroded than the High Atlas. Known for dramatic rock formations, ancient granites, and almond groves.",
-        context: "The Anti-Atlas contains some of the oldest exposed rock on Earth, dating back over 2 billion years.",
-        related: ["Atlas Mountains", "Tafraoute", "geological formations"],
-        seeAlso: ["high-atlas"],
-      },
-      {
-        id: "draa-valley",
-        term: "Draa Valley",
-        pronunciation: "drah",
-        arabicScript: "وادي درعة",
-        category: "geography",
-        definition: "Morocco's longest river valley, stretching from the Atlas Mountains toward the Sahara. The Draa River feeds a chain of oases and palm groves, with kasbahs and ksour lining its banks.",
-        context: "The valley was historically a key caravan route for trans-Saharan trade in gold, salt, and slaves.",
-        related: ["Draa River", "palm oasis", "caravan route"],
-        seeAlso: ["kasbah", "ksar", "oasis"],
-      },
       {
         id: "jebel",
         term: "Jebel",
