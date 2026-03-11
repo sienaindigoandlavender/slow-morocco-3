@@ -87,6 +87,9 @@ function BuildQuoteContent() {
   const [price, setPrice] = useState("");
   const [requests, setRequests] = useState("");
   const [notes, setNotes] = useState("");
+  const [firstTimeMorocco, setFirstTimeMorocco] = useState("");
+  const [dreamExperience, setDreamExperience] = useState("");
+  const [hearAboutUs, setHearAboutUs] = useState("");
   
   // Status
   const [saving, setSaving] = useState(false);
@@ -135,27 +138,30 @@ function BuildQuoteContent() {
       
       if (data.success && data.quote) {
         const q = data.quote;
-        setClientId(q.clientId);
-        setFirstName(q.firstName || "");
-        setLastName(q.lastName || "");
-        setEmail(q.email || "");
-        setPhone(q.phone || "");
-        setCountry(q.country || "");
-        setJourneyInterest(q.journeyInterest || "");
-        setStartDate(q.startDate || "");
-        setEndDate(q.endDate || "");
-        setStartCity(q.startCity || "");
-        setEndCity(q.endCity || "");
-        setDays(parseInt(q.days) || 7);
-        setTravelers(parseInt(q.travelers) || 2);
-        setLanguage(q.language || "English");
-        setBudget(q.budget || "");
-        setRequests(q.requests || "");
-        setNotes(q.notes || "");
+        setClientId(q.Client_ID || id);
+        setFirstName(q.First_Name || "");
+        setLastName(q.Last_Name || "");
+        setEmail(q.Email || "");
+        setPhone(q.Phone || "");
+        setCountry(q.Country || "");
+        setJourneyInterest(q.Journey_Interest || "");
+        setStartDate(q.Start_Date || "");
+        setEndDate(q.End_Date || "");
+        setStartCity(q.Start_City || "");
+        setEndCity(q.End_City || "");
+        setDays(parseInt(q.Days) || 7);
+        setTravelers(parseInt(q.Number_Travelers) || 2);
+        setLanguage(q.Language || "English");
+        setBudget(q.Budget || "");
+        setRequests(q.Requests || "");
+        setNotes(q.Notes || "");
+        setFirstTimeMorocco(q.First_Time_Morocco || "");
+        setDreamExperience(q.Dream_Experience || "");
+        setHearAboutUs(q.Hear_About_Us || "");
         setIsExisting(true);
         setSearchResults([]);
         setSearchQuery("");
-        setMessage(`Loaded: ${q.firstName} ${q.lastName}`);
+        setMessage(`Loaded: ${q.First_Name} ${q.Last_Name}`);
       }
     } catch (err) {
       console.error("Load error:", err);
@@ -171,7 +177,8 @@ function BuildQuoteContent() {
       firstName, lastName, email, phone, country,
       journeyInterest, startDate, endDate, startCity, endCity,
       days: days.toString(), travelers: travelers.toString(), 
-      language, budget, requests, notes
+      language, budget, requests, notes,
+      firstTimeMorocco, dreamExperience, hearAboutUs
     };
     
     try {
@@ -434,6 +441,32 @@ function BuildQuoteContent() {
             {/* Journey Details */}
             <section>
               <h2 className="font-serif text-xl mb-6">Journey Details</h2>
+              <div className="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-sm text-muted-foreground mb-2">First Time in Morocco?</label>
+                  <select
+                    value={firstTimeMorocco}
+                    onChange={(e) => setFirstTimeMorocco(e.target.value)}
+                    className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors"
+                  >
+                    <option value="">— Select —</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Unknown">Unknown</option>
+                  </select>
+                </div>
+                <TextInput label="How Did They Find Us?" value={hearAboutUs} onChange={setHearAboutUs} placeholder="e.g., Slow Morocco article, Google, referral" />
+              </div>
+              <div className="mb-6">
+                <label className="block text-sm text-muted-foreground mb-2">Expectations / Dream Experience</label>
+                <textarea
+                  value={dreamExperience}
+                  onChange={(e) => setDreamExperience(e.target.value)}
+                  rows={3}
+                  placeholder="What do they want from this trip? What experiences are they looking for?"
+                  className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors resize-none"
+                />
+              </div>
               <div className="mb-6">
                 <TextInput label="Journey Interest" value={journeyInterest} onChange={setJourneyInterest} placeholder="e.g., Sahara Desert, Imperial Cities" />
               </div>
