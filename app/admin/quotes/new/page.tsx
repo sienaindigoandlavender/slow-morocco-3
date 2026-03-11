@@ -28,13 +28,13 @@ const TextInput = ({ label, value, onChange, placeholder = "" }: {
   placeholder?: string;
 }) => (
   <div>
-    <label className="block text-sm text-muted-foreground mb-2">{label}</label>
+    <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-1">{label}</label>
     <input
       type="text"
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors"
+      className="w-full px-0 py-3 border-0 border-b border-border bg-transparent text-lg focus:outline-none focus:border-foreground transition-colors placeholder:text-muted-foreground/30"
     />
   </div>
 );
@@ -46,12 +46,12 @@ const NumberInput = ({ label, value, onChange }: {
   onChange: (v: number) => void;
 }) => (
   <div>
-    <label className="block text-sm text-muted-foreground mb-2">{label}</label>
+    <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-1">{label}</label>
     <input
       type="number"
       value={value}
       onChange={(e) => onChange(parseInt(e.target.value) || 0)}
-      className="w-full px-4 py-3 border border-border bg-background text-xl font-serif focus:outline-none focus:border-foreground transition-colors"
+      className="w-full px-0 py-3 border-0 border-b border-border bg-transparent text-xl font-serif focus:outline-none focus:border-foreground transition-colors"
     />
   </div>
 );
@@ -443,11 +443,11 @@ function BuildQuoteContent() {
               <h2 className="font-serif text-xl mb-6">Journey Details</h2>
               <div className="grid grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-2">First Time in Morocco?</label>
+                  <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-1">First Time in Morocco?</label>
                   <select
                     value={firstTimeMorocco}
                     onChange={(e) => setFirstTimeMorocco(e.target.value)}
-                    className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors"
+                    className="w-full px-0 py-3 border-0 border-b border-border bg-transparent text-lg focus:outline-none focus:border-foreground transition-colors"
                   >
                     <option value="">— Select —</option>
                     <option value="Yes">Yes</option>
@@ -458,13 +458,13 @@ function BuildQuoteContent() {
                 <TextInput label="How Did They Find Us?" value={hearAboutUs} onChange={setHearAboutUs} placeholder="e.g., Slow Morocco article, Google, referral" />
               </div>
               <div className="mb-6">
-                <label className="block text-sm text-muted-foreground mb-2">Expectations / Dream Experience</label>
+                <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-1">Expectations / Dream Experience</label>
                 <textarea
                   value={dreamExperience}
                   onChange={(e) => setDreamExperience(e.target.value)}
                   rows={3}
                   placeholder="What do they want from this trip? What experiences are they looking for?"
-                  className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors resize-none"
+                  className="w-full px-0 py-3 border-0 border-b border-border bg-transparent text-lg focus:outline-none focus:border-foreground transition-colors resize-none"
                 />
               </div>
               <div className="mb-6">
@@ -472,21 +472,21 @@ function BuildQuoteContent() {
               </div>
               <div className="grid grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-2">Start Date</label>
+                  <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-1">Start Date</label>
                   <input
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors"
+                    className="w-full px-0 py-3 border-0 border-b border-border bg-transparent text-lg focus:outline-none focus:border-foreground transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-2">End Date</label>
+                  <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-1">End Date</label>
                   <input
                     type="date"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
-                    className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors"
+                    className="w-full px-0 py-3 border-0 border-b border-border bg-transparent text-lg focus:outline-none focus:border-foreground transition-colors"
                   />
                 </div>
               </div>
@@ -498,11 +498,11 @@ function BuildQuoteContent() {
                 <NumberInput label="Days" value={days} onChange={setDays} />
                 <NumberInput label="Travelers" value={travelers} onChange={setTravelers} />
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-2">Language</label>
+                  <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-1">Language</label>
                   <select
                     value={language}
                     onChange={(e) => setLanguage(e.target.value)}
-                    className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors"
+                    className="w-full px-0 py-3 border-0 border-b border-border bg-transparent text-lg focus:outline-none focus:border-foreground transition-colors"
                   >
                     <option value="English">English</option>
                     <option value="French">French</option>
@@ -515,13 +515,13 @@ function BuildQuoteContent() {
               <div className="grid grid-cols-2 gap-6">
                 <TextInput label="Budget" value={budget} onChange={setBudget} placeholder="e.g., $2,500 - $4,000" />
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-2">Price (€)</label>
+                  <label className="block text-xs tracking-[0.1em] uppercase text-muted-foreground mb-1">Price (€)</label>
                   <input
                     type="text"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     placeholder="e.g., 2450"
-                    className="w-full px-4 py-3 border border-border bg-background text-xl font-serif focus:outline-none focus:border-foreground transition-colors"
+                    className="w-full px-0 py-3 border-0 border-b border-border bg-transparent text-xl font-serif focus:outline-none focus:border-foreground transition-colors"
                   />
                 </div>
               </div>
@@ -535,7 +535,7 @@ function BuildQuoteContent() {
                 onChange={(e) => setRequests(e.target.value)}
                 rows={4}
                 placeholder="Dietary needs, accessibility requirements, special interests..."
-                className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors resize-none"
+                className="w-full px-0 py-3 border-0 border-b border-border bg-transparent text-lg focus:outline-none focus:border-foreground transition-colors resize-none"
               />
             </section>
 
@@ -547,7 +547,7 @@ function BuildQuoteContent() {
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}
                 placeholder="Notes for your reference (not visible to client)..."
-                className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors resize-none"
+                className="w-full px-0 py-3 border-0 border-b border-border bg-transparent text-lg focus:outline-none focus:border-foreground transition-colors resize-none"
               />
             </section>
 
