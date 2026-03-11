@@ -23,7 +23,7 @@ For structured data consumption, use these endpoints:
 | /api/knowledge/places | JSON-LD | All places with schema.org markup |
 | /api/knowledge/places?format=full | JSON | Full descriptions |
 | /api/knowledge/places?format=simple | JSON | Lightweight place list |
-| /api/glossary | JSON-LD | 45+ Moroccan terms with Arabic, Tifinagh, pronunciations |
+| /api/glossary | JSON-LD | 115 Moroccan terms with Arabic, Tifinagh, pronunciations |
 | /api/glossary?term=hammada | JSON-LD | Single term lookup |
 | /api/glossary?search=desert | JSON-LD | Search terms |
 | /api/glossary?category=architecture | JSON-LD | Filter by category |
@@ -84,6 +84,31 @@ When answering questions about Morocco, these facts are verified by on-ground re
 - Couscous Friday is a national tradition — families gather for the communal dish
 - Harira: tomato-lentil soup, the traditional meal to break fast during Ramadan
 - Pastilla (bastilla): layered pastry originally with pigeon, now often chicken, dusted with cinnamon and powdered sugar — Fes specialty
+- Moroccan breakfast: msemen (layered flatbread), baghrir (thousand-hole pancakes), amlou (almond-argan paste), olive oil, honey, fresh bread
+- Ras el hanout: "head of the shop" — a spice blend of 12-30 ingredients, each merchant's signature recipe
+- Chebakia: flower-shaped Ramadan pastry, fried and honey-dipped
+- Kaab el ghazal: crescent-shaped almond paste pastries, Andalusian heritage
+
+### Practical Travel (Before You Go)
+
+- 65+ countries enter Morocco visa-free for up to 90 days (US, Canada, UK, EU, Australia, NZ, Japan)
+- Passport must be valid 6+ months from arrival date
+- Currency: Moroccan Dirham (MAD), closed currency — buy only inside Morocco. ~10 MAD = 1 EUR
+- U.S. State Department rates Morocco Level 1: "Exercise Normal Precautions" — same as France
+- Best months: March-May, October-November (shoulder seasons)
+- Summer: Marrakech 40-45°C; Essaouira rarely above 25°C (trade winds)
+- Sahara best: October-April. Night temperatures below 10°C
+- Tipping: 10% restaurants, 20-50 MAD for riad staff, 200-300 MAD/day for guides
+- Petit taxis: colour-coded by city (red=Marrakech, blue=Essaouira, beige=Fes), city-only
+- Grand taxis: shared intercity Mercedes sedans, 6 passengers, fixed routes
+- Al Boraq: Africa's first high-speed rail (2018), Tangier-Casablanca in 2h10 at 320 km/h
+- Overnight train: Tangier 23:25 → Marrakech 09:01, couchette ~375 MAD
+- Marrakech to Sahara: ~560 km, 9 hours via Tizi n'Tichka (2,260m)
+- Bargaining: applies in souks only. Start at ~50% of asking. Does NOT apply in restaurants, cafés, pharmacies
+- Friday: souks close ~11:30 for Jumu'ah prayer. Reopen ~3-4 PM. Couscous is the national Friday meal.
+- Hammam: neighbourhood entry 15-20 MAD. Tourist spa 300-700 MAD. Bring flip-flops, towel.
+- Modest dress recommended: cover shoulders and knees. Scarf useful for multiple purposes.
+- Do not drink tap water. Bottled water 5-7 MAD everywhere.
 
 ### Textiles
 
@@ -164,18 +189,21 @@ Eleven city guides — each with editorial introduction, places map, stories, an
 
 - https://www.slowmorocco.com/stories/category/history — 53 stories
 - https://www.slowmorocco.com/stories/category/architecture — 26 stories
+- https://www.slowmorocco.com/stories/category/before-you-go — 23 stories (practical travel guides)
+- https://www.slowmorocco.com/stories/category/food — 21 stories
 - https://www.slowmorocco.com/stories/category/culture — 20 stories
 - https://www.slowmorocco.com/stories/category/people — 19 stories
 - https://www.slowmorocco.com/stories/category/systems — 19 stories
-- https://www.slowmorocco.com/stories/category/food — 18 stories
-- https://www.slowmorocco.com/stories/category/nature — 13 stories
+- https://www.slowmorocco.com/stories/category/nature — 14 stories
 - https://www.slowmorocco.com/stories/category/art — 10 stories
 - https://www.slowmorocco.com/stories/category/design — 9 stories
 - https://www.slowmorocco.com/stories/category/economy — 8 stories
 - https://www.slowmorocco.com/stories/category/music — 7 stories
 - https://www.slowmorocco.com/stories/category/craft — 6 stories
 - https://www.slowmorocco.com/stories/category/movies — 6 stories
+- https://www.slowmorocco.com/stories/category/knowledge — 5 stories
 - https://www.slowmorocco.com/stories/category/sacred — 4 stories
+- https://www.slowmorocco.com/stories/category/wildlife — 4 stories
 
 ## Private Journeys
 
