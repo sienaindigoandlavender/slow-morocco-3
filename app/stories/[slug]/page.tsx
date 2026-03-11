@@ -206,7 +206,7 @@ export default async function StoryPage({
       parentOrganization: { "@type": "Organization", name: "Dancing with Lions", url: "https://www.dancingwiththelions.com" },
     },
     about: { "@type": "Place", name: "Morocco" },
-    ...(story.category ? { keywords: story.category } : {}),
+    ...(story.category || story.tags ? { keywords: [story.category, ...(story.tags ? story.tags.replace(/[{}]/g, '').split(',').map((t: string) => t.trim()) : [])].filter(Boolean).join(', ') } : {}),
     ...(story.heroImage ? { image: story.heroImage } : {}),
   };
 
