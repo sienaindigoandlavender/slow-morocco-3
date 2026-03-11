@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getJourneys, getStories, getPlaces, getDayTrips, getDestinations } from '@/lib/supabase'
+import { getJourneys, getStories, getPlaces, getDayTrips } from '@/lib/supabase'
 
 const BASE_URL = 'https://www.slowmorocco.com'
 
@@ -16,6 +16,12 @@ function safeSitemapUrl(base: string, prefix: string, slug: string): string {
   return `${base}${prefix}/${encodedSlug}`
 }
 
+// City guide slugs
+const CITY_SLUGS = [
+  'marrakech', 'fes', 'tangier', 'rabat', 'essaouira',
+  'casablanca', 'meknes', 'ouarzazate', 'agadir', 'dakhla', 'chefchaouen',
+]
+
 // Static pages with their priorities
 const STATIC_PAGES = [
   { path: '', priority: 1, changeFrequency: 'weekly' as const },
@@ -24,6 +30,12 @@ const STATIC_PAGES = [
   { path: '/places', priority: 0.8, changeFrequency: 'weekly' as const },
   { path: '/places/map', priority: 0.7, changeFrequency: 'weekly' as const },
   { path: '/destinations', priority: 0.9, changeFrequency: 'weekly' as const },
+  // City guides — high priority, these are destination authority pages
+  ...CITY_SLUGS.map(city => ({
+    path: `/${city}`,
+    priority: 0.9,
+    changeFrequency: 'weekly' as const,
+  })),
   { path: '/morocco', priority: 0.9, changeFrequency: 'monthly' as const },
   { path: '/regions', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/regions/cities', priority: 0.8, changeFrequency: 'monthly' as const },
@@ -44,6 +56,9 @@ const STATIC_PAGES = [
   { path: '/stories/category/craft', priority: 0.7, changeFrequency: 'weekly' as const },
   { path: '/stories/category/movies', priority: 0.6, changeFrequency: 'monthly' as const },
   { path: '/stories/category/sacred', priority: 0.6, changeFrequency: 'monthly' as const },
+  { path: '/stories/category/before-you-go', priority: 0.9, changeFrequency: 'weekly' as const },
+  { path: '/stories/category/wildlife', priority: 0.6, changeFrequency: 'monthly' as const },
+  { path: '/stories/category/knowledge', priority: 0.7, changeFrequency: 'monthly' as const },
   { path: '/about', priority: 0.7, changeFrequency: 'monthly' as const },
   { path: '/plan-your-trip', priority: 0.9, changeFrequency: 'monthly' as const },
   { path: '/manifesto', priority: 0.7, changeFrequency: 'monthly' as const },
@@ -75,23 +90,6 @@ const STATIC_PAGES = [
 
 async function getDynamicPages() {
   const dynamicPages: MetadataRoute.Sitemap = []
-
-  // Destination / city guide pages — from database
-  try {
-    const destinations = await getDestinations({ published: true })
-    destinations.forEach((dest) => {
-      if (dest.slug) {
-        dynamicPages.push({
-          url: `${BASE_URL}/${dest.slug}`,
-          lastModified: new Date(),
-          changeFrequency: 'weekly',
-          priority: 0.9,
-        })
-      }
-    })
-  } catch (e) {
-    console.error('Failed to fetch destinations for sitemap:', e)
-  }
 
   try {
     const journeys = await getJourneys({ published: true })
