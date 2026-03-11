@@ -48,6 +48,8 @@ export async function GET(
       Dream_Experience: data.dream_experience,
       Requests: data.requests,
       Hear_About_Us: data.hear_about_us,
+      First_Time_Morocco: data.first_time_morocco,
+      Dream_Experience: data.dream_experience,
       Journey_Type: data.journey_type,
       Status: data.status || "NEW",
       Itinerary_Doc_Link: data.itinerary_doc_link,
@@ -111,6 +113,9 @@ export async function PUT(
     if (body.budget !== undefined) updates.budget = body.budget;
     if (body.requests !== undefined) updates.requests = body.requests;
     if (body.notes !== undefined) updates.notes = body.notes;
+    if (body.firstTimeMorocco !== undefined) updates.first_time_morocco = body.firstTimeMorocco;
+    if (body.dreamExperience !== undefined) updates.dream_experience = body.dreamExperience;
+    if (body.hearAboutUs !== undefined) updates.hear_about_us = body.hearAboutUs;
     
     // Direct DB column names (from quote detail/edit pages)
     if (body.Status !== undefined) updates.status = body.Status;
@@ -129,6 +134,9 @@ export async function PUT(
     if (body.Budget !== undefined) updates.budget = body.Budget;
     if (body.Requests !== undefined) updates.requests = body.Requests;
     if (body.Notes !== undefined) updates.notes = body.Notes;
+    if (body.First_Time_Morocco !== undefined) updates.first_time_morocco = body.First_Time_Morocco;
+    if (body.Dream_Experience !== undefined) updates.dream_experience = body.Dream_Experience;
+    if (body.Hear_About_Us !== undefined) updates.hear_about_us = body.Hear_About_Us;
     if (body.Proposal_URL !== undefined) updates.proposal_url = body.Proposal_URL;
     if (body.Itinerary_Doc_Link !== undefined) updates.itinerary_doc_link = body.Itinerary_Doc_Link;
 
