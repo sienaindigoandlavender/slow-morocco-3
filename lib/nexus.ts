@@ -203,6 +203,44 @@ const LEGAL_PAGES: Record<string, { title: string; sections: { order: number; ti
       { order: 7, title: "Contact", content: "Slow Morocco SARL, 35 Derb Fhal Zfriti Kennaria, Marrakech 40000 Morocco. Email: hello@slowmorocco.com" },
     ],
   },
+  "booking-conditions": {
+    title: "Booking Conditions",
+    sections: [
+      { order: 1, title: "How It Works", content: "Every Slow Morocco journey is designed from scratch. There are no fixed packages and no group tours. You tell us what you're looking for, we design a journey around it, and we coordinate with trusted local partners — licensed operators, riads, guides, artisans — to bring it to life.\n\nSlow Morocco is a journey design studio. We create the experience. Our licensed local partners deliver the transport, guiding, and logistics on the ground." },
+      { order: 2, title: "Your Proposal", content: "After our initial conversation, we send you a detailed proposal including your itinerary, accommodation, experiences, and a total price. The proposal is valid for 7 days. Prices are quoted in euros (€) and are based on availability at the time of quoting. If anything changes before you confirm, we will let you know." },
+      { order: 3, title: "What Is Included", content: "Your proposal specifies exactly what is included. This varies by journey, but typically covers private transport with a professional driver, accommodation as specified (riads, kasbahs, desert camps, hotels), local guides where specified, experiences and activities as listed, and WhatsApp support throughout your journey.\n\nUnless stated in your proposal, the following are not included: international flights, travel insurance, meals not specified, drinks and personal expenses, tips and gratuities, and entry fees to monuments or museums." },
+      { order: 4, title: "Travel Insurance", content: "Travel insurance is required. We will ask for confirmation of your policy before your journey begins. Your insurance must cover medical expenses and emergency evacuation, trip cancellation and interruption, and personal belongings. If you choose to travel without insurance, you accept full responsibility for any costs that insurance would have covered." },
+      { order: 5, title: "Your Responsibility", content: "You are responsible for ensuring your passport is valid for at least 6 months from your date of arrival in Morocco, obtaining any visa required for entry, arranging adequate travel insurance, and informing us of any medical conditions, dietary requirements, or mobility needs that may affect your journey.\n\nMorocco is a Muslim country. Modest dress is expected in public spaces, particularly when visiting religious sites and rural communities. Your guide will advise you." },
+      { order: 6, title: "Changes to Your Journey", content: "You can request changes to your itinerary, dates, or accommodation at any time before departure. We will do our best to accommodate changes, but they may incur additional costs if suppliers charge amendment fees or if prices have changed. We will confirm any cost difference before proceeding.\n\nDuring your journey, adjustments on the ground are often possible — an extra night, a change of route, a spontaneous detour. Talk to your guide or contact us directly.\n\nIf we need to adjust your itinerary due to circumstances beyond our control — a road closure, a fully booked riad — we will offer an alternative of equal or higher quality at no additional cost." },
+      { order: 7, title: "Complaints", content: "If something goes wrong during your journey, please tell us immediately — by WhatsApp or phone. Most issues can be resolved on the ground, in real time. If you are not satisfied, you may submit a written complaint within 14 days of your return. We will respond within 30 days." },
+      { order: 8, title: "Governing Law", content: "These terms are governed by the laws of the Kingdom of Morocco. Any dispute arising from these terms will be subject to the jurisdiction of the courts of Marrakech." },
+      { order: 9, title: "Contact", content: "Slow Morocco SARL, 35 Derb Fhal Zfriti Kennaria, Marrakech 40000 Morocco. Email: hello@slowmorocco.com" },
+    ],
+  },
+  "payments": {
+    title: "Payments",
+    sections: [
+      { order: 1, title: "How Payment Works", content: "Once you accept your proposal, we send you an invoice. Your booking is not confirmed until payment is received. Once confirmed, we begin making reservations on your behalf — accommodation, transport, guides, and any special arrangements." },
+      { order: 2, title: "Deposit", content: "A deposit of 30% of the total journey price is required to confirm your booking. The deposit is due within 7 days of accepting your proposal." },
+      { order: 3, title: "Balance", content: "The remaining 70% is due no later than 30 days before your arrival date.\n\nFor bookings made within 30 days of travel, full payment (100%) is required at the time of confirmation." },
+      { order: 4, title: "Payment Methods", content: "We accept PayPal and bank transfer. Payment details are included in your invoice." },
+      { order: 5, title: "Currency", content: "All prices are quoted in euros (€). If paying in another currency, the exchange rate on the day of payment applies. Any bank transfer fees are the responsibility of the client." },
+      { order: 6, title: "What Your Payment Covers", content: "Your payment covers the journey design, coordination, and all services listed in your proposal. Some services are delivered directly by our licensed local partners (transport, guiding), and some are booked through us on your behalf (accommodation, experiences). Your proposal specifies exactly what is included." },
+      { order: 7, title: "Contact", content: "Slow Morocco SARL, 35 Derb Fhal Zfriti Kennaria, Marrakech 40000 Morocco. Email: hello@slowmorocco.com" },
+    ],
+  },
+  "cancellations-and-refunds": {
+    title: "Cancellations & Refunds",
+    sections: [
+      { order: 1, title: "Cancellation by You", content: "We understand plans change. If you need to cancel your booking, the following refund schedule applies based on when we receive written notice (email or WhatsApp):\n\nMore than 60 days before departure — full refund minus a €100 administration fee.\n30 to 60 days before departure — 70% refund (deposit forfeited).\n15 to 29 days before departure — 50% refund.\n7 to 14 days before departure — 25% refund.\nLess than 7 days before departure — no refund.\n\nThe date we receive your written notice determines the refund tier." },
+      { order: 2, title: "Non-Recoverable Costs", content: "Some costs cannot be recovered once commitments are made on your behalf. If a supplier — a riad, a desert camp, a maalem for a private ceremony — charges us a cancellation fee, that cost is passed to you even if it exceeds the refund percentages above. We will always be transparent about this and will inform you of any non-recoverable costs before they are incurred." },
+      { order: 3, title: "Cancellation by Slow Morocco", content: "We reserve the right to cancel a journey if full payment has not been received by the due date, or if circumstances beyond our control make the journey unsafe or impossible.\n\nIf we cancel for safety or force majeure reasons, you will receive a full refund of all payments made, or the option to reschedule at no additional cost. We are not liable for additional expenses you may have incurred, such as flights or other travel arrangements." },
+      { order: 4, title: "Force Majeure", content: "Neither party is liable for failure to perform due to events beyond reasonable control, including natural disasters, extreme weather, epidemics or pandemics, government actions, civil unrest, strikes, or travel restrictions.\n\nIn such cases, we will work with you to reschedule your journey or provide a refund minus any non-recoverable costs already paid to suppliers." },
+      { order: 5, title: "Rescheduling", content: "If you would prefer to reschedule rather than cancel, we are happy to move your journey to new dates subject to availability. One reschedule is permitted at no additional charge if requested more than 30 days before departure. Changes to dates within 30 days of departure may incur supplier amendment fees." },
+      { order: 6, title: "Our Liability", content: "Slow Morocco acts as a journey designer and coordinator. We select and work with trusted local partners with care. However, we are not liable for the acts or omissions of third-party suppliers, or for injury, loss, damage, or delay caused by events outside our control. Our total liability for any claim shall not exceed the total amount you paid for your journey." },
+      { order: 7, title: "Contact", content: "Slow Morocco SARL, 35 Derb Fhal Zfriti Kennaria, Marrakech 40000 Morocco. Email: hello@slowmorocco.com" },
+    ],
+  },
 };
 
 export async function getNexusSite(): Promise<NexusSite> {
