@@ -78,6 +78,9 @@ function isHTML(str: string): boolean {
 function prepareHTML(html: string): string {
   // Convert any remaining <br> tags to paragraph breaks
   let processed = html.replace(/<br\s*\/?>/gi, '</p><p>');
+  // Also convert newlines to paragraph/line breaks (page.tsx converts <br> to \n before this runs)
+  processed = processed.replace(/\n\n+/g, '</p><p>');
+  processed = processed.replace(/\n/g, '<br>');
   
   return processed
     .replace(/<p>/gi, '<p class="text-foreground leading-[1.85] mb-8">')
