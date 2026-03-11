@@ -122,7 +122,6 @@ export default function Footer() {
   const legal = footerData?.legal || [
     { label: "Terms", href: "/terms" },
     { label: "Privacy", href: "/privacy" },
-    { label: "Cancellation", href: "/cancellation-policy" },
     { label: "Glossary", href: "/glossary" },
   ];
   const copyright = footerData?.copyright || {
@@ -209,6 +208,7 @@ export default function Footer() {
               <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/25 mb-5">Explore</h4>
               <ul className="space-y-3">
                 <li><Link href="/places" className="text-sm text-white/50 hover:text-white/80 transition-colors">Places</Link></li>
+                <li><Link href="/destinations" className="text-sm text-white/50 hover:text-white/80 transition-colors">Destinations</Link></li>
                 <li><Link href="/journeys" className="text-sm text-white/50 hover:text-white/80 transition-colors">Journeys</Link></li>
                 <li><Link href="/stories/category/before-you-go" className="text-sm text-white/50 hover:text-white/80 transition-colors">Before You Go</Link></li>
                 <li><Link href="/glossary" className="text-sm text-white/50 hover:text-white/80 transition-colors">Glossary</Link></li>
@@ -221,6 +221,9 @@ export default function Footer() {
               <ul className="space-y-3">
                 <li><Link href="/about" className="text-sm text-white/50 hover:text-white/80 transition-colors">Who We Are</Link></li>
                 <li><Link href="/plan-your-trip" className="text-sm text-white/50 hover:text-white/80 transition-colors">Plan a Trip</Link></li>
+                <li><Link href="/booking-conditions" className="text-sm text-white/50 hover:text-white/80 transition-colors">Booking Conditions</Link></li>
+                <li><Link href="/payments" className="text-sm text-white/50 hover:text-white/80 transition-colors">Payments</Link></li>
+                <li><Link href="/cancellations-and-refunds" className="text-sm text-white/50 hover:text-white/80 transition-colors">Cancellations & Refunds</Link></li>
                 <li><Link href="/faq" className="text-sm text-white/50 hover:text-white/80 transition-colors">FAQ</Link></li>
                 <li><Link href="/contact" className="text-sm text-white/50 hover:text-white/80 transition-colors">Contact</Link></li>
               </ul>

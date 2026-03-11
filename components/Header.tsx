@@ -143,6 +143,9 @@ export default function Header() {
 
               <div className="mt-6 flex flex-col gap-1">
                 {[
+                  { href: "/booking-conditions", label: "Booking Conditions" },
+                  { href: "/payments", label: "Payments" },
+                  { href: "/cancellations-and-refunds", label: "Cancellations & Refunds" },
                   { href: "/faq", label: "FAQ" },
                   { href: "/contact", label: "Contact" },
                 ].map((item) => (
@@ -151,22 +154,6 @@ export default function Header() {
                     href={item.href}
                     onClick={() => setMenuOpen(false)}
                     className="text-sm text-[#2a2a25]/50 hover:text-[#2a2a25]/80 transition-colors py-1"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-
-              <div className="mt-6 flex flex-col gap-1">
-                {[
-                  { href: "/privacy", label: "Privacy Policy" },
-                  { href: "/terms", label: "Terms of Service" },
-                ].map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="text-xs text-[#2a2a25]/35 hover:text-[#2a2a25]/60 transition-colors py-0.5"
                   >
                     {item.label}
                   </Link>
