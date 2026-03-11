@@ -49,7 +49,6 @@ export async function GET(
       Requests: data.requests,
       Hear_About_Us: data.hear_about_us,
       First_Time_Morocco: data.first_time_morocco,
-      Dream_Experience: data.dream_experience,
       Journey_Type: data.journey_type,
       Status: data.status || "NEW",
       Itinerary_Doc_Link: data.itinerary_doc_link,
