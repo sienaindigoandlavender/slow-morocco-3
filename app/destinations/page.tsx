@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { getDestinations, convertDriveUrl } from "@/lib/supabase";
+import { cloudinaryUrl } from "@/lib/cloudinary";
 
 export const revalidate = 3600;
 
@@ -14,24 +14,18 @@ export const metadata: Metadata = {
   },
 };
 
-function cloudinaryUrl(url: string, width: number = 800): string {
+function imgSrc(url: string | null, width: number = 800): string {
   if (!url) return "";
-  if (url.includes("cloudinary.com") && url.includes("/upload/")) {
-    return url.replace("/upload/", `/upload/w_${width},q_auto,f_auto/`);
-  }
-  return convertDriveUrl(url);
+  return cloudinaryUrl(convertDriveUrl(url), width);
 }
 
 export default async function DestinationsPage() {
   const destinations = await getDestinations({ published: true });
 
-  // Separate featured (cities with hero images) from the rest
   const withImages = destinations.filter((d) => d.hero_image);
   const withoutImages = destinations.filter((d) => !d.hero_image);
 
-  // First 3 become the hero mosaic
   const heroCards = withImages.slice(0, 3);
-  // Next batch becomes the asymmetric grid
   const gridCards = withImages.slice(3);
 
   return (
@@ -58,18 +52,16 @@ export default async function DestinationsPage() {
               className="group md:col-span-7 relative overflow-hidden"
             >
               <div className="aspect-[4/3] md:aspect-[16/11] relative">
-                <Image
-                  src={cloudinaryUrl(heroCards[0].hero_image!, 1400)}
+                <img
+                  src={imgSrc(heroCards[0].hero_image, 1400)}
                   alt={heroCards[0].title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 58vw"
-                  className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.03]"
-                  priority
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.03]"
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                   <p className="text-[10px] tracking-[0.3em] uppercase text-white/60 mb-2">
-                    {heroCards[0].subtitle || "Destination"}
+                    {heroCards[0].subtitle || ""}
                   </p>
                   <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white leading-[1.05]">
                     {heroCards[0].title}
@@ -86,18 +78,17 @@ export default async function DestinationsPage() {
                   href={`/${d.slug}`}
                   className="group relative overflow-hidden flex-1"
                 >
-                  <div className="aspect-[16/10] md:aspect-auto md:h-full relative">
-                    <Image
-                      src={cloudinaryUrl(d.hero_image!, 900)}
+                  <div className="aspect-[16/10] md:aspect-auto md:h-full relative min-h-[200px]">
+                    <img
+                      src={imgSrc(d.hero_image, 900)}
                       alt={d.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 42vw"
-                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.03]"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.03]"
+                      loading="eager"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
                       <p className="text-[10px] tracking-[0.3em] uppercase text-white/50 mb-1.5">
-                        {d.subtitle || "Destination"}
+                        {d.subtitle || ""}
                       </p>
                       <h2 className="font-serif text-xl md:text-2xl text-white leading-[1.1]">
                         {d.title}
@@ -116,37 +107,35 @@ export default async function DestinationsPage() {
         <section className="px-6 md:px-[8%] lg:px-[12%] pb-16 md:pb-24">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-x-5 gap-y-10 md:gap-y-14">
             {gridCards.map((d, i) => {
-              // Vary card sizes: large (8 col), medium (6 col), small (4 col)
               const pattern = i % 5;
               let colSpan = "md:col-span-4";
               let aspect = "aspect-[4/3]";
               let titleSize = "text-lg md:text-xl";
+              let imgWidth = 800;
 
               if (pattern === 0) {
-                // Wide card
                 colSpan = "md:col-span-8";
                 aspect = "aspect-[16/9]";
                 titleSize = "text-xl md:text-2xl lg:text-3xl";
+                imgWidth = 1200;
               } else if (pattern === 1) {
-                // Tall narrow
                 colSpan = "md:col-span-4";
                 aspect = "aspect-[3/4]";
                 titleSize = "text-lg md:text-xl";
+                imgWidth = 600;
               } else if (pattern === 2) {
-                // Medium
                 colSpan = "md:col-span-6";
                 aspect = "aspect-[4/3]";
                 titleSize = "text-xl md:text-2xl";
               } else if (pattern === 3) {
-                // Medium
                 colSpan = "md:col-span-6";
                 aspect = "aspect-[16/10]";
                 titleSize = "text-xl md:text-2xl";
               } else {
-                // Full width panoramic
                 colSpan = "md:col-span-12";
                 aspect = "aspect-[21/9]";
                 titleSize = "text-2xl md:text-3xl lg:text-4xl";
+                imgWidth = 1600;
               }
 
               return (
@@ -156,18 +145,10 @@ export default async function DestinationsPage() {
                   className={`group block ${colSpan}`}
                 >
                   <div className={`${aspect} relative overflow-hidden`}>
-                    <Image
-                      src={cloudinaryUrl(d.hero_image!, pattern === 4 ? 1600 : pattern === 0 ? 1200 : 800)}
+                    <img
+                      src={imgSrc(d.hero_image, imgWidth)}
                       alt={d.title}
-                      fill
-                      sizes={
-                        pattern === 4
-                          ? "100vw"
-                          : pattern === 0
-                          ? "(max-width: 768px) 100vw, 66vw"
-                          : "(max-width: 768px) 100vw, 50vw"
-                      }
-                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.03]"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.03]"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
