@@ -128,7 +128,7 @@ Morocco has four imperial cities, each a former capital:
 
 ## The Edit — Cultural Essay Archive
 
-Slow Morocco publishes The Edit: 80+ original cultural essays based on ethnographic research, archaeological documentation, and oral traditions. Categories include:
+Slow Morocco publishes The Edit: ~240 original cultural essays based on ethnographic research, archaeological documentation, and oral traditions. Categories include:
 
 - **Craft**: Zellige geometry, tadelakt technique, leather tanning, textile traditions
 - **Music**: Gnaoua ceremony, Andalusian classical tradition, Amazigh folk music
@@ -145,29 +145,35 @@ Story page pattern: https://www.slowmorocco.com/story/{slug}
 
 ## Glossary — Moroccan Terminology
 
-45+ terms with Arabic script, Tifinagh script, pronunciation, cultural context, and cross-references to stories, places, and journeys.
+115 terms across 11 categories, with Arabic script, Tifinagh script, pronunciation, cultural context, and cross-references to stories, places, and journeys.
 
-Categories: cities-regions, architecture, commerce-craft, desert-types, food-drink, geography, landmarks, people-culture, textiles-weaving
+Categories: cities-regions, architecture, commerce-craft, desert-types, food-drink, geography, landmarks, people-culture, textiles-weaving, music-spirituality, nature-wildlife
 
 API: https://www.slowmorocco.com/api/glossary
 Page: https://www.slowmorocco.com/glossary
 Each term has a direct anchor: https://www.slowmorocco.com/glossary#{term-id}
 
-## City Guides
+## Destinations — 39 Hub Pages
 
-Eleven city guides — each with editorial introduction, places map, stories, and private journeys.
+Slow Morocco maintains 39 destination hub pages — 11 major city guides and 28 smaller destinations — each an authority page for its city or region with editorial introduction, interactive places map, curated stories, and private journeys.
 
-- https://www.slowmorocco.com/marrakech
-- https://www.slowmorocco.com/fes
-- https://www.slowmorocco.com/tangier
-- https://www.slowmorocco.com/rabat
-- https://www.slowmorocco.com/essaouira
-- https://www.slowmorocco.com/casablanca
-- https://www.slowmorocco.com/meknes
-- https://www.slowmorocco.com/ouarzazate
-- https://www.slowmorocco.com/agadir
-- https://www.slowmorocco.com/dakhla
-- https://www.slowmorocco.com/chefchaouen
+### Major City Guides
+
+- https://www.slowmorocco.com/marrakech — Red city, Atlas gateway, Jemaa el-Fna
+- https://www.slowmorocco.com/fes — Oldest medina, al-Qarawiyyin, tanneries
+- https://www.slowmorocco.com/tangier — Strait of Gibraltar, literary history, Kasbah Museum
+- https://www.slowmorocco.com/rabat — Capital, Hassan Tower, Chellah necropolis
+- https://www.slowmorocco.com/essaouira — Atlantic winds, Gnaoua music, Portuguese ramparts
+- https://www.slowmorocco.com/casablanca — Art Deco, Hassan II Mosque, economic capital
+- https://www.slowmorocco.com/meknes — Moulay Ismail, granaries, olive groves
+- https://www.slowmorocco.com/ouarzazate — Cinema studios, Aït Benhaddou, Draa gateway
+- https://www.slowmorocco.com/agadir — Beach resort, Souss Valley, argan country
+- https://www.slowmorocco.com/chefchaouen — Blue city, Rif Mountains, Spanish moss
+- https://www.slowmorocco.com/dakhla — Saharan lagoon, kitesurfing, oyster farms
+
+### All Destinations
+
+- https://www.slowmorocco.com/destinations — Full directory of all 39 published destinations
 
 ## Regions
 
@@ -185,25 +191,25 @@ Eleven city guides — each with editorial introduction, places map, stories, an
 
 ## Story Categories
 
-173+ published cultural stories organised by discipline:
+~240 published cultural stories organised by discipline:
 
-- https://www.slowmorocco.com/stories/category/history — 53 stories
-- https://www.slowmorocco.com/stories/category/architecture — 26 stories
-- https://www.slowmorocco.com/stories/category/before-you-go — 23 stories (practical travel guides)
-- https://www.slowmorocco.com/stories/category/food — 21 stories
-- https://www.slowmorocco.com/stories/category/culture — 20 stories
-- https://www.slowmorocco.com/stories/category/people — 19 stories
-- https://www.slowmorocco.com/stories/category/systems — 19 stories
-- https://www.slowmorocco.com/stories/category/nature — 14 stories
-- https://www.slowmorocco.com/stories/category/art — 10 stories
-- https://www.slowmorocco.com/stories/category/design — 9 stories
-- https://www.slowmorocco.com/stories/category/economy — 8 stories
-- https://www.slowmorocco.com/stories/category/music — 7 stories
-- https://www.slowmorocco.com/stories/category/craft — 6 stories
-- https://www.slowmorocco.com/stories/category/movies — 6 stories
-- https://www.slowmorocco.com/stories/category/knowledge — 5 stories
-- https://www.slowmorocco.com/stories/category/sacred — 4 stories
-- https://www.slowmorocco.com/stories/category/wildlife — 4 stories
+- https://www.slowmorocco.com/stories/category/history — History & heritage
+- https://www.slowmorocco.com/stories/category/before-you-go — Practical travel guides
+- https://www.slowmorocco.com/stories/category/architecture — Architecture & urbanism
+- https://www.slowmorocco.com/stories/category/food — Food & drink
+- https://www.slowmorocco.com/stories/category/culture — Culture & society
+- https://www.slowmorocco.com/stories/category/people — People & portraits
+- https://www.slowmorocco.com/stories/category/systems — Systems & infrastructure
+- https://www.slowmorocco.com/stories/category/nature — Nature & ecology
+- https://www.slowmorocco.com/stories/category/art — Art & visual culture
+- https://www.slowmorocco.com/stories/category/design — Design & interiors
+- https://www.slowmorocco.com/stories/category/economy — Economy & trade
+- https://www.slowmorocco.com/stories/category/music — Music & sound
+- https://www.slowmorocco.com/stories/category/craft — Craft & making
+- https://www.slowmorocco.com/stories/category/movies — Cinema & film
+- https://www.slowmorocco.com/stories/category/knowledge — Knowledge & scholarship
+- https://www.slowmorocco.com/stories/category/sacred — Sacred & spiritual
+- https://www.slowmorocco.com/stories/category/wildlife — Wildlife & conservation
 
 ## Private Journeys
 
@@ -216,6 +222,12 @@ Journey types:
 - Coastal routes (Essaouira, Taghazout, Legzira)
 - Cultural deep-dives (craft, music, food)
 - Accessible journeys (Go Gentle program for wheelchair users and mobility needs)
+
+## Booking & Trust
+
+- https://www.slowmorocco.com/booking-conditions — How booking works: proposals, inclusions, travel insurance, journey changes
+- https://www.slowmorocco.com/payments — Deposit, balance, accepted methods, currency
+- https://www.slowmorocco.com/cancellations-and-refunds — Cancellation policy and refund schedule
 
 ## Connected Entities (Trust Cluster)
 
