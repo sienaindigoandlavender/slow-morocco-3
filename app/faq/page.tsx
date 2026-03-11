@@ -29,7 +29,7 @@ export default function FAQPage() {
     {
       question: "What's included in the price?",
       answer:
-        "Each journey includes accommodations, private transportation, an expert guide, most meals, and all activities mentioned in your itinerary. International flights and personal expenses are not included.",
+        "Every journey is different. Your proposal specifies exactly what's included — typically private transport, accommodation, guides, and activities. Flights, travel insurance, and personal expenses are not included. Full details on our Booking Conditions page.",
     },
     {
       question: "Can I customize a journey?",
@@ -49,12 +49,12 @@ export default function FAQPage() {
     {
       question: "What's your cancellation policy?",
       answer:
-        "We offer flexible cancellation terms. Full details are available on our Cancellation Policy page, but in short: we understand that plans change and try to be as accommodating as possible.",
+        "We offer flexible cancellation terms — full refund minus €100 if you cancel more than 60 days out, with a sliding scale closer to departure. Full details on our Cancellations & Refunds page.",
     },
     {
       question: "Do you offer payment plans?",
       answer:
-        "Yes. We require a deposit to secure your booking, with the balance due 60 days before departure. We can also arrange custom payment schedules for longer or more complex journeys.",
+        "Yes. A 30% deposit secures your booking, with the balance due 30 days before departure. Full details on our Payments page.",
     },
   ];
 
@@ -89,6 +89,38 @@ export default function FAQPage() {
           label: "Support",
         }}
       />
+
+      {/* Trust Links */}
+      <section className="py-12 md:py-16 border-b border-foreground/10">
+        <div className="container mx-auto px-6 lg:px-16 max-w-3xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <a
+              href="/booking-conditions"
+              className="group block border border-foreground/10 p-6 hover:border-foreground/30 transition-colors"
+            >
+              <p className="text-xs tracking-[0.15em] uppercase text-foreground/40 mb-2">01</p>
+              <h3 className="font-serif text-lg text-white/90 group-hover:text-white transition-colors">Booking Conditions</h3>
+              <p className="text-foreground/40 text-sm mt-2">How it works, what's included, your responsibilities.</p>
+            </a>
+            <a
+              href="/payments"
+              className="group block border border-foreground/10 p-6 hover:border-foreground/30 transition-colors"
+            >
+              <p className="text-xs tracking-[0.15em] uppercase text-foreground/40 mb-2">02</p>
+              <h3 className="font-serif text-lg text-white/90 group-hover:text-white transition-colors">Payments</h3>
+              <p className="text-foreground/40 text-sm mt-2">Deposit, balance, methods, and currency.</p>
+            </a>
+            <a
+              href="/cancellations-and-refunds"
+              className="group block border border-foreground/10 p-6 hover:border-foreground/30 transition-colors"
+            >
+              <p className="text-xs tracking-[0.15em] uppercase text-foreground/40 mb-2">03</p>
+              <h3 className="font-serif text-lg text-white/90 group-hover:text-white transition-colors">Cancellations & Refunds</h3>
+              <p className="text-foreground/40 text-sm mt-2">Clear terms, no surprises.</p>
+            </a>
+          </div>
+        </div>
+      </section>
 
       {/* FAQs */}
       <section className="py-16 md:py-24">
