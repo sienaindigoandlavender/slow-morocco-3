@@ -20,6 +20,42 @@ interface QuoteData {
   notes: string;
 }
 
+// Styled text input — defined outside component to prevent re-creation on render
+const TextInput = ({ label, value, onChange, placeholder = "" }: { 
+  label: string; 
+  value: string; 
+  onChange: (v: string) => void;
+  placeholder?: string;
+}) => (
+  <div>
+    <label className="block text-sm text-muted-foreground mb-2">{label}</label>
+    <input
+      type="text"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors"
+    />
+  </div>
+);
+
+// Styled number input
+const NumberInput = ({ label, value, onChange }: { 
+  label: string; 
+  value: number; 
+  onChange: (v: number) => void;
+}) => (
+  <div>
+    <label className="block text-sm text-muted-foreground mb-2">{label}</label>
+    <input
+      type="number"
+      value={value}
+      onChange={(e) => onChange(parseInt(e.target.value) || 0)}
+      className="w-full px-4 py-3 border border-border bg-background text-xl font-serif focus:outline-none focus:border-foreground transition-colors"
+    />
+  </div>
+);
+
 function BuildQuoteContent() {
   const searchParams = useSearchParams();
   
@@ -64,42 +100,6 @@ function BuildQuoteContent() {
       setClientFeedback(decodeURIComponent(feedback));
     }
   }, [searchParams]);
-
-  // Styled text input
-  const TextInput = ({ label, value, onChange, placeholder = "" }: { 
-    label: string; 
-    value: string; 
-    onChange: (v: string) => void;
-    placeholder?: string;
-  }) => (
-    <div>
-      <label className="block text-sm text-muted-foreground mb-2">{label}</label>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="w-full px-4 py-3 border border-border bg-background text-lg focus:outline-none focus:border-foreground transition-colors"
-      />
-    </div>
-  );
-
-  // Styled number input
-  const NumberInput = ({ label, value, onChange }: { 
-    label: string; 
-    value: number; 
-    onChange: (v: number) => void;
-  }) => (
-    <div>
-      <label className="block text-sm text-muted-foreground mb-2">{label}</label>
-      <input
-        type="number"
-        value={value}
-        onChange={(e) => onChange(parseInt(e.target.value) || 0)}
-        className="w-full px-4 py-3 border border-border bg-background text-xl font-serif focus:outline-none focus:border-foreground transition-colors"
-      />
-    </div>
-  );
 
   // Search for existing quotes
   const handleSearch = async () => {
