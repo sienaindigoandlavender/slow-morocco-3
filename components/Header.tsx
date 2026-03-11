@@ -122,6 +122,7 @@ export default function Header() {
             {/* Left column — Navigation */}
             <nav className="flex flex-col gap-1 md:gap-2 mb-10 md:mb-0">
               {[
+                { href: "/morocco", label: "Morocco" },
                 { href: "/stories", label: "Stories" },
                 { href: "/places", label: "Places" },
                 { href: "/destinations", label: "Destinations" },
