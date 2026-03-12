@@ -443,21 +443,27 @@ export default function JourneyDetailContent({
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
 
-        {/* Title on image */}
+        {/* Title on image — days + title only */}
         <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-12 lg:px-16 pb-14 md:pb-20">
           <p className="text-[10px] tracking-[0.25em] uppercase text-white/50 mb-4">
             {journey.durationDays} Days
           </p>
-          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] max-w-5xl mb-4">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] max-w-5xl">
             {journey.title}
           </h1>
-          {(journey.arcDescription || journey.description) && (
-            <p className="font-serif text-white/60 text-lg md:text-xl max-w-2xl leading-relaxed">
-              {journey.arcDescription || journey.description}
-            </p>
-          )}
         </div>
       </section>
+
+      {/* Blurb — below the hero */}
+      {(journey.arcDescription || journey.description) && (
+        <section className="border-b border-foreground/10">
+          <div className="max-w-3xl mx-auto px-8 md:px-12 lg:px-16 py-10 md:py-14">
+            <p className="font-serif text-foreground/60 text-lg md:text-xl leading-relaxed">
+              {journey.arcDescription || journey.description}
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* Meta bar */}
       <div className="border-b border-foreground/10">
