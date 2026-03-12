@@ -454,6 +454,29 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
 
       <Divider />
 
+      {/* ── Timeline ──────────────────────────────────────────────────────── */}
+      <section className="px-8 md:px-16 lg:px-20 py-16">
+        <Link
+          href="/stories/timeline-of-morocco"
+          className="group block max-w-3xl"
+        >
+          <p className="text-[10px] tracking-[0.3em] uppercase font-mono text-foreground/30 mb-4">
+            315,000 BCE — Present
+          </p>
+          <h2 className="font-serif text-3xl md:text-4xl mb-3 group-hover:text-foreground/70 transition-colors">
+            Timeline
+          </h2>
+          <p className="text-sm text-foreground/50 leading-relaxed">
+            From the oldest Homo sapiens skull on earth to the 2030 World Cup. Every dynasty, every turning point, every invasion and independence — in one vertical line.
+          </p>
+          <p className="mt-6 text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/40 group-hover:text-foreground transition-colors">
+            Explore the timeline →
+          </p>
+        </Link>
+      </section>
+
+      <Divider />
+
       {/* ── CTA ───────────────────────────────────────────────────────────── */}
       <section className="px-8 md:px-16 lg:px-20 py-20 md:py-28">
         <div className="max-w-xl">
