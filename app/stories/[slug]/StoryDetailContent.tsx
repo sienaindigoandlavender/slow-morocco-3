@@ -143,7 +143,7 @@ export default function StoryDetailContent({
       {/* ══════════════════════════════════════════════════════════════
           HERO — Full-bleed image with title overlaid (Kinfolk style)
           ══════════════════════════════════════════════════════════════ */}
-      {story.heroImage && (
+      {story.heroImage ? (
         <section className="relative h-[100svh] min-h-[600px]">
           <Image
             src={cloudinaryUrl(story.heroImage, 1920)}
@@ -170,6 +170,24 @@ export default function StoryDetailContent({
             </h1>
             {story.subtitle && (
               <p className="font-serif text-white/60 text-lg md:text-xl mt-4 max-w-2xl leading-relaxed">
+                {story.subtitle}
+              </p>
+            )}
+          </div>
+        </section>
+      ) : (
+        <section className="bg-[#0a0a0a] pt-32 md:pt-40 pb-16 md:pb-24">
+          <div className="px-8 md:px-12 lg:px-16 max-w-5xl">
+            {story.category && (
+              <p className="text-[10px] tracking-[0.25em] uppercase text-white/40 mb-4">
+                {story.category}
+              </p>
+            )}
+            <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] max-w-5xl">
+              {story.title}
+            </h1>
+            {story.subtitle && (
+              <p className="font-serif text-white/50 text-lg md:text-xl mt-4 max-w-2xl leading-relaxed">
                 {story.subtitle}
               </p>
             )}
