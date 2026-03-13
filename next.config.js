@@ -312,6 +312,12 @@ const nextConfig = {
       { source: '/places/musee-du-parfum', destination: '/places/museum-of-perfume-marrakech', permanent: true },
       { source: '/places/macaal', destination: '/places/macaal-museum-marrakech', permanent: true },
       { source: '/places/gnawa-khamlia', destination: '/places/khamlia-gnawa-village', permanent: true },
+
+      // ============================================
+      // DELETED REACT DATA MODULES — March 13, 2026
+      // ============================================
+      { source: '/stories/hammam-culture', destination: '/stories/the-hammam', permanent: true },
+      { source: '/stories/dynasty-timeline', destination: '/stories/twelve-dynasties', permanent: true },
     ];
   },
 };
