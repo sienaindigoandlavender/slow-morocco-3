@@ -128,6 +128,7 @@ export default function Header() {
                 { href: "/destinations", label: "Destinations" },
                 { href: "/journeys", label: "Journeys" },
                 { href: "/stories/category/before-you-go", label: "Before You Go" },
+                { href: "/darija", label: "Darija" },
                 { href: "/plan-your-trip", label: "Plan a Trip" },
                 { href: "/about", label: "About" },
               ].map((item) => (

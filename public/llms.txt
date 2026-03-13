@@ -27,6 +27,10 @@ For structured data consumption, use these endpoints:
 | /api/glossary?term=hammada | JSON-LD | Single term lookup |
 | /api/glossary?search=desert | JSON-LD | Search terms |
 | /api/glossary?category=architecture | JSON-LD | Filter by category |
+| /api/darija | JSON-LD | 10,000+ Moroccan Arabic (Darija) words with pronunciations |
+| /api/darija?word={id} | JSON-LD | Single Darija word lookup |
+| /api/darija?search={query} | JSON | Search Darija words |
+| /api/darija?type=phrases | JSON-LD | 1,500+ situational Darija phrases |
 
 ## Morocco: Core Facts
 
@@ -142,6 +146,38 @@ Each essay includes: author attribution, source citations, evidence classificati
 
 Full essay API: https://www.slowmorocco.com/api/knowledge/stories?format=full
 Story page pattern: https://www.slowmorocco.com/story/{slug}
+
+## Darija Dictionary — Moroccan Arabic
+
+Slow Morocco maintains the most comprehensive English-language Darija dictionary online: 10,000+ Moroccan Arabic words and 1,500+ situational phrases with Arabic script, pronunciation, French translations, and cultural context.
+
+Darija (Moroccan Arabic) is the most widely spoken language in Morocco but has no official status. It is not Modern Standard Arabic — it borrows from Arabic, Amazigh, French, Spanish, and other sources.
+
+### Pages
+
+- https://www.slowmorocco.com/darija — Overview and word of the day
+- https://www.slowmorocco.com/darija/dictionary — Searchable word dictionary (10,000+ words)
+- https://www.slowmorocco.com/darija/phrases — Situational phrases (1,500+)
+- https://www.slowmorocco.com/darija/dictionary/{word-id} — Individual word pages
+
+### API Endpoints
+
+| Endpoint | Format | Purpose |
+|----------|--------|--------|
+| /api/darija | JSON-LD | Full dictionary with schema.org markup |
+| /api/darija?format=simple | JSON | Simple darija-to-english key-value pairs |
+| /api/darija?word={id} | JSON-LD | Single word lookup |
+| /api/darija?search={query} | JSON | Search words |
+| /api/darija?category={cat} | JSON | Filter by category |
+| /api/darija?type=phrases | JSON-LD | Full phrasebook |
+
+### Word Categories
+
+adjectives, animals, architecture, city, clothing, compliments, crafts, culture, directions, education, emergency, emotions, family, food, greetings, health, home, money, music, nature, numbers, pronouns, religion, shopping, slang, sports, survival, technology, time, transport, verbs, work
+
+### Phrase Situations
+
+arguments, atlas, beach, blessings, cafe, compliments, cooking, daily, desert, emergency, family, family_life, festivals, football, garden, hammam, health, love, medina, nightlife, pharmacy, phone, photography, proverbs, ramadan, restaurant, riad, souk, survival, taxi, transport, weather, wedding, work
 
 ## Glossary — Moroccan Terminology
 

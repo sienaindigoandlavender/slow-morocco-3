@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { getAllWords } from '@/lib/darija'
 import { getJourneys, getStories, getPlaces, getDayTrips } from '@/lib/supabase'
 
 const BASE_URL = 'https://www.slowmorocco.com'
@@ -68,6 +69,9 @@ const STATIC_PAGES = [
   { path: '/guides', priority: 0.6, changeFrequency: 'monthly' as const },
   { path: '/epic', priority: 0.8, changeFrequency: 'weekly' as const },
   { path: '/glossary', priority: 0.7, changeFrequency: 'monthly' as const },
+  { path: '/darija', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/darija/dictionary', priority: 0.8, changeFrequency: 'weekly' as const },
+  { path: '/darija/phrases', priority: 0.8, changeFrequency: 'weekly' as const },
   { path: '/jewish-heritage-morocco', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/morocco-world-cup-2030', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/overnight/agafay-desert', priority: 0.8, changeFrequency: 'monthly' as const },
@@ -149,6 +153,21 @@ async function getDynamicPages() {
     console.error('Failed to fetch day trips for sitemap:', e)
   }
 
+  try {
+    const darijaWords = await getAllWords()
+    darijaWords.forEach((word) => {
+      if (word.id) {
+        dynamicPages.push({
+          url: safeSitemapUrl(BASE_URL, '/darija/dictionary', word.id),
+          lastModified: new Date(),
+          changeFrequency: 'monthly',
+          priority: 0.5,
+        })
+      }
+    })
+  } catch (e) {
+    console.error('Failed to fetch darija words for sitemap:', e)
+  }
   return dynamicPages
 }
 

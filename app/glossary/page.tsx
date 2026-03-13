@@ -137,6 +137,20 @@ export default function GlossaryPage() {
               <p className="text-sm text-foreground/50">
                 {allTerms.length} terms · Compiled by Slow Morocco
               </p>
+              <div className="mt-6 py-4 px-5 border border-border inline-block">
+                <p className="text-sm text-foreground/70">
+                  Looking for Moroccan Arabic?{" "}
+                  <Link
+                    href="/darija"
+                    className="underline hover:text-foreground transition-colors"
+                  >
+                    See our Darija Dictionary &rarr;
+                  </Link>
+                </p>
+                <p className="text-xs text-foreground/40 mt-1">
+                  10,000+ words and 1,500 phrases with pronunciation and cultural context
+                </p>
+              </div>
             </div>
           </div>
         </header>
