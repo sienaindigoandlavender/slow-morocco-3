@@ -37,24 +37,71 @@ export interface DarijaPhrase {
   tags: string[];
 }
 
+// Paginated fetch — Supabase defaults to 1000 row limit
 export async function getAllWords(): Promise<DarijaWord[]> {
-  const { data } = await supabase
-    .from('darija_words')
-    .select('*')
-    .eq('published', true)
-    .order('category')
-    .order('order');
-  return data || [];
+  const all: DarijaWord[] = [];
+  let from = 0;
+  const batchSize = 1000;
+
+  while (true) {
+    const { data } = await supabase
+      .from('darija_words')
+      .select('*')
+      .eq('published', true)
+      .order('category')
+      .order('order')
+      .range(from, from + batchSize - 1);
+    if (!data || data.length === 0) break;
+    all.push(...data);
+    if (data.length < batchSize) break;
+    from += batchSize;
+  }
+
+  return all;
+}
+
+// Lightweight paginated fetch — IDs only, for sitemap
+export async function getAllWordIds(): Promise<string[]> {
+  const ids: string[] = [];
+  let from = 0;
+  const batchSize = 1000;
+
+  while (true) {
+    const { data } = await supabase
+      .from('darija_words')
+      .select('id')
+      .eq('published', true)
+      .order('id')
+      .range(from, from + batchSize - 1);
+    if (!data || data.length === 0) break;
+    ids.push(...data.map(d => d.id));
+    if (data.length < batchSize) break;
+    from += batchSize;
+  }
+
+  return ids;
 }
 
 export async function getWordsByCategory(category: string): Promise<DarijaWord[]> {
-  const { data } = await supabase
-    .from('darija_words')
-    .select('*')
-    .eq('category', category)
-    .eq('published', true)
-    .order('order');
-  return data || [];
+  const all: DarijaWord[] = [];
+  let from = 0;
+  const batchSize = 1000;
+
+  while (true) {
+    const { data } = await supabase
+      .from('darija_words')
+      .select('*')
+      .eq('category', category)
+      .eq('published', true)
+      .order('order')
+      .range(from, from + batchSize - 1);
+    if (!data || data.length === 0) break;
+    all.push(...data);
+    if (data.length < batchSize) break;
+    from += batchSize;
+  }
+
+  return all;
 }
 
 export async function getWordById(id: string): Promise<DarijaWord | null> {
@@ -79,22 +126,47 @@ export async function searchWords(query: string): Promise<DarijaWord[]> {
 }
 
 export async function getWordCategories(): Promise<string[]> {
-  const { data } = await supabase
-    .from('darija_words')
-    .select('category')
-    .eq('published', true);
-  const cats = Array.from(new Set((data || []).map(d => d.category)));
+  const all: { category: string }[] = [];
+  let from = 0;
+  const batchSize = 1000;
+
+  while (true) {
+    const { data } = await supabase
+      .from('darija_words')
+      .select('category')
+      .eq('published', true)
+      .range(from, from + batchSize - 1);
+    if (!data || data.length === 0) break;
+    all.push(...data);
+    if (data.length < batchSize) break;
+    from += batchSize;
+  }
+
+  const cats = Array.from(new Set(all.map(d => d.category)));
   return cats.sort();
 }
 
+// Paginated fetch for phrases — 1500 entries, needs pagination too
 export async function getAllPhrases(): Promise<DarijaPhrase[]> {
-  const { data } = await supabase
-    .from('darija_phrases')
-    .select('*')
-    .eq('published', true)
-    .order('category')
-    .order('order');
-  return data || [];
+  const all: DarijaPhrase[] = [];
+  let from = 0;
+  const batchSize = 1000;
+
+  while (true) {
+    const { data } = await supabase
+      .from('darija_phrases')
+      .select('*')
+      .eq('published', true)
+      .order('category')
+      .order('order')
+      .range(from, from + batchSize - 1);
+    if (!data || data.length === 0) break;
+    all.push(...data);
+    if (data.length < batchSize) break;
+    from += batchSize;
+  }
+
+  return all;
 }
 
 export async function getPhrasesByCategory(category: string): Promise<DarijaPhrase[]> {
