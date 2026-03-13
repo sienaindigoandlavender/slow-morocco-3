@@ -83,7 +83,7 @@ export async function getWordCategories(): Promise<string[]> {
     .from('darija_words')
     .select('category')
     .eq('published', true);
-  const cats = [...new Set((data || []).map(d => d.category))];
+  const cats = Array.from(new Set((data || []).map(d => d.category)));
   return cats.sort();
 }
 
