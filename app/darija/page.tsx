@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { getAllWords, getWordCategories, getAllPhrases } from "@/lib/darija";
+import DarijaTranslate from "./DarijaTranslate";
 
 export const metadata: Metadata = {
   title: "Darija Dictionary | Moroccan Arabic | Slow Morocco",
@@ -72,6 +73,15 @@ export default async function DarijaLandingPage() {
           </div>
         </div>
       </header>
+
+      {/* Translate Search Box */}
+      <section className="pb-16 md:pb-24">
+        <div className="px-8 md:px-[8%] lg:px-[12%]">
+          <div className="max-w-3xl">
+            <DarijaTranslate words={words} phrases={phrases} />
+          </div>
+        </div>
+      </section>
 
       {/* Word of the Day */}
       {wordOfTheDay && (
