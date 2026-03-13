@@ -289,7 +289,7 @@ const nextConfig = {
 
       // Stories
       { source: '/stories/medina-data', destination: '/stories/marrakech-medina-guide', permanent: true },
-      { source: '/stories/moroccan-wedding-atlas', destination: '/stories/moroccan-wedding-traditions', permanent: true },
+      { source: '/stories/moroccan-wedding-atlas', destination: '/stories/moroccan-wedding-economy', permanent: true },
       { source: '/stories/tagine-atlas', destination: '/stories/moroccan-tagine-guide', permanent: true },
       { source: '/stories/tagine-atlas-deep', destination: '/stories/moroccan-tagine-guide', permanent: true },
       { source: '/stories/spice-map-morocco', destination: '/stories/moroccan-spice-guide', permanent: true },
@@ -318,6 +318,12 @@ const nextConfig = {
       // ============================================
       { source: '/stories/hammam-culture', destination: '/stories/the-hammam', permanent: true },
       { source: '/stories/dynasty-timeline', destination: '/stories/twelve-dynasties', permanent: true },
+
+      // Cleaned-up story directory redirects — March 13, 2026
+      { source: '/stories/al-andalus', destination: '/stories/al-andalus-corridor', permanent: true },
+      { source: '/stories/gates-of-marrakech', destination: '/stories/the-golden-doors', permanent: true },
+      { source: '/stories/islamic-spain', destination: '/stories/islamic-spain-legacy', permanent: true },
+      { source: '/stories/timeline-of-morocco', destination: '/stories/twelve-dynasties', permanent: true },
     ];
   },
 };
