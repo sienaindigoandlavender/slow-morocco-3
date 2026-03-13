@@ -21,7 +21,7 @@ export default function PhrasesClient({
   const [search, setSearch] = useState("");
 
   const categories = useMemo(() => {
-    return [...new Set(phrases.map((p) => p.category))].sort();
+    return Array.from(new Set(phrases.map((p) => p.category))).sort();
   }, [phrases]);
 
   const filtered = useMemo(() => {
