@@ -212,6 +212,7 @@ export default function Footer() {
                 <li><Link href="/journeys" className="text-sm text-white/50 hover:text-white/80 transition-colors">Journeys</Link></li>
                 <li><Link href="/stories/category/before-you-go" className="text-sm text-white/50 hover:text-white/80 transition-colors">Before You Go</Link></li>
                 <li><Link href="/glossary" className="text-sm text-white/50 hover:text-white/80 transition-colors">Glossary</Link></li>
+                <li><Link href="/darija" className="text-sm text-white/50 hover:text-white/80 transition-colors">Darija Dictionary</Link></li>
               </ul>
             </div>
 
