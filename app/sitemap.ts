@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getAllWords } from '@/lib/darija'
+import { getAllWordIds } from '@/lib/darija'
 import { getJourneys, getStories, getPlaces, getDayTrips } from '@/lib/supabase'
 
 const BASE_URL = 'https://www.slowmorocco.com'
@@ -154,16 +154,14 @@ async function getDynamicPages() {
   }
 
   try {
-    const darijaWords = await getAllWords()
-    darijaWords.forEach((word) => {
-      if (word.id) {
-        dynamicPages.push({
-          url: safeSitemapUrl(BASE_URL, '/darija/dictionary', word.id),
-          lastModified: new Date(),
-          changeFrequency: 'monthly',
-          priority: 0.5,
-        })
-      }
+    const wordIds = await getAllWordIds()
+    wordIds.forEach((id) => {
+      dynamicPages.push({
+        url: safeSitemapUrl(BASE_URL, '/darija/dictionary', id),
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.5,
+      })
     })
   } catch (e) {
     console.error('Failed to fetch darija words for sitemap:', e)
