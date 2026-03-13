@@ -47,9 +47,7 @@ export default async function DarijaLandingPage() {
   const wordOfTheDay = words[dayIndex] || null;
 
   // Phrase categories
-  const phraseCategories = [
-    ...new Set(phrases.map((p) => p.category)),
-  ].sort();
+  const phraseCategories = Array.from(new Set(phrases.map((p) => p.category))).sort();
 
   return (
     <div className="bg-background min-h-screen">
