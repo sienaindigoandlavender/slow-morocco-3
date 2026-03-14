@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { getWordById, getAllWords } from "@/lib/darija";
+import { getWordById } from "@/lib/darija";
+import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({
@@ -12,14 +13,29 @@ export async function generateMetadata({
   const word = await getWordById(id);
   if (!word) return { title: "Word Not Found" };
 
+  const title = `How to Say "${word.english}" in Moroccan Arabic — ${word.darija} | Slow Morocco`;
+  const description = `${word.darija} (${word.arabic}) means "${word.english}" in Moroccan Darija. Pronunciation: /${word.pronunciation}/. French: ${word.french}. ${word.cultural_note || ""}`.trim();
+
   return {
-    title: `${word.darija} — ${word.english} | Darija Dictionary`,
-    description: `${word.darija} (${word.pronunciation}) means "${word.english}" in Moroccan Arabic (Darija). ${word.cultural_note || ""}`.trim(),
+    title,
+    description,
+    keywords: [
+      word.darija,
+      word.english,
+      word.french,
+      `${word.english} in Moroccan Arabic`,
+      `${word.english} in Darija`,
+      `how to say ${word.english} in Morocco`,
+      "Darija dictionary",
+      "Moroccan Arabic",
+    ],
     openGraph: {
-      title: `${word.darija} — ${word.english} | Darija Dictionary | Slow Morocco`,
-      description: `${word.darija} (${word.pronunciation}) means "${word.english}" in Moroccan Arabic.`,
+      title,
+      description: `${word.darija} (/${word.pronunciation}/) means "${word.english}" in Moroccan Arabic (Darija).`,
       type: "website",
       url: `https://www.slowmorocco.com/darija/dictionary/${word.id}`,
+      siteName: "Slow Morocco",
+      locale: "en_US",
     },
     alternates: {
       canonical: `https://www.slowmorocco.com/darija/dictionary/${word.id}`,
@@ -29,6 +45,17 @@ export async function generateMetadata({
 
 function formatCategoryLabel(cat: string): string {
   return cat.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+// Fetch only the specific related words, not all 10,000
+async function getRelatedWords(ids: string[]): Promise<{ id: string; darija: string; english: string }[]> {
+  if (!ids || ids.length === 0) return [];
+  const { data } = await supabase
+    .from('darija_words')
+    .select('id, darija, english')
+    .in('id', ids)
+    .eq('published', true);
+  return data || [];
 }
 
 export default async function WordDetailPage({
@@ -41,26 +68,63 @@ export default async function WordDetailPage({
 
   if (!word) notFound();
 
-  // Fetch related words if any
-  let relatedWordData: { id: string; darija: string; english: string }[] = [];
-  if (word.related_words && word.related_words.length > 0) {
-    const allWords = await getAllWords();
-    relatedWordData = allWords
-      .filter((w) => word.related_words!.includes(w.id))
-      .map((w) => ({ id: w.id, darija: w.darija, english: w.english }));
-  }
+  // Targeted fetch — only the related words, not all 10K
+  const relatedWordData = await getRelatedWords(word.related_words || []);
 
-  // JSON-LD DefinedTerm schema
+  // Rich JSON-LD — DefinedTerm with full linguistic data
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "DefinedTerm",
     name: word.darija,
-    description: word.english,
+    description: `${word.english} (${word.french})`,
+    url: `https://www.slowmorocco.com/darija/dictionary/${word.id}`,
     inDefinedTermSet: {
       "@type": "DefinedTermSet",
       name: "Moroccan Darija Dictionary",
       url: "https://www.slowmorocco.com/darija/dictionary",
     },
+    "pronunciation": `/${word.pronunciation}/`,
+    "arabicScript": word.arabic,
+    "englishTranslation": word.english,
+    "frenchTranslation": word.french,
+    "partOfSpeech": word.part_of_speech,
+    "category": word.category,
+    "register": word.register,
+    ...(word.gender && { "gender": word.gender }),
+    ...(word.plural && { "plural": word.plural }),
+    ...(word.cultural_note && { "culturalNote": word.cultural_note }),
+    ...(word.examples && word.examples.length > 0 && {
+      "example": word.examples.map(ex => ({
+        "@type": "TextObject",
+        "text": ex.darija,
+        "inLanguage": "ar-MA",
+        "translation": ex.english,
+      })),
+    }),
+  };
+
+  // FAQPage schema — captures "what does X mean" and "how do you say X" queries
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: `What does "${word.darija}" mean in Moroccan Arabic?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `"${word.darija}" (${word.arabic}) means "${word.english}" in Moroccan Darija. In French: "${word.french}". Pronunciation: /${word.pronunciation}/.${word.cultural_note ? ' ' + word.cultural_note : ''}`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `How do you say "${word.english}" in Moroccan Arabic (Darija)?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `"${word.english}" in Moroccan Darija is "${word.darija}" (${word.arabic}), pronounced /${word.pronunciation}/. This is a ${word.part_of_speech} in the ${word.category} category.`,
+        },
+      },
+    ],
   };
 
   return (
@@ -68,6 +132,10 @@ export default async function WordDetailPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
 
       <div className="bg-background min-h-screen">
