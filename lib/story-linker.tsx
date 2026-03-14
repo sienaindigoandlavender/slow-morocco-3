@@ -181,3 +181,45 @@ export function linkCrossReferences(text: string, currentSlug?: string): React.R
 
   return <>{parts}</>;
 }
+
+/**
+ * Links story/place cross-references in HTML string
+ * Returns HTML string with <a> tags
+ * Only links each target once per call
+ */
+export function linkCrossReferencesHTML(html: string, currentSlug?: string): string {
+  if (!html) return html;
+
+  const linked = new Set<string>();
+  const parts = html.split(/(<[^>]+>)/);
+
+  let inAnchor = false;
+  let inHeading = false;
+
+  const processed = parts.map(part => {
+    if (part.startsWith('<')) {
+      const lp = part.toLowerCase();
+      if (lp.startsWith('<a ') || lp === '<a>') inAnchor = true;
+      if (lp.startsWith('</a')) inAnchor = false;
+      if (lp.match(/^<h[1-6]/)) inHeading = true;
+      if (lp.match(/^<\/h[1-6]/)) inHeading = false;
+      return part;
+    }
+
+    if (inAnchor || inHeading) return part;
+
+    // Reset regex for each text node
+    const regex = new RegExp(crossLinkRegex.source, 'gi');
+    return part.replace(regex, (match) => {
+      const target = crossLinkMap.get(match.toLowerCase());
+      if (!target) return match;
+      if (currentSlug && target.slug === currentSlug) return match;
+      if (linked.has(target.slug)) return match;
+      linked.add(target.slug);
+      const href = target.type === 'story' ? `/stories/${target.slug}` : `/places/${target.slug}`;
+      return `<a href="${href}" class="underline decoration-foreground/20 underline-offset-2 hover:decoration-foreground/50 transition-colors">${match}</a>`;
+    });
+  });
+
+  return processed.join('');
+}
