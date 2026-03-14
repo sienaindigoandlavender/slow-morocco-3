@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { linkGlossaryTermsText } from '@/lib/glossary-linker';
-import { linkDerbTermsText } from '@/lib/derb-linker';
-import { linkCrossReferences } from '@/lib/story-linker';
+import { linkGlossaryTermsText, linkGlossaryTermsHTML } from '@/lib/glossary-linker';
+import { linkDerbTermsText, linkDerbTermsHTML } from '@/lib/derb-linker';
+import { linkCrossReferences, linkCrossReferencesHTML } from '@/lib/story-linker';
 
 interface InlineImage {
   image_url: string;
@@ -50,6 +50,21 @@ function linkAllTerms(text: string, currentSlug?: string): React.ReactNode {
   return applyToStringChildren(withDerb, (t) => linkGlossaryTermsText(t));
 }
 
+/**
+ * Chain all HTML linkers: cross-references → derb → glossary
+ * Each respects existing <a> tags so they don't double-link
+ */
+function linkAllTermsHTML(html: string, currentSlug?: string): string {
+  let result = html;
+  // Layer 1: Cross-references (story-to-story, story-to-place)
+  result = linkCrossReferencesHTML(result, currentSlug);
+  // Layer 2: Derb links
+  result = linkDerbTermsHTML(result);
+  // Layer 3: Glossary links
+  result = linkGlossaryTermsHTML(result);
+  return result;
+}
+
 function processText(text: string, currentSlug?: string): React.ReactNode {
   const parts = text.split(/(https?:\/\/[^\s,)]+)/g);
   if (parts.length === 1) return linkAllTerms(text, currentSlug);
@@ -75,14 +90,14 @@ function isHTML(str: string): boolean {
   return /<[a-z][^>]*>/i.test(str);
 }
 
-function prepareHTML(html: string): string {
+function prepareHTML(html: string, currentSlug?: string): string {
   // Convert any remaining <br> tags to paragraph breaks
   let processed = html.replace(/<br\s*\/?>/gi, '</p><p>');
   // Also convert newlines to paragraph/line breaks (page.tsx converts <br> to \n before this runs)
   processed = processed.replace(/\n\n+/g, '</p><p>');
   processed = processed.replace(/\n/g, '<br>');
   
-  return processed
+  processed = processed
     .replace(/<p>/gi, '<p class="text-foreground leading-[1.85] mb-8">')
     .replace(/<h1>/gi, '<h1 class="font-serif text-3xl text-foreground mt-14 mb-8">')
     .replace(/<h2>/gi, '<h2 class="font-serif text-2xl text-foreground mt-14 mb-8">')
@@ -102,6 +117,11 @@ function prepareHTML(html: string): string {
     .replace(/<figure>/gi, '<figure class="my-12 -mx-4 md:-mx-8">')
     .replace(/<figcaption>/gi, '<figcaption class="text-xs text-foreground/40 mt-3 text-center italic px-4">')
     .replace(/<img\s+src="([^"]+)"([^>]*)>/gi, '<img src="$1"$2 class="w-full object-cover" loading="lazy">');
+
+  // Chain all HTML linkers AFTER formatting (so linker-created <a> tags keep their own classes)
+  processed = linkAllTermsHTML(processed, currentSlug);
+
+  return processed;
 }
 
 // Inline image block between paragraphs
@@ -155,7 +175,7 @@ export default function StoryBody({ content, inlineImages = [], currentSlug }: S
     if (inlineImages.length === 0) {
       return (
         <div className="prose prose-lg max-w-none story-html-body"
-          dangerouslySetInnerHTML={{ __html: prepareHTML(content) }} />
+          dangerouslySetInnerHTML={{ __html: prepareHTML(content, currentSlug) }} />
       );
     }
     // Split HTML at </p> boundaries to inject images
@@ -168,7 +188,7 @@ export default function StoryBody({ content, inlineImages = [], currentSlug }: S
         paraCount++;
         buffer += part;
         nodes.push(
-          <div key={`p-${i}`} dangerouslySetInnerHTML={{ __html: prepareHTML(buffer) }} />
+          <div key={`p-${i}`} dangerouslySetInnerHTML={{ __html: prepareHTML(buffer, currentSlug) }} />
         );
         buffer = '';
         const imgs = imagesByPosition.get(paraCount);
@@ -177,7 +197,7 @@ export default function StoryBody({ content, inlineImages = [], currentSlug }: S
         buffer += part;
       }
     });
-    if (buffer) nodes.push(<div key="tail" dangerouslySetInnerHTML={{ __html: prepareHTML(buffer) }} />);
+    if (buffer) nodes.push(<div key="tail" dangerouslySetInnerHTML={{ __html: prepareHTML(buffer, currentSlug) }} />);
     return <div className="prose prose-lg max-w-none story-html-body">{nodes}</div>;
   }
 
