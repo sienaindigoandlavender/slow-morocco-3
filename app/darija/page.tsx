@@ -4,9 +4,9 @@ import { getAllWords, getWordCategories, getAllPhrases } from "@/lib/darija";
 import DarijaTranslate from "./DarijaTranslate";
 
 export const metadata: Metadata = {
-  title: "Darija Dictionary | Moroccan Arabic | Slow Morocco",
+  title: "Darija Dictionary | Moroccan Arabic | 10,000+ Words | Slow Morocco",
   description:
-    "Learn Moroccan Arabic (Darija) — 10,000+ words and 1,500 phrases with pronunciation, Arabic script, and cultural context. The language Moroccans actually speak.",
+    "The most comprehensive Moroccan Arabic (Darija) dictionary online. 10,000+ words and 1,500 phrases with pronunciation, Arabic script, and cultural context. The language Moroccans actually speak.",
   keywords: [
     "Darija",
     "Moroccan Arabic",
@@ -16,11 +16,14 @@ export const metadata: Metadata = {
     "Darija phrases",
     "Moroccan words",
     "Arabic Morocco",
+    "how to say in Moroccan Arabic",
+    "Darija translation",
+    "Moroccan dialect",
   ],
   openGraph: {
     title: "Darija Dictionary | Moroccan Arabic | Slow Morocco",
     description:
-      "Learn Moroccan Arabic (Darija) — the language Moroccans actually speak. 10,000+ words and phrases with pronunciation and cultural context.",
+      "The most comprehensive Moroccan Arabic (Darija) dictionary online. 10,000+ words and 1,500 phrases with pronunciation and cultural context.",
     type: "website",
     url: "https://www.slowmorocco.com/darija",
   },
@@ -34,6 +37,69 @@ function formatCategoryLabel(cat: string): string {
     .replace(/_/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
+
+// FAQ schema for AI citation
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is Darija?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Darija is Moroccan Arabic — the spoken language of 37 million Moroccans. It is not Modern Standard Arabic (MSA), not Classical Arabic, and not French. It incorporates vocabulary from Arabic, Amazigh (Berber), French, and Spanish. It has no official status in Morocco despite being the most widely spoken language in the country.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do you say hello in Moroccan Arabic?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The most common greeting in Darija is 'Salam' (سلام), meaning 'peace.' The standard follow-up is 'Labas?' (لاباس؟) meaning 'No harm?' or 'How are you?' The typical reply is 'Labas, lhamdullah' — 'No harm, praise God.'",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do you say thank you in Moroccan Arabic?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "In Darija, the most common way to say thank you is 'Shukran' (شكرا). In more informal settings, Moroccans also use 'Bssaha' (بصحة), which literally means 'to your health' and is used for thank you, enjoy your meal, and congratulations.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is Darija the same as Arabic?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. Darija and Modern Standard Arabic (MSA) are not mutually intelligible. A speaker of Egyptian or Gulf Arabic will struggle to understand Moroccan Darija without exposure to it. Darija has an Amazigh (Berber) grammatical substrate, extensive French and Spanish loanwords, and unique vocabulary not found in any other Arabic dialect.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How many people speak Darija?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Approximately 37 million people speak Darija as their first or primary language. It is the most widely spoken language in Morocco, used in daily life, markets, homes, and informal settings. Despite this, it has no official status — Morocco's constitution recognizes only Arabic (MSA) and Tamazight as official languages.",
+      },
+    },
+  ],
+};
+
+// DefinedTermSet schema for the dictionary itself
+const dictionaryJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  name: "Moroccan Darija Dictionary",
+  description: "The most comprehensive Moroccan Arabic (Darija) dictionary online. 10,000+ words and 1,500+ phrases with pronunciation, Arabic script, English and French translations, and cultural context.",
+  url: "https://www.slowmorocco.com/darija",
+  inLanguage: ["ar-MA", "en", "fr"],
+  publisher: {
+    "@type": "Organization",
+    name: "Slow Morocco",
+    url: "https://www.slowmorocco.com",
+  },
+};
 
 export default async function DarijaLandingPage() {
   const [words, categories, phrases] = await Promise.all([
@@ -51,175 +117,186 @@ export default async function DarijaLandingPage() {
   const phraseCategories = Array.from(new Set(phrases.map((p) => p.category))).sort();
 
   return (
-    <div className="bg-background min-h-screen">
-      {/* Hero */}
-      <header className="pt-32 pb-16 md:pt-40 md:pb-24">
-        <div className="px-8 md:px-[8%] lg:px-[12%]">
-          <div className="max-w-3xl">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-4 font-sans">
-              Language
-            </p>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl mb-6">
-              Everyday Darija
-            </h1>
-            <p className="text-lg text-foreground/70 leading-relaxed font-serif">
-              Darija is Moroccan Arabic — not the formal Arabic of newscasters,
-              not French, not Amazigh. It is the language thirty-seven million
-              Moroccans actually speak: in the souk, at the cafe, on the phone
-              with their mothers. It borrows from Arabic, Amazigh, French,
-              Spanish, and a few words nobody can trace at all. No textbook
-              teaches it properly. This dictionary tries.
-            </p>
-          </div>
-        </div>
-      </header>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(dictionaryJsonLd) }}
+      />
 
-      {/* Translate Search Box */}
-      <section className="pb-16 md:pb-24">
-        <div className="px-8 md:px-[8%] lg:px-[12%]">
-          <div className="max-w-3xl">
-            <DarijaTranslate words={words} phrases={phrases} />
-          </div>
-        </div>
-      </section>
-
-      {/* Word of the Day */}
-      {wordOfTheDay && (
-        <section className="border-y border-border py-12 md:py-16">
+      <div className="bg-background min-h-screen">
+        {/* Hero */}
+        <header className="pt-32 pb-16 md:pt-40 md:pb-24">
           <div className="px-8 md:px-[8%] lg:px-[12%]">
             <div className="max-w-3xl">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-6 font-sans">
-                Word of the Day
+              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-4 font-sans">
+                Language
               </p>
-              <Link
-                href={`/darija/dictionary/${wordOfTheDay.id}`}
-                className="group block"
-              >
-                <p className="font-serif text-3xl md:text-4xl mb-2 group-hover:text-foreground/70 transition-colors">
-                  {wordOfTheDay.darija}
-                </p>
-                <p
-                  className="text-xl text-foreground/50 mb-3"
-                  dir="rtl"
-                  lang="ar"
-                >
-                  {wordOfTheDay.arabic}
-                </p>
-                <p className="text-foreground/70 font-serif">
-                  {wordOfTheDay.english}
-                </p>
-                <p className="text-sm text-foreground/40 mt-1 italic font-serif">
-                  /{wordOfTheDay.pronunciation}/
-                </p>
-              </Link>
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl mb-6">
+                Everyday Darija
+              </h1>
+              <p className="text-lg text-foreground/70 leading-relaxed font-serif">
+                Darija is Moroccan Arabic — not the formal Arabic of newscasters,
+                not French, not Amazigh. It is the language thirty-seven million
+                Moroccans actually speak: in the souk, at the cafe, on the phone
+                with their mothers. It borrows from Arabic, Amazigh, French,
+                Spanish, and a few words nobody can trace at all. No textbook
+                teaches it properly. This dictionary tries.
+              </p>
+            </div>
+          </div>
+        </header>
+
+        {/* Translate Search Box */}
+        <section className="pb-16 md:pb-24">
+          <div className="px-8 md:px-[8%] lg:px-[12%]">
+            <div className="max-w-3xl">
+              <DarijaTranslate words={words} phrases={phrases} />
             </div>
           </div>
         </section>
-      )}
 
-      {/* Stats + Links */}
-      <section className="py-16 md:py-24">
-        <div className="px-8 md:px-[8%] lg:px-[12%]">
-          <div className="max-w-4xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
-              {/* Dictionary */}
-              <Link href="/darija/dictionary" className="group block">
-                <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-3 font-sans">
-                  Dictionary
+        {/* Word of the Day */}
+        {wordOfTheDay && (
+          <section className="border-y border-border py-12 md:py-16">
+            <div className="px-8 md:px-[8%] lg:px-[12%]">
+              <div className="max-w-3xl">
+                <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-6 font-sans">
+                  Word of the Day
                 </p>
-                <p className="font-serif text-2xl md:text-3xl mb-3 group-hover:text-foreground/70 transition-colors">
-                  {words.length.toLocaleString()} words
-                </p>
-                <p className="text-foreground/60 font-serif leading-relaxed">
-                  Searchable by Darija, English, French, or Arabic script.
-                  Every entry includes pronunciation, part of speech, and
-                  example sentences.
-                </p>
-              </Link>
-
-              {/* Phrases */}
-              <Link href="/darija/phrases" className="group block">
-                <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-3 font-sans">
-                  Phrases
-                </p>
-                <p className="font-serif text-2xl md:text-3xl mb-3 group-hover:text-foreground/70 transition-colors">
-                  {phrases.length.toLocaleString()} phrases
-                </p>
-                <p className="text-foreground/60 font-serif leading-relaxed">
-                  Organised by situation: at the souk, in a taxi, at the riad,
-                  blessings, emergencies. What to say and how to say it.
-                </p>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Category cards — Dictionary */}
-      <section className="py-16 md:py-24 border-t border-border">
-        <div className="px-8 md:px-[8%] lg:px-[12%]">
-          <div className="max-w-5xl">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-8 font-sans">
-              Browse by Category
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {categories.map((cat) => (
                 <Link
-                  key={cat}
-                  href={`/darija/dictionary?category=${cat}`}
-                  className="py-4 px-5 border border-border hover:border-foreground/30 transition-colors group"
+                  href={`/darija/dictionary/${wordOfTheDay.id}`}
+                  className="group block"
                 >
-                  <p className="font-serif text-base group-hover:text-foreground/70 transition-colors">
-                    {formatCategoryLabel(cat)}
+                  <p className="font-serif text-3xl md:text-4xl mb-2 group-hover:text-foreground/70 transition-colors">
+                    {wordOfTheDay.darija}
                   </p>
-                  <p className="text-xs text-foreground/40 mt-1 font-sans">
-                    {words.filter((w) => w.category === cat).length} words
+                  <p
+                    className="text-xl text-foreground/50 mb-3"
+                    dir="rtl"
+                    lang="ar"
+                  >
+                    {wordOfTheDay.arabic}
+                  </p>
+                  <p className="text-foreground/70 font-serif">
+                    {wordOfTheDay.english}
+                  </p>
+                  <p className="text-sm text-foreground/40 mt-1 italic font-serif">
+                    /{wordOfTheDay.pronunciation}/
                   </p>
                 </Link>
-              ))}
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
+        )}
 
-      {/* Phrase situations */}
-      <section className="py-16 md:py-24 border-t border-border">
-        <div className="px-8 md:px-[8%] lg:px-[12%]">
-          <div className="max-w-5xl">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-8 font-sans">
-              Phrases by Situation
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {phraseCategories.map((cat) => (
-                <Link
-                  key={cat}
-                  href={`/darija/phrases?category=${cat}`}
-                  className="py-4 px-5 border border-border hover:border-foreground/30 transition-colors group"
-                >
-                  <p className="font-serif text-base group-hover:text-foreground/70 transition-colors">
-                    {formatCategoryLabel(cat)}
+        {/* Stats + Links */}
+        <section className="py-16 md:py-24">
+          <div className="px-8 md:px-[8%] lg:px-[12%]">
+            <div className="max-w-4xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
+                {/* Dictionary */}
+                <Link href="/darija/dictionary" className="group block">
+                  <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-3 font-sans">
+                    Dictionary
                   </p>
-                  <p className="text-xs text-foreground/40 mt-1 font-sans">
-                    {phrases.filter((p) => p.category === cat).length} phrases
+                  <p className="font-serif text-2xl md:text-3xl mb-3 group-hover:text-foreground/70 transition-colors">
+                    {words.length.toLocaleString()} words
+                  </p>
+                  <p className="text-foreground/60 font-serif leading-relaxed">
+                    Searchable by Darija, English, French, or Arabic script.
+                    Every entry includes pronunciation, part of speech, and
+                    example sentences.
                   </p>
                 </Link>
-              ))}
+
+                {/* Phrases */}
+                <Link href="/darija/phrases" className="group block">
+                  <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-3 font-sans">
+                    Phrases
+                  </p>
+                  <p className="font-serif text-2xl md:text-3xl mb-3 group-hover:text-foreground/70 transition-colors">
+                    {phrases.length.toLocaleString()} phrases
+                  </p>
+                  <p className="text-foreground/60 font-serif leading-relaxed">
+                    Organised by situation: at the souk, in a taxi, at the riad,
+                    blessings, emergencies. What to say and how to say it.
+                  </p>
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Back link */}
-      <section className="py-8 border-t border-border">
-        <div className="px-8 md:px-[8%] lg:px-[12%]">
-          <Link
-            href="/"
-            className="text-sm text-foreground/40 hover:text-foreground transition-colors"
-          >
-            &larr; Back to Slow Morocco
-          </Link>
-        </div>
-      </section>
-    </div>
+        {/* Category cards — Dictionary */}
+        <section className="py-16 md:py-24 border-t border-border">
+          <div className="px-8 md:px-[8%] lg:px-[12%]">
+            <div className="max-w-5xl">
+              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-8 font-sans">
+                Browse by Category
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {categories.map((cat) => (
+                  <Link
+                    key={cat}
+                    href={`/darija/dictionary?category=${cat}`}
+                    className="py-4 px-5 border border-border hover:border-foreground/30 transition-colors group"
+                  >
+                    <p className="font-serif text-base group-hover:text-foreground/70 transition-colors">
+                      {formatCategoryLabel(cat)}
+                    </p>
+                    <p className="text-xs text-foreground/40 mt-1 font-sans">
+                      {words.filter((w) => w.category === cat).length} words
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Phrase situations */}
+        <section className="py-16 md:py-24 border-t border-border">
+          <div className="px-8 md:px-[8%] lg:px-[12%]">
+            <div className="max-w-5xl">
+              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/40 mb-8 font-sans">
+                Phrases by Situation
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {phraseCategories.map((cat) => (
+                  <Link
+                    key={cat}
+                    href={`/darija/phrases?category=${cat}`}
+                    className="py-4 px-5 border border-border hover:border-foreground/30 transition-colors group"
+                  >
+                    <p className="font-serif text-base group-hover:text-foreground/70 transition-colors">
+                      {formatCategoryLabel(cat)}
+                    </p>
+                    <p className="text-xs text-foreground/40 mt-1 font-sans">
+                      {phrases.filter((p) => p.category === cat).length} phrases
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Back link */}
+        <section className="py-8 border-t border-border">
+          <div className="px-8 md:px-[8%] lg:px-[12%]">
+            <Link
+              href="/"
+              className="text-sm text-foreground/40 hover:text-foreground transition-colors"
+            >
+              &larr; Back to Slow Morocco
+            </Link>
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
