@@ -82,6 +82,17 @@ export async function getAllWordIds(): Promise<string[]> {
   return ids;
 }
 
+// Fetch specific words by ID array — for related words
+export async function getWordsByIds(ids: string[]): Promise<DarijaWord[]> {
+  if (!ids || ids.length === 0) return [];
+  const { data } = await supabase
+    .from('darija_words')
+    .select('*')
+    .in('id', ids)
+    .eq('published', true);
+  return data || [];
+}
+
 export async function getWordsByCategory(category: string): Promise<DarijaWord[]> {
   const all: DarijaWord[] = [];
   let from = 0;
