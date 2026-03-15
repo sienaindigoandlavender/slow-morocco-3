@@ -27,6 +27,7 @@ const CITY_SLUGS = [
 const STATIC_PAGES = [
   { path: '', priority: 1, changeFrequency: 'weekly' as const },
   { path: '/journeys', priority: 0.9, changeFrequency: 'weekly' as const },
+  { path: '/epic', priority: 0.9, changeFrequency: 'monthly' as const },
   { path: '/stories', priority: 0.8, changeFrequency: 'weekly' as const },
   { path: '/places', priority: 0.8, changeFrequency: 'weekly' as const },
   { path: '/places/map', priority: 0.7, changeFrequency: 'weekly' as const },
