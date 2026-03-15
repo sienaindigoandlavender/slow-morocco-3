@@ -181,10 +181,10 @@ export default function EpicPage() {
             A non-refundable deposit of €1,000 opens the conversation. You will receive a detailed proposal — your dates, your route, and access to the people who make each journey possible. If you proceed, the deposit applies in full to your journey total.
           </p>
           <p className="font-sans text-base text-[#a8a29e] leading-relaxed mb-12">
-            No forms. No packages. Write to us and tell us which journey is calling you.
+            No forms. No packages. Write to us at hello@slowmorocco.com and tell us which journey is calling you.
           </p>
           <a
-            href="https://wa.me/212600000000"
+            href="mailto:hello@slowmorocco.com?subject=EPIC%20Journey%20Inquiry"
             className="inline-block font-sans text-xs tracking-[0.3em] uppercase border border-[#8B2635] text-[#8B2635] px-10 py-4 hover:bg-[#8B2635] hover:text-white transition-all duration-500"
           >
             Request a journey
