@@ -2,20 +2,23 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { Menu, X, Search } from "lucide-react";
 import SearchModal from "./SearchModal";
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Cmd/Ctrl + K for search
+  // Keyboard shortcut for search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -23,187 +26,146 @@ export default function Header() {
         setSearchOpen(true);
       }
     };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Lock body scroll when menu is open
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
+  const navLinks = [
+    { href: "/destinations", label: "Destinations" },
+    { href: "/places", label: "Places" },
+    { href: "/journeys", label: "Journeys" },
+    { href: "/epic", label: "Epic" },
+    { href: "/stories/category/before-you-go", label: "Before You Go" },
+    { href: "/darija", label: "Darija" },
+    { href: "/about", label: "About" },
+  ];
 
   return (
     <>
-      {/* ── Fixed header bar ─────────────────────────────────────────── */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          menuOpen
-            ? "bg-transparent"
-            : scrolled
-            ? "bg-background/95 backdrop-blur-sm"
-            : "bg-gradient-to-b from-black/30 to-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-background/95 backdrop-blur-sm border-b border-border"
+            : "bg-gradient-to-b from-black/40 to-transparent"
         }`}
       >
-        <div className="px-6 md:px-10 lg:px-14">
-          <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="container mx-auto px-8 md:px-16 lg:px-20">
+          <div className="flex items-center justify-between h-20 md:h-24">
             {/* Logo */}
-            <Link
-              href="/"
-              onClick={() => setMenuOpen(false)}
-              className="relative z-[60]"
-            >
+            <Link href="/" className="flex items-center">
               <span
-                className={`text-[13px] tracking-[0.25em] uppercase transition-colors duration-500 ${
-                  menuOpen
-                    ? "text-[#2a2a25]"
-                    : scrolled
-                    ? "text-foreground"
-                    : "text-white"
+                className={`font-serif text-sm tracking-[0.2em] transition-colors duration-300 ${
+                  scrolled ? "text-foreground" : "text-white"
                 }`}
               >
-                Slow Morocco
+                SLOW MOROCCO
               </span>
             </Link>
 
-            {/* Burger — all screen sizes */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="relative z-[60] w-8 h-8 flex flex-col items-end justify-center gap-[5px] group"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-            >
-              <span
-                className={`block h-[1.5px] transition-all duration-500 origin-right ${
-                  menuOpen
-                    ? "w-6 bg-[#2a2a25] rotate-[-40deg] translate-y-[0.5px]"
-                    : `w-7 ${scrolled ? "bg-foreground" : "bg-white"} group-hover:w-6`
-                }`}
-              />
-              <span
-                className={`block h-[1.5px] transition-all duration-500 origin-right ${
-                  menuOpen
-                    ? "w-6 bg-[#2a2a25] rotate-[40deg] translate-y-[-0.5px]"
-                    : `w-5 ${scrolled ? "bg-foreground" : "bg-white"} group-hover:w-6`
-                }`}
-              />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* ── Full-screen menu overlay ─────────────────────────────────── */}
-      <div
-        className={`fixed inset-0 z-40 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          menuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
-      >
-        {/* Sage background */}
-        <div
-          className={`absolute inset-0 bg-[#c8c4b8] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top ${
-            menuOpen ? "scale-y-100" : "scale-y-0"
-          }`}
-        />
-
-        {/* Menu content */}
-        <div
-          className={`relative z-10 h-full flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-24 md:pt-28 pb-10 transition-opacity duration-500 delay-200 ${
-            menuOpen ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          {/* Main content area — nav left, categories right */}
-          <div className="flex flex-col md:flex-row md:gap-24 lg:gap-40 flex-grow">
-
-            {/* Left column — Navigation */}
-            <nav className="flex flex-col gap-1 md:gap-2 mb-10 md:mb-0">
-              {[
-                { href: "/morocco", label: "Morocco" },
-                { href: "/stories", label: "Stories" },
-                { href: "/places", label: "Places" },
-                { href: "/destinations", label: "Destinations" },
-                { href: "/journeys", label: "Journeys" },
-                { href: "/stories/category/before-you-go", label: "Before You Go" },
-                { href: "/darija", label: "Darija" },
-                { href: "/plan-your-trip", label: "Plan a Trip" },
-                { href: "/about", label: "About" },
-              ].map((item) => (
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-8">
+              {navLinks.map((link) => (
                 <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-sm text-[#2a2a25] hover:text-[#2a2a25]/60 transition-colors py-1"
+                  key={link.href}
+                  href={link.href}
+                  className={`text-[11px] tracking-[0.15em] uppercase transition-colors ${
+                    scrolled
+                      ? "text-foreground/70 hover:text-foreground"
+                      : "text-white/80 hover:text-white"
+                  }`}
                 >
-                  {item.label}
+                  {link.label}
                 </Link>
               ))}
 
-              <div className="mt-6 flex flex-col gap-1">
-                {[
-                  { href: "/booking-conditions", label: "Booking Conditions" },
-                  { href: "/payments", label: "Payments" },
-                  { href: "/cancellations-and-refunds", label: "Cancellations & Refunds" },
-                  { href: "/faq", label: "FAQ" },
-                  { href: "/contact", label: "Contact" },
-                ].map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="text-sm text-[#2a2a25]/50 hover:text-[#2a2a25]/80 transition-colors py-1"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
+              {/* Search Icon */}
+              <button
+                onClick={() => setSearchOpen(true)}
+                className={`p-2 transition-colors ${
+                  scrolled
+                    ? "text-foreground/70 hover:text-foreground"
+                    : "text-white/80 hover:text-white"
+                }`}
+                aria-label="Search"
+                title="Search (⌘K)"
+              >
+                <Search className="w-4 h-4" />
+              </button>
+
+              {/* Plan Your Trip button */}
+              <Link
+                href="/plan-your-trip"
+                className={`text-[11px] tracking-[0.15em] uppercase border px-6 py-3 transition-colors ${
+                  scrolled
+                    ? "border-foreground hover:bg-foreground hover:text-background"
+                    : "border-white text-white hover:bg-white hover:text-foreground"
+                }`}
+              >
+                Plan Your Trip
+              </Link>
             </nav>
 
-            {/* Right column — Categories in large serif */}
-            <div className="flex flex-col gap-0">
-              {[
-                { href: "/stories/category/history", label: "History" },
-                { href: "/stories/category/architecture", label: "Architecture" },
-                { href: "/stories/category/culture", label: "Culture" },
-                { href: "/stories/category/food", label: "Food" },
-                { href: "/stories/category/craft", label: "Craft" },
-                { href: "/stories/category/music", label: "Music" },
-                { href: "/stories/category/people", label: "People" },
-                { href: "/stories/category/nature", label: "Nature" },
-                { href: "/stories/category/sacred", label: "Sacred" },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] text-[#2a2a25] hover:text-[#2a2a25]/50 transition-colors leading-[1.35]"
-                >
-                  {item.label}
-                </Link>
-              ))}
+            {/* Mobile: Search + Hamburger */}
+            <div className="flex md:hidden items-center gap-2">
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="p-2"
+                aria-label="Search"
+              >
+                <Search
+                  className={`w-5 h-5 ${
+                    scrolled ? "text-foreground" : "text-white"
+                  }`}
+                />
+              </button>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 tap-target"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? (
+                  <X
+                    className={`w-5 h-5 ${
+                      scrolled ? "text-foreground" : "text-white"
+                    }`}
+                  />
+                ) : (
+                  <Menu
+                    className={`w-5 h-5 ${
+                      scrolled ? "text-foreground" : "text-white"
+                    }`}
+                  />
+                )}
+              </button>
             </div>
           </div>
 
-          {/* Bottom — Search bar */}
-          <div className="flex items-center justify-end mt-8">
-            <button
-              onClick={() => {
-                setMenuOpen(false);
-                setTimeout(() => setSearchOpen(true), 400);
-              }}
-              className="flex items-center gap-3 text-sm text-[#2a2a25]/50 hover:text-[#2a2a25]/80 transition-colors group"
-            >
-              <span className="border-b border-[#2a2a25]/20 group-hover:border-[#2a2a25]/40 pb-0.5 transition-colors">
-                Type here to search
-              </span>
-              <span className="text-[#2a2a25]/30">Search</span>
-            </button>
-          </div>
+          {/* Mobile Navigation */}
+          {mobileMenuOpen && (
+            <nav className="md:hidden py-8 space-y-1 border-t border-border bg-background">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block text-sm tracking-[0.15em] uppercase py-4"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <div className="pt-6">
+                <Link
+                  href="/plan-your-trip"
+                  className="inline-block text-sm tracking-[0.15em] uppercase border border-foreground px-8 py-4"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Plan Your Trip
+                </Link>
+              </div>
+            </nav>
+          )}
         </div>
-      </div>
+      </header>
 
       {/* Search Modal */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
