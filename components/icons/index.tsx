@@ -444,13 +444,6 @@ export const IconMail: React.FC<IconProps> = (props) => (
   </Icon>
 );
 
-export const IconWhatsApp: React.FC<IconProps> = (props) => (
-  <Icon {...props}>
-    <path d="M12 2a10 10 0 00-8.6 15L2 22l5-1.4A10 10 0 1012 2z" />
-    <path d="M9 10c.5 1.5 1.5 2.5 3 3l.5-.5c.5-.5 1-.5 1.5 0l1 1c.5.5.5 1 0 1.5-.5.5-1.5 1-2.5.5-2-.5-4-2.5-5-5-.5-1 0-2 .5-2.5.5-.5 1-.5 1.5 0l.5.5c.5.5.5 1 0 1.5z" />
-  </Icon>
-);
-
 export const IconInstagram: React.FC<IconProps> = (props) => (
   <Icon {...props}>
     <rect x="3" y="3" width="18" height="18" rx="4" />
@@ -529,7 +522,6 @@ const Icons = {
   Menu: IconMenu,
   Phone: IconPhone,
   Mail: IconMail,
-  WhatsApp: IconWhatsApp,
   Instagram: IconInstagram,
   Location: IconLocation,
   Info: IconInfo,

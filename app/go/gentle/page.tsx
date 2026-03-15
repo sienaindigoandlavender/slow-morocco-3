@@ -104,8 +104,6 @@ const fallbackSettings = {
   heroTagline: "A Slow Morocco Collection",
   founderNoteTitle: "Why I built this",
   founderNoteBody: "We've watched travellers be told \"yes, we can accommodate you\" — then be treated as an afterthought. Squeezed into standard itineraries. Made to feel like a problem to be solved.\n\nThat's not accommodation. That's tolerance.\n\nSo I built something different. These journeys were designed from scratch for travellers who need a different pace. You're the primary guest here, not the exception.",
-  whatsappUrl: "https://wa.me/212618070450?text=Hello%2C%20I%27d%20like%20to%20talk%20about%20travelling%20to%20Morocco",
-  whatsappNumber: "+212 6 18 07 04 50",
   contactEmail: "hello@slowmorocco.com",
   requirements: [
     { title: "Travel insurance", description: "Travel insurance that covers medical evacuation. Non-negotiable." },
@@ -162,17 +160,12 @@ export default async function GentleLandingPage() {
 
     // Build settings
     if (settingsData) {
-      const whatsappNumber = (settingsData.whatsapp_number || "+212618070450").replace(/\D/g, "");
-      const whatsappMessage = encodeURIComponent(settingsData.whatsapp_message || "Hello, I'd like to talk about travelling to Morocco");
-
       settings = {
         heroTitle: settingsData.hero_title || fallbackSettings.heroTitle,
         heroSubtitle: settingsData.hero_subtitle || fallbackSettings.heroSubtitle,
         heroTagline: settingsData.hero_tagline || fallbackSettings.heroTagline,
         founderNoteTitle: settingsData.founder_note_title || fallbackSettings.founderNoteTitle,
         founderNoteBody: settingsData.founder_note_body || fallbackSettings.founderNoteBody,
-        whatsappUrl: `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`,
-        whatsappNumber: settingsData.whatsapp_number || "+212 6 18 07 04 50",
         contactEmail: settingsData.contact_email || "hello@slowmorocco.com",
         requirements: [
           { title: "Travel insurance", description: settingsData.requirement_insurance || "" },

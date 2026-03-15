@@ -55,7 +55,7 @@ function getDefaultTraining(): ChatbotTraining[] {
     { id: 0, category: "prices", question: "How much do your journeys cost?", answer: "Depends on duration and accommodation level. Roughly: 3 days from €1,200, 12 days around €4,500 - for two guests. Includes transport, accommodation, guides, most meals. Use Plan Your Trip for a real quote.", keywords: "price,cost,how much,expensive,budget,euro,money,rate", sort_order: 11 },
     { id: 0, category: "included", question: "What's included?", answer: "Private 4x4 with driver. Handpicked riads and camps. Local guides. Breakfasts, most dinners. Not included: flights, insurance, personal expenses.", keywords: "include,included,what's in,cover,meals,hotel,transport,guide", sort_order: 12 },
     { id: 0, category: "booking", question: "How do I book?", answer: "Fill out the Plan Your Trip form. We send a proposal within 48 hours. 30% deposit holds your dates, balance due 60 days before.", keywords: "book,booking,reserve,reservation,how to,start,begin,deposit,payment", sort_order: 13 },
-    { id: 0, category: "contact", question: "How can I contact you?", answer: "Plan Your Trip form or hello@slowmorocco.com. WhatsApp: +212 6 18 07 04 50.", keywords: "contact,email,phone,whatsapp,reach,talk,call", sort_order: 18 },
+    { id: 0, category: "contact", question: "How can I contact you?", answer: "Plan Your Trip form or email us at hello@slowmorocco.com.", keywords: "contact,email,reach,talk", sort_order: 18 },
   ];
 }
 

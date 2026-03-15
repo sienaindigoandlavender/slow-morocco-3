@@ -37,11 +37,6 @@ export async function GET() {
       image: convertDriveUrl(t.image_url || ""),
     }));
 
-    // Build WhatsApp URL
-    const whatsappNumber = (settings.whatsapp_number || "+212618070450").replace(/\D/g, "");
-    const whatsappMessage = encodeURIComponent(settings.whatsapp_message || "Hello, I'd like to talk about travelling to Morocco");
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-
     return NextResponse.json({
       success: true,
       journeys: formattedJourneys,
@@ -52,8 +47,6 @@ export async function GET() {
         heroTagline: settings.hero_tagline || "A Slow Morocco Collection",
         founderNoteTitle: settings.founder_note_title || "Why I built this",
         founderNoteBody: settings.founder_note_body || "",
-        whatsappUrl,
-        whatsappNumber: settings.whatsapp_number || "+212618070450",
         contactEmail: settings.contact_email || "hello@slowmorocco.com",
         requirements: [
           { title: "Travel insurance", description: settings.requirement_insurance || "" },
