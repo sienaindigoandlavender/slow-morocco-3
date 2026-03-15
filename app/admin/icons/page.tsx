@@ -9,7 +9,7 @@ import Icons, {
   IconTagine, IconMintTea, IconArgan, IconZellige, IconLantern, IconDoor,
   IconClock, IconCalendar, IconPeople, IconPrice, IconStar, IconCheck, IconX,
   IconArrowRight, IconArrowLeft, IconChevronDown, IconMenu,
-  IconPhone, IconMail, IconWhatsApp, IconInstagram, IconLocation, IconInfo,
+  IconPhone, IconMail, IconInstagram, IconLocation, IconInfo,
 } from "@/components/icons";
 
 const iconGroups = [
@@ -102,7 +102,6 @@ const iconGroups = [
     icons: [
       { name: "Phone", component: IconPhone },
       { name: "Mail", component: IconMail },
-      { name: "WhatsApp", component: IconWhatsApp },
       { name: "Instagram", component: IconInstagram },
       { name: "Location", component: IconLocation },
       { name: "Info", component: IconInfo },

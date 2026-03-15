@@ -448,7 +448,7 @@ export default function PlanYourTripForm({
           {/* Phone */}
           <div>
             <label className={labelStyle}>
-              Phone / WhatsApp
+              Phone
             </label>
             <div className="flex gap-4">
               <div className="relative w-32">
