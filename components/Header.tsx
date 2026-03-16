@@ -113,12 +113,12 @@ export default function Header() {
 
         {/* Menu content */}
         <div
-          className={`relative z-10 h-full flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-24 md:pt-28 pb-10 transition-opacity duration-500 delay-200 ${
+          className={`relative z-10 h-full flex flex-col px-6 md:px-10 lg:px-14 pt-24 md:pt-28 pb-10 transition-opacity duration-500 delay-200 ${
             menuOpen ? "opacity-100" : "opacity-0"
           }`}
         >
           {/* Main content area — nav left, categories right */}
-          <div className="flex flex-col md:flex-row md:gap-24 lg:gap-40 flex-grow">
+          <div className="flex flex-col md:flex-row md:gap-24 lg:gap-40 flex-grow overflow-y-auto min-h-0">
 
             {/* Left column — Navigation */}
             <nav className="flex flex-col gap-1 md:gap-2 mb-10 md:mb-0">
@@ -189,8 +189,8 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Search input — bottom right */}
-          <div className="absolute bottom-10 right-6 md:right-10 lg:right-14">
+          {/* Bottom — Search input */}
+          <div className="mt-6 flex-shrink-0 pt-4 border-t border-[#2a2a25]/10">
             <input
               type="text"
               placeholder="Search"
@@ -208,8 +208,7 @@ export default function Header() {
                   setTimeout(() => setSearchOpen(true), 400);
                 }
               }}
-              style={{ borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderBottom: '1px solid rgba(42,42,37,0.3)' }}
-              className="w-48 md:w-56 bg-transparent text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/50 py-2 outline-none focus:border-[#2a2a25]/60 transition-colors"
+              className="w-full bg-transparent border-0 border-b border-[#2a2a25]/30 focus:border-[#2a2a25]/60 text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/40 py-2 outline-none transition-colors"
             />
           </div>
         </div>
