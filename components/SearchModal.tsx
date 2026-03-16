@@ -15,9 +15,10 @@ interface SearchResult {
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialQuery?: string;
 }
 
-export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
+export default function SearchModal({ isOpen, onClose, initialQuery = "" }: SearchModalProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -60,15 +61,16 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     });
   }, []);
 
-  // Focus input when modal opens
+  // Focus input when modal opens, apply initial query
   useEffect(() => {
     if (isOpen) {
+      if (initialQuery) setQuery(initialQuery);
       setTimeout(() => inputRef.current?.focus(), 100);
     } else {
       setQuery("");
       setResults([]);
     }
-  }, [isOpen]);
+  }, [isOpen, initialQuery]);
 
   // Close on escape
   useEffect(() => {

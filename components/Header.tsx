@@ -8,6 +8,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -188,26 +189,33 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Bottom — Search bar */}
-          <div className="flex items-center justify-end mt-8">
-            <button
-              onClick={() => {
-                setMenuOpen(false);
-                setTimeout(() => setSearchOpen(true), 400);
+          {/* Bottom — Search input */}
+          <div className="mt-8">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                if (e.target.value.length >= 2) {
+                  setMenuOpen(false);
+                  setTimeout(() => setSearchOpen(true), 400);
+                }
               }}
-              className="flex items-center gap-3 text-sm text-[#2a2a25]/50 hover:text-[#2a2a25]/80 transition-colors group"
-            >
-              <span className="border-b border-[#2a2a25]/20 group-hover:border-[#2a2a25]/40 pb-0.5 transition-colors">
-                Type here to search
-              </span>
-              <span className="text-[#2a2a25]/30">Search</span>
-            </button>
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && searchQuery.length >= 1) {
+                  setMenuOpen(false);
+                  setTimeout(() => setSearchOpen(true), 400);
+                }
+              }}
+              className="w-full bg-transparent border-0 border-b border-[#2a2a25]/30 focus:border-[#2a2a25]/60 text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/40 py-2 outline-none transition-colors"
+            />
           </div>
         </div>
       </div>
 
       {/* Search Modal */}
-      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SearchModal isOpen={searchOpen} onClose={() => { setSearchOpen(false); setSearchQuery(""); }} initialQuery={searchQuery} />
     </>
   );
 }
