@@ -1,15 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const INDEXNOW_KEY = "444430c5e133f87effb18d8fbc14bebd";
-const SITE_HOST = "slowmorocco.com";
+export const dynamic = 'force-dynamic';
+
+const INDEXNOW_KEY = "4cf3eebae2e7475aa8ba4653a0a7d8aa";
+const SITE_HOST = "www.slowmorocco.com";
 const BASE_URL = `https://${SITE_HOST}`;
 
 // Static pages that should always be submitted
 const STATIC_PAGES = [
   "",
   "/journeys",
+  "/epic",
   "/stories",
   "/places",
+  "/destinations",
+  "/darija",
+  "/darija/dictionary",
+  "/darija/phrases",
+  "/glossary",
   "/about",
   "/plan-your-trip",
   "/contact",
@@ -19,7 +27,9 @@ const STATIC_PAGES = [
   "/visa-info",
   "/day-trips",
   "/guides",
-  "/epic",
+  "/morocco",
+  "/stories/category/before-you-go",
+  "/overnight/agafay-desert",
 ];
 
 interface Journey {
@@ -96,6 +106,17 @@ async function getAllUrls(): Promise<string[]> {
     console.error("Failed to fetch places:", e);
   }
 
+  // Fetch darija word pages
+  try {
+    const { getAllWordIds } = await import('@/lib/darija');
+    const wordIds = await getAllWordIds();
+    wordIds.forEach((id) => {
+      urls.push(`${BASE_URL}/darija/dictionary/${id}`);
+    });
+  } catch (e) {
+    console.error("Failed to fetch darija words:", e);
+  }
+
   return urls;
 }
 
@@ -104,41 +125,47 @@ async function submitToIndexNow(urls: string[]): Promise<{
   submitted: number;
   error?: string;
 }> {
-  // IndexNow accepts up to 10,000 URLs per request
-  const payload = {
-    host: SITE_HOST,
-    key: INDEXNOW_KEY,
-    keyLocation: `${BASE_URL}/${INDEXNOW_KEY}.txt`,
-    urlList: urls,
-  };
+  const BATCH_SIZE = 9999;
+  let totalSubmitted = 0;
 
-  try {
-    const response = await fetch("https://api.indexnow.org/indexnow", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(payload),
-    });
+  for (let i = 0; i < urls.length; i += BATCH_SIZE) {
+    const batch = urls.slice(i, i + BATCH_SIZE);
+    const payload = {
+      host: SITE_HOST,
+      key: INDEXNOW_KEY,
+      keyLocation: `${BASE_URL}/${INDEXNOW_KEY}.txt`,
+      urlList: batch,
+    };
 
-    // IndexNow returns 200, 202 for success
-    if (response.ok || response.status === 202) {
-      return { success: true, submitted: urls.length };
+    try {
+      const response = await fetch("https://api.indexnow.org/indexnow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok || response.status === 202) {
+        totalSubmitted += batch.length;
+      } else {
+        const errorText = await response.text();
+        return {
+          success: false,
+          submitted: totalSubmitted,
+          error: `IndexNow returned ${response.status}: ${errorText}`,
+        };
+      }
+    } catch (e) {
+      return {
+        success: false,
+        submitted: totalSubmitted,
+        error: e instanceof Error ? e.message : "Unknown error",
+      };
     }
-
-    const errorText = await response.text();
-    return {
-      success: false,
-      submitted: 0,
-      error: `IndexNow returned ${response.status}: ${errorText}`,
-    };
-  } catch (e) {
-    return {
-      success: false,
-      submitted: 0,
-      error: e instanceof Error ? e.message : "Unknown error",
-    };
   }
+
+  return { success: true, submitted: totalSubmitted };
 }
 
 // GET: Check status and list URLs that would be submitted
