@@ -189,8 +189,8 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Bottom — Search input */}
-          <div className="mt-8">
+          {/* Search input — bottom right */}
+          <div className="absolute bottom-10 right-6 md:right-10 lg:right-14">
             <input
               type="text"
               placeholder="Search"
@@ -208,7 +208,8 @@ export default function Header() {
                   setTimeout(() => setSearchOpen(true), 400);
                 }
               }}
-              className="w-full bg-transparent border-0 border-b border-[#2a2a25]/30 focus:border-[#2a2a25]/60 text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/40 py-2 outline-none transition-colors"
+              style={{ borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderBottom: '1px solid rgba(42,42,37,0.3)' }}
+              className="w-48 md:w-56 bg-transparent text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/50 py-2 outline-none focus:border-[#2a2a25]/60 transition-colors"
             />
           </div>
         </div>
