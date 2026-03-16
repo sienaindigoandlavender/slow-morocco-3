@@ -7,6 +7,7 @@ import StoryBody from "@/components/StoryBody";
 import ShareTools from "@/components/ShareTools";
 import SeasonalBadge from "@/components/SeasonalBadge";
 import dynamic from "next/dynamic";
+import NewsletterCapture from "@/components/NewsletterCapture";
 
 const StoryMapRenderer = dynamic(() => import("@/components/StoryMapRenderer"), { ssr: false });
 
@@ -356,6 +357,13 @@ export default function StoryDetailContent({
         </footer>
 
       </article>
+
+      {/* ══════════════════════════════════════════════════════════════
+          THE EDIT — Newsletter capture
+          ══════════════════════════════════════════════════════════════ */}
+      <div className="max-w-3xl mx-auto px-8 md:px-12">
+        <NewsletterCapture />
+      </div>
 
       {/* ══════════════════════════════════════════════════════════════
           RELATED STORIES — sage editorial panel

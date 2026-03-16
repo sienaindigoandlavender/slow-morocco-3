@@ -7,9 +7,8 @@ export const revalidate = 0;
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { email, brand } = body;
+    const { email, source_page } = body;
 
-    // Validate email
     if (!email || typeof email !== "string") {
       return NextResponse.json(
         { success: false, message: "Email is required." },
@@ -25,7 +24,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = await subscribeToNewsletter(email.toLowerCase().trim(), brand);
+    const result = await subscribeToNewsletter(
+      email.toLowerCase().trim(),
+      source_page
+    );
 
     return NextResponse.json(result, {
       status: result.success ? 200 : 500,

@@ -10,6 +10,7 @@ import PlaceSchema from "@/components/seo/PlaceSchema";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import dynamic from "next/dynamic";
 import SeasonalBadge from "@/components/SeasonalBadge";
+import NewsletterCapture from "@/components/NewsletterCapture";
 
 const PlaceSatelliteMap = dynamic(() => import("@/components/PlaceSatelliteMap"), { ssr: false });
 
@@ -461,6 +462,13 @@ export default function PlaceDetailContent({
           </div>
         </section>
       )}
+
+      {/* The Edit — Newsletter capture */}
+      <div className="container mx-auto px-6 lg:px-16">
+        <div className="max-w-3xl mx-auto">
+          <NewsletterCapture />
+        </div>
+      </div>
 
       {/* Related Stories */}
       {relatedStories.length > 0 && (

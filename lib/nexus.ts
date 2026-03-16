@@ -5,8 +5,14 @@
 // ============================================
 
 import { supabase } from "./supabase";
+import { Resend } from "resend";
 
 const BRAND_NAME = "Slow Morocco";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.slowmorocco.com";
+
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 function generateUnsubscribeToken(): string {
   const chars =
@@ -22,54 +28,165 @@ function generateUnsubscribeToken(): string {
 // NEWSLETTER (uses Slow Morocco's own Supabase)
 // ============================================
 
+async function sendConfirmationEmail(email: string, confirmToken: string) {
+  if (!resend) {
+    console.warn("[Newsletter] Resend not configured — skipping confirmation email");
+    return;
+  }
+
+  const confirmUrl = `${SITE_URL}/api/newsletter/confirm?token=${confirmToken}`;
+
+  await resend.emails.send({
+    from: "The Edit <hello@slowmorocco.com>",
+    to: email,
+    subject: "Confirm your subscription to The Edit",
+    html: `
+      <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; padding: 40px 20px; color: #1C1917;">
+        <p style="font-size: 16px; line-height: 1.7; margin-bottom: 24px;">
+          You asked to receive The Edit — one story about Morocco, every week.
+        </p>
+        <p style="margin-bottom: 32px;">
+          <a href="${confirmUrl}" style="display: inline-block; padding: 12px 28px; border: 1px solid #1C1917; color: #1C1917; text-decoration: none; font-size: 14px; letter-spacing: 0.05em;">
+            Confirm my subscription
+          </a>
+        </p>
+        <p style="font-size: 13px; color: #78716C; line-height: 1.6;">
+          If you didn't sign up, ignore this email.
+        </p>
+        <p style="font-size: 12px; color: #a8a29e; margin-top: 32px;">
+          Slow Morocco · Marrakech
+        </p>
+      </div>
+    `,
+  });
+}
+
+export async function sendWelcomeEmail(email: string) {
+  if (!resend) {
+    console.warn("[Newsletter] Resend not configured — skipping welcome email");
+    return;
+  }
+
+  await resend.emails.send({
+    from: "The Edit <hello@slowmorocco.com>",
+    to: email,
+    subject: "You're in",
+    html: `
+      <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; padding: 40px 20px; color: #1C1917;">
+        <p style="font-size: 16px; line-height: 1.7; margin-bottom: 24px;">
+          Every Tuesday, one story about Morocco — the kind of thing you won't find in a guidebook.
+        </p>
+        <p style="font-size: 16px; line-height: 1.7; margin-bottom: 24px;">
+          Your first one arrives next week. In the meantime, here are three places to start:
+        </p>
+        <p style="font-size: 15px; line-height: 1.8; margin-bottom: 8px;">
+          <strong>The Ksour</strong> — Fortified villages built to outlast empires<br/>
+          <a href="${SITE_URL}/stories/the-ksour" style="color: #78716C; font-size: 13px;">${SITE_URL}/stories/the-ksour</a>
+        </p>
+        <p style="font-size: 15px; line-height: 1.8; margin-bottom: 8px;">
+          <strong>The Amazigh Identity Map</strong> — A language older than Arabic, written in Africa's oldest script<br/>
+          <a href="${SITE_URL}/stories/amazigh-identity" style="color: #78716C; font-size: 13px;">${SITE_URL}/stories/amazigh-identity</a>
+        </p>
+        <p style="font-size: 15px; line-height: 1.8; margin-bottom: 8px;">
+          <strong>The Apothecary</strong> — The herbalist tradition that predates pharmacy<br/>
+          <a href="${SITE_URL}/stories/the-apothecary" style="color: #78716C; font-size: 13px;">${SITE_URL}/stories/the-apothecary</a>
+        </p>
+        <p style="font-size: 12px; color: #a8a29e; margin-top: 32px;">
+          Slow Morocco · Marrakech
+        </p>
+      </div>
+    `,
+  });
+}
+
 export async function subscribeToNewsletter(
   email: string,
-  brand?: string
-): Promise<{ success: boolean; message: string; isResubscribe?: boolean }> {
-  const brandName = brand || BRAND_NAME;
-
+  sourcePage?: string
+): Promise<{ success: boolean; message: string; status?: string }> {
   try {
     const { data: existing } = await supabase
       .from("newsletter_subscribers")
       .select("*")
       .eq("email", email.toLowerCase())
-      .eq("brand", brandName)
       .maybeSingle();
 
     if (existing) {
-      if (existing.status === "active") {
-        return { success: true, message: "You're already subscribed." };
+      if (existing.confirmed) {
+        return { success: true, message: "You're already subscribed.", status: "exists" };
       }
 
-      await supabase
-        .from("newsletter_subscribers")
-        .update({ status: "active", updated_at: new Date().toISOString() })
-        .eq("id", existing.id);
+      // Resend confirmation email
+      const confirmToken = existing.confirm_token || crypto.randomUUID();
+      if (!existing.confirm_token) {
+        await supabase
+          .from("newsletter_subscribers")
+          .update({ confirm_token: confirmToken })
+          .eq("id", existing.id);
+      }
 
-      return {
-        success: true,
-        message: "Welcome back.",
-        isResubscribe: true,
-      };
+      await sendConfirmationEmail(email.toLowerCase(), confirmToken);
+      return { success: true, message: "Check your inbox to confirm.", status: "pending" };
     }
 
-    const token = generateUnsubscribeToken();
+    const confirmToken = crypto.randomUUID();
+    const unsubToken = generateUnsubscribeToken();
     const { error } = await supabase.from("newsletter_subscribers").insert({
       email: email.toLowerCase(),
-      brand: brandName,
-      status: "active",
-      unsubscribe_token: token,
+      brand: BRAND_NAME,
+      confirmed: false,
+      confirm_token: confirmToken,
+      unsubscribe_token: unsubToken,
+      source_page: sourcePage || null,
     });
 
     if (error) throw error;
 
-    return { success: true, message: "You're in." };
+    await sendConfirmationEmail(email.toLowerCase(), confirmToken);
+    return { success: true, message: "Check your inbox to confirm.", status: "pending" };
   } catch (error) {
     console.error("[Newsletter] Error subscribing:", error);
     return {
       success: false,
       message: "Something went wrong. Please try again.",
     };
+  }
+}
+
+export async function confirmSubscriber(
+  token: string
+): Promise<{ success: boolean; message: string; email?: string }> {
+  try {
+    const { data: existing } = await supabase
+      .from("newsletter_subscribers")
+      .select("*")
+      .eq("confirm_token", token)
+      .maybeSingle();
+
+    if (!existing) {
+      return { success: false, message: "Invalid or expired link." };
+    }
+
+    if (existing.confirmed) {
+      return { success: true, message: "Already confirmed.", email: existing.email };
+    }
+
+    const { error } = await supabase
+      .from("newsletter_subscribers")
+      .update({
+        confirmed: true,
+        confirmed_at: new Date().toISOString(),
+        status: "active",
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", existing.id);
+
+    if (error) throw error;
+
+    await sendWelcomeEmail(existing.email);
+    return { success: true, message: "Confirmed.", email: existing.email };
+  } catch (error) {
+    console.error("[Newsletter] Error confirming:", error);
+    return { success: false, message: "Something went wrong." };
   }
 }
 
