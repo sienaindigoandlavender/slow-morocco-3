@@ -3,6 +3,9 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "outputDirectory": ".next",
+  "redirects": [
+    { "source": "/tangier-2", "destination": "/places/tangier", "permanent": true }
+  ],
   "crons": [
     {
       "path": "/api/keepalive",
