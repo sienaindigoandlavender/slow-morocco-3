@@ -190,7 +190,7 @@ export default function Header() {
           </div>
 
           {/* Search input — bottom right */}
-          <div className="self-end">
+          <div className="absolute bottom-10 right-6 md:right-10 lg:right-14">
             <input
               type="text"
               placeholder="Search"
