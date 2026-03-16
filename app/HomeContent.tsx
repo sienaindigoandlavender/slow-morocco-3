@@ -214,7 +214,7 @@ export default function HomeContent({
       {/* ═══════════════════════════════════════════════════════════════════
           HERO — Magazine cover
           ═══════════════════════════════════════════════════════════════════ */}
-      <section className="relative h-[100svh] min-h-[600px]">
+      <section className="relative h-screen h-[100svh] min-h-[700px] overflow-hidden">
         {leadStory?.heroImage ? (
           <Image
             src={cloudinaryUrl(leadStory.heroImage, 1920)}

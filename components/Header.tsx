@@ -190,7 +190,7 @@ export default function Header() {
           </div>
 
           {/* Search input — bottom right */}
-          <div className="flex justify-end">
+          <div className="self-end">
             <input
               type="text"
               placeholder="Search"
