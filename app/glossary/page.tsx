@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { glossaryData, getAllTerms } from "@/lib/glossary-data";
+import NewsletterCapture from "@/components/NewsletterCapture";
 
 export const metadata: Metadata = {
   title: "Moroccan Glossary | Slow Morocco",
@@ -189,6 +190,13 @@ export default function GlossaryPage() {
             </div>
           </div>
         </section>
+
+        {/* The Edit — Newsletter capture */}
+        <div className="container mx-auto px-6 lg:px-16">
+          <div className="max-w-3xl">
+            <NewsletterCapture />
+          </div>
+        </div>
 
         {/* Table of Contents */}
         <nav className="py-8 border-b border-border" aria-label="Glossary sections">
