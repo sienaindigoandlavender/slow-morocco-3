@@ -8,7 +8,6 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -113,12 +112,12 @@ export default function Header() {
 
         {/* Menu content */}
         <div
-          className={`relative z-10 h-full flex flex-col px-6 md:px-10 lg:px-14 pt-24 md:pt-28 pb-10 transition-opacity duration-500 delay-200 ${
+          className={`relative z-10 h-full flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-24 md:pt-28 pb-10 transition-opacity duration-500 delay-200 ${
             menuOpen ? "opacity-100" : "opacity-0"
           }`}
         >
           {/* Main content area — nav left, categories right */}
-          <div className="flex flex-col md:flex-row md:gap-24 lg:gap-40 flex-grow overflow-y-auto min-h-0">
+          <div className="flex flex-col md:flex-row md:gap-24 lg:gap-40 flex-grow">
 
             {/* Left column — Navigation */}
             <nav className="flex flex-col gap-1 md:gap-2 mb-10 md:mb-0">
@@ -189,33 +188,26 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Bottom — Search input */}
-          <div className="mt-6 flex-shrink-0 pt-4 border-t border-[#2a2a25]/10">
-            <input
-              type="text"
-              placeholder="Search"
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                if (e.target.value.length >= 2) {
-                  setMenuOpen(false);
-                  setTimeout(() => setSearchOpen(true), 400);
-                }
+          {/* Bottom — Search bar */}
+          <div className="flex items-center justify-end mt-8">
+            <button
+              onClick={() => {
+                setMenuOpen(false);
+                setTimeout(() => setSearchOpen(true), 400);
               }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && searchQuery.length >= 1) {
-                  setMenuOpen(false);
-                  setTimeout(() => setSearchOpen(true), 400);
-                }
-              }}
-              className="w-full bg-transparent border-0 border-b border-[#2a2a25]/30 focus:border-[#2a2a25]/60 text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/40 py-2 outline-none transition-colors"
-            />
+              className="flex items-center gap-3 text-sm text-[#2a2a25]/50 hover:text-[#2a2a25]/80 transition-colors group"
+            >
+              <span className="border-b border-[#2a2a25]/20 group-hover:border-[#2a2a25]/40 pb-0.5 transition-colors">
+                Type here to search
+              </span>
+              <span className="text-[#2a2a25]/30">Search</span>
+            </button>
           </div>
         </div>
       </div>
 
       {/* Search Modal */}
-      <SearchModal isOpen={searchOpen} onClose={() => { setSearchOpen(false); setSearchQuery(""); }} initialQuery={searchQuery} />
+      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }
