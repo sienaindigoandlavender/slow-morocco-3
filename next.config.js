@@ -324,6 +324,17 @@ const nextConfig = {
       { source: '/stories/gates-of-marrakech', destination: '/stories/the-golden-doors', permanent: true },
       { source: '/stories/islamic-spain', destination: '/stories/islamic-spain-legacy', permanent: true },
       { source: '/stories/timeline-of-morocco', destination: '/stories/twelve-dynasties', permanent: true },
+
+      // ============================================
+      // GSC 404 FIXES — March 16, 2026
+      // ============================================
+      { source: '/contact-2', destination: '/contact', permanent: true },
+      { source: '/getting-around-morocco', destination: '/stories/category/before-you-go', permanent: true },
+      { source: '/getting-to-morocco', destination: '/stories/category/before-you-go', permanent: true },
+      { source: '/morocco-travel-guide', destination: '/stories/category/before-you-go', permanent: true },
+      { source: '/morocco-money-guide', destination: '/stories/what-things-cost', permanent: true },
+      { source: '/places/bab-bou-jeloud', destination: '/places', permanent: true },
+      { source: '/places/ifrane', destination: '/places/ifrane-morocco', permanent: true },
     ];
   },
 };
