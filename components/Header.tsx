@@ -144,30 +144,7 @@ export default function Header() {
                 </Link>
               ))}
 
-              {/* Search input — underline only */}
-              <div className="mt-6 mb-6">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    if (e.target.value.length >= 2) {
-                      setMenuOpen(false);
-                      setTimeout(() => setSearchOpen(true), 400);
-                    }
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && searchQuery.length >= 1) {
-                      setMenuOpen(false);
-                      setTimeout(() => setSearchOpen(true), 400);
-                    }
-                  }}
-                  className="w-full bg-transparent border-0 border-b border-[#2a2a25]/30 focus:border-[#2a2a25]/60 text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/40 py-2 outline-none transition-colors"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
+              <div className="mt-6 flex flex-col gap-1">
                 {[
                   { href: "/booking-conditions", label: "Booking Conditions" },
                   { href: "/payments", label: "Payments" },
@@ -187,28 +164,53 @@ export default function Header() {
               </div>
             </nav>
 
-            {/* Right column — Categories in large serif */}
-            <div className="flex flex-col gap-0">
-              {[
-                { href: "/stories/category/history", label: "History" },
-                { href: "/stories/category/architecture", label: "Architecture" },
-                { href: "/stories/category/culture", label: "Culture" },
-                { href: "/stories/category/food", label: "Food" },
-                { href: "/stories/category/craft", label: "Craft" },
-                { href: "/stories/category/music", label: "Music" },
-                { href: "/stories/category/people", label: "People" },
-                { href: "/stories/category/nature", label: "Nature" },
-                { href: "/stories/category/sacred", label: "Sacred" },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] text-[#2a2a25] hover:text-[#2a2a25]/50 transition-colors leading-[1.35]"
-                >
-                  {item.label}
-                </Link>
-              ))}
+            {/* Right column — Categories in large serif + search at bottom */}
+            <div className="flex flex-col justify-between flex-grow">
+              <div className="flex flex-col gap-0">
+                {[
+                  { href: "/stories/category/history", label: "History" },
+                  { href: "/stories/category/architecture", label: "Architecture" },
+                  { href: "/stories/category/culture", label: "Culture" },
+                  { href: "/stories/category/food", label: "Food" },
+                  { href: "/stories/category/craft", label: "Craft" },
+                  { href: "/stories/category/music", label: "Music" },
+                  { href: "/stories/category/people", label: "People" },
+                  { href: "/stories/category/nature", label: "Nature" },
+                  { href: "/stories/category/sacred", label: "Sacred" },
+                ].map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] text-[#2a2a25] hover:text-[#2a2a25]/50 transition-colors leading-[1.35]"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+
+              {/* Search input — underline only, bottom right */}
+              <div className="mt-auto pt-8">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    if (e.target.value.length >= 2) {
+                      setMenuOpen(false);
+                      setTimeout(() => setSearchOpen(true), 400);
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && searchQuery.length >= 1) {
+                      setMenuOpen(false);
+                      setTimeout(() => setSearchOpen(true), 400);
+                    }
+                  }}
+                  className="w-full max-w-xs bg-transparent border-0 border-b border-[#2a2a25]/30 focus:border-[#2a2a25]/60 text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/40 py-2 outline-none transition-colors"
+                />
+              </div>
             </div>
           </div>
 
