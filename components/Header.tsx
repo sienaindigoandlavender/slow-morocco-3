@@ -112,7 +112,7 @@ export default function Header() {
 
         {/* Menu content */}
         <div
-          className={`relative z-10 h-full flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-24 md:pt-28 pb-10 transition-opacity duration-500 delay-200 ${
+          className={`relative z-10 h-full flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-20 md:pt-24 pb-6 transition-opacity duration-500 delay-200 ${
             menuOpen ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -120,7 +120,7 @@ export default function Header() {
           <div className="flex flex-col md:flex-row md:gap-24 lg:gap-40 flex-grow">
 
             {/* Left column — Navigation */}
-            <nav className="flex flex-col gap-1 md:gap-2 mb-10 md:mb-0">
+            <nav className="flex flex-col gap-0.5 md:gap-1 mb-8 md:mb-0">
               {[
                 { href: "/morocco", label: "Morocco" },
                 { href: "/stories", label: "Stories" },
@@ -143,7 +143,7 @@ export default function Header() {
                 </Link>
               ))}
 
-              <div className="mt-6 flex flex-col gap-1">
+              <div className="mt-4 flex flex-col gap-0.5">
                 {[
                   { href: "/booking-conditions", label: "Booking Conditions" },
                   { href: "/payments", label: "Payments" },
@@ -189,7 +189,7 @@ export default function Header() {
           </div>
 
           {/* Bottom — Search bar */}
-          <div className="flex items-center justify-end mt-8">
+          <div className="flex items-center justify-end mt-4">
             <button
               onClick={() => {
                 setMenuOpen(false);
