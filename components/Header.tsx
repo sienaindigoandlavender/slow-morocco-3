@@ -144,7 +144,30 @@ export default function Header() {
                 </Link>
               ))}
 
-              <div className="mt-6 flex flex-col gap-1">
+              {/* Search input — underline only */}
+              <div className="mt-6 mb-6">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    if (e.target.value.length >= 2) {
+                      setMenuOpen(false);
+                      setTimeout(() => setSearchOpen(true), 400);
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && searchQuery.length >= 1) {
+                      setMenuOpen(false);
+                      setTimeout(() => setSearchOpen(true), 400);
+                    }
+                  }}
+                  className="w-full bg-transparent border-0 border-b border-[#2a2a25]/30 focus:border-[#2a2a25]/60 text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/40 py-2 outline-none transition-colors"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
                 {[
                   { href: "/booking-conditions", label: "Booking Conditions" },
                   { href: "/payments", label: "Payments" },
@@ -189,28 +212,6 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Bottom — Search input */}
-          <div className="mt-8">
-            <input
-              type="text"
-              placeholder="Search"
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                if (e.target.value.length >= 2) {
-                  setMenuOpen(false);
-                  setTimeout(() => setSearchOpen(true), 400);
-                }
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && searchQuery.length >= 1) {
-                  setMenuOpen(false);
-                  setTimeout(() => setSearchOpen(true), 400);
-                }
-              }}
-              className="w-full bg-transparent border-0 border-b border-[#2a2a25]/30 focus:border-[#2a2a25]/60 text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/40 py-2 outline-none transition-colors"
-            />
-          </div>
         </div>
       </div>
 
