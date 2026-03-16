@@ -44,7 +44,7 @@ INSERT INTO email_sequence (send_order, story_slug, subject_line, intro_line) VA
 (7, 'the-saffron-harvest', 'One hundred and fifty thousand flowers', 'That is what it takes to make a single kilo. The harvest lasts two weeks in November.'),
 (8, 'play-it-again-sam', 'Nobody said that line in Casablanca', 'The film was shot in Burbank. Rick''s Café didn''t exist until a diplomat built it in 2004.'),
 (9, 'the-pillars', 'The five things that hold the structure', 'One of them involves your money. Another involves your sleep.'),
-(10, 'the-flyway', 'Three hundred thousand raptors cross Morocco every autumn', 'The Strait of Gibraltar is nine miles wide. The birds have been using it for longer than humans have existed.'),
+(10, 'bird-atlas-morocco', 'Three hundred thousand raptors cross Morocco every autumn', 'The Strait of Gibraltar is nine miles wide. The birds have been using it for longer than humans have existed.'),
 (11, 'french-protectorate', 'The forty-four years that explain modern Morocco', 'It was called a protectorate, not a colony. The legal fiction mattered.'),
-(12, 'the-bestiary', 'The leopard that might still be in the mountains', 'The last confirmed sighting was decades ago. The locals are less certain it is gone.')
+(12, 'wildlife-atlas-morocco', 'The leopard that might still be in the mountains', 'The last confirmed sighting was decades ago. The locals are less certain it is gone.')
 ON CONFLICT (send_order) DO NOTHING;
