@@ -118,7 +118,7 @@ export default function Header() {
           }`}
         >
           {/* Scrollable content area */}
-          <div className="flex-1 overflow-y-auto scrollbar-hide">
+          <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hide">
             <div className="flex flex-col md:flex-row md:gap-24 lg:gap-40">
 
               {/* Left column — Navigation */}
