@@ -58,17 +58,16 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
     { title: "Contact", slug: "/contact", subtitle: "Get in touch" },
   ];
 
-  // Fetch data on mount
+  // Fetch data on mount — single lightweight endpoint
   useEffect(() => {
-    Promise.all([
-      fetch("/api/journeys").then((r) => r.json()),
-      fetch("/api/stories").then((r) => r.json()),
-      fetch("/api/places").then((r) => r.json()),
-    ]).then(([journeysData, storiesData, placesData]) => {
-      setJourneys(journeysData.journeys || []);
-      setStories(storiesData.stories || []);
-      setPlaces(placesData.places || []);
-    });
+    fetch("/api/search")
+      .then((r) => r.json())
+      .then((data) => {
+        setJourneys(data.journeys || []);
+        setStories(data.stories || []);
+        setPlaces(data.places || []);
+      })
+      .catch((err) => console.error("Search index load failed:", err));
   }, []);
 
   // Focus input when modal opens, apply initial query
@@ -127,7 +126,7 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
           type: "journey",
           title: j.title,
           slug: j.slug,
-          subtitle: `${j.duration || j.durationDays} days`,
+          subtitle: `${j.duration_days || j.duration || j.durationDays || ""} days`,
         });
       }
     });
