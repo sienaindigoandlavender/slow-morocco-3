@@ -232,18 +232,18 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl mx-auto mt-20 md:mt-32 px-4">
+      <div className="relative w-full max-w-2xl mx-auto mt-4 md:mt-32 px-4">
         <div className="bg-background border border-border shadow-2xl">
           {/* Search Input */}
-          <div className="flex items-center gap-4 px-6 py-5 border-b border-border">
-            <Search className="w-5 h-5 text-foreground/40" />
+          <div className="flex items-center gap-4 px-4 md:px-6 py-4 md:py-5 border-b border-border">
+            <Search className="w-5 h-5 text-foreground/40 flex-shrink-0" />
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search journeys, stories, places, guides..."
-              className="flex-1 bg-transparent text-foreground text-lg placeholder:text-foreground/30 focus:outline-none"
+              placeholder="Search journeys, stories, places..."
+              className="flex-1 bg-transparent text-foreground text-base md:text-lg placeholder:text-foreground/30 focus:outline-none"
             />
             <button
               onClick={onClose}

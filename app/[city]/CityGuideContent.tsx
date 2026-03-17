@@ -373,7 +373,7 @@ export default function CityGuideContent({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-border">
 
           {/* Map */}
-          <div className="h-[480px] lg:h-[600px] border-b lg:border-b-0 lg:border-r border-border">
+          <div className="h-[300px] md:h-[480px] lg:h-[600px] border-b lg:border-b-0 lg:border-r border-border">
             {showMap && (
               <CityMap
                 citySlug={citySlug}
@@ -386,7 +386,7 @@ export default function CityGuideContent({
           </div>
 
           {/* Places list */}
-          <div className="p-8 md:p-10 overflow-y-auto max-h-[600px]">
+          <div className="p-6 md:p-10 overflow-y-auto max-h-[400px] md:max-h-[600px]">
             <SectionLabel>Places</SectionLabel>
             {places.length > 0 ? (
               <div className="space-y-0">

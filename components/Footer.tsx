@@ -194,40 +194,40 @@ export default function Footer() {
             {/* Stories */}
             <div>
               <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/25 mb-5">Stories</h4>
-              <ul className="space-y-3">
-                <li><Link href="/stories" className="text-sm text-white/50 hover:text-white/80 transition-colors">All Stories</Link></li>
-                <li><Link href="/stories/category/history" className="text-sm text-white/50 hover:text-white/80 transition-colors">History</Link></li>
-                <li><Link href="/stories/category/architecture" className="text-sm text-white/50 hover:text-white/80 transition-colors">Architecture</Link></li>
-                <li><Link href="/stories/category/food" className="text-sm text-white/50 hover:text-white/80 transition-colors">Food</Link></li>
-                <li><Link href="/stories/category/culture" className="text-sm text-white/50 hover:text-white/80 transition-colors">Culture</Link></li>
+              <ul className="space-y-1">
+                <li><Link href="/stories" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">All Stories</Link></li>
+                <li><Link href="/stories/category/history" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">History</Link></li>
+                <li><Link href="/stories/category/architecture" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Architecture</Link></li>
+                <li><Link href="/stories/category/food" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Food</Link></li>
+                <li><Link href="/stories/category/culture" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Culture</Link></li>
               </ul>
             </div>
 
             {/* Places & Journeys */}
             <div>
               <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/25 mb-5">Explore</h4>
-              <ul className="space-y-3">
-                <li><Link href="/places" className="text-sm text-white/50 hover:text-white/80 transition-colors">Places</Link></li>
-                <li><Link href="/destinations" className="text-sm text-white/50 hover:text-white/80 transition-colors">Destinations</Link></li>
-                <li><Link href="/journeys" className="text-sm text-white/50 hover:text-white/80 transition-colors">Journeys</Link></li>
-                <li><Link href="/stories/category/before-you-go" className="text-sm text-white/50 hover:text-white/80 transition-colors">Before You Go</Link></li>
-                <li><Link href="/glossary" className="text-sm text-white/50 hover:text-white/80 transition-colors">Glossary</Link></li>
-                <li><Link href="/darija" className="text-sm text-white/50 hover:text-white/80 transition-colors">Darija Dictionary</Link></li>
+              <ul className="space-y-1">
+                <li><Link href="/places" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Places</Link></li>
+                <li><Link href="/destinations" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Destinations</Link></li>
+                <li><Link href="/journeys" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Journeys</Link></li>
+                <li><Link href="/stories/category/before-you-go" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Before You Go</Link></li>
+                <li><Link href="/glossary" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Glossary</Link></li>
+                <li><Link href="/darija" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Darija Dictionary</Link></li>
               </ul>
             </div>
 
             {/* About */}
             <div>
               <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/25 mb-5">About</h4>
-              <ul className="space-y-3">
-                <li><Link href="/about" className="text-sm text-white/50 hover:text-white/80 transition-colors">Who We Are</Link></li>
-                <li><Link href="/manifesto" className="text-sm text-white/50 hover:text-white/80 transition-colors">Manifesto</Link></li>
-                <li><Link href="/plan-your-trip" className="text-sm text-white/50 hover:text-white/80 transition-colors">Plan a Trip</Link></li>
-                <li><Link href="/booking-conditions" className="text-sm text-white/50 hover:text-white/80 transition-colors">Booking Conditions</Link></li>
-                <li><Link href="/payments" className="text-sm text-white/50 hover:text-white/80 transition-colors">Payments</Link></li>
-                <li><Link href="/cancellations-and-refunds" className="text-sm text-white/50 hover:text-white/80 transition-colors">Cancellations & Refunds</Link></li>
-                <li><Link href="/faq" className="text-sm text-white/50 hover:text-white/80 transition-colors">FAQ</Link></li>
-                <li><Link href="/contact" className="text-sm text-white/50 hover:text-white/80 transition-colors">Contact</Link></li>
+              <ul className="space-y-1">
+                <li><Link href="/about" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Who We Are</Link></li>
+                <li><Link href="/manifesto" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Manifesto</Link></li>
+                <li><Link href="/plan-your-trip" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Plan a Trip</Link></li>
+                <li><Link href="/booking-conditions" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Booking Conditions</Link></li>
+                <li><Link href="/payments" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Payments</Link></li>
+                <li><Link href="/cancellations-and-refunds" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Cancellations & Refunds</Link></li>
+                <li><Link href="/faq" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">FAQ</Link></li>
+                <li><Link href="/contact" className="text-sm text-white/50 hover:text-white/80 transition-colors inline-block py-1.5">Contact</Link></li>
               </ul>
             </div>
           </div>

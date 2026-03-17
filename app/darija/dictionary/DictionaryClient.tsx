@@ -178,11 +178,11 @@ export default function DictionaryClient({
                     href={`/darija/dictionary/${word.id}`}
                     className="flex items-baseline gap-4 md:gap-8 py-4 border-b border-border/50 group hover:bg-foreground/[0.02] -mx-4 px-4 transition-colors"
                   >
-                    <span className="font-serif text-lg md:text-xl min-w-[120px] md:min-w-[180px] group-hover:text-foreground/70 transition-colors">
+                    <span className="font-serif text-lg md:text-xl min-w-[80px] md:min-w-[180px] group-hover:text-foreground/70 transition-colors">
                       {word.darija}
                     </span>
                     <span
-                      className="text-foreground/40 text-sm min-w-[80px] md:min-w-[120px]"
+                      className="text-foreground/40 text-sm min-w-[60px] md:min-w-[120px] hidden sm:inline"
                       dir="rtl"
                       lang="ar"
                     >
