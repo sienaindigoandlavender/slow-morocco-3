@@ -108,7 +108,11 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
       if (
         j.title?.toLowerCase().includes(q) ||
         j.destinations?.toLowerCase().includes(q) ||
-        j.description?.toLowerCase().includes(q)
+        j.description?.toLowerCase().includes(q) ||
+        j.arcDescription?.toLowerCase().includes(q) ||
+        j.startCity?.toLowerCase().includes(q) ||
+        j.focus?.toLowerCase().includes(q) ||
+        j.category?.toLowerCase().includes(q)
       ) {
         matched.push({
           type: "journey",
@@ -123,8 +127,12 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
     stories.forEach((s) => {
       if (
         s.title?.toLowerCase().includes(q) ||
+        s.subtitle?.toLowerCase().includes(q) ||
         s.category?.toLowerCase().includes(q) ||
-        s.excerpt?.toLowerCase().includes(q)
+        s.excerpt?.toLowerCase().includes(q) ||
+        s.tags?.toLowerCase().includes(q) ||
+        s.region?.toLowerCase().includes(q) ||
+        s.theme?.toLowerCase().includes(q)
       ) {
         matched.push({
           type: "story",
@@ -140,7 +148,8 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
       if (
         p.title?.toLowerCase().includes(q) ||
         p.destination?.toLowerCase().includes(q) ||
-        p.category?.toLowerCase().includes(q)
+        p.category?.toLowerCase().includes(q) ||
+        p.excerpt?.toLowerCase().includes(q)
       ) {
         matched.push({
           type: "place",
@@ -181,14 +190,16 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
       }
     });
 
-    // Sort: prioritize exact matches
+    // Sort: prioritize title-starts-with, then title-includes, then others
     const sorted = matched.sort((a, b) => {
-      const aExact = a.title.toLowerCase().startsWith(q) ? 0 : 1;
-      const bExact = b.title.toLowerCase().startsWith(q) ? 0 : 1;
-      return aExact - bExact;
+      const aTitle = a.title.toLowerCase();
+      const bTitle = b.title.toLowerCase();
+      const aScore = aTitle.startsWith(q) ? 0 : aTitle.includes(q) ? 1 : 2;
+      const bScore = bTitle.startsWith(q) ? 0 : bTitle.includes(q) ? 1 : 2;
+      return aScore - bScore;
     });
 
-    setResults(sorted.slice(0, 12));
+    setResults(sorted.slice(0, 30));
   }, [query, journeys, stories, places]);
 
   const getHref = (result: SearchResult) => {
