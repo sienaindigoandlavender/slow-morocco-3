@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { Search } from "lucide-react";
 import SearchModal from "./SearchModal";
 
 export default function Header() {
@@ -192,8 +193,18 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Search input — pinned at bottom right */}
+          {/* Search — icon on mobile, underline input on desktop */}
           <div className="flex-shrink-0 flex justify-end pt-6">
+            {/* Mobile: search icon */}
+            <button
+              onClick={() => { setMenuOpen(false); setTimeout(() => setSearchOpen(true), 400); }}
+              className="md:hidden flex items-center gap-2 text-[#2a2a25]/50 hover:text-[#2a2a25] transition-colors py-2"
+              aria-label="Search"
+            >
+              <Search className="w-4 h-4" />
+              <span className="text-sm">Search</span>
+            </button>
+            {/* Desktop: underline input */}
             <input
               type="text"
               placeholder="Search"
@@ -211,7 +222,7 @@ export default function Header() {
                   setTimeout(() => setSearchOpen(true), 400);
                 }
               }}
-              className="w-48 md:w-56 bg-transparent text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/50 py-2 outline-none transition-colors"
+              className="hidden md:block w-56 bg-transparent text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/50 py-2 outline-none transition-colors"
               style={{ borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderBottom: '1px solid rgba(42,42,37,0.3)' }}
             />
           </div>
