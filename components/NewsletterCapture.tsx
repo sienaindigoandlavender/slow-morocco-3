@@ -62,7 +62,7 @@ export default function NewsletterCapture() {
       </p>
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto flex gap-3 px-6"
+        className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 px-6"
       >
         <input
           type="email"

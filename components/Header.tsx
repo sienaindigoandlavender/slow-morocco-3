@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { Search } from "lucide-react";
 import SearchModal from "./SearchModal";
 
 export default function Header() {
@@ -116,8 +117,9 @@ export default function Header() {
             menuOpen ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* Main content area — nav left, categories right */}
-          <div className="flex flex-col md:flex-row md:gap-24 lg:gap-40 flex-grow">
+          {/* Scrollable content area */}
+          <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hide">
+            <div className="flex flex-col md:flex-row md:gap-24 lg:gap-40">
 
             {/* Left column — Navigation */}
             <nav className="flex flex-col gap-0.5 md:gap-1 mb-8 md:mb-0">
@@ -144,47 +146,51 @@ export default function Header() {
               ))}
 
               <div className="mt-4 flex flex-col gap-0.5">
+                {/* Secondary links — hidden on mobile */}
+                <div className="hidden md:flex flex-col gap-1 mt-6">
+                  {[
+                    { href: "/booking-conditions", label: "Booking Conditions" },
+                    { href: "/payments", label: "Payments" },
+                    { href: "/cancellations-and-refunds", label: "Cancellations & Refunds" },
+                    { href: "/faq", label: "FAQ" },
+                    { href: "/contact", label: "Contact" },
+                  ].map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="text-sm text-[#2a2a25]/50 hover:text-[#2a2a25]/80 transition-colors py-1"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              </nav>
+
+              {/* Right column — Categories in large serif */}
+              <div className="flex flex-col gap-0">
                 {[
-                  { href: "/booking-conditions", label: "Booking Conditions" },
-                  { href: "/payments", label: "Payments" },
-                  { href: "/cancellations-and-refunds", label: "Cancellations & Refunds" },
-                  { href: "/faq", label: "FAQ" },
-                  { href: "/contact", label: "Contact" },
+                  { href: "/stories/category/history", label: "History" },
+                  { href: "/stories/category/architecture", label: "Architecture" },
+                  { href: "/stories/category/culture", label: "Culture" },
+                  { href: "/stories/category/food", label: "Food" },
+                  { href: "/stories/category/craft", label: "Craft" },
+                  { href: "/stories/category/music", label: "Music" },
+                  { href: "/stories/category/people", label: "People" },
+                  { href: "/stories/category/nature", label: "Nature" },
+                  { href: "/stories/category/sacred", label: "Sacred" },
                 ].map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
                     onClick={() => setMenuOpen(false)}
-                    className="text-sm text-[#2a2a25]/50 hover:text-[#2a2a25]/80 transition-colors py-1"
+                    className="font-serif text-xl md:text-3xl lg:text-[2.5rem] text-[#2a2a25] hover:text-[#2a2a25]/50 transition-colors leading-[1.35]"
                   >
                     {item.label}
                   </Link>
                 ))}
               </div>
-            </nav>
-
-            {/* Right column — Categories in large serif */}
-            <div className="flex flex-col gap-0">
-              {[
-                { href: "/stories/category/history", label: "History" },
-                { href: "/stories/category/architecture", label: "Architecture" },
-                { href: "/stories/category/culture", label: "Culture" },
-                { href: "/stories/category/food", label: "Food" },
-                { href: "/stories/category/craft", label: "Craft" },
-                { href: "/stories/category/music", label: "Music" },
-                { href: "/stories/category/people", label: "People" },
-                { href: "/stories/category/nature", label: "Nature" },
-                { href: "/stories/category/sacred", label: "Sacred" },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] text-[#2a2a25] hover:text-[#2a2a25]/50 transition-colors leading-[1.35]"
-                >
-                  {item.label}
-                </Link>
-              ))}
             </div>
           </div>
 

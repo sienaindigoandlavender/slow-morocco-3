@@ -118,6 +118,9 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
         j.title?.toLowerCase().includes(q) ||
         j.destinations?.toLowerCase().includes(q) ||
         j.description?.toLowerCase().includes(q) ||
+        j.arcDescription?.toLowerCase().includes(q) ||
+        j.startCity?.toLowerCase().includes(q) ||
+        j.focus?.toLowerCase().includes(q) ||
         j.slug?.toLowerCase().includes(q) ||
         j.category?.toLowerCase().includes(q) ||
         j.region?.toLowerCase().includes(q)
@@ -135,13 +138,13 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
     stories.forEach((s) => {
       if (
         s.title?.toLowerCase().includes(q) ||
+        s.subtitle?.toLowerCase().includes(q) ||
         s.category?.toLowerCase().includes(q) ||
         s.excerpt?.toLowerCase().includes(q) ||
         s.tags?.toLowerCase().includes(q) ||
         s.region?.toLowerCase().includes(q) ||
         s.theme?.toLowerCase().includes(q) ||
         s.era?.toLowerCase().includes(q) ||
-        s.subtitle?.toLowerCase().includes(q) ||
         s.the_facts?.toLowerCase().includes(q)
       ) {
         matched.push({
@@ -159,6 +162,7 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
         p.title?.toLowerCase().includes(q) ||
         p.destination?.toLowerCase().includes(q) ||
         p.category?.toLowerCase().includes(q) ||
+        p.excerpt?.toLowerCase().includes(q) ||
         p.slug?.toLowerCase().includes(q) ||
         p.description?.toLowerCase().includes(q) ||
         p.region?.toLowerCase().includes(q)
@@ -202,11 +206,13 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
       }
     });
 
-    // Sort: prioritize exact matches
+    // Sort: prioritize title-starts-with, then title-includes, then others
     const sorted = matched.sort((a, b) => {
-      const aExact = a.title.toLowerCase().startsWith(q) ? 0 : 1;
-      const bExact = b.title.toLowerCase().startsWith(q) ? 0 : 1;
-      return aExact - bExact;
+      const aTitle = a.title.toLowerCase();
+      const bTitle = b.title.toLowerCase();
+      const aScore = aTitle.startsWith(q) ? 0 : aTitle.includes(q) ? 1 : 2;
+      const bScore = bTitle.startsWith(q) ? 0 : bTitle.includes(q) ? 1 : 2;
+      return aScore - bScore;
     });
 
     setResults(sorted.slice(0, 20));
@@ -253,18 +259,18 @@ export default function SearchModal({ isOpen, onClose, initialQuery = "" }: Sear
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl mx-auto mt-20 md:mt-32 px-4">
+      <div className="relative w-full max-w-2xl mx-auto mt-4 md:mt-32 px-4">
         <div className="bg-background border border-border shadow-2xl">
           {/* Search Input */}
-          <div className="flex items-center gap-4 px-6 py-5 border-b border-border">
-            <Search className="w-5 h-5 text-foreground/40" />
+          <div className="flex items-center gap-4 px-4 md:px-6 py-4 md:py-5 border-b border-border">
+            <Search className="w-5 h-5 text-foreground/40 flex-shrink-0" />
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search journeys, stories, places, guides..."
-              className="flex-1 bg-transparent text-foreground text-lg placeholder:text-foreground/30 focus:outline-none"
+              placeholder="Search journeys, stories, places..."
+              className="flex-1 bg-transparent text-foreground text-base md:text-lg placeholder:text-foreground/30 focus:outline-none"
             />
             <button
               onClick={onClose}

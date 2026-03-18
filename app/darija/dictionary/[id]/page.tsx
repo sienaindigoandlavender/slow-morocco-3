@@ -200,7 +200,7 @@ export default async function WordDetailPage({
         <section className="py-10 md:py-14">
           <div className="px-8 md:px-[8%] lg:px-[12%]">
             <div className="max-w-3xl">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
                 <div>
                   <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/30 mb-1 font-sans">
                     Part of Speech
