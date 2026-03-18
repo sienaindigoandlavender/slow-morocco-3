@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getStories } from "@/lib/supabase";
 
+export const dynamic = 'force-dynamic';
 // Cache for 1 hour, allow AI crawlers to consume
 export const revalidate = 3600;
 
