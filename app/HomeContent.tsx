@@ -406,14 +406,49 @@ export default function HomeContent({
       )}
 
       {/* ═══════════════════════════════════════════════════════════════════
-          STORIES ROW TWO
+          THOUGHT STARTERS — horizontal editorial list
           ═══════════════════════════════════════════════════════════════════ */}
       {rowTwo.length > 0 && (
-        <section className="px-8 md:px-10 lg:px-14 pt-14 md:pt-20 pb-16 md:pb-24 border-t border-foreground/[0.08]">
-          <SectionHeader title="Keep reading." />
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 md:gap-x-5 gap-y-10">
+        <section className="border-t border-foreground/[0.08]">
+          <div className="px-8 md:px-10 lg:px-14 pt-14 md:pt-16 pb-4">
+            <SectionHeader title="Keep Reading." linkHref="/stories" linkLabel="View All" />
+          </div>
+          <div className="divide-y divide-foreground/[0.06]">
             {rowTwo.map((story) => (
-              <StoryCard key={story.slug} story={story} />
+              <Link
+                key={story.slug}
+                href={`/stories/${story.slug}`}
+                className="group flex items-center gap-6 md:gap-10 px-8 md:px-10 lg:px-14 py-5 md:py-6 hover:bg-foreground/[0.02] transition-colors"
+              >
+                {/* Thumbnail */}
+                <div className="relative w-16 h-16 md:w-20 md:h-20 flex-shrink-0 overflow-hidden bg-foreground/5">
+                  {story.heroImage && (
+                    <img
+                      src={cloudinaryUrl(story.heroImage, 160)}
+                      alt={story.title}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                    />
+                  )}
+                </div>
+                {/* Category + Title + Subtitle */}
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-1.5">
+                    {story.category || ""}
+                  </p>
+                  <h3 className="font-serif text-base md:text-lg lg:text-xl text-foreground leading-snug group-hover:text-foreground/60 transition-colors duration-300">
+                    {story.title}
+                  </h3>
+                  {story.excerpt && (
+                    <p className="hidden md:block text-sm text-foreground/40 mt-1 leading-relaxed line-clamp-1">
+                      {story.excerpt}
+                    </p>
+                  )}
+                </div>
+                {/* Arrow */}
+                <span className="hidden md:block text-foreground/20 group-hover:text-foreground/50 transition-colors text-lg flex-shrink-0">
+                  →
+                </span>
+              </Link>
             ))}
           </div>
         </section>
