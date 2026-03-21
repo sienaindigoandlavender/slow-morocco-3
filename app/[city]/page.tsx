@@ -30,16 +30,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const BASE_URL = "https://www.slowmorocco.com";
-  const title = `${destination.title} — Slow Morocco`;
+  const titleSuffix = destination.subtitle
+    ? `${destination.title} — ${destination.subtitle} | Slow Morocco`
+    : `${destination.title}, Morocco — Slow Morocco`;
   const description =
     destination.excerpt ||
-    `Explore ${destination.title}: stories, places, and private journeys.`;
+    `Everything you need to know before you go to ${destination.title}. Places, stories, and cultural context from Slow Morocco.`;
 
   return {
-    title,
+    title: titleSuffix,
     description,
     openGraph: {
-      title,
+      title: titleSuffix,
       description,
       url: `${BASE_URL}/${params.city}`,
       images: destination.hero_image
