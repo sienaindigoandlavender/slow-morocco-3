@@ -194,25 +194,21 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Bottom — Inline search */}
-          <div className="mt-6 border-t border-[#2a2a25]/10 pt-4">
+          {/* Bottom — Kinfolk-style compact search, bottom right */}
+          <div className="border-t border-[#2a2a25]/10 pt-4 flex justify-end">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                const q = (e.currentTarget.elements.namedItem('q') as HTMLInputElement).value.trim();
-                if (q) {
-                  setMenuOpen(false);
-                  setTimeout(() => setSearchOpen(true), 400);
-                }
+                setMenuOpen(false);
+                setTimeout(() => setSearchOpen(true), 400);
               }}
-              className="flex items-baseline justify-between gap-6"
+              className="flex items-baseline gap-4"
             >
               <input
                 name="q"
                 type="text"
                 placeholder="Type here to search"
-                defaultValue=""
-                className="flex-1 bg-transparent text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/35 focus:outline-none border-b border-[#2a2a25]/15 focus:border-[#2a2a25]/40 py-2 transition-colors"
+                className="w-48 md:w-64 bg-transparent text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/30 focus:outline-none border-b border-[#2a2a25]/15 focus:border-[#2a2a25]/40 pb-1 transition-colors"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     setMenuOpen(false);
