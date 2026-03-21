@@ -314,6 +314,20 @@ const nextConfig = {
       { source: '/places/gnawa-khamlia', destination: '/places/khamlia-gnawa-village', permanent: true },
 
       // ============================================
+      // DELETED DATA STORIES — March 21, 2026
+      // ============================================
+      { source: '/stories/oldest-universities', destination: '/stories/the-first-university', permanent: true },
+      { source: '/stories/not-all-desert-is-sand', destination: '/stories/the-desert-that-is-not-a-desert', permanent: true },
+      { source: '/stories/automotive-industry', destination: '/stories/the-long-rise', permanent: true },
+      { source: '/stories/demographic-atlas', destination: '/stories/moroccan-diaspora', permanent: true },
+      { source: '/stories/morocco-population', destination: '/stories/moroccan-diaspora', permanent: true },
+      { source: '/stories/solar-atlas', destination: '/stories/the-long-rise', permanent: true },
+      { source: '/stories/ottoman-north-africa', destination: '/stories/the-empire-that-crossed', permanent: true },
+      { source: '/stories/moroccan-genome', destination: '/stories/the-first-skull', permanent: true },
+      { source: '/stories/who-is-the-goat', destination: '/stories/the-man-who-walked-the-world', permanent: true },
+      { source: '/stories/morocco-3d-population', destination: '/stories/moroccan-diaspora', permanent: true },
+
+      // ============================================
       // DELETED REACT DATA MODULES — March 13, 2026
       // ============================================
       { source: '/stories/hammam-culture', destination: '/stories/the-hammam', permanent: true },
