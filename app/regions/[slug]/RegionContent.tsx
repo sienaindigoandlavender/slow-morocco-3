@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 
@@ -104,13 +103,10 @@ export default function RegionContent({
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative h-[65vh] min-h-[480px] max-h-[720px]">
         {region.hero_image && (
-          <Image
+          <img
             src={cloudinaryUrl(region.hero_image)}
             alt={region.title}
-            fill
             className="object-cover"
-            priority
-              unoptimized
             />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/65" />
@@ -149,12 +145,10 @@ export default function RegionContent({
                 className="group relative aspect-[3/4] overflow-hidden bg-foreground/5"
               >
                 {dest.hero_image && (
-                  <Image
+                  <img
                     src={cloudinaryUrl(dest.hero_image)}
                     alt={dest.title}
-                    fill
                     className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
-              unoptimized
             />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -185,12 +179,10 @@ export default function RegionContent({
               >
                 <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-4">
                   {place.hero_image && (
-                    <Image
+                    <img
                       src={cloudinaryUrl(place.hero_image)}
                       alt={place.title}
-                      fill
                       className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-              unoptimized
             />
                   )}
                 </div>
@@ -233,12 +225,10 @@ export default function RegionContent({
                 <Link href={`/stories/${story.slug}`} className="group">
                   <div className="aspect-[3/4] relative overflow-hidden bg-foreground/5 mb-5">
                     {story.hero_image && (
-                      <Image
+                      <img
                         src={cloudinaryUrl(story.hero_image)}
                         alt={story.title}
-                        fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-              unoptimized
             />
                     )}
                   </div>
@@ -272,12 +262,10 @@ export default function RegionContent({
                 <Link href={`/journeys/${journey.slug}`} className="group">
                   <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-5">
                     {journey.hero_image_url && (
-                      <Image
+                      <img
                         src={cloudinaryUrl(journey.hero_image_url)}
                         alt={journey.title}
-                        fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-              unoptimized
             />
                     )}
                   </div>

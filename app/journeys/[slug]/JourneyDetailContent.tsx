@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -88,13 +87,11 @@ function DayImage({ src, alt }: { src: string; alt: string }) {
   if (failed) return null;
   return (
     <div className="relative aspect-[3/4] w-full max-w-lg overflow-hidden mb-8">
-      <Image
+      <img
         src={cloudinaryUrl(src)}
         alt={alt}
-        fill
         className="object-cover"
         onError={() => setFailed(true)}
-        unoptimized
       />
     </div>
   );
@@ -152,12 +149,10 @@ function JourneysCarousel({ journeys }: { journeys: Journey[] }) {
           >
             <div className="relative aspect-[4/5] mb-3 overflow-hidden bg-[#f0f0f0]">
               {journey.heroImage && (
-                <Image
+                <img
                   src={cloudinaryUrl(journey.heroImage)}
                   alt={journey.title}
-                  fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
-              unoptimized
             />
               )}
             </div>
@@ -225,14 +220,10 @@ export default function JourneyDetailContent({
         {/* Hero Image */}
         <section className="relative h-[70vh] md:h-[80vh]">
           {journey.heroImage ? (
-            <Image
+            <img
               src={cloudinaryUrl(journey.heroImage)}
               alt={journey.title}
-              fill
-              sizes="100vw"
               className="object-cover opacity-70"
-              priority
-              unoptimized
             />
           ) : (
             <div className="absolute inset-0 bg-foreground/10" />
@@ -431,14 +422,10 @@ export default function JourneyDetailContent({
       {/* Hero Image with title overlay */}
       <section className="relative h-[100svh] min-h-[600px] bg-[#f0f0f0]">
         {journey.heroImage && (
-          <Image
+          <img
             src={cloudinaryUrl(journey.heroImage)}
             alt={journey.title}
-            fill
-            sizes="100vw"
             className="object-cover"
-            priority
-              unoptimized
             />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
@@ -562,13 +549,10 @@ export default function JourneyDetailContent({
                 <Link key={journey.slug} href={`/journeys/${journey.slug}`} className="group block">
                   <div className="aspect-[29/39] relative overflow-hidden bg-[#d5d0c8] mb-3.5">
                     {journey.heroImage && (
-                      <Image
+                      <img
                         src={cloudinaryUrl(journey.heroImage, 480)}
                         alt={journey.title}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 16.6vw"
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
-                        unoptimized
                       />
                     )}
                   </div>
@@ -612,13 +596,10 @@ export default function JourneyDetailContent({
                 <Link key={story.slug} href={`/stories/${story.slug}`} className="group block">
                   <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-3.5">
                     {story.heroImage ? (
-                      <Image
+                      <img
                         src={cloudinaryUrl(story.heroImage, 480)}
                         alt={story.title}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 16.6vw"
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
-                        unoptimized
                       />
                     ) : (
                       <div className="absolute inset-0 bg-[#e8e6e1]" />

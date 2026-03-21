@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 
@@ -190,13 +189,10 @@ export default function PlacesContent({
                 <Link key={place.slug} href={`/places/${place.slug}`} className="group block">
                   <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-3.5">
                     {place.heroImage ? (
-                      <Image
+                      <img
                         src={cloudinaryUrl(place.heroImage, 480)}
                         alt={place.title}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 16.6vw"
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
-                        unoptimized
                       />
                     ) : null}
                   </div>

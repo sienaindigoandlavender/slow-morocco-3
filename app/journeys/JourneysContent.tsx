@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 
 interface SearchableItem {
@@ -155,13 +154,10 @@ export default function JourneysContent({
                   <Link href={href} className="group block">
                     <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-3.5">
                       {item.heroImage && (
-                        <Image
+                        <img
                           src={cloudinaryUrl(item.heroImage, 480)}
                           alt={item.title}
-                          fill
-                          sizes="(max-width: 768px) 50vw, 16.6vw"
                           className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
-                          unoptimized
                           itemProp="image"
                         />
                       )}

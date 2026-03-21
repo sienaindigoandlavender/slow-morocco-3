@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 import { ChevronLeft, ChevronDown, MapPin, Clock, Ticket, Navigation, Timer, Compass } from "lucide-react";
@@ -144,14 +143,10 @@ export default function PlaceDetailContent({
       {/* Hero */}
       <section className="relative h-[100svh] min-h-[600px]">
         {place.heroImage ? (
-          <Image
+          <img
             src={cloudinaryUrl(place.heroImage)}
             alt={place.heroCaption || `${place.title} in ${place.destination}, Morocco`}
-            fill
-            sizes="100vw"
             className="object-cover"
-            priority
-              unoptimized
             />
         ) : (
           <div className="absolute inset-0 bg-muted" />
@@ -349,8 +344,7 @@ export default function PlaceDetailContent({
                     <Link key={np.slug} href={`/places/${np.slug}`} className="group">
                       <div className="relative aspect-[4/3] mb-3 overflow-hidden bg-[#e8e0d4]">
                         {np.heroImage && (
-                          <Image src={cloudinaryUrl(np.heroImage)} alt={np.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700"
-              unoptimized
+                          <img src={cloudinaryUrl(np.heroImage)} alt={np.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
                         )}
                       </div>
@@ -489,8 +483,7 @@ export default function PlaceDetailContent({
                 {relatedStories.map((story: any) => (
                   <Link key={story.slug} href={`/stories/${story.slug}`} className="group flex-shrink-0 w-[260px]">
                     <div className="relative aspect-[4/3] mb-4 overflow-hidden bg-[#e8e0d4]">
-                      {story.heroImage && (<Image src={cloudinaryUrl(story.heroImage)} alt={story.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700"
-              unoptimized
+                      {story.heroImage && (<img src={cloudinaryUrl(story.heroImage)} alt={story.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />)}
                     </div>
                     <p className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-1">{story.category}</p>
@@ -528,8 +521,7 @@ export default function PlaceDetailContent({
                 {relatedJourneys.map((journey: any) => (
                   <Link key={journey.slug} href={`/journeys/${journey.slug}`} className="group flex-shrink-0 w-[280px]">
                     <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-[#e8e0d4]">
-                      {journey.heroImage && (<Image src={cloudinaryUrl(journey.heroImage)} alt={journey.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700"
-              unoptimized
+                      {journey.heroImage && (<img src={cloudinaryUrl(journey.heroImage)} alt={journey.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />)}
                     </div>
                     <p className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-1">{journey.durationDays || journey.duration} Days</p>

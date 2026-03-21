@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
@@ -607,13 +606,10 @@ Slow Morocco Team`);
       {/* Hero Image */}
       <section className="relative h-[60vh] md:h-[70vh] bg-[#e8e0d4]">
         {(proposal.heroImage || proposal.days[0]?.imageUrl) && (
-          <Image
+          <img
             src={cloudinaryUrl(proposal.heroImage || proposal.days[0]?.imageUrl)}
             alt={proposal.journeyTitle}
-            fill
             className="object-cover"
-            priority
-              unoptimized
             />
         )}
       </section>
@@ -723,12 +719,10 @@ Slow Morocco Team`);
                   {/* Day Image */}
                   {day.imageUrl && (
                     <div className="relative aspect-[16/10] overflow-hidden">
-                      <Image
+                      <img
                         src={cloudinaryUrl(day.imageUrl)}
                         alt={`Day ${day.dayNumber} - ${day.title}`}
-                        fill
                         className="object-cover"
-              unoptimized
             />
                     </div>
                   )}
