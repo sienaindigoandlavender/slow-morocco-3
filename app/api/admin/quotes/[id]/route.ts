@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+}
 
 export async function GET(
   request: Request,
@@ -12,7 +14,7 @@ export async function GET(
 ) {
   try {
     const clientId = params.id;
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .from("quotes")
       .select("*")
       .eq("client_id", clientId)
@@ -139,7 +141,7 @@ export async function PUT(
     if (body.Proposal_URL !== undefined) updates.proposal_url = body.Proposal_URL;
     if (body.Itinerary_Doc_Link !== undefined) updates.itinerary_doc_link = body.Itinerary_Doc_Link;
 
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .from("quotes")
       .update(updates)
       .eq("client_id", clientId)
@@ -164,7 +166,7 @@ export async function DELETE(
 ) {
   try {
     const clientId = params.id;
-    const { error } = await supabase
+    const { error } = await getSupabase()
       .from("quotes")
       .delete()
       .eq("client_id", clientId);
