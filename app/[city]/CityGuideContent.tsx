@@ -373,16 +373,30 @@ export default function CityGuideContent({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-border">
 
           {/* Map */}
-          <div className="h-[300px] md:h-[480px] lg:h-[600px] border-b lg:border-b-0 lg:border-r border-border">
-            {showMap && (
-              <CityMap
-                citySlug={citySlug}
-                cityTitle={destination.title}
-                center={cityData.center}
-                zoom={cityData.zoom}
-                attractions={attractions}
-              />
-            )}
+          <div className="relative border-b lg:border-b-0 lg:border-r border-border">
+            <div className="h-[300px] md:h-[480px] lg:h-[600px]">
+              {showMap && (
+                <CityMap
+                  citySlug={citySlug}
+                  cityTitle={destination.title}
+                  center={cityData.center}
+                  zoom={cityData.zoom}
+                  attractions={attractions}
+                />
+              )}
+            </div>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destination.title + ', Morocco')}&center=${cityData.center[1]},${cityData.center[0]}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute bottom-3 right-3 flex items-center gap-2 bg-background/90 backdrop-blur-sm border border-border px-3 py-2 text-[10px] tracking-[0.15em] uppercase text-foreground/60 hover:text-foreground hover:border-foreground/40 transition-colors"
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              Open in Google Maps
+            </a>
           </div>
 
           {/* Places list */}
