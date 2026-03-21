@@ -146,7 +146,7 @@ export default function PlaceDetailContent({
           <img
             src={cloudinaryUrl(place.heroImage)}
             alt={place.heroCaption || `${place.title} in ${place.destination}, Morocco`}
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
             />
         ) : (
           <div className="absolute inset-0 bg-muted" />

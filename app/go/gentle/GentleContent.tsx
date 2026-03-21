@@ -216,7 +216,7 @@ export default function GentleContent({
                       <img
                         src={cloudinaryUrl(exp.heroImage)}
                         alt={`${exp.title} — accessible Morocco journey through ${exp.cities}`}
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
             />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
@@ -406,7 +406,7 @@ export default function GentleContent({
                           alt={`${member.name}, ${member.role} at Slow Morocco`}
                           width={80}
                           height={80}
-                          className="object-cover w-full h-full"
+                          className="absolute inset-0 w-full h-full object-cover w-full h-full"
             />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">

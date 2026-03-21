@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import dynamic from "next/dynamic";
 
@@ -23,13 +22,10 @@ export default function ColinItineraryPage() {
     <div className="bg-background min-h-screen">
       {/* Hero - Immersive */}
       <section className="relative h-[70vh] md:h-[85vh] flex items-end">
-        <Image
+        <img
           src="https://res.cloudinary.com/drstfu5yr/image/upload/v1769870529/motorbike_nmjsx0.png"
           alt="Motorcycle ride through Morocco"
-          fill
-          className="object-cover"
-          priority
-              unoptimized
+          className="absolute inset-0 w-full h-full object-cover"
             />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         <div className="relative z-10 container mx-auto px-8 md:px-16 lg:px-20 pb-16 md:pb-24">

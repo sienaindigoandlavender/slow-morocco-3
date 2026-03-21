@@ -157,7 +157,7 @@ export default function JourneysContent({
                         <img
                           src={cloudinaryUrl(item.heroImage, 480)}
                           alt={item.title}
-                          className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
                           itemProp="image"
                         />
                       )}

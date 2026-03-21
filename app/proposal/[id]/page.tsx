@@ -609,7 +609,7 @@ Slow Morocco Team`);
           <img
             src={cloudinaryUrl(proposal.heroImage || proposal.days[0]?.imageUrl)}
             alt={proposal.journeyTitle}
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
             />
         )}
       </section>
@@ -722,7 +722,7 @@ Slow Morocco Team`);
                       <img
                         src={cloudinaryUrl(day.imageUrl)}
                         alt={`Day ${day.dayNumber} - ${day.title}`}
-                        className="object-cover"
+                        className="absolute inset-0 w-full h-full object-cover"
             />
                     </div>
                   )}

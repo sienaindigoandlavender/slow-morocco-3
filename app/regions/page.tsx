@@ -61,7 +61,7 @@ export default async function RegionsPage() {
                 <img
                   src={cloudinaryUrl(region.hero_image)}
                   alt={region.title}
-                  className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
             />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />

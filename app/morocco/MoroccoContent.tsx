@@ -163,7 +163,7 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
         <img
           src="https://res.cloudinary.com/ddcznjibs/image/upload/v1772838482/Taourirt_Kasbah_rising_above_the_desert_town_lqljat.png"
           alt="Morocco"
-          className="object-cover object-center opacity-60"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-60"
             />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
         <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-12 lg:px-16 pb-14 md:pb-20">
@@ -331,7 +331,7 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
                 <img
                   src={cloudinaryUrl(cityImage)}
                   alt={city.title}
-                  className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
             />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -374,7 +374,7 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
                       <img
                         src={cloudinaryUrl(story.hero_image)}
                         alt={story.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
             />
                     )}
                   </div>

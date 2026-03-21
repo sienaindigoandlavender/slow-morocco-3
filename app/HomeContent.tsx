@@ -63,7 +63,7 @@ function StoryCard({ story, priority = false }: { story: Story; priority?: boole
           <img
             src={cloudinaryUrl(story.heroImage, 480)}
             alt={story.title}
-            className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
           />
         )}
       </div>
@@ -94,7 +94,7 @@ function JourneyCard({ journey }: { journey: Journey }) {
           <img
             src={cloudinaryUrl(journey.heroImage, 480)}
             alt={journey.title}
-            className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
           />
         )}
       </div>
@@ -123,7 +123,7 @@ function PlaceCard({ place }: { place: Place }) {
           <img
             src={cloudinaryUrl(place.heroImage, 480)}
             alt={place.title}
-            className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
           />
         )}
       </div>
@@ -208,13 +208,13 @@ export default function HomeContent({
           <img
             src={cloudinaryUrl(leadStory.heroImage, 1920)}
             alt={leadStory.title}
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
         ) : heroImage ? (
           <img
             src={cloudinaryUrl(heroImage, 1920)}
             alt="Slow Morocco"
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
           <div className="absolute inset-0 bg-[#2a2520]" />
@@ -306,7 +306,7 @@ export default function HomeContent({
             <img
               src={cloudinaryUrl(interstitialJourney.heroImage, 1920)}
               alt={interstitialJourney.title}
-              className="object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60" />

@@ -106,7 +106,7 @@ export default function RegionContent({
           <img
             src={cloudinaryUrl(region.hero_image)}
             alt={region.title}
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
             />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/65" />
@@ -148,7 +148,7 @@ export default function RegionContent({
                   <img
                     src={cloudinaryUrl(dest.hero_image)}
                     alt={dest.title}
-                    className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
             />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -182,7 +182,7 @@ export default function RegionContent({
                     <img
                       src={cloudinaryUrl(place.hero_image)}
                       alt={place.title}
-                      className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
             />
                   )}
                 </div>
@@ -228,7 +228,7 @@ export default function RegionContent({
                       <img
                         src={cloudinaryUrl(story.hero_image)}
                         alt={story.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
             />
                     )}
                   </div>
@@ -265,7 +265,7 @@ export default function RegionContent({
                       <img
                         src={cloudinaryUrl(journey.hero_image_url)}
                         alt={journey.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
             />
                     )}
                   </div>

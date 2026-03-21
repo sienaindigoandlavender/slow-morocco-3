@@ -90,7 +90,7 @@ function DayImage({ src, alt }: { src: string; alt: string }) {
       <img
         src={cloudinaryUrl(src)}
         alt={alt}
-        className="object-cover"
+        className="absolute inset-0 w-full h-full object-cover"
         onError={() => setFailed(true)}
       />
     </div>
@@ -152,7 +152,7 @@ function JourneysCarousel({ journeys }: { journeys: Journey[] }) {
                 <img
                   src={cloudinaryUrl(journey.heroImage)}
                   alt={journey.title}
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
               )}
             </div>
@@ -223,7 +223,7 @@ export default function JourneyDetailContent({
             <img
               src={cloudinaryUrl(journey.heroImage)}
               alt={journey.title}
-              className="object-cover opacity-70"
+              className="absolute inset-0 w-full h-full object-cover opacity-70"
             />
           ) : (
             <div className="absolute inset-0 bg-foreground/10" />
@@ -425,7 +425,7 @@ export default function JourneyDetailContent({
           <img
             src={cloudinaryUrl(journey.heroImage)}
             alt={journey.title}
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
             />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
@@ -552,7 +552,7 @@ export default function JourneyDetailContent({
                       <img
                         src={cloudinaryUrl(journey.heroImage, 480)}
                         alt={journey.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
                       />
                     )}
                   </div>
@@ -599,7 +599,7 @@ export default function JourneyDetailContent({
                       <img
                         src={cloudinaryUrl(story.heroImage, 480)}
                         alt={story.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
                       />
                     ) : (
                       <div className="absolute inset-0 bg-[#e8e6e1]" />

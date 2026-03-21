@@ -192,7 +192,7 @@ export default function PlacesContent({
                       <img
                         src={cloudinaryUrl(place.heroImage, 480)}
                         alt={place.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
                       />
                     ) : null}
                   </div>
