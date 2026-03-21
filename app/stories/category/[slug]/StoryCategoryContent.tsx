@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 
@@ -80,12 +79,10 @@ export default function StoryCategoryContent({
                   {/* Image */}
                   <div className="aspect-[3/4] relative overflow-hidden bg-[#f0f0f0] mb-5">
                     {story.hero_image && (
-                      <Image
+                      <img
                         src={cloudinaryUrl(story.hero_image, 600)}
                         alt={story.title}
-                        fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                        unoptimized
                       />
                     )}
                   </div>
