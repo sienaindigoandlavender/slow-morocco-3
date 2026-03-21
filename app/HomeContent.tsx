@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
+import NewsletterCapture from "@/components/NewsletterCapture";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -417,6 +418,34 @@ export default function HomeContent({
           </div>
         </section>
       )}
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          PLAN YOUR TRIP CTA
+          ═══════════════════════════════════════════════════════════════════ */}
+      <section className="px-8 md:px-10 lg:px-14 py-20 md:py-28 border-t border-foreground/[0.08]">
+        <div className="max-w-2xl">
+          <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/30 mb-4">Private Journeys</p>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground leading-[1.15] mb-6">
+            Tell us what you&rsquo;re looking for.
+          </h2>
+          <p className="text-sm text-foreground/50 leading-relaxed mb-8 max-w-lg">
+            We design private journeys around what you want to understand, not what&rsquo;s easiest to sell. Start with a question or a feeling — we&rsquo;ll take it from there.
+          </p>
+          <Link
+            href="/plan-your-trip"
+            className="inline-block px-8 py-3 border border-foreground text-sm tracking-[0.15em] uppercase text-foreground hover:bg-foreground hover:text-background transition-colors duration-300"
+          >
+            Begin
+          </Link>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          NEWSLETTER — The Edit
+          ═══════════════════════════════════════════════════════════════════ */}
+      <div className="border-t border-foreground/[0.08]">
+        <NewsletterCapture />
+      </div>
 
     </div>
   );
