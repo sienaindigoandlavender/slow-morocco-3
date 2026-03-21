@@ -255,7 +255,7 @@ export default function PlacesContent({
                   <img
                     src={cloudinaryUrl(region.heroImage)}
                     alt={region.title}
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
                 ) : (
                   <div className="absolute inset-0 bg-foreground/5" />
@@ -380,7 +380,7 @@ export default function PlacesContent({
                           <img
                             src={cloudinaryUrl(place.heroImage)}
                             alt={place.title}
-                            className="object-cover group-hover:scale-105 transition-transform duration-700"
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
                         )}
                       </div>

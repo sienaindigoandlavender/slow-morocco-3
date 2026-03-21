@@ -127,7 +127,7 @@ export default async function AboutPage() {
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="object-cover"
+                        className="absolute inset-0 w-full h-full object-cover"
                       />
                     ) : (
                       <div className="absolute inset-0 bg-[#d5d0c8]" />

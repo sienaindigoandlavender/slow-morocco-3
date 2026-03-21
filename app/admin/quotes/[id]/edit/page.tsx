@@ -579,7 +579,7 @@ export default function EditQuotePage() {
                             <img
                               src={cloudinaryUrl(day.imageUrl)}
                               alt={day.title || "Day image"}
-                              className="object-cover"
+                              className="absolute inset-0 w-full h-full object-cover"
                               onError={(e) => {
                                 (e.target as HTMLImageElement).style.display = 'none';
                               }}

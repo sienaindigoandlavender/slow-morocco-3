@@ -151,7 +151,7 @@ export default function EpicContent({ journeys }: EpicContentProps) {
                           <img
                             src={cloudinaryUrl(journey.heroImage)}
                             alt={journey.title}
-                            className="object-cover opacity-80"
+                            className="absolute inset-0 w-full h-full object-cover opacity-80"
             />
                         ) : (
                           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />

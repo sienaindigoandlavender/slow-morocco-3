@@ -74,7 +74,7 @@ export default function AdminJourneysPage() {
                     <img
                       src={cloudinaryUrl(journey.heroImage)}
                       alt={journey.title}
-                      className="object-cover"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">

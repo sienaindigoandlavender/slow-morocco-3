@@ -289,7 +289,7 @@ export default function CityGuideContent({
           <img
             src={cloudinaryUrl(heroImage, 1920)}
             alt={destination.title}
-            className="object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-center"
           />
         ) : (
           <div className="absolute inset-0 bg-foreground/10" />
@@ -346,7 +346,7 @@ export default function CityGuideContent({
                     <img
                       src={cloudinaryUrl(img.image_url, 800)}
                       alt={img.caption || destination.title}
-                      className="object-cover"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
                   )}
                 </div>
@@ -447,7 +447,7 @@ export default function CityGuideContent({
                       <img
                         src={cloudinaryUrl(story.hero_image, 600)}
                         alt={story.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
                       />
                     )}
                   </div>
@@ -498,7 +498,7 @@ export default function CityGuideContent({
                       <img
                         src={cloudinaryUrl(journey.hero_image_url, 600)}
                         alt={journey.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
                       />
                     )}
                   </div>
@@ -569,7 +569,7 @@ export default function CityGuideContent({
                         <img
                           src={cloudinaryUrl(journey.hero_image_url, 600)}
                           alt={journey.title}
-                          className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
                         />
                       )}
                     </div>

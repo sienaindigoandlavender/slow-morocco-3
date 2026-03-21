@@ -66,7 +66,7 @@ export default function DayTripDetailContent({
           <img
             src={cloudinaryUrl(dayTrip.heroImage || dayTrip.routeImage)}
             alt={dayTrip.title}
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
             />
         )}
         <div className="absolute top-24 left-6 md:left-16">
