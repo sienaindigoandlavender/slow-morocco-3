@@ -4,7 +4,6 @@ import ControlBar from "@/components/ControlBar";
 
 import { useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 import MoroccoMapWrapper from "@/components/MoroccoMapWrapper";
@@ -253,12 +252,10 @@ export default function PlacesContent({
                 }`}
               >
                 {region.heroImage ? (
-                  <Image
+                  <img
                     src={cloudinaryUrl(region.heroImage)}
                     alt={region.title}
-                    fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
-              unoptimized
             />
                 ) : (
                   <div className="absolute inset-0 bg-foreground/5" />
@@ -380,12 +377,10 @@ export default function PlacesContent({
                     >
                       <div className="relative aspect-[3/4] mb-3 overflow-hidden bg-foreground/5">
                         {place.heroImage && (
-                          <Image
+                          <img
                             src={cloudinaryUrl(place.heroImage)}
                             alt={place.title}
-                            fill
                             className="object-cover group-hover:scale-105 transition-transform duration-700"
-              unoptimized
             />
                         )}
                       </div>

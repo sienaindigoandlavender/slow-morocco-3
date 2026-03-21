@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
@@ -287,14 +286,10 @@ export default function CityGuideContent({
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="relative h-[100svh] min-h-[600px]">
         {heroImage ? (
-          <Image
+          <img
             src={cloudinaryUrl(heroImage, 1920)}
             alt={destination.title}
-            fill
-            sizes="100vw"
             className="object-cover object-center"
-            priority
-            unoptimized
           />
         ) : (
           <div className="absolute inset-0 bg-foreground/10" />
@@ -348,12 +343,10 @@ export default function CityGuideContent({
               <figure key={img.id}>
                 <div className="relative aspect-[16/10] overflow-hidden bg-foreground/5">
                   {img.image_url && (
-                    <Image
+                    <img
                       src={cloudinaryUrl(img.image_url, 800)}
                       alt={img.caption || destination.title}
-                      fill
                       className="object-cover"
-                      unoptimized
                     />
                   )}
                 </div>
@@ -373,30 +366,16 @@ export default function CityGuideContent({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-border">
 
           {/* Map */}
-          <div className="relative border-b lg:border-b-0 lg:border-r border-border">
-            <div className="h-[300px] md:h-[480px] lg:h-[600px]">
-              {showMap && (
-                <CityMap
-                  citySlug={citySlug}
-                  cityTitle={destination.title}
-                  center={cityData.center}
-                  zoom={cityData.zoom}
-                  attractions={attractions}
-                />
-              )}
-            </div>
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destination.title + ', Morocco')}&center=${cityData.center[1]},${cityData.center[0]}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute bottom-3 right-3 flex items-center gap-2 bg-background/90 backdrop-blur-sm border border-border px-3 py-2 text-[10px] tracking-[0.15em] uppercase text-foreground/60 hover:text-foreground hover:border-foreground/40 transition-colors"
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-              Open in Google Maps
-            </a>
+          <div className="h-[300px] md:h-[480px] lg:h-[600px] border-b lg:border-b-0 lg:border-r border-border">
+            {showMap && (
+              <CityMap
+                citySlug={citySlug}
+                cityTitle={destination.title}
+                center={cityData.center}
+                zoom={cityData.zoom}
+                attractions={attractions}
+              />
+            )}
           </div>
 
           {/* Places list */}
@@ -465,12 +444,10 @@ export default function CityGuideContent({
                 <Link href={`/stories/${story.slug}`} className="group">
                   <div className="aspect-[3/4] relative overflow-hidden bg-foreground/5 mb-5">
                     {story.hero_image && (
-                      <Image
+                      <img
                         src={cloudinaryUrl(story.hero_image, 600)}
                         alt={story.title}
-                        fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                        unoptimized
                       />
                     )}
                   </div>
@@ -518,12 +495,10 @@ export default function CityGuideContent({
                 <Link href={`/journeys/${journey.slug}`} className="group">
                   <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-5">
                     {journey.hero_image_url && (
-                      <Image
+                      <img
                         src={cloudinaryUrl(journey.hero_image_url, 600)}
                         alt={journey.title}
-                        fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                        unoptimized
                       />
                     )}
                   </div>
@@ -591,12 +566,10 @@ export default function CityGuideContent({
                   <Link href={`/journeys/${journey.slug}`} className="group">
                     <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-5">
                       {journey.hero_image_url && (
-                        <Image
+                        <img
                           src={cloudinaryUrl(journey.hero_image_url, 600)}
                           alt={journey.title}
-                          fill
                           className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                          unoptimized
                         />
                       )}
                     </div>

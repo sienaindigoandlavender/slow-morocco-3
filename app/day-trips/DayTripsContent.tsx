@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import MoroccoMapWrapper from "@/components/MoroccoMapWrapper";
 import PageBanner from "@/components/PageBanner";
@@ -75,8 +74,7 @@ export default function DayTripsContent({
                 <Link key={trip.slug} href={`/day-trips/${trip.slug}`} className="group">
                   <div className="relative aspect-[4/5] mb-6 overflow-hidden bg-foreground/5">
                     {trip.heroImage && (
-                      <Image src={cloudinaryUrl(trip.heroImage)} alt={trip.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700"
-              unoptimized
+                      <img src={cloudinaryUrl(trip.heroImage)} alt={trip.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
                     )}
                     <div className="absolute top-4 left-4">

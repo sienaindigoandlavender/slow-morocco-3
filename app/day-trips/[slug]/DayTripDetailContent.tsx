@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import { ArrowLeft, Clock, MapPin, Mountain } from "lucide-react";
 import DayTripBookingModal from "@/components/DayTripBookingModal";
@@ -64,13 +63,10 @@ export default function DayTripDetailContent({
       {/* Hero Image */}
       <section className="relative h-[50vh] md:h-[60vh] bg-[#e8e0d4]">
         {(dayTrip.heroImage || dayTrip.routeImage) && (
-          <Image
+          <img
             src={cloudinaryUrl(dayTrip.heroImage || dayTrip.routeImage)}
             alt={dayTrip.title}
-            fill
             className="object-cover"
-            priority
-              unoptimized
             />
         )}
         <div className="absolute top-24 left-6 md:left-16">

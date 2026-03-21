@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Metadata } from "next";
 import { getWebsiteTeam, getPageBannerBySlug, convertDriveUrl } from "@/lib/supabase";
 import { cloudinaryUrl } from "@/lib/cloudinary";
@@ -125,12 +124,10 @@ export default async function AboutPage() {
                 <div key={member.id}>
                   <div className="aspect-[29/39] relative overflow-hidden bg-[#d5d0c8] mb-4">
                     {member.image ? (
-                      <Image
+                      <img
                         src={member.image}
                         alt={member.name}
-                        fill
                         className="object-cover"
-                        unoptimized
                       />
                     ) : (
                       <div className="absolute inset-0 bg-[#d5d0c8]" />
