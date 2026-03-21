@@ -57,8 +57,8 @@ export default function NewsletterCapture() {
       <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3">
         The Edit
       </h3>
-      <p className="font-sans text-sm text-muted-foreground mb-8">
-        One story about Morocco, every week. Free.
+      <p className="font-sans text-sm text-muted-foreground mb-8 max-w-sm mx-auto leading-relaxed">
+        The intelligence layer. History, culture, craft — the context that changes what you see when you arrive.
       </p>
       <form
         onSubmit={handleSubmit}
