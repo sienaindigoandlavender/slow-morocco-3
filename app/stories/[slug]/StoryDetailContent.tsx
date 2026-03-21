@@ -354,6 +354,36 @@ export default function StoryDetailContent({
       </article>
 
       {/* ══════════════════════════════════════════════════════════════
+          PREV / NEXT NAVIGATION
+          ══════════════════════════════════════════════════════════════ */}
+      {(prevStory || nextStory) && (
+        <div className="max-w-3xl mx-auto px-8 md:px-12 border-t border-foreground/10">
+          <div className="grid grid-cols-2 divide-x divide-foreground/10 py-1">
+            <div className="pr-8 py-8">
+              {prevStory && (
+                <Link href={`/stories/${prevStory.slug}`} className="group block">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-2">← Previous</p>
+                  <p className="font-serif text-base text-foreground/70 group-hover:text-foreground transition-colors duration-300 leading-snug">
+                    {prevStory.title}
+                  </p>
+                </Link>
+              )}
+            </div>
+            <div className="pl-8 py-8 text-right">
+              {nextStory && (
+                <Link href={`/stories/${nextStory.slug}`} className="group block">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-2">Next →</p>
+                  <p className="font-serif text-base text-foreground/70 group-hover:text-foreground transition-colors duration-300 leading-snug">
+                    {nextStory.title}
+                  </p>
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ══════════════════════════════════════════════════════════════
           THE EDIT — Newsletter capture
           ══════════════════════════════════════════════════════════════ */}
       <div className="max-w-3xl mx-auto px-8 md:px-12">
