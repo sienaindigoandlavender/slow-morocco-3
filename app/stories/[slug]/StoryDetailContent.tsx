@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 import StoryBody from "@/components/StoryBody";
@@ -146,14 +145,10 @@ export default function StoryDetailContent({
           ══════════════════════════════════════════════════════════════ */}
       {story.heroImage ? (
         <section className="relative h-[100svh] min-h-[600px]">
-          <Image
+          <img
             src={cloudinaryUrl(story.heroImage, 1920)}
             alt={story.title}
-            fill
-            sizes="100vw"
             className="object-cover"
-            priority
-            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
 
@@ -385,12 +380,10 @@ export default function StoryDetailContent({
                 <Link key={s.slug} href={`/stories/${s.slug}`} className="group">
                   <div className="aspect-[29/39] relative overflow-hidden bg-[#d5d0c8] mb-4">
                     {s.heroImage ? (
-                      <Image
+                      <img
                         src={cloudinaryUrl(s.heroImage, 480)}
                         alt={s.title}
-                        fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
-                        unoptimized
                       />
                     ) : (
                       <div className="absolute inset-0 bg-[#d5d0c8]" />
@@ -445,12 +438,10 @@ export default function StoryDetailContent({
                 <Link key={journey.slug} href={`/journeys/${journey.slug}`} className="group">
                   <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-4">
                     {journey.heroImage && (
-                      <Image
+                      <img
                         src={cloudinaryUrl(journey.heroImage, 480)}
                         alt={journey.title}
-                        fill
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
-                        unoptimized
                       />
                     )}
                   </div>
