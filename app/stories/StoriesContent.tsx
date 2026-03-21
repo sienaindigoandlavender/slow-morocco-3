@@ -33,6 +33,14 @@ export default function StoriesContent({
     return ["all", ...Array.from(cats).sort()];
   }, [initialStories]);
 
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: initialStories.length };
+    initialStories.forEach((s) => {
+      if (s.mood) counts[s.mood] = (counts[s.mood] || 0) + 1;
+    });
+    return counts;
+  }, [initialStories]);
+
   const filteredStories = useMemo(() => {
     let result = initialStories;
     if (activeFilter !== "all") {
@@ -79,13 +87,16 @@ export default function StoriesContent({
               <button
                 key={cat}
                 onClick={() => { setActiveFilter(cat); setCurrentPage(1); }}
-                className={`text-[11px] tracking-[0.12em] uppercase whitespace-nowrap transition-colors ${
+                className={`text-[11px] tracking-[0.12em] uppercase whitespace-nowrap transition-colors flex items-baseline gap-1.5 ${
                   activeFilter === cat
                     ? "text-foreground"
                     : "text-foreground/35 hover:text-foreground/60"
                 }`}
               >
                 {cat === "all" ? "All" : cat}
+                <span className={`text-[9px] ${activeFilter === cat ? "text-foreground/40" : "text-foreground/20"}`}>
+                  {categoryCounts[cat] || 0}
+                </span>
               </button>
             ))}
           </div>
