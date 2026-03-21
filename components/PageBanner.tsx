@@ -49,7 +49,7 @@ export default function PageBanner({ slug, fallback }: PageBannerProps) {
         <img
           src={cloudinaryUrl(image, 1920)}
           alt={title}
-          className="object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
           />
       ) : (
         <div className="absolute inset-0 bg-[#8B7355]" />
