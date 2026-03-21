@@ -148,7 +148,7 @@ export default function StoryDetailContent({
           <img
             src={cloudinaryUrl(story.heroImage, 1920)}
             alt={story.title}
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
 
@@ -383,7 +383,7 @@ export default function StoryDetailContent({
                       <img
                         src={cloudinaryUrl(s.heroImage, 480)}
                         alt={s.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
                       />
                     ) : (
                       <div className="absolute inset-0 bg-[#d5d0c8]" />
@@ -441,7 +441,7 @@ export default function StoryDetailContent({
                       <img
                         src={cloudinaryUrl(journey.heroImage, 480)}
                         alt={journey.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
                       />
                     )}
                   </div>

@@ -82,7 +82,7 @@ export default function StoryCategoryContent({
                       <img
                         src={cloudinaryUrl(story.hero_image, 600)}
                         alt={story.title}
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
                       />
                     )}
                   </div>
