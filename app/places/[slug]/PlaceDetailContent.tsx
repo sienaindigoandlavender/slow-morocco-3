@@ -550,6 +550,36 @@ export default function PlaceDetailContent({
           </div>
         </section>
       )}
+
+      {/* Prev / Next places */}
+      {(prevPlace || nextPlace) && (
+        <div className="border-t border-foreground/10">
+          <div className="container mx-auto px-6 lg:px-16">
+            <div className="grid grid-cols-2 divide-x divide-foreground/10 py-1">
+              <div className="pr-8 py-8">
+                {prevPlace && (
+                  <Link href={`/places/${prevPlace.slug}`} className="group block">
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-2">← Previous</p>
+                    <p className="font-serif text-base text-foreground/70 group-hover:text-foreground transition-colors duration-300 leading-snug">
+                      {prevPlace.title}
+                    </p>
+                  </Link>
+                )}
+              </div>
+              <div className="pl-8 py-8 text-right">
+                {nextPlace && (
+                  <Link href={`/places/${nextPlace.slug}`} className="group block">
+                    <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-2">Next →</p>
+                    <p className="font-serif text-base text-foreground/70 group-hover:text-foreground transition-colors duration-300 leading-snug">
+                      {nextPlace.title}
+                    </p>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
