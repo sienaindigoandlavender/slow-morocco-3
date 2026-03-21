@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 
 interface BannerData {
@@ -47,14 +46,10 @@ export default function PageBanner({ slug, fallback }: PageBannerProps) {
     <section className="relative h-[100svh] min-h-[600px] flex items-end">
       {/* Background Image */}
       {image ? (
-        <Image
+        <img
           src={cloudinaryUrl(image, 1920)}
           alt={title}
-          fill
           className="object-cover"
-          priority
-        
-            unoptimized
           />
       ) : (
         <div className="absolute inset-0 bg-[#8B7355]" />
