@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 
 interface Story {
@@ -111,13 +110,10 @@ export default function StoriesContent({
               <Link href={`/stories/${story.slug}`} className="group block">
                 <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-3.5">
                   {story.heroImage && (
-                    <Image
+                    <img
                       src={cloudinaryUrl(story.heroImage, 480)}
                       alt={story.title}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 16.6vw"
                       className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
-                      unoptimized
                       itemProp="image"
                     />
                   )}
