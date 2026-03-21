@@ -194,20 +194,39 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Bottom — Search bar */}
-          <div className="flex items-center justify-end mt-4">
-            <button
-              onClick={() => {
-                setMenuOpen(false);
-                setTimeout(() => setSearchOpen(true), 400);
+          {/* Bottom — Inline search */}
+          <div className="mt-6 border-t border-[#2a2a25]/10 pt-4">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const q = (e.currentTarget.elements.namedItem('q') as HTMLInputElement).value.trim();
+                if (q) {
+                  setMenuOpen(false);
+                  setTimeout(() => setSearchOpen(true), 400);
+                }
               }}
-              className="flex items-center gap-3 text-sm text-[#2a2a25]/50 hover:text-[#2a2a25]/80 transition-colors group"
+              className="flex items-baseline justify-between gap-6"
             >
-              <span className="border-b border-[#2a2a25]/20 group-hover:border-[#2a2a25]/40 pb-0.5 transition-colors">
-                Type here to search
-              </span>
-              <span className="text-[#2a2a25]/30">Search</span>
-            </button>
+              <input
+                name="q"
+                type="text"
+                placeholder="Type here to search"
+                defaultValue=""
+                className="flex-1 bg-transparent text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/35 focus:outline-none border-b border-[#2a2a25]/15 focus:border-[#2a2a25]/40 py-2 transition-colors"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setMenuOpen(false);
+                    setTimeout(() => setSearchOpen(true), 400);
+                  }
+                }}
+              />
+              <button
+                type="submit"
+                className="text-[11px] tracking-[0.15em] uppercase text-[#2a2a25]/40 hover:text-[#2a2a25]/70 transition-colors shrink-0"
+              >
+                Search
+              </button>
+            </form>
           </div>
         </div>
       </div>
