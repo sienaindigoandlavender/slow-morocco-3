@@ -4,6 +4,83 @@ import { useState } from "react";
 import Link from "next/link";
 import OvernightBookingModal from "@/components/OvernightBookingModal";
 
+// ── Testimonials ─────────────────────────────────────────────────────────────
+const TESTIMONIALS = [
+  {
+    quote: "A brilliant introduction to Morocco. Well organised and thought out — I couldn't wish for a better introduction. All of the accommodations were interesting.",
+    author: "Angela A.",
+    journey: "3-Day Sahara Circle",
+  },
+  {
+    quote: "I loved every minute. The desert was memorable. So many things were over and above what you would expect. The details were so thoughtful. Feel secure and happy and confident that you are being well cared for.",
+    author: "Rhonda",
+    journey: "Morocco private journey",
+  },
+  {
+    quote: "I've ventured into the desert and I'm at a loss for words to convey just how rich in culture and adventure this journey turned out to be. Every step of the way, I felt exceptionally well taken care of and completely safe.",
+    author: "Anthony K.",
+    journey: "Morocco private journey",
+  },
+  {
+    quote: "We were welcomed to Dihya Desert Camp where Berbers played and danced to music around a bonfire. The stars out in the desert were amazing. We rode the sand dunes and viewed the sunset on our evening camel ride.",
+    author: "Mary Ann",
+    journey: "Morocco private journey",
+  },
+];
+
+// ── FAQ data ──────────────────────────────────────────────────────────────────
+const FAQS = [
+  {
+    q: "How far is Merzouga from Marrakech?",
+    a: "Merzouga is approximately 550 kilometres from Marrakech — about 9 hours by road. The route crosses the High Atlas via the Tizi n'Tichka pass, passes through Ouarzazate and the Draa Valley. It is not a day trip. Anyone offering 'the Sahara' as a day trip from Marrakech is selling you the Agafay plateau, which is a rocky desert outside the city — very different from the Erg Chebbi dunes.",
+  },
+  {
+    q: "What is the difference between the Agafay Desert and the Sahara?",
+    a: "The Agafay is a rocky plateau about 40 minutes from Marrakech. It offers dramatic landscape and overnight camps, but it has no sand dunes and is technically not part of the Sahara. The Erg Chebbi dunes at Merzouga — 150 metres high — are the real Sahara. Both are valid experiences. They are not the same thing.",
+  },
+  {
+    q: "What is the best time of year for a Sahara desert tour?",
+    a: "October to April. The desert in summer (June to August) reaches 45°C at midday — physically dangerous and not enjoyable. Spring and autumn offer warm days, cool nights, and the best light on the dunes. October coincides with the date harvest in the Draa Valley. December and January are cold at night but the days are clear.",
+  },
+  {
+    q: "Is this a private tour or a group tour?",
+    a: "Private. Your own vehicle, your own driver, your own schedule. No shared minibuses, no fixed stops at tourist shops, no commission arrangements with souvenir sellers. The route and pace are yours.",
+  },
+  {
+    q: "What is included in the price?",
+    a: "Private driver for three days, two nights accommodation (Ouarzazate and a desert camp at Merzouga), and all transfers. Meals are not included — you eat at local restaurants en route, which we recommend specifically. Entry fees to sites like Aït Benhaddou are not included (roughly €2-3 per person).",
+  },
+  {
+    q: "Can the tour be extended?",
+    a: "Yes. The 4-Day Sahara & Valleys Journey adds the Dades Valley and Todra Gorge on the return. The 7-Day Gorges to Desert Trek continues to Fes. Both are available as private journeys.",
+  },
+];
+
+// ── FAQ Item component ────────────────────────────────────────────────────────
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-t border-foreground/[0.08]">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-start justify-between gap-4 py-5 text-left"
+      >
+        <span className="text-sm font-medium text-foreground leading-snug">
+          {question}
+        </span>
+        <span className="text-foreground/30 flex-shrink-0 mt-0.5 text-lg leading-none">
+          {open ? "−" : "+"}
+        </span>
+      </button>
+      {open && (
+        <p className="text-sm text-foreground/55 leading-relaxed pb-6 pr-8">
+          {answer}
+        </p>
+      )}
+    </div>
+  );
+}
+
 const PRICE_PER_PERSON = 450;
 const MIN_PARTICIPANTS = 2;
 
@@ -271,6 +348,61 @@ export default function SaharaLandingContent() {
               Read: The Ksour →
             </Link>
           </div>
+        </div>
+      </div>
+
+      {/* ── Testimonials ─────────────────────────────────────────────────── */}
+      <div className="px-6 md:px-14 py-16 border-t border-foreground/[0.08]">
+        <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/30 mb-12">
+          From people who've done this
+        </p>
+        <div className="max-w-3xl grid md:grid-cols-2 gap-px bg-foreground/[0.06]">
+          {TESTIMONIALS.map((t, i) => (
+            <div key={i} className="bg-background p-8">
+              <p className="text-sm text-foreground/70 leading-relaxed mb-6 font-serif">
+                &ldquo;{t.quote}&rdquo;
+              </p>
+              <div>
+                <p className="text-xs font-medium text-foreground">{t.author}</p>
+                {t.journey && (
+                  <p className="text-[10px] tracking-wide text-foreground/30 mt-0.5">{t.journey}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── FAQ ───────────────────────────────────────────────────────────── */}
+      <div className="px-6 md:px-14 py-16 border-t border-foreground/[0.08]">
+        <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/30 mb-12">
+          Common questions
+        </p>
+        <div className="max-w-2xl space-y-0">
+          {FAQS.map((faq, i) => (
+            <FAQItem key={i} question={faq.q} answer={faq.a} />
+          ))}
+        </div>
+      </div>
+
+      {/* ── Start Here CTA ────────────────────────────────────────────────── */}
+      <div className="px-6 md:px-14 py-16 border-t border-foreground/[0.08] bg-foreground/[0.02]">
+        <div className="max-w-xl">
+          <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/30 mb-4">
+            Not sure this is the right trip?
+          </p>
+          <h2 className="font-serif text-2xl text-foreground mb-4">
+            Start with your orientation.
+          </h2>
+          <p className="text-sm text-foreground/50 leading-relaxed mb-8">
+            Five questions. A framework specific to your trip — which cities, what order, what you'll actually understand when you arrive.
+          </p>
+          <Link
+            href="https://tally.so/r/aQG8W9"
+            className="inline-block px-8 py-3 border border-foreground text-sm tracking-[0.15em] uppercase text-foreground hover:bg-foreground hover:text-background transition-colors"
+          >
+            Get my orientation →
+          </Link>
         </div>
       </div>
 
