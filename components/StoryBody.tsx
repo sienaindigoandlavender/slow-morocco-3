@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { linkGlossaryTermsText, linkGlossaryTermsHTML } from '@/lib/glossary-linker';
 import { linkDerbTermsText, linkDerbTermsHTML } from '@/lib/derb-linker';
 import { linkCrossReferences, linkCrossReferencesHTML } from '@/lib/story-linker';

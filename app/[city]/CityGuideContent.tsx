@@ -1,6 +1,6 @@
 "use client";
+import NewsletterCapture from "@/components/NewsletterCapture";
 
-import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
@@ -287,14 +287,10 @@ export default function CityGuideContent({
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="relative h-[100svh] min-h-[600px]">
         {heroImage ? (
-          <Image
+          <img
             src={cloudinaryUrl(heroImage, 1920)}
             alt={destination.title}
-            fill
-            sizes="100vw"
-            className="object-cover object-center"
-            priority
-            unoptimized
+            className="absolute inset-0 w-full h-full object-cover object-center"
           />
         ) : (
           <div className="absolute inset-0 bg-foreground/10" />
@@ -348,12 +344,10 @@ export default function CityGuideContent({
               <figure key={img.id}>
                 <div className="relative aspect-[16/10] overflow-hidden bg-foreground/5">
                   {img.image_url && (
-                    <Image
+                    <img
                       src={cloudinaryUrl(img.image_url, 800)}
                       alt={img.caption || destination.title}
-                      fill
-                      className="object-cover"
-                      unoptimized
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
                   )}
                 </div>
@@ -451,12 +445,10 @@ export default function CityGuideContent({
                 <Link href={`/stories/${story.slug}`} className="group">
                   <div className="aspect-[3/4] relative overflow-hidden bg-foreground/5 mb-5">
                     {story.hero_image && (
-                      <Image
+                      <img
                         src={cloudinaryUrl(story.hero_image, 600)}
                         alt={story.title}
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                        unoptimized
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
                       />
                     )}
                   </div>
@@ -504,12 +496,10 @@ export default function CityGuideContent({
                 <Link href={`/journeys/${journey.slug}`} className="group">
                   <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-5">
                     {journey.hero_image_url && (
-                      <Image
+                      <img
                         src={cloudinaryUrl(journey.hero_image_url, 600)}
                         alt={journey.title}
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                        unoptimized
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
                       />
                     )}
                   </div>
@@ -577,12 +567,10 @@ export default function CityGuideContent({
                   <Link href={`/journeys/${journey.slug}`} className="group">
                     <div className="aspect-[4/3] relative overflow-hidden bg-foreground/5 mb-5">
                       {journey.hero_image_url && (
-                        <Image
+                        <img
                           src={cloudinaryUrl(journey.hero_image_url, 600)}
                           alt={journey.title}
-                          fill
-                          className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                          unoptimized
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
                         />
                       )}
                     </div>
@@ -702,6 +690,11 @@ export default function CityGuideContent({
           </section>
         );
       })()}
+
+      {/* ── Newsletter capture ──────────────────────────────────────────── */}
+      <div className="border-t border-border">
+        <NewsletterCapture />
+      </div>
 
       {/* ── Footer bridge ─────────────────────────────────────────────────── */}
       <section className="px-8 md:px-16 lg:px-20 py-20 border-t border-border">

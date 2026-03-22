@@ -5,7 +5,13 @@ export function middleware(request: NextRequest) {
   const hostname = request.headers.get("host") || "";
   const { searchParams, pathname } = request.nextUrl;
 
-  // 1. Redirect non-www to www (canonical is www.riaddisiena.com)
+  // 1. Redirect non-www to www
+  if (hostname === "slowmorocco.com") {
+    const newUrl = new URL(request.url);
+    newUrl.host = "www.slowmorocco.com";
+    return NextResponse.redirect(newUrl, 301);
+  }
+
   if (hostname === "riaddisiena.com") {
     const newUrl = new URL(request.url);
     newUrl.host = "www.riaddisiena.com";

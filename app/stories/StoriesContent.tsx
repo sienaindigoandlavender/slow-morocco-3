@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 
 interface Story {
@@ -32,6 +31,14 @@ export default function StoriesContent({
   const categories = useMemo(() => {
     const cats = new Set(initialStories.map((s) => s.mood).filter((m): m is string => !!m));
     return ["all", ...Array.from(cats).sort()];
+  }, [initialStories]);
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: initialStories.length };
+    initialStories.forEach((s) => {
+      if (s.mood) counts[s.mood] = (counts[s.mood] || 0) + 1;
+    });
+    return counts;
   }, [initialStories]);
 
   const filteredStories = useMemo(() => {
@@ -80,13 +87,16 @@ export default function StoriesContent({
               <button
                 key={cat}
                 onClick={() => { setActiveFilter(cat); setCurrentPage(1); }}
-                className={`text-[11px] tracking-[0.12em] uppercase whitespace-nowrap transition-colors ${
+                className={`text-[11px] tracking-[0.12em] uppercase whitespace-nowrap transition-colors flex items-baseline gap-1.5 ${
                   activeFilter === cat
                     ? "text-foreground"
                     : "text-foreground/35 hover:text-foreground/60"
                 }`}
               >
                 {cat === "all" ? "All" : cat}
+                <span className={`text-[9px] ${activeFilter === cat ? "text-foreground/40" : "text-foreground/20"}`}>
+                  {categoryCounts[cat] || 0}
+                </span>
               </button>
             ))}
           </div>
@@ -111,13 +121,10 @@ export default function StoriesContent({
               <Link href={`/stories/${story.slug}`} className="group block">
                 <div className="aspect-[29/39] relative overflow-hidden bg-[#e8e6e1] mb-3.5">
                   {story.heroImage && (
-                    <Image
+                    <img
                       src={cloudinaryUrl(story.heroImage, 480)}
                       alt={story.title}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 16.6vw"
-                      className="object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
-                      unoptimized
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-[1.2s] ease-out"
                       itemProp="image"
                     />
                   )}
@@ -150,17 +157,35 @@ export default function StoriesContent({
             >
               ←
             </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => goToPage(page)}
-                className={`min-w-[32px] py-2 text-[11px] transition-colors ${
-                  currentPage === page ? "text-foreground" : "text-foreground/30 hover:text-foreground/60"
-                }`}
-              >
-                {page}
-              </button>
-            ))}
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+              .reduce<(number | string)[]>((acc, page) => {
+                if (
+                  page === 1 ||
+                  page === totalPages ||
+                  (page >= currentPage - 2 && page <= currentPage + 2)
+                ) {
+                  if (acc.length > 0 && typeof acc[acc.length - 1] === "number" && (acc[acc.length - 1] as number) !== page - 1) {
+                    acc.push("...");
+                  }
+                  acc.push(page);
+                }
+                return acc;
+              }, [])
+              .map((item, i) =>
+                item === "..." ? (
+                  <span key={`ellipsis-${i}`} className="px-1 text-[11px] text-foreground/20">…</span>
+                ) : (
+                  <button
+                    key={item}
+                    onClick={() => goToPage(item as number)}
+                    className={`min-w-[32px] py-2 text-[11px] transition-colors ${
+                      currentPage === item ? "text-foreground" : "text-foreground/30 hover:text-foreground/60"
+                    }`}
+                  >
+                    {item}
+                  </button>
+                )
+              )}
             <button
               onClick={() => goToPage(currentPage + 1)}
               disabled={currentPage === totalPages}

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { getWordById } from "@/lib/darija";
+import { getWordById, getWordsByCategory } from "@/lib/darija";
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 
@@ -70,6 +70,12 @@ export default async function WordDetailPage({
 
   // Targeted fetch — only the related words, not all 10K
   const relatedWordData = await getRelatedWords(word.related_words || []);
+
+  // Prev/next within same category
+  const categoryWords = await getWordsByCategory(word.category);
+  const currentCatIndex = categoryWords.findIndex(w => w.id === word.id);
+  const prevWord = currentCatIndex > 0 ? categoryWords[currentCatIndex - 1] : null;
+  const nextWord = currentCatIndex < categoryWords.length - 1 ? categoryWords[currentCatIndex + 1] : null;
 
   // Rich JSON-LD — DefinedTerm with full linguistic data
   const jsonLd = {
@@ -355,15 +361,39 @@ export default async function WordDetailPage({
           </div>
         </section>
 
-        {/* Back link */}
-        <section className="py-8 border-t border-border">
+        {/* Back + Prev/Next */}
+        <section className="border-t border-border">
           <div className="px-8 md:px-[8%] lg:px-[12%]">
-            <Link
-              href="/darija/dictionary"
-              className="text-sm text-foreground/40 hover:text-foreground transition-colors"
-            >
-              &larr; Back to dictionary
-            </Link>
+            <div className="py-4 border-b border-border">
+              <Link
+                href="/darija/dictionary"
+                className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 hover:text-foreground transition-colors"
+              >
+                ← Dictionary
+              </Link>
+            </div>
+            {(prevWord || nextWord) && (
+              <div className="grid grid-cols-2 divide-x divide-border py-1">
+                <div className="pr-8 py-8">
+                  {prevWord && (
+                    <Link href={`/darija/dictionary/${prevWord.id}`} className="group block">
+                      <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-2">← Previous</p>
+                      <p className="font-serif text-base text-foreground/70 group-hover:text-foreground transition-colors duration-300">{prevWord.darija}</p>
+                      <p className="text-xs text-foreground/40 mt-1">{prevWord.english}</p>
+                    </Link>
+                  )}
+                </div>
+                <div className="pl-8 py-8 text-right">
+                  {nextWord && (
+                    <Link href={`/darija/dictionary/${nextWord.id}`} className="group block">
+                      <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/30 mb-2">Next →</p>
+                      <p className="font-serif text-base text-foreground/70 group-hover:text-foreground transition-colors duration-300">{nextWord.darija}</p>
+                      <p className="text-xs text-foreground/40 mt-1">{nextWord.english}</p>
+                    </Link>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </div>

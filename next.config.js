@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -43,23 +44,23 @@ const nextConfig = {
       // meknes, ouarzazate, agadir, dakhla, chefchaouen are now city
       // guide pages at /[city] — do NOT redirect these slugs.
       // ============================================
-      { source: '/tangier-2', destination: '/places/tangier', permanent: true },
-      { source: '/fes-meknes', destination: '/places/fes', permanent: true },
-      { source: '/tafraoute', destination: '/places/tafraoute', permanent: true },
-      { source: '/tata', destination: '/places/tata', permanent: true },
-      { source: '/amizmiz', destination: '/places/amizmiz', permanent: true },
-      { source: '/ouirgane', destination: '/places/ouirgane', permanent: true },
-      { source: '/ourika-valley', destination: '/places/ourika-valley', permanent: true },
-      { source: '/agafay', destination: '/places/agafay', permanent: true },
-      { source: '/al-hoceima', destination: '/places/al-hoceima', permanent: true },
-      { source: '/ergoud-merzouga', destination: '/places/merzouga', permanent: true },
-      { source: '/dades-valley-todra-gorge', destination: '/places/dades-valley', permanent: true },
-      { source: '/zagora-the-draa-valley', destination: '/places/zagora', permanent: true },
-      { source: '/tamegroute-tamnougalt', destination: '/places/tamegroute', permanent: true },
-      { source: '/ouarzazate-skoura-details', destination: '/places/ouarzazate', permanent: true },
-      { source: '/mhamid-erg-chegaga', destination: '/places/mhamid', permanent: true },
-      { source: '/marrakech-beyond', destination: '/places/marrakech', permanent: true },
-      { source: '/marrakech-to-erg-chigaga', destination: '/places/marrakech', permanent: true },
+      { source: '/tangier-2', destination: '/tangier', permanent: true },
+      { source: '/fes-meknes', destination: '/fes', permanent: true },
+      { source: '/tafraoute', destination: '/tafraout', permanent: true },
+      { source: '/tata', destination: '/destinations', permanent: true },
+      { source: '/amizmiz', destination: '/destinations', permanent: true },
+      { source: '/ouirgane', destination: '/destinations', permanent: true },
+      { source: '/ourika-valley', destination: '/destinations', permanent: true },
+      { source: '/agafay', destination: '/overnight/agafay-desert', permanent: true },
+      { source: '/al-hoceima', destination: '/destinations', permanent: true },
+      { source: '/ergoud-merzouga', destination: '/merzouga', permanent: true },
+      { source: '/dades-valley-todra-gorge', destination: '/dades-valley', permanent: true },
+      { source: '/zagora-the-draa-valley', destination: '/draa-valley', permanent: true },
+      { source: '/tamegroute-tamnougalt', destination: '/tamegroute', permanent: true },
+      { source: '/ouarzazate-skoura-details', destination: '/ouarzazate', permanent: true },
+      { source: '/mhamid-erg-chegaga', destination: '/mhamid', permanent: true },
+      { source: '/marrakech-beyond', destination: '/marrakech', permanent: true },
+      { source: '/marrakech-to-erg-chigaga', destination: '/marrakech', permanent: true },
       
       // ============================================
       // JOURNEY REDIRECTS (with duration prefix)

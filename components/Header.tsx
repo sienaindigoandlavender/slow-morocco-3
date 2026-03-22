@@ -9,7 +9,6 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -114,7 +113,7 @@ export default function Header() {
 
         {/* Menu content */}
         <div
-          className={`relative z-10 h-full flex flex-col px-6 md:px-10 lg:px-14 pt-24 md:pt-28 pb-10 transition-opacity duration-500 delay-200 ${
+          className={`relative z-10 h-full flex flex-col justify-between px-6 md:px-10 lg:px-14 pt-20 md:pt-24 pb-6 transition-opacity duration-500 delay-200 ${
             menuOpen ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -122,30 +121,31 @@ export default function Header() {
           <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hide">
             <div className="flex flex-col md:flex-row md:gap-24 lg:gap-40">
 
-              {/* Left column — Navigation */}
-              <nav className="flex flex-col gap-1 md:gap-2 mb-10 md:mb-0">
-                {[
-                  { href: "/morocco", label: "Morocco" },
-                  { href: "/stories", label: "Stories" },
-                  { href: "/places", label: "Places" },
-                  { href: "/destinations", label: "Destinations" },
-                  { href: "/journeys", label: "Journeys" },
-                  { href: "/epic", label: "Epic" },
-                  { href: "/stories/category/before-you-go", label: "Before You Go" },
-                  { href: "/darija", label: "Darija" },
-                  { href: "/plan-your-trip", label: "Plan a Trip" },
-                  { href: "/about", label: "About" },
-                ].map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="text-sm text-[#2a2a25] hover:text-[#2a2a25]/60 transition-colors py-1"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+            {/* Left column — Navigation */}
+            <nav className="flex flex-col gap-0.5 md:gap-1 mb-8 md:mb-0">
+              {[
+                { href: "/morocco", label: "Morocco" },
+                { href: "/stories", label: "Stories" },
+                { href: "/places", label: "Places" },
+                { href: "/destinations", label: "Destinations" },
+                { href: "/journeys", label: "Journeys" },
+                { href: "/epic", label: "Epic" },
+                { href: "/stories/category/before-you-go", label: "Before You Go" },
+                { href: "/darija", label: "Darija" },
+                { href: "/plan-your-trip", label: "Plan a Trip" },
+                { href: "/about", label: "About" },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="text-sm text-[#2a2a25] hover:text-[#2a2a25]/60 transition-colors py-1"
+                >
+                  {item.label}
+                </Link>
+              ))}
 
+              <div className="mt-4 flex flex-col gap-0.5">
                 {/* Secondary links — hidden on mobile */}
                 <div className="hidden md:flex flex-col gap-1 mt-6">
                   {[
@@ -165,6 +165,7 @@ export default function Header() {
                     </Link>
                   ))}
                 </div>
+              </div>
               </nav>
 
               {/* Right column — Categories in large serif */}
@@ -193,44 +194,41 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Search — icon on mobile, underline input on desktop */}
-          <div className="flex-shrink-0 flex justify-end pt-6">
-            {/* Mobile: search icon */}
-            <button
-              onClick={() => { setMenuOpen(false); setTimeout(() => setSearchOpen(true), 400); }}
-              className="md:hidden flex items-center gap-2 text-[#2a2a25]/50 hover:text-[#2a2a25] transition-colors py-2"
-              aria-label="Search"
+          {/* Bottom — Kinfolk-style compact search, bottom right */}
+          <div className="border-t border-[#2a2a25]/10 pt-4 flex justify-end">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setMenuOpen(false);
+                setTimeout(() => setSearchOpen(true), 400);
+              }}
+              className="flex items-baseline gap-4"
             >
-              <Search className="w-4 h-4" />
-              <span className="text-sm">Search</span>
-            </button>
-            {/* Desktop: underline input */}
-            <input
-              type="text"
-              placeholder="Search"
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                if (e.target.value.length >= 2) {
-                  setMenuOpen(false);
-                  setTimeout(() => setSearchOpen(true), 400);
-                }
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && searchQuery.length >= 1) {
-                  setMenuOpen(false);
-                  setTimeout(() => setSearchOpen(true), 400);
-                }
-              }}
-              className="hidden md:block w-56 bg-transparent text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/50 py-2 outline-none transition-colors"
-              style={{ borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderBottom: '1px solid rgba(42,42,37,0.3)' }}
-            />
+              <input
+                name="q"
+                type="text"
+                placeholder="Type here to search"
+                className="w-48 md:w-64 bg-transparent text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/30 focus:outline-none border-b border-[#2a2a25]/15 focus:border-[#2a2a25]/40 pb-1 transition-colors"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setMenuOpen(false);
+                    setTimeout(() => setSearchOpen(true), 400);
+                  }
+                }}
+              />
+              <button
+                type="submit"
+                className="text-[11px] tracking-[0.15em] uppercase text-[#2a2a25]/40 hover:text-[#2a2a25]/70 transition-colors shrink-0"
+              >
+                Search
+              </button>
+            </form>
           </div>
         </div>
       </div>
 
       {/* Search Modal */}
-      <SearchModal isOpen={searchOpen} onClose={() => { setSearchOpen(false); setSearchQuery(""); }} initialQuery={searchQuery} />
+      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }

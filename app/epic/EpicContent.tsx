@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import { Play, ChevronDown } from "lucide-react";
 
@@ -149,12 +148,10 @@ export default function EpicContent({ journeys }: EpicContentProps) {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 pl-0 md:pl-[4.5rem]">
                       <div className="relative aspect-[4/3] overflow-hidden bg-foreground/5">
                         {journey.heroImage ? (
-                          <Image
+                          <img
                             src={cloudinaryUrl(journey.heroImage)}
                             alt={journey.title}
-                            fill
-                            className="object-cover opacity-80"
-              unoptimized
+                            className="absolute inset-0 w-full h-full object-cover opacity-80"
             />
                         ) : (
                           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />

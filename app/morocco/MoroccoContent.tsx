@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 
@@ -161,14 +160,10 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative h-[100svh] min-h-[600px] bg-[#1a1612]">
-        <Image
+        <img
           src="https://res.cloudinary.com/ddcznjibs/image/upload/v1772838482/Taourirt_Kasbah_rising_above_the_desert_town_lqljat.png"
           alt="Morocco"
-          fill
-          sizes="100vw"
-          className="object-cover object-center opacity-60"
-          priority
-              unoptimized
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-60"
             />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/15" />
         <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-12 lg:px-16 pb-14 md:pb-20">
@@ -333,13 +328,10 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
               className="group relative aspect-[3/4] overflow-hidden bg-foreground/5"
             >
               {cityImage && (
-                <Image
+                <img
                   src={cloudinaryUrl(cityImage)}
                   alt={city.title}
-                  fill
-                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                  className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
-              unoptimized
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
             />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -379,12 +371,10 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
                 <Link href={`/stories/${story.slug}`} className="group">
                   <div className="aspect-[3/4] relative overflow-hidden bg-foreground/5 mb-5">
                     {story.hero_image && (
-                      <Image
+                      <img
                         src={cloudinaryUrl(story.hero_image)}
                         alt={story.title}
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-              unoptimized
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
             />
                     )}
                   </div>

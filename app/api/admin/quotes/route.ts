@@ -1,14 +1,16 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+}
 
 export async function GET() {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .from("quotes")
       .select("*")
       .order("created_date", { ascending: false });
@@ -70,7 +72,7 @@ export async function POST(request: Request) {
     const prefix = `SM-${String(now.getFullYear()).slice(2)}${String(now.getMonth() + 1).padStart(2, "0")}`;
     
     // Get count for sequence
-    const { count } = await supabase
+    const { count } = await getSupabase()
       .from("quotes")
       .select("*", { count: "exact", head: true })
       .like("client_id", `${prefix}%`);
@@ -89,7 +91,7 @@ export async function POST(request: Request) {
       }
     }
 
-    const { data, error } = await supabase.from("quotes").insert({
+    const { data, error } = await getSupabase().from("quotes").insert({
       client_id: clientId,
       first_name: body.firstName || null,
       last_name: body.lastName || null,
