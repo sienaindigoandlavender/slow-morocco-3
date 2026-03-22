@@ -1,4 +1,5 @@
 "use client";
+import NewsletterCapture from "@/components/NewsletterCapture";
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -689,6 +690,11 @@ export default function CityGuideContent({
           </section>
         );
       })()}
+
+      {/* ── Newsletter capture ──────────────────────────────────────────── */}
+      <div className="border-t border-border">
+        <NewsletterCapture />
+      </div>
 
       {/* ── Footer bridge ─────────────────────────────────────────────────── */}
       <section className="px-8 md:px-16 lg:px-20 py-20 border-t border-border">
