@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 import HomePlacesMap from "./HomePlacesMap";
+import NewsletterCapture from "@/components/NewsletterCapture";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -492,6 +493,13 @@ export default function HomeContent({
           </Link>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          NEWSLETTER — The Edit
+          ═══════════════════════════════════════════════════════════════════ */}
+      <div style={{ background: "#C4724A" }}>
+        <NewsletterCapture />
+      </div>
 
     </div>
   );

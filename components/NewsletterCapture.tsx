@@ -45,7 +45,7 @@ export default function NewsletterCapture() {
   if (status === "success") {
     return (
       <section className="px-8 md:px-10 lg:px-14 py-8 md:py-10">
-        <p className="font-serif text-lg text-foreground/60">
+        <p className="font-serif text-lg text-white/85">
           Check your inbox to confirm.
         </p>
       </section>
@@ -58,7 +58,7 @@ export default function NewsletterCapture() {
         onSubmit={handleSubmit}
         className="flex flex-col md:flex-row md:items-baseline justify-between gap-6"
       >
-        <p className="font-serif text-lg md:text-xl text-foreground shrink-0">
+        <p className="font-serif text-lg md:text-xl text-white shrink-0">
           The intelligence layer. History, culture, craft.
         </p>
         <div className="flex items-center gap-4 flex-1 max-w-md">
@@ -71,19 +71,19 @@ export default function NewsletterCapture() {
             }}
             placeholder="Email Address"
             disabled={status === "loading"}
-            className="flex-1 bg-transparent border-b border-foreground/20 py-2 text-sm text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-foreground/50 transition-colors"
+            className="flex-1 bg-transparent border-b border-white/40 py-2 text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-white/70 transition-colors"
           />
           <button
             type="submit"
             disabled={status === "loading"}
-            className="text-[11px] tracking-[0.12em] uppercase text-foreground/50 hover:text-foreground transition-colors shrink-0"
+            className="text-[11px] tracking-[0.12em] uppercase border border-white/60 text-white/85 px-4 py-2 hover:bg-white hover:text-[#C4724A] transition-colors shrink-0 disabled:opacity-50"
           >
             {status === "loading" ? "..." : "Submit"}
           </button>
         </div>
       </form>
       {status === "error" && (
-        <p className="text-sm text-red-600 mt-3">
+        <p className="text-sm text-white/80 mt-3">
           Something went wrong. Try again.
         </p>
       )}
