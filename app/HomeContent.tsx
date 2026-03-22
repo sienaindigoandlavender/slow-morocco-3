@@ -474,22 +474,22 @@ export default function HomeContent({
       )}
 
       {/* ═══════════════════════════════════════════════════════════════════
-          PLAN YOUR TRIP CTA
+          START HERE CTA
           ═══════════════════════════════════════════════════════════════════ */}
       <section className="px-8 md:px-10 lg:px-14 py-20 md:py-28 border-t border-foreground/[0.08]">
         <div className="max-w-2xl">
-          <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/30 mb-4">Private Journeys</p>
+          <p className="text-[10px] tracking-[0.25em] uppercase text-foreground/30 mb-4">Start Here</p>
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground leading-[1.15] mb-6">
-            Tell us what you&rsquo;re looking for.
+            Not sure where to begin?
           </h2>
           <p className="text-sm text-foreground/50 leading-relaxed mb-8 max-w-lg">
-            We design private journeys around what you want to understand, not what&rsquo;s easiest to sell. Start with a question or a feeling — we&rsquo;ll take it from there.
+            Five questions. A framework specific to your trip — not a generic itinerary, but the mental map you need before any good decision can be made.
           </p>
           <Link
-            href="/plan-your-trip"
+            href="https://tally.so/r/aQG8W9"
             className="inline-block px-8 py-3 border border-foreground text-sm tracking-[0.15em] uppercase text-foreground hover:bg-foreground hover:text-background transition-colors duration-300"
           >
-            Begin
+            Get my orientation →
           </Link>
         </div>
       </section>
