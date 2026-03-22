@@ -61,7 +61,7 @@ export default function Header() {
               <span
                 className={`text-[13px] tracking-[0.25em] uppercase transition-colors duration-500 ${
                   menuOpen
-                    ? "text-[#2a2a25]"
+                    ? "text-[#1C1917]"
                     : scrolled
                     ? "text-foreground"
                     : "text-white"
@@ -80,14 +80,14 @@ export default function Header() {
               <span
                 className={`block h-[1.5px] transition-all duration-500 origin-right ${
                   menuOpen
-                    ? "w-6 bg-[#2a2a25] rotate-[-40deg] translate-y-[0.5px]"
+                    ? "w-6 bg-[#1C1917] rotate-[-40deg] translate-y-[0.5px]"
                     : `w-7 ${scrolled ? "bg-foreground" : "bg-white"} group-hover:w-6`
                 }`}
               />
               <span
                 className={`block h-[1.5px] transition-all duration-500 origin-right ${
                   menuOpen
-                    ? "w-6 bg-[#2a2a25] rotate-[40deg] translate-y-[-0.5px]"
+                    ? "w-6 bg-[#1C1917] rotate-[40deg] translate-y-[-0.5px]"
                     : `w-5 ${scrolled ? "bg-foreground" : "bg-white"} group-hover:w-6`
                 }`}
               />
@@ -139,7 +139,7 @@ export default function Header() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-sm text-[#2a2a25] hover:text-[#2a2a25]/60 transition-colors py-1"
+                  className="text-sm text-[#1C1917] hover:text-[#1C1917]/60 transition-colors py-1"
                 >
                   {item.label}
                 </Link>
@@ -159,7 +159,7 @@ export default function Header() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setMenuOpen(false)}
-                      className="text-sm text-[#2a2a25]/50 hover:text-[#2a2a25]/80 transition-colors py-1"
+                      className="text-sm text-[#1C1917]/60 hover:text-[#1C1917]/90 transition-colors py-1"
                     >
                       {item.label}
                     </Link>
@@ -185,7 +185,7 @@ export default function Header() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMenuOpen(false)}
-                    className="font-serif text-xl md:text-3xl lg:text-[2.5rem] text-[#2a2a25] hover:text-[#2a2a25]/50 transition-colors leading-[1.35]"
+                    className="font-serif text-xl md:text-3xl lg:text-[2.5rem] text-[#1C1917] hover:text-[#1C1917]/50 transition-colors leading-[1.35]"
                   >
                     {item.label}
                   </Link>
@@ -195,7 +195,7 @@ export default function Header() {
           </div>
 
           {/* Bottom — Kinfolk-style compact search, bottom right */}
-          <div className="border-t border-[#2a2a25]/10 pt-4 flex justify-end">
+          <div className="pt-4 flex justify-end">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -208,7 +208,7 @@ export default function Header() {
                 name="q"
                 type="text"
                 placeholder="Type here to search"
-                className="w-48 md:w-64 bg-transparent text-sm text-[#2a2a25] placeholder:text-[#2a2a25]/30 focus:outline-none border-b border-[#2a2a25]/15 focus:border-[#2a2a25]/40 pb-1 transition-colors"
+                className="w-48 md:w-64 bg-transparent text-sm text-[#1C1917] placeholder:text-[#1C1917]/40 focus:outline-none border-b border-[#1C1917]/20 focus:border-[#1C1917]/50 pb-1 transition-colors"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     setMenuOpen(false);
@@ -218,7 +218,7 @@ export default function Header() {
               />
               <button
                 type="submit"
-                className="text-[11px] tracking-[0.15em] uppercase text-[#2a2a25]/40 hover:text-[#2a2a25]/70 transition-colors shrink-0"
+                className="text-[11px] tracking-[0.15em] uppercase text-[#1C1917]/50 hover:text-[#1C1917]/80 transition-colors shrink-0"
               >
                 Search
               </button>

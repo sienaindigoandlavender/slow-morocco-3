@@ -43,7 +43,7 @@ async function sendConfirmationEmail(email: string, confirmToken: string) {
     html: `
       <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; padding: 40px 20px; color: #1C1917;">
         <p style="font-size: 16px; line-height: 1.7; margin-bottom: 24px;">
-          You asked to receive The Edit — one story about Morocco, every week.
+          You asked to receive The Edit — history, culture, craft. The context that changes what you see when you arrive.
         </p>
         <p style="margin-bottom: 32px;">
           <a href="${confirmUrl}" style="display: inline-block; padding: 12px 28px; border: 1px solid #1C1917; color: #1C1917; text-decoration: none; font-size: 14px; letter-spacing: 0.05em;">
@@ -74,7 +74,7 @@ export async function sendWelcomeEmail(email: string) {
     html: `
       <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; padding: 40px 20px; color: #1C1917;">
         <p style="font-size: 16px; line-height: 1.7; margin-bottom: 24px;">
-          Every Tuesday, one story about Morocco — the kind of thing you won't find in a guidebook.
+          The intelligence layer — history, culture, craft. The context that changes what you see when you arrive.
         </p>
         <p style="font-size: 16px; line-height: 1.7; margin-bottom: 24px;">
           Your first one arrives next week. In the meantime, here are three places to start:

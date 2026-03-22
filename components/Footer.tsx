@@ -147,7 +147,7 @@ export default function Footer() {
                 className="flex flex-col md:flex-row md:items-baseline justify-between gap-6"
               >
                 <p className="font-serif text-lg md:text-xl text-foreground shrink-0">
-                  The Edit — the context that changes what you see when you arrive.
+                  The intelligence layer. History, culture, craft.
                 </p>
                 <div className="flex items-center gap-4 flex-1 max-w-md">
                   <input
