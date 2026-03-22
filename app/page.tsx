@@ -20,6 +20,7 @@ export default async function HomePage() {
   let epicJourneys: any[] = [];
   let stories: any[] = [];
   let places: any[] = [];
+  let mapPlaces: any[] = [];
   let testimonials: any[] = [];
   let settings: Record<string, string> = {};
 
@@ -87,7 +88,7 @@ export default async function HomePage() {
       if (row.key) settings[row.key] = row.value || "";
     });
 
-    // Format places
+    // Format places (hero cards — 6 with images)
     places = placesData
       .filter((p) => p.hero_image)
       .slice(0, 6)
@@ -97,6 +98,18 @@ export default async function HomePage() {
         heroImage: p.hero_image,
         destination: p.destination || "",
         category: p.category || "",
+      }));
+
+    // Map places — all with coordinates for the homepage strip
+    mapPlaces = placesData
+      .filter((p) => p.latitude != null && p.longitude != null)
+      .map((p) => ({
+        slug: p.slug,
+        title: p.title,
+        category: p.category || "",
+        destination: p.destination || "",
+        latitude: p.latitude as number,
+        longitude: p.longitude as number,
       }));
 
     // Format testimonials
@@ -116,6 +129,7 @@ export default async function HomePage() {
       epicJourneys={epicJourneys}
       stories={stories}
       places={places}
+      mapPlaces={mapPlaces}
       testimonials={testimonials}
       settings={settings}
     />

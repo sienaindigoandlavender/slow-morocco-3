@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import Link from "next/link";
 import NewsletterCapture from "@/components/NewsletterCapture";
+import HomePlacesMap from "./HomePlacesMap";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -45,11 +46,21 @@ interface Testimonial {
   journeyTitle?: string;
 }
 
+interface MapPlace {
+  slug: string;
+  title: string;
+  category: string;
+  destination: string;
+  latitude: number;
+  longitude: number;
+}
+
 interface HomeContentProps {
   journeys: Journey[];
   epicJourneys: Journey[];
   stories: Story[];
   places: Place[];
+  mapPlaces: MapPlace[];
   testimonials: Testimonial[];
   settings: Record<string, string>;
 }
@@ -174,6 +185,7 @@ export default function HomeContent({
   epicJourneys,
   stories,
   places,
+  mapPlaces,
   testimonials,
   settings,
 }: HomeContentProps) {
@@ -403,6 +415,13 @@ export default function HomeContent({
             ))}
           </div>
         </section>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          MAP STRIP — all places on one map
+          ═══════════════════════════════════════════════════════════════════ */}
+      {mapPlaces.length > 0 && (
+        <HomePlacesMap places={mapPlaces} />
       )}
 
       {/* ═══════════════════════════════════════════════════════════════════
