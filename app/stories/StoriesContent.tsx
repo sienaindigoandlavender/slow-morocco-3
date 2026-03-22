@@ -157,17 +157,35 @@ export default function StoriesContent({
             >
               ←
             </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => goToPage(page)}
-                className={`min-w-[32px] py-2 text-[11px] transition-colors ${
-                  currentPage === page ? "text-foreground" : "text-foreground/30 hover:text-foreground/60"
-                }`}
-              >
-                {page}
-              </button>
-            ))}
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+              .reduce<(number | string)[]>((acc, page) => {
+                if (
+                  page === 1 ||
+                  page === totalPages ||
+                  (page >= currentPage - 2 && page <= currentPage + 2)
+                ) {
+                  if (acc.length > 0 && typeof acc[acc.length - 1] === "number" && (acc[acc.length - 1] as number) !== page - 1) {
+                    acc.push("...");
+                  }
+                  acc.push(page);
+                }
+                return acc;
+              }, [])
+              .map((item, i) =>
+                item === "..." ? (
+                  <span key={`ellipsis-${i}`} className="px-1 text-[11px] text-foreground/20">…</span>
+                ) : (
+                  <button
+                    key={item}
+                    onClick={() => goToPage(item as number)}
+                    className={`min-w-[32px] py-2 text-[11px] transition-colors ${
+                      currentPage === item ? "text-foreground" : "text-foreground/30 hover:text-foreground/60"
+                    }`}
+                  >
+                    {item}
+                  </button>
+                )
+              )}
             <button
               onClick={() => goToPage(currentPage + 1)}
               disabled={currentPage === totalPages}
