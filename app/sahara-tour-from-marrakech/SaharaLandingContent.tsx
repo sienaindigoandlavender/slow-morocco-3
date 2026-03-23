@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { ItineraryDay } from "./page";
 
 interface SaharaLandingContentProps {
@@ -9,6 +10,16 @@ interface SaharaLandingContentProps {
 export default function SaharaLandingContent({ itinerary }: SaharaLandingContentProps) {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
+      <div className="relative w-full h-[60vh] md:h-[75vh]">
+        <Image
+          src="https://res.cloudinary.com/do2ojyohc/image/upload/v1774039524/Camel_caravan_crossing_Saharan_dunes_wngjzj.png"
+          alt="Camel caravan crossing Saharan dunes"
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
+
       <section className="px-8 md:px-[8%] lg:px-[12%] py-24 md:py-40">
         <h1
           className="text-4xl md:text-6xl font-normal mb-6"
