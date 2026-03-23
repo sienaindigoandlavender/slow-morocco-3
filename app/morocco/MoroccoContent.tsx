@@ -472,18 +472,17 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
         <p className="text-[10px] tracking-[0.3em] uppercase font-mono text-foreground/30 mb-10">
           Planning guides
         </p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06] max-w-4xl">
-          <div className="mb-12">
+
+        {/* Planning */}
+        <div className="mb-[2rem]">
           <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30 mb-6">Planning</p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06]">
             {[
               { href: "/morocco/best-time-to-visit", title: "Best time to visit", desc: "Month by month — what's happening, where, and what the weather means." },
               { href: "/morocco/is-morocco-safe", title: "Is Morocco safe?", desc: "What to actually watch for. The difference between dangerous and irritating." },
               { href: "/morocco/travel-guide", title: "Morocco travel guide", desc: "Visa, money, transport, language, health. Everything practical." },
               { href: "/morocco/things-to-do-in-marrakech", title: "Things to do in Marrakech", desc: "The monuments and what they actually are." },
               { href: "/morocco/7-day-itinerary", title: "7-day itinerary", desc: "Two routes that work. Built around real distances." },
-              { href: "/morocco/getting-around", title: "Getting around", desc: "Trains, buses, taxis and transfers. How Morocco moves." },
-              { href: "/morocco/food-and-tipping", title: "Food and tipping", desc: "What to order, where to eat it, and what to pay." },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="group bg-background p-6 hover:bg-foreground/[0.02] transition-colors">
                 <h3 className="font-serif text-base text-foreground mb-1 group-hover:text-foreground/70 transition-colors">{guide.title}</h3>
@@ -493,9 +492,11 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
             ))}
           </div>
         </div>
-        <div className="mb-12">
+
+        {/* Experiences */}
+        <div className="mb-[2rem]">
           <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30 mb-6">Experiences</p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06]">
             {[
               { href: "/morocco/hammam", title: "The hammam", desc: "Not a spa. A centuries-old institution of hygiene and sociality." },
               { href: "/morocco/cooking-class", title: "Moroccan cooking class", desc: "The spice logic, the tagine layers, the couscous technique." },
@@ -512,9 +513,11 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
             ))}
           </div>
         </div>
+
+        {/* Cultural Context */}
         <div>
           <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30 mb-6">Cultural context</p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06]">
             {[
               { href: "/morocco/islam-and-daily-life", title: "Islam and daily life", desc: "The call to prayer, the five pillars, what it means to move through a Muslim country." },
               { href: "/morocco/ramadan", title: "Visiting during Ramadan", desc: "What changes, what opens, why most tourists are wrong to avoid it." },
@@ -530,7 +533,6 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
               </Link>
             ))}
           </div>
-        </div>
         </div>
       </section>
 
