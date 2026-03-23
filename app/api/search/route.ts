@@ -31,7 +31,7 @@ export async function GET() {
     // Fetch places — lightweight
     const { data: places } = await getSupabase()
       .from('places')
-      .select('slug, title, destination, category, description, region')
+      .select('slug, title, destination, category, excerpt, region')
       .eq('published', true)
       .order('title', { ascending: true })
       .limit(500);
