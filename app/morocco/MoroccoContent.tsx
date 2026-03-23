@@ -467,6 +467,65 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
 
       <Divider />
 
+      {/* ── Planning Guides ───────────────────────────────────────────────── */}
+      <section className="px-8 md:px-16 lg:px-20 py-16">
+        <p className="text-[10px] tracking-[0.3em] uppercase font-mono text-foreground/30 mb-10">
+          Planning guides
+        </p>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06] max-w-4xl">
+          {[
+            {
+              href: "/morocco/best-time-to-visit",
+              title: "Best time to visit",
+              desc: "Month by month — what's happening, where, and what the weather actually means for your trip.",
+            },
+            {
+              href: "/morocco/is-morocco-safe",
+              title: "Is Morocco safe?",
+              desc: "What to actually watch for. The difference between dangerous and irritating.",
+            },
+            {
+              href: "/morocco/travel-guide",
+              title: "Morocco travel guide",
+              desc: "Visa, money, transport, language, health. Everything practical before you arrive.",
+            },
+            {
+              href: "/morocco/things-to-do-in-marrakech",
+              title: "Things to do in Marrakech",
+              desc: "The monuments and what they actually are — not what to photograph but what to understand.",
+            },
+            {
+              href: "/morocco/7-day-itinerary",
+              title: "7-day itinerary",
+              desc: "Two routes that work. Built around real distances, not Instagram.",
+            },
+            {
+              href: "/start-here",
+              title: "Get your orientation",
+              desc: "Five questions. A framework specific to your trip.",
+            },
+          ].map((guide) => (
+            <Link
+              key={guide.href}
+              href={guide.href}
+              className="group bg-background p-8 hover:bg-foreground/[0.02] transition-colors"
+            >
+              <h3 className="font-serif text-lg text-foreground mb-2 group-hover:text-foreground/70 transition-colors">
+                {guide.title}
+              </h3>
+              <p className="text-sm text-foreground/45 leading-relaxed mb-4">
+                {guide.desc}
+              </p>
+              <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30 group-hover:text-foreground/60 transition-colors">
+                Read →
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <Divider />
+
       {/* ── CTA ───────────────────────────────────────────────────────────── */}
       <section className="px-8 md:px-16 lg:px-20 py-20 md:py-28">
         <div className="max-w-xl">
