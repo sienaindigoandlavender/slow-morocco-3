@@ -473,54 +473,64 @@ export default function MoroccoContent({ cities, stories, cityImages = {} }: Pro
           Planning guides
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06] max-w-4xl">
-          {[
-            {
-              href: "/morocco/best-time-to-visit",
-              title: "Best time to visit",
-              desc: "Month by month — what's happening, where, and what the weather actually means for your trip.",
-            },
-            {
-              href: "/morocco/is-morocco-safe",
-              title: "Is Morocco safe?",
-              desc: "What to actually watch for. The difference between dangerous and irritating.",
-            },
-            {
-              href: "/morocco/travel-guide",
-              title: "Morocco travel guide",
-              desc: "Visa, money, transport, language, health. Everything practical before you arrive.",
-            },
-            {
-              href: "/morocco/things-to-do-in-marrakech",
-              title: "Things to do in Marrakech",
-              desc: "The monuments and what they actually are — not what to photograph but what to understand.",
-            },
-            {
-              href: "/morocco/7-day-itinerary",
-              title: "7-day itinerary",
-              desc: "Two routes that work. Built around real distances, not Instagram.",
-            },
-            {
-              href: "/start-here",
-              title: "Get your orientation",
-              desc: "Five questions. A framework specific to your trip.",
-            },
-          ].map((guide) => (
-            <Link
-              key={guide.href}
-              href={guide.href}
-              className="group bg-background p-8 hover:bg-foreground/[0.02] transition-colors"
-            >
-              <h3 className="font-serif text-lg text-foreground mb-2 group-hover:text-foreground/70 transition-colors">
-                {guide.title}
-              </h3>
-              <p className="text-sm text-foreground/45 leading-relaxed mb-4">
-                {guide.desc}
-              </p>
-              <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30 group-hover:text-foreground/60 transition-colors">
-                Read →
-              </span>
-            </Link>
-          ))}
+          <div className="mb-12">
+          <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30 mb-6">Planning</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06]">
+            {[
+              { href: "/morocco/best-time-to-visit", title: "Best time to visit", desc: "Month by month — what's happening, where, and what the weather means." },
+              { href: "/morocco/is-morocco-safe", title: "Is Morocco safe?", desc: "What to actually watch for. The difference between dangerous and irritating." },
+              { href: "/morocco/travel-guide", title: "Morocco travel guide", desc: "Visa, money, transport, language, health. Everything practical." },
+              { href: "/morocco/things-to-do-in-marrakech", title: "Things to do in Marrakech", desc: "The monuments and what they actually are." },
+              { href: "/morocco/7-day-itinerary", title: "7-day itinerary", desc: "Two routes that work. Built around real distances." },
+              { href: "/morocco/getting-around", title: "Getting around", desc: "Trains, buses, taxis and transfers. How Morocco moves." },
+              { href: "/morocco/food-and-tipping", title: "Food and tipping", desc: "What to order, where to eat it, and what to pay." },
+            ].map((guide) => (
+              <Link key={guide.href} href={guide.href} className="group bg-background p-6 hover:bg-foreground/[0.02] transition-colors">
+                <h3 className="font-serif text-base text-foreground mb-1 group-hover:text-foreground/70 transition-colors">{guide.title}</h3>
+                <p className="text-sm text-foreground/40 leading-relaxed mb-3">{guide.desc}</p>
+                <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/25 group-hover:text-foreground/50 transition-colors">Read →</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div className="mb-12">
+          <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30 mb-6">Experiences</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06]">
+            {[
+              { href: "/morocco/hammam", title: "The hammam", desc: "Not a spa. A centuries-old institution of hygiene and sociality." },
+              { href: "/morocco/cooking-class", title: "Moroccan cooking class", desc: "The spice logic, the tagine layers, the couscous technique." },
+              { href: "/morocco/souk-guide", title: "Souk navigation", desc: "The spatial logic of the medina. What to buy and how to bargain." },
+              { href: "/morocco/desert-camp", title: "Desert camp", desc: "Erg Chebbi vs Erg Chigaga. What a night in the Sahara actually involves." },
+              { href: "/morocco/atlas-trekking", title: "Atlas trekking", desc: "From Ourika day hikes to the Toubkal summit (4,167m)." },
+              { href: "/morocco/surfing", title: "Surfing the Atlantic", desc: "Taghazout, Essaouira, Dakhla. Season, levels, what each offers." },
+            ].map((guide) => (
+              <Link key={guide.href} href={guide.href} className="group bg-background p-6 hover:bg-foreground/[0.02] transition-colors">
+                <h3 className="font-serif text-base text-foreground mb-1 group-hover:text-foreground/70 transition-colors">{guide.title}</h3>
+                <p className="text-sm text-foreground/40 leading-relaxed mb-3">{guide.desc}</p>
+                <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/25 group-hover:text-foreground/50 transition-colors">Read →</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/30 mb-6">Cultural context</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/[0.06]">
+            {[
+              { href: "/morocco/islam-and-daily-life", title: "Islam and daily life", desc: "The call to prayer, the five pillars, what it means to move through a Muslim country." },
+              { href: "/morocco/ramadan", title: "Visiting during Ramadan", desc: "What changes, what opens, why most tourists are wrong to avoid it." },
+              { href: "/morocco/jewish-heritage", title: "Jewish heritage", desc: "265,000 Jewish Moroccans at its peak. The Mellah quarters, the synagogues, the museum." },
+              { href: "/morocco/amazigh", title: "The Amazigh people", desc: "60-70% of Morocco. The indigenous language, the carpets, the mountains." },
+              { href: "/morocco/french-protectorate", title: "The French Protectorate", desc: "1912–1956. Why it explains the Ville Nouvelle, the language, and modern Morocco." },
+              { href: "/start-here", title: "Get your orientation", desc: "Five questions. A framework specific to your trip." },
+            ].map((guide) => (
+              <Link key={guide.href} href={guide.href} className="group bg-background p-6 hover:bg-foreground/[0.02] transition-colors">
+                <h3 className="font-serif text-base text-foreground mb-1 group-hover:text-foreground/70 transition-colors">{guide.title}</h3>
+                <p className="text-sm text-foreground/40 leading-relaxed mb-3">{guide.desc}</p>
+                <span className="text-[10px] tracking-[0.2em] uppercase font-mono text-foreground/25 group-hover:text-foreground/50 transition-colors">Read →</span>
+              </Link>
+            ))}
+          </div>
+        </div>
         </div>
       </section>
 
