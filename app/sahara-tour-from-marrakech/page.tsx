@@ -1,9 +1,8 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Script from "next/script";
-import { getJourneyBySlug, getRoutesByIds, getJourneys, getStories, getAllPlaceFirstImages } from "@/lib/supabase";
-import { findRelatedStories } from "@/lib/content-matcher";
-import JourneyDetailContent from "../journeys/[slug]/JourneyDetailContent";
+import { getJourneyBySlug, getRoutesByIds } from "@/lib/supabase";
+import SaharaLandingContent from "./SaharaLandingContent";
 
 export const revalidate = 3600;
 
@@ -134,180 +133,33 @@ const jsonLd = {
   },
 };
 
-interface Journey {
-  slug: string;
-  title: string;
-  duration: string;
-  durationDays: number;
-  description: string;
-  arcDescription: string;
-  heroImage: string;
-  startCity: string;
-  focus: string;
-  destinations: string;
-  journeyId: string;
-  journeyType?: string;
-  epicPrice?: number;
-  price?: number;
-}
-
-interface ItineraryDay {
-  dayNumber: number;
-  cityName: string;
-  fromCity: string;
-  toCity: string;
-  description: string;
-  imageUrl: string;
-  travelTime: string;
-  difficulty: string;
-  activities: string;
-  meals: string;
-  routeType: string;
-}
-
-async function getJourneyData() {
+export default async function SaharaLandingPage() {
   const journeyData = await getJourneyBySlug(JOURNEY_SLUG);
-  if (!journeyData) return null;
 
-  const journey: Journey = {
-    slug: journeyData.slug || "",
-    title: journeyData.title || "",
-    duration: journeyData.duration_days ? `${journeyData.duration_days}-Day` : "",
-    durationDays: journeyData.duration_days || 0,
-    description: journeyData.short_description || "",
-    arcDescription: journeyData.arc_description || "",
-    heroImage: journeyData.hero_image_url || "",
-    price: journeyData.price_eur || 0,
-    startCity: journeyData.start_city || "",
-    focus: journeyData.focus_type || "",
-    destinations: journeyData.destinations || "",
-    journeyId: journeyData.id || "",
-    journeyType: journeyData.journey_type || "regular",
-    epicPrice: journeyData.epic_price_eur || undefined,
-  };
+  if (!journeyData) {
+    notFound();
+  }
 
+  // Build itinerary from route_sequence
   const routeSequence = journeyData.route_sequence || "";
   const routeIds = routeSequence
     .split(",")
     .map((id: string) => id.trim())
     .filter((id: string) => id.length > 0);
 
-  const [routes, placeImages] = await Promise.all([
-    getRoutesByIds(routeIds),
-    getAllPlaceFirstImages(),
-  ]);
+  const routes = await getRoutesByIds(routeIds);
 
-  function isValidImageUrl(url: string | null | undefined): string {
-    if (!url) return "";
-    if (url.includes("soqcqlzerhgacdaggtch")) return "";
-    return url;
-  }
-
-  function findPlaceImage(cityName: string): string {
-    if (!cityName) return "";
-    const slug = cityName.toLowerCase().replace(/\s+/g, "-");
-    return placeImages[slug] || placeImages[cityName] || "";
-  }
-
-  const itinerary: ItineraryDay[] = routeIds.map(
-    (routeId: string, index: number) => {
-      const route = routes.find((r) => r.id === routeId);
-      if (!route) {
-        return {
-          dayNumber: index + 1, cityName: "", fromCity: "", toCity: "",
-          description: "", imageUrl: "", travelTime: "", difficulty: "",
-          activities: "", meals: "", routeType: "",
-        };
-      }
-      const imageUrl = isValidImageUrl(route.image_url)
-        || isValidImageUrl(route.hero_image_url)
-        || findPlaceImage(route.to_city || "")
-        || findPlaceImage(route.from_city || "")
-        || "";
-      return {
-        dayNumber: index + 1,
-        cityName: route.to_city || "",
-        fromCity: route.from_city || "",
-        toCity: route.to_city || "",
-        description: route.route_narrative || "",
-        imageUrl,
-        travelTime: String(route.travel_time_hours || ""),
-        difficulty: route.difficulty_level || "",
-        activities: route.activities || "",
-        meals: route.meals || "",
-        routeType: route.route_type || "",
-      };
-    }
-  );
-
-  return { journey, itinerary };
-}
-
-async function getOtherJourneys() {
-  try {
-    const allJourneys = await getJourneys({ published: true });
-    return allJourneys
-      .filter((j) => j.slug !== JOURNEY_SLUG)
-      .map((j) => ({
-        slug: j.slug || "",
-        title: j.title || "",
-        duration: j.duration_days ? `${j.duration_days}-Day` : "",
-        durationDays: j.duration_days || 0,
-        description: j.short_description || "",
-        arcDescription: j.arc_description || "",
-        heroImage: j.hero_image_url || "",
-        price: j.price_eur || 0,
-        startCity: j.start_city || "",
-        focus: j.focus_type || "",
-        destinations: j.destinations || "",
-        journeyId: j.id || "",
-        journeyType: j.journey_type || "regular",
-        epicPrice: j.epic_price_eur || undefined,
-      }));
-  } catch {
-    return [];
-  }
-}
-
-async function getRelatedStoriesSSR(journey: Journey) {
-  try {
-    const allStories = await getStories({ published: true });
-    const storiesForMatcher = allStories.map((s) => ({
-      slug: s.slug || "",
-      title: s.title || "",
-      region: s.region || "",
-      tags: s.tags || "",
-      category: s.category || "",
-      heroImage: s.hero_image || "",
-      excerpt: s.excerpt || "",
-    }));
-
-    return findRelatedStories(
-      journey.destinations,
-      journey.focus,
-      storiesForMatcher,
-      4
-    );
-  } catch {
-    return [];
-  }
-}
-
-export default async function SaharaLandingPage() {
-  const data = await getJourneyData();
-
-  if (!data) {
-    notFound();
-  }
-
-  const otherJourneys = await getOtherJourneys();
-  const relatedStories = await getRelatedStoriesSSR(data.journey);
-
-  const allJourneys = await getJourneys({ published: true });
-  const visibleJourneys = allJourneys.filter((j) => j.show_on_journeys_page !== false && j.journey_type !== "epic");
-  const currentIndex = visibleJourneys.findIndex((j) => j.slug === JOURNEY_SLUG);
-  const prevJourney = currentIndex > 0 ? { slug: visibleJourneys[currentIndex - 1].slug, title: visibleJourneys[currentIndex - 1].title } : null;
-  const nextJourney = currentIndex < visibleJourneys.length - 1 ? { slug: visibleJourneys[currentIndex + 1].slug, title: visibleJourneys[currentIndex + 1].title } : null;
+  const itinerary = routeIds.map((routeId: string, index: number) => {
+    const route = routes.find((r) => r.id === routeId);
+    return {
+      dayNumber: index + 1,
+      fromCity: route?.from_city || "",
+      toCity: route?.to_city || "",
+      description: route?.route_narrative || "",
+      travelTime: String(route?.travel_time_hours || ""),
+      activities: route?.activities || "",
+    };
+  });
 
   return (
     <>
@@ -316,14 +168,12 @@ export default async function SaharaLandingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <JourneyDetailContent
-        journey={data.journey}
-        itinerary={data.itinerary}
-        otherJourneys={otherJourneys}
-        relatedStories={relatedStories}
-        slug={JOURNEY_SLUG}
-        prevJourney={prevJourney}
-        nextJourney={nextJourney}
+      <SaharaLandingContent
+        itinerary={itinerary}
+        price={journeyData.price_eur || 450}
+        heroImage={journeyData.hero_image_url || ""}
+        title={journeyData.title || "Sahara Desert Tour from Marrakech"}
+        arcDescription={journeyData.arc_description || ""}
       />
     </>
   );
