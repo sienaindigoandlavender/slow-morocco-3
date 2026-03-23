@@ -144,7 +144,7 @@ export default function SaharaLandingContent() {
       <div className="relative h-[70vh] bg-[#c4a882] overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-60"
-          style={{ backgroundImage: "url('https://res.cloudinary.com/dsza1ksnz/image/upload/v1/slow-morocco/merzouga-dunes')" }}
+          style={{ backgroundImage: "url('https://res.cloudinary.com/do2ojyohc/image/upload/v1774039524/Camel_caravan_crossing_Saharan_dunes_wngjzj.png')" }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 px-6 md:px-14 pb-16">
